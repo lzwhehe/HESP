@@ -2,7 +2,7 @@
 
 ## 当前约定
 
-用户要求读取项目、继续研究并使用 GitHub 管理。随后明确选择：暂不付费，先完成工程和实验准备。目标为 `lzwhehe` 账号下私有 `HESP` 仓库。尚未选择真实模型、费用预算和真实任务集；这些不应被默认为已完成。
+用户要求读取项目、继续研究并使用 GitHub 管理。随后明确选择：暂不付费，先完成工程和实验准备。目标为 [`lzwhehe/HESP`](https://github.com/lzwhehe/HESP)；用户在提供仓库地址后确认保持公开并上传项目。尚未选择真实模型、费用预算和真实任务集；这些不应被默认为已完成。
 
 源文件：`HESP_research_v0.1.zip`。
 SHA256：`a9fb810528cac36bdfe1f62c20e161388d3fa7497d0bbfeaddc293db62812c7d`。
@@ -29,11 +29,7 @@ python scripts/run_study.py --output runs/study --repeats 3 --seed 42
 python scripts/audit_run.py results/demo_v01
 ```
 
-本机没有 PATH 中的 Python，可使用 Codex 提供的解释器：
-
-```powershell
-& 'C:\Users\32630\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' scripts/run_study.py --output runs/study --repeats 3 --seed 42
-```
+若系统 PATH 中没有 Python，请使用已安装 Python 3.10+ 解释器的绝对路径执行上述命令。
 
 `results/verification_v02` 保存本次实际测试记录；`results/study_v02` 保存配对软件验证。程序没有付费调用。固定策略和确定性任务上的重复运行只验证执行及统计管线，不能据此推断方法优越性或统计显著性。
 
@@ -54,4 +50,4 @@ python scripts/audit_run.py results/demo_v01
 ## GitHub 工作方式
 
 保留原始结果；按研究里程碑提交代码，实验采用新的结果目录。功能分支使用 `codex/` 前缀，通过 PR 记录问题和验证。Issue 的完成必须链接对应代码与实际日志。
-密钥通过本机环境变量或 GitHub Secrets 提供，不能提交 `.env` 或凭据。仓库保持私有，公开发布另行决定。
+密钥通过本机环境变量或 GitHub Secrets 提供，不能提交 `.env` 或凭据。仓库按用户确认保持公开，实验原始材料在提交前须检查是否含凭据或真实用户数据。
