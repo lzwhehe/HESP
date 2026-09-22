@@ -1,0 +1,121 @@
+{
+  "purpose": "synthetic_software_validation_only",
+  "research_claim_allowed": false,
+  "warning": "Fixture repetitions are deterministic; intervals are pipeline checks, not efficacy evidence.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 42,
+  "modes": {
+    "react_style": {
+      "runs": 12,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 12
+      },
+      "tool_calls": {
+        "mean_known": 3.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 3.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 4.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.007833333333333333,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      }
+    },
+    "memory_only": {
+      "runs": 12,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 12
+      },
+      "tool_calls": {
+        "mean_known": 3.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 3.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 4.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.010416666666666666,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      }
+    },
+    "hesp": {
+      "runs": 12,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 12
+      },
+      "tool_calls": {
+        "mean_known": 2.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.006416666666666667,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      }
+    }
+  },
+  "paired_verification": {
+    "hesp_minus_react_style": {
+      "task_clusters": 4,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "hesp_minus_memory_only": {
+      "task_clusters": 4,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    }
+  },
+  "manifest_sha256": "9ad8149a33702be9402ae7772596e1fe66e372dd047309688d2ee9f63c866543"
+}

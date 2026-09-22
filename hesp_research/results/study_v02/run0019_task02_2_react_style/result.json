@@ -1,0 +1,25 @@
+{
+  "mode": "react_style",
+  "planner": "scripted_smoke_not_llm",
+  "environment": "synthetic_software_test_only",
+  "status": "VERIFIED_SIMULATION",
+  "verified_simulation": true,
+  "tool_calls": 4,
+  "tool_cost_units": 4,
+  "planner_calls": 5,
+  "blocked_duplicate_proposals": 0,
+  "replan_signals": 0,
+  "reported_input_tokens": 0,
+  "reported_output_tokens": 0,
+  "usage_unknown_calls": 0,
+  "wall_seconds": 0.0,
+  "final_scores": {
+    "session_expired": 0.00030902348578491974,
+    "owner_policy": 0.00030902348578491974,
+    "workflow_locked": 0.9891841779975279,
+    "other": 0.01019777503090235
+  },
+  "source_sha256": "69b1451a8df0916bb906a0595e49e060ba0d51c3004b03f797761b8810dfe5c8",
+  "research_claim_allowed": false,
+  "warning": "Synthetic software test; does not measure real LLM or Web CTF capability"
+}

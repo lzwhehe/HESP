@@ -1,0 +1,156 @@
+{
+  "version": "0.2.0",
+  "mode": "memory_only",
+  "planner": "scripted_smoke_not_llm",
+  "environment": {
+    "objective": "Diagnose why a document operation fails in a simulator",
+    "initial_observation": "Document operation did not complete",
+    "environment": "synthetic_software_test_only",
+    "allowed_targets": [
+      "fixture://documents"
+    ]
+  },
+  "budget": {
+    "max_tool_calls": 8,
+    "max_decisions": 12,
+    "max_tool_cost": 8,
+    "max_seconds": 60.0
+  },
+  "source_sha256": "69b1451a8df0916bb906a0595e49e060ba0d51c3004b03f797761b8810dfe5c8",
+  "python": "3.12.14",
+  "priors": {
+    "session_expired": 0.25,
+    "owner_policy": 0.25,
+    "workflow_locked": 0.25,
+    "other": 0.25
+  },
+  "predictive_catalog": [
+    {
+      "id": "read_help",
+      "target": "fixture://documents",
+      "purpose": "read_general_help",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "generic_help": 1.0
+        },
+        "owner_policy": {
+          "generic_help": 1.0
+        },
+        "workflow_locked": {
+          "generic_help": 1.0
+        },
+        "other": {
+          "generic_help": 1.0
+        }
+      },
+      "prediction_source": "handwritten_simulator_model",
+      "prerequisites": {}
+    },
+    {
+      "id": "inspect_session",
+      "target": "fixture://documents",
+      "purpose": "diagnose_session_expired",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "matched": 0.97,
+          "not_matched": 0.03
+        },
+        "owner_policy": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "workflow_locked": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "other": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        }
+      },
+      "prediction_source": "handwritten_simulator_model",
+      "prerequisites": {}
+    },
+    {
+      "id": "inspect_owner",
+      "target": "fixture://documents",
+      "purpose": "diagnose_owner_policy",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "owner_policy": {
+          "matched": 0.97,
+          "not_matched": 0.03
+        },
+        "workflow_locked": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "other": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        }
+      },
+      "prediction_source": "handwritten_simulator_model",
+      "prerequisites": {}
+    },
+    {
+      "id": "inspect_workflow",
+      "target": "fixture://documents",
+      "purpose": "diagnose_workflow_locked",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "owner_policy": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "workflow_locked": {
+          "matched": 0.97,
+          "not_matched": 0.03
+        },
+        "other": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        }
+      },
+      "prediction_source": "handwritten_simulator_model",
+      "prerequisites": {}
+    },
+    {
+      "id": "inspect_other",
+      "target": "fixture://documents",
+      "purpose": "diagnose_other",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "owner_policy": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "workflow_locked": {
+          "matched": 0.01,
+          "not_matched": 0.99
+        },
+        "other": {
+          "matched": 0.97,
+          "not_matched": 0.03
+        }
+      },
+      "prediction_source": "handwritten_simulator_model",
+      "prerequisites": {}
+    }
+  ],
+  "warning": "Software smoke test, not real Web CTF research evidence"
+}

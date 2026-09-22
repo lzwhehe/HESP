@@ -1,0 +1,45 @@
+test_entropy_uniform (test_core.InformationTests.test_entropy_uniform) ... ok
+test_information_bound (test_core.InformationTests.test_information_bound) ... ok
+test_invalid_costs (test_core.InformationTests.test_invalid_costs) ... ok
+test_invalid_probabilities_rejected (test_core.InformationTests.test_invalid_probabilities_rejected) ... ok
+test_likelihood_must_sum_to_one (test_core.InformationTests.test_likelihood_must_sum_to_one) ... ok
+test_perfect_test_yields_one_bit (test_core.InformationTests.test_perfect_test_yields_one_bit) ... ok
+test_prediction_must_cover_hypotheses (test_core.InformationTests.test_prediction_must_cover_hypotheses) ... ok
+test_reject_different_outcome_vocabularies (test_core.InformationTests.test_reject_different_outcome_vocabularies) ... ok
+test_uninformative_test_yields_zero (test_core.InformationTests.test_uninformative_test_yields_zero) ... ok
+test_duplicate_id_does_not_double_count (test_core.LedgerTests.test_duplicate_id_does_not_double_count) ... ok
+test_high_score_does_not_mean_confirmed (test_core.LedgerTests.test_high_score_does_not_mean_confirmed) ... ok
+test_impossible_result_keeps_uncertainty (test_core.LedgerTests.test_impossible_result_keeps_uncertainty) ... ok
+test_invalid_observation_not_used (test_core.LedgerTests.test_invalid_observation_not_used) ... ok
+test_mismatched_action_rejected (test_core.LedgerTests.test_mismatched_action_rejected) ... ok
+test_old_state_evidence_not_used (test_core.LedgerTests.test_old_state_evidence_not_used) ... ok
+test_renamed_action_same_purpose_not_independent (test_core.LedgerTests.test_renamed_action_same_purpose_not_independent) ... ok
+test_same_test_new_evidence_id_not_independent (test_core.LedgerTests.test_same_test_new_evidence_id_not_independent) ... ok
+test_state_change_invalidates_old_scores_and_allows_retest (test_core.LedgerTests.test_state_change_invalidates_old_scores_and_allows_retest) ... ok
+test_state_versions_cannot_go_backwards (test_core.LedgerTests.test_state_versions_cannot_go_backwards) ... ok
+test_unknown_outcome_is_not_negative_evidence (test_core.LedgerTests.test_unknown_outcome_is_not_negative_evidence) ... ok
+test_updates_and_relations (test_core.LedgerTests.test_updates_and_relations) ... ok
+test_all_modes_and_cases_complete_fixture (test_integration.IntegrationTests.test_all_modes_and_cases_complete_fixture) ... ok
+test_bad_budget_rejected (test_integration.IntegrationTests.test_bad_budget_rejected) ... ok
+test_baseline_does_not_receive_structured_ledger (test_integration.IntegrationTests.test_baseline_does_not_receive_structured_ledger) ... ok
+test_duplicate_calls_blocked_and_loop_bounded (test_integration.IntegrationTests.test_duplicate_calls_blocked_and_loop_bounded) ... ok
+test_external_command_is_argv_not_shell (test_integration.IntegrationTests.test_external_command_is_argv_not_shell) ... ok
+test_external_invalid_json (test_integration.IntegrationTests.test_external_invalid_json) ... ok
+test_external_protocol (test_integration.IntegrationTests.test_external_protocol) ... ok
+test_hesp_avoids_zero_ig_help_first (test_integration.IntegrationTests.test_hesp_avoids_zero_ig_help_first) ... ok
+test_high_confidence_claim_is_not_success (test_integration.IntegrationTests.test_high_confidence_claim_is_not_success) ... ok
+test_independent_verifier_requires_matching_evidence (test_integration.IntegrationTests.test_independent_verifier_requires_matching_evidence) ... ok
+test_invalid_token_usage_rejected (test_integration.IntegrationTests.test_invalid_token_usage_rejected) ... ok
+test_malformed_decision_fails_closed (test_integration.IntegrationTests.test_malformed_decision_fails_closed) ... ok
+test_memory_control_has_ledger_without_rankings (test_integration.IntegrationTests.test_memory_control_has_ledger_without_rankings) ... ok
+test_output_directory_is_not_overwritten (test_integration.IntegrationTests.test_output_directory_is_not_overwritten) ... ok
+test_planner_does_not_receive_hidden_answer (test_integration.IntegrationTests.test_planner_does_not_receive_hidden_answer) ... ok
+test_predictions_are_logged_before_observations (test_integration.IntegrationTests.test_predictions_are_logged_before_observations) ... ok
+test_tool_budget_enforced (test_integration.IntegrationTests.test_tool_budget_enforced) ... ok
+test_unknown_tool_blocks_execution (test_integration.IntegrationTests.test_unknown_tool_blocks_execution) ... ok
+test_unknown_usage_not_zero (test_integration.IntegrationTests.test_unknown_usage_not_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 0.074s
+
+OK

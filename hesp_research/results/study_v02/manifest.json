@@ -1,0 +1,233 @@
+{
+  "schema": "hesp.fixture-study.v1",
+  "created_utc": "2026-09-22T10:01:42.556709+00:00",
+  "source_sha256": "69b1451a8df0916bb906a0595e49e060ba0d51c3004b03f797761b8810dfe5c8",
+  "seed": 42,
+  "repeats": 3,
+  "budget": {
+    "max_tool_calls": 8,
+    "max_decisions": 12,
+    "max_tool_cost": 8,
+    "max_seconds": 60.0
+  },
+  "schedule": [
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 0,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 1,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 1,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 0,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 1,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 0,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 1,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 2,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 1,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 2,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 1,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 0,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 0,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 0,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 2,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 0,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 2,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 2,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 2,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 2,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 0,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 2,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 1,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 0,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 0,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 2,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task03",
+      "fixture_cause": "other",
+      "repeat": 0,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 1,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 1,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task02",
+      "fixture_cause": "workflow_locked",
+      "repeat": 1,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 1,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 1,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 2,
+      "mode": "react_style"
+    },
+    {
+      "task_id": "task01",
+      "fixture_cause": "owner_policy",
+      "repeat": 2,
+      "mode": "hesp"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 0,
+      "mode": "memory_only"
+    },
+    {
+      "task_id": "task00",
+      "fixture_cause": "session_expired",
+      "repeat": 2,
+      "mode": "memory_only"
+    }
+  ],
+  "authorization": "In-process synthetic fixtures; no network or external targets",
+  "research_claim_allowed": false
+}

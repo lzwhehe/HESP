@@ -1,0 +1,11 @@
+{
+  "kind": "software_verification_not_research_results",
+  "recorded_at_utc": "2026-09-22T09:22:44.718019+00:00",
+  "python": "3.12.14",
+  "source_sha256": "b966c8569b19d934dddadb7e63b8ab68b0e8a888516aedcb162fc3431283648e",
+  "tests_run": 40,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true
+}

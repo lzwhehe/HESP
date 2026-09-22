@@ -1,0 +1,26 @@
+name: Verify research software
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.12']
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: hesp_research
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python scripts/check_project.py --output runs/verification
+      - run: python scripts/run_study.py --output runs/study --repeats 2 --seed 42
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-${{ matrix.os }}-${{ matrix.python }}
+          path: hesp_research/runs/
