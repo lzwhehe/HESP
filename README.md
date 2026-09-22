@@ -6,7 +6,7 @@
 
 一个围绕假设、证据与业务状态组织行动的 Agent 研究原型。
 
-[![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
+[![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square)
 ![Version 0.2](https://img.shields.io/badge/version-0.2-14B8A6?style=flat-square)
 ![Research prototype](https://img.shields.io/badge/stage-research_prototype-64748B?style=flat-square)
