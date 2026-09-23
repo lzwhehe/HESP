@@ -28,6 +28,12 @@ class Action:
     likelihoods: dict[str, dict[str, float]]
     prediction_source: str = "handwritten_simulator_model"
     prerequisites: dict = field(default_factory=dict)
+    # Public, planner-visible text. Not part of the fingerprint.
+    description: str = ""
+    outcome_notes: dict = field(default_factory=dict)
+
+    def outcomes(self):
+        return list(next(iter(self.likelihoods.values())))
 
     def validate(self, hypotheses):
         if isinstance(self.cost, bool) or not isinstance(self.cost, int) or self.cost <= 0:
@@ -75,10 +81,10 @@ class Observation:
 class Ledger:
     """Version-scoped evidence. High posterior alone never confirms a result."""
 
-    def __init__(self, priors):
+    def __init__(self, priors, initial_state=None):
         self.priors = normalize(priors)
         self.scores = dict(self.priors)
-        self.state = {"role": "tester", "page": "document", "version": 0}
+        self.state = dict(initial_state or {"role": "tester", "page": "document", "version": 0})
         self.evidence = []
         self.observation_ids = set()
         self.used_fingerprints = set()

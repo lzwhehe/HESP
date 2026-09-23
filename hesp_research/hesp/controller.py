@@ -1,6 +1,6 @@
-"""Run one auditable local experiment. Environment is simulation-only in v0.1."""
+"""Run one auditable local experiment on an in-process fixture or the loopback web sandbox."""
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 import hashlib
 import json
 from pathlib import Path
@@ -8,10 +8,15 @@ import platform
 import time
 
 from .core import Ledger, entropy, expected_information_gain
-from .environment import CAUSES, actions
+from .predictors import TablePredictor
+from .selectors import Selector
 from . import __version__
 
 MODES = ("react_style", "memory_only", "hesp")
+ENVIRONMENTS = {
+    "synthetic_software_test_only": "Software smoke test, not real Web CTF research evidence",
+    "local_web_sandbox": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim",
+}
 
 
 @dataclass(frozen=True)
@@ -73,31 +78,45 @@ def validate_decision(value, valid_hypotheses):
                 raise ValueError("Reported token counts must be nonnegative integers")
 
 
-def run(environment, planner, mode, output, budget=None):
+def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
+        metadata=None):
+    """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
     budget.validate()
+    public_task = environment.describe()
+    if public_task.get("environment") not in ENVIRONMENTS:
+        raise ValueError("Environment is not an accepted local fixture or sandbox")
+    hypotheses = tuple(environment.hypotheses)
+    predictor = predictor or TablePredictor()
+    selector = selector or Selector("eig_cost")
+    env_actions = {a.id: a for a in environment.catalog()}
+    catalog = []
+    for a in env_actions.values():
+        modeled = a if isinstance(predictor, TablePredictor) else replace(
+            a, likelihoods=predictor.likelihoods(a, hypotheses), prediction_source=predictor.source)
+        modeled.validate(hypotheses)
+        catalog.append(modeled)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     journal = Journal(output / "events.jsonl")
-    catalog = actions()
     action_map = {a.id: a for a in catalog}
-    priors = {h: 1 / len(CAUSES) for h in CAUSES}
-    ledger = Ledger(priors)
-    public_task = environment.describe()
-    if public_task.get("environment") != "synthetic_software_test_only":
-        raise ValueError("v0.1 accepts the simulation fixture only")
+    priors = {h: 1 / len(hypotheses) for h in hypotheses}
+    ledger = Ledger(priors, environment.state())
     config = {
-        "version": __version__, "mode": mode, "planner": planner.name,
+        "version": __version__, "mode": mode, "arm": arm or mode, "planner": planner.name,
+        "selector": selector.name, "prediction_source": getattr(predictor, "source", "designer_table"),
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
-        "warning": "Software smoke test, not real Web CTF research evidence",
+        "metadata": metadata or {},
+        "warning": ENVIRONMENTS[public_task["environment"]],
     }
     (output / "config.json").write_text(json.dumps(config, indent=2, ensure_ascii=False), encoding="utf-8")
     journal.write("run_started", mode=mode, planner=planner.name)
     history = []
+    blocked = []   # tool-level feedback shared by every arm (like an error message from a tool)
     seen = set()
     tool_calls = tool_cost = blocked_repeats = decisions = replan_signals = 0
     input_tokens = output_tokens = 0
@@ -128,9 +147,11 @@ def run(environment, planner, mode, output, budget=None):
         request = {
             "protocol": "hesp.planner.v1", "mode": mode, "task": public_task,
             "state_version": ledger.state["version"],
-            "tools": [{"id": a.id, "target": a.target, "purpose": a.purpose,
-                       "cost": a.cost, "prerequisites": a.prerequisites} for a in catalog],
+            "tools": [{"id": a.id, "target": a.target, "purpose": a.purpose, "cost": a.cost,
+                       "prerequisites": a.prerequisites, "description": a.description,
+                       "outcome_notes": a.outcome_notes} for a in catalog],
             "history": list(history),
+            "blocked_proposals": blocked[-5:],
             "remaining_tool_calls": budget.max_tool_calls - tool_calls,
             "remaining_tool_cost": budget.max_tool_cost - tool_cost,
             "instructions": (
@@ -143,7 +164,7 @@ def run(environment, planner, mode, output, budget=None):
             request["investigation"] = ledger.public()
         if mode == "hesp":
             request["action_rankings"] = rankings
-            request["selection_policy"] = "Controller ranks fixture actions by modeled IG / cost"
+            request["selection_policy"] = f"Controller selects legal actions by '{selector.name}'"
         # Serialize snapshot before external code can mutate the request.
         journal.write("planner_request", request=request)
         decisions += 1
@@ -186,13 +207,15 @@ def run(environment, planner, mode, output, budget=None):
             if not rankings:
                 status = "NO_LEGAL_ACTION"
                 break
-            chosen_id = rankings[0]["action_id"]
+            chosen_id = selector.choose(rankings, ledger.scores, action_map)
         else:
             chosen_id = proposed_id
         action = action_map[chosen_id]
         fingerprint = action.fingerprint(ledger.state["version"])
         if fingerprint in seen:
             blocked_repeats += 1
+            blocked.append({"action_id": chosen_id, "reason": "duplicate_same_state",
+                            "state_version": ledger.state["version"]})
             journal.write("action_blocked", reason="duplicate_same_state", action_id=chosen_id)
             continue
         if action.target not in public_task["allowed_targets"]:
@@ -207,13 +230,13 @@ def run(environment, planner, mode, output, budget=None):
         # Registration is durable and occurs before the environment call.
         journal.write("prediction_registered", action=asdict(action),
                       state_version=ledger.state["version"], before_scores=ledger.scores,
-                      selected_by="ig_cost_controller" if mode == "hesp" else "planner",
+                      selected_by=f"controller:{selector.name}" if mode == "hesp" else "planner",
                       planner_proposed_action=proposed_id, modeled_rankings=rankings)
         tool_calls += 1
         tool_cost += action.cost
         seen.add(fingerprint)
         try:
-            observation = environment.execute(action)
+            observation = environment.execute(env_actions[chosen_id])
         except (ValueError, RuntimeError):
             journal.write("execution_error", action_id=chosen_id)
             status = "EXECUTION_ERROR"
@@ -223,6 +246,9 @@ def run(environment, planner, mode, output, budget=None):
         before = entropy(ledger.scores)
         entry = ledger.ingest(action, observation)
         journal.write("evidence_update", evidence=entry)
+        if entry["skip_reason"] == "invalid_observation":
+            # A transient failure is not evidence; allow one more attempt in this state (budget still spent).
+            seen.discard(fingerprint)
         # A signal is not a count of completed multi-step replans.
         if before - entropy(ledger.scores) <= 1e-9:
             zero_information_streak += 1
@@ -234,7 +260,8 @@ def run(environment, planner, mode, output, budget=None):
                           note="v0.1 reranks existing catalog; does not generate new hypotheses")
             zero_information_streak = 0
     result = {
-        "mode": mode, "planner": planner.name, "environment": environment.label,
+        "mode": mode, "arm": arm or mode, "planner": planner.name, "selector": selector.name,
+        "prediction_source": config["prediction_source"], "environment": environment.label,
         "status": status, "verified_simulation": verified, "tool_calls": tool_calls,
         "tool_cost_units": tool_cost, "planner_calls": decisions,
         "blocked_duplicate_proposals": blocked_repeats,
@@ -245,7 +272,7 @@ def run(environment, planner, mode, output, budget=None):
         "wall_seconds": round(time.monotonic() - start, 6),
         "final_scores": ledger.scores, "source_sha256": config["source_sha256"],
         "research_claim_allowed": False,
-        "warning": "Synthetic software test; does not measure real LLM or Web CTF capability",
+        "warning": config["warning"],
     }
     journal.write("run_finished", result=result)
     (output / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -19,6 +19,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python scripts/check_project.py --output runs/verification
       - run: python scripts/run_study.py --output runs/study --repeats 2 --seed 42
+      - run: python scripts/run_web_ablation.py --output runs/web_ablation --repeats 1 --budgets 4 10
       - uses: actions/upload-artifact@v4
         if: always()
         with:

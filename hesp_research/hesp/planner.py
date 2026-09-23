@@ -61,3 +61,39 @@ class SubprocessPlanner:
         if not isinstance(result, dict):
             raise ValueError("Planner adapter response must be an object")
         return result
+
+
+class PosteriorPlanner:
+    """Deterministic, model-free policy for selector ablations (not an LLM, not a baseline claim).
+
+    Finishes when the current-state posterior of one hypothesis reaches ``threshold`` and at
+    least one used, supporting observation from the current state exists; otherwise proposes
+    the next untried probe in catalogue order (the naive "sequential" strategy). In the HESP
+    arm the controller overrides the proposed probe. Requires the structured ledger.
+    """
+
+    def __init__(self, threshold=0.9):
+        self.threshold = threshold
+        self.name = f"posterior_threshold_script@{threshold}"
+
+    def decide(self, request):
+        zero = {"input_tokens": 0, "output_tokens": 0}
+        inv = request.get("investigation")
+        if inv is None:
+            raise ValueError("PosteriorPlanner requires the structured ledger (memory_only/hesp)")
+        version = request["state_version"]
+        scores = {h["id"]: h["score"] for h in inv["hypotheses"]}
+        top = max(sorted(scores), key=lambda h: scores[h])
+        if scores[top] >= self.threshold:
+            support = [e["observation_id"] for e in reversed(inv["evidence"])
+                       if e["used"] and e["state_version"] == version and e["relations"].get(top) == "support"][:3]
+            if support:
+                return {"kind": "finish", "hypothesis": top, "evidence_ids": support,
+                        "reason": f"posterior {scores[top]:.3f} >= {self.threshold}", "usage": zero}
+        tried = {(o["action_id"], o["state_version"]) for o in request["history"] if o.get("valid", True)}
+        options = [t for t in request["tools"]
+                   if (t["id"], version) not in tried and t["cost"] <= request["remaining_tool_cost"]]
+        if not options or request["remaining_tool_calls"] <= 0:
+            return {"kind": "stop", "reason": "No affordable untried probe", "usage": zero}
+        return {"kind": "action", "action_id": options[0]["id"], "reason": "Next probe in catalogue order",
+                "usage": zero}

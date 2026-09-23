@@ -68,3 +68,21 @@ H1：控制模型、工具、可见任务信息与总预算后，HESP 在结构�
 3. 主实验：冻结版本、任务分组、预算及指标后执行配对实验。
 4. 研究报告：方法、结果、负例、局限和复现说明齐备。
 5. 简历：只使用已完成阶段的事实，结果必须能追溯到日志。
+
+---
+
+## v0.3 Pilot 预先登记（2026-09-23，写于结果产生之前）
+
+本节在 `results/llm_pilot_v03` 与 `results/web_ablation_v03` 产生任何结果之前写入。manifest 中的源码哈希为 `3364da44…`，LLM 预测表 `results/elicitation_v03/elicitation.json` 的 SHA256 为 `f3b25eca…`。
+
+**环境。** 自建本地 Web 诊断靶场（`hesp/webapp.py`），仅监听 127.0.0.1，每回合新实例。8 种隐藏原因 × 3 种变体（base / drift / noise）= 24 个任务。任务与答案在代码中可见，因此它只能用于 Pilot 与工程验证，**不是**隐藏测试集，也不是 Web CTF。
+
+**LLM Pilot。** 模型 `qwen2.5:7b-instruct`（Q4_K_M，本地 Ollama），温度 0.2，每次调用不同种子。5 个 arm × 24 任务 × 2 次重复，配对、按种子打乱顺序。预算：10 次工具调用 / 10 成本单位 / 12 次决策。
+
+- 主要比较：`hesp − memory_only`（验证完成率，按任务聚类的配对差与 bootstrap 区间）。
+- 次要比较：`hesp − react_style`；`memory_only − react_style`；`hesp − hesp_random`（区分“控制器代选动作”与“按 EIG 选动作”）；`hesp − hesp_llm_pred` 与 `hesp_llm_pred − memory_only`（预测表来源的影响）；成本差。
+- 判读：24 个任务聚类的区间只描述这一小型靶场；即使区间不含 0，也只写“在本 Pilot 中观察到”，不写“显著优于”。失败、超时、格式错误全部留在分母。
+
+**脚本消融。** 同一个无模型策略（后验 ≥ 0.9 且有当前状态支持证据时结束），只改变选择规则：sequential / eig_cost / eig / map_greedy / random / eig_cost_llmP。工具预算扫描 {2,3,4,5,6,8,10}，每任务 5 次重复。它只回答“在给定预测模型下，选择规则本身的影响”，不涉及 LLM 行为。
+
+**已知局限（事先声明）。** 设计者预测表与靶场生成器几乎一致（KL≈0.01 bit），相当于接近 oracle 的预测模型，会高估 HESP 在真实环境中的收益；LLM 抽取的预测表用来衡量这一差距。假设集合由任务提供，尚未实现开放式假设生成与扩展。

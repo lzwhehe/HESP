@@ -1,6 +1,8 @@
 # 外部模型适配器协议
 
-当前提供模型无关的 JSON 子进程接口，未实现或测试任何特定厂商 API。无需在聊天里发送密钥。适配器自行从用户本机的正常凭据配置读取密钥，调用用户选择的模型。
+> **v0.3 更新：** 除下文的通用子进程协议外，已内置一个本地模型适配器 `hesp.llm`（Ollama HTTP API，仅允许回环地址），见文末“内置本地模型（v0.3）”。
+
+通用 JSON 子进程接口与模型无关，未实现或测试任何特定厂商 API。无需在聊天里发送密钥。适配器自行从用户本机的正常凭据配置读取密钥，调用用户选择的模型。
 
 示例启动形式（适配器文件须先自行实现）：
 
@@ -42,3 +44,23 @@ python3 -m hesp --mode memory_only --case owner_policy --output runs/model_pilot
 ## 安全说明
 
 子进程不是沙箱，也不限制子进程访问外网。仅执行用户明确提供并信任的适配器。在未确定服务商、模型、预算和运行机器前，不应自动启动付费调用。
+
+## 内置本地模型（v0.3）
+
+`hesp/llm.py` 使用标准库 `urllib` 调用本机 Ollama（`http://127.0.0.1:11434`，非回环地址直接拒绝），无需任何密钥，也不产生费用。
+
+| 组件 | 作用 | 记录内容 |
+| --- | --- | --- |
+| `OllamaClient` | 单次 chat 调用，`format=json` 或 JSON Schema | 服务端 `prompt_eval_count + prompt_eval_cached_count`（完整提示）、`eval_count`、缓存命中的输入 token、提示字符数、耗时 |
+| `LLMPlanner` | 三个 arm 共用同一模板，只按请求里存在的段落增减内容 | 解析失败或非法字段（未知工具、未知假设、引用不存在的观察）时最多修复 1 次，两次的 usage 都计入；仍失败则 `PLANNER_ERROR` |
+| `LLMPredictor` | 在任何回合开始前，逐 (假设 × 探针) 抽取 `P(o｜h,a)` | JSON Schema 强制覆盖全部结果类别；原始回复、解析行、ε 平滑、回退为均匀分布的行都会保存 |
+
+命令行示例：
+
+```bash
+python -m hesp --env web --mode memory_only --case owner_policy --llm qwen2.5:7b-instruct --output runs/llm_demo
+```
+
+本机环境记录（2026-09-23）：Ollama 0.34.3 便携版；RTX 3080 Laptop，驱动 546.33 过旧导致 CUDA 后端报 `device kernel image is invalid`，改用 Ollama 自带的 Vulkan 后端（`CUDA_VISIBLE_DEVICES=-1 OLLAMA_VULKAN=1`）。模型 `qwen2.5:7b-instruct`（Q4_K_M，digest 记录在每个 manifest 中）。
+
+所有 arm 都会收到 `blocked_proposals` 字段：被控制器拦截的重复提议会作为工具反馈告知 Planner。v0.2 的请求中没有这一反馈，在真实模型上会导致同一提示词、同一种子反复生成同一个被拦截的动作。
