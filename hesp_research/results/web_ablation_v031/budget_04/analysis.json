@@ -1,0 +1,398 @@
+{
+  "purpose": "scripted_selector_ablation",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 42,
+  "arms": [
+    "sequential",
+    "eig_cost",
+    "eig",
+    "map_greedy",
+    "random",
+    "lookahead",
+    "eig_cost_llmP"
+  ],
+  "modes": {
+    "sequential": {
+      "runs": 120,
+      "verified_fraction": 0.6916666666666667,
+      "statuses": {
+        "VERIFIED_SIMULATION": 83,
+        "STOPPED_UNRESOLVED": 37
+      },
+      "tool_calls": {
+        "mean_known": 2.8,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.8,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3.8,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.019391666666666668,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.2650602409638556
+    },
+    "eig_cost": {
+      "runs": 120,
+      "verified_fraction": 0.6666666666666666,
+      "statuses": {
+        "VERIFIED_SIMULATION": 80,
+        "STOPPED_UNRESOLVED": 40
+      },
+      "tool_calls": {
+        "mean_known": 1.7083333333333333,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.8916666666666666,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.7083333333333335,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.01365,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.3375
+    },
+    "eig": {
+      "runs": 120,
+      "verified_fraction": 0.875,
+      "statuses": {
+        "VERIFIED_SIMULATION": 105,
+        "STOPPED_UNRESOLVED": 15
+      },
+      "tool_calls": {
+        "mean_known": 1.1666666666666667,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 3.1666666666666665,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.1666666666666665,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.0103,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 3.0476190476190474
+    },
+    "map_greedy": {
+      "runs": 120,
+      "verified_fraction": 0.6833333333333333,
+      "statuses": {
+        "VERIFIED_SIMULATION": 82,
+        "STOPPED_UNRESOLVED": 38
+      },
+      "tool_calls": {
+        "mean_known": 2.591666666666667,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.591666666666667,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3.591666666666667,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.020391666666666666,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.9390243902439024
+    },
+    "random": {
+      "runs": 120,
+      "verified_fraction": 0.5333333333333333,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 56,
+        "VERIFIED_SIMULATION": 64
+      },
+      "tool_calls": {
+        "mean_known": 2.825,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 3.175,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3.825,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.01995,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.453125
+    },
+    "lookahead": {
+      "runs": 120,
+      "verified_fraction": 0.675,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 39,
+        "VERIFIED_SIMULATION": 81
+      },
+      "tool_calls": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.95,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.65,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.05963333333333333,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.4444444444444446
+    },
+    "eig_cost_llmP": {
+      "runs": 120,
+      "verified_fraction": 0.175,
+      "statuses": {
+        "VERIFIED_SIMULATION": 21,
+        "STOPPED_UNRESOLVED": 99
+      },
+      "tool_calls": {
+        "mean_known": 2,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 4,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.017075,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 4
+    }
+  },
+  "paired_verification": {
+    "eig_cost_minus_sequential": {
+      "task_clusters": 24,
+      "difference": -0.024999999999999998,
+      "cluster_bootstrap_percentile_95": [
+        -0.2583333333333333,
+        0.225
+      ],
+      "tasks_better": 6,
+      "tasks_worse": 8
+    },
+    "eig_cost_minus_eig": {
+      "task_clusters": 24,
+      "difference": -0.20833333333333334,
+      "cluster_bootstrap_percentile_95": [
+        -0.375,
+        -0.05
+      ],
+      "tasks_better": 3,
+      "tasks_worse": 7
+    },
+    "eig_cost_minus_map_greedy": {
+      "task_clusters": 24,
+      "difference": -0.016666666666666666,
+      "cluster_bootstrap_percentile_95": [
+        -0.19166666666666668,
+        0.15833333333333333
+      ],
+      "tasks_better": 4,
+      "tasks_worse": 6
+    },
+    "eig_cost_minus_random": {
+      "task_clusters": 24,
+      "difference": 0.13333333333333333,
+      "cluster_bootstrap_percentile_95": [
+        -0.016666666666666666,
+        0.2916666666666667
+      ],
+      "tasks_better": 13,
+      "tasks_worse": 6
+    },
+    "eig_cost_minus_lookahead": {
+      "task_clusters": 24,
+      "difference": -0.008333333333333333,
+      "cluster_bootstrap_percentile_95": [
+        -0.03333333333333333,
+        0.016666666666666666
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 2
+    },
+    "eig_cost_minus_eig_cost_llmP": {
+      "task_clusters": 24,
+      "difference": 0.4916666666666667,
+      "cluster_bootstrap_percentile_95": [
+        0.31666666666666665,
+        0.6666666666666666
+      ],
+      "tasks_better": 16,
+      "tasks_worse": 1
+    },
+    "lookahead_minus_eig": {
+      "task_clusters": 24,
+      "difference": -0.2,
+      "cluster_bootstrap_percentile_95": [
+        -0.3666666666666667,
+        -0.041666666666666664
+      ],
+      "tasks_better": 3,
+      "tasks_worse": 8
+    },
+    "lookahead_minus_sequential": {
+      "task_clusters": 24,
+      "difference": -0.016666666666666666,
+      "cluster_bootstrap_percentile_95": [
+        -0.24166666666666667,
+        0.23333333333333334
+      ],
+      "tasks_better": 6,
+      "tasks_worse": 9
+    }
+  },
+  "paired_tool_cost": {
+    "eig_cost_minus_sequential": {
+      "task_clusters": 24,
+      "difference": 0.09166666666666666,
+      "cluster_bootstrap_percentile_95": [
+        -0.48333333333333334,
+        0.6583333333333333
+      ]
+    },
+    "eig_cost_minus_eig": {
+      "task_clusters": 24,
+      "difference": -0.275,
+      "cluster_bootstrap_percentile_95": [
+        -0.875,
+        0.25
+      ]
+    },
+    "eig_cost_minus_map_greedy": {
+      "task_clusters": 24,
+      "difference": 0.3,
+      "cluster_bootstrap_percentile_95": [
+        0.09166666666666667,
+        0.55
+      ]
+    },
+    "eig_cost_minus_random": {
+      "task_clusters": 24,
+      "difference": -0.2833333333333333,
+      "cluster_bootstrap_percentile_95": [
+        -0.9,
+        0.2666666666666667
+      ]
+    },
+    "eig_cost_minus_lookahead": {
+      "task_clusters": 24,
+      "difference": -0.058333333333333334,
+      "cluster_bootstrap_percentile_95": [
+        -0.11666666666666667,
+        -0.016666666666666666
+      ]
+    },
+    "eig_cost_minus_eig_cost_llmP": {
+      "task_clusters": 24,
+      "difference": -1.1083333333333334,
+      "cluster_bootstrap_percentile_95": [
+        -1.7166666666666666,
+        -0.6083333333333333
+      ]
+    },
+    "lookahead_minus_eig": {
+      "task_clusters": 24,
+      "difference": -0.21666666666666667,
+      "cluster_bootstrap_percentile_95": [
+        -0.7833333333333334,
+        0.29166666666666663
+      ]
+    },
+    "lookahead_minus_sequential": {
+      "task_clusters": 24,
+      "difference": 0.15,
+      "cluster_bootstrap_percentile_95": [
+        -0.425,
+        0.7083333333333334
+      ]
+    }
+  },
+  "manifest_sha256": "4e5c5ee16d25cda22167d9b1c38109fbb9f05b15a24ce125a2c2238e20f1474f"
+}

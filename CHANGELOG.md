@@ -1,5 +1,22 @@
 # 更新日志
 
+## 0.4 · 2026-09-23
+
+### 新增
+
+- `hesp/sandbox.py`：通用的仅回环地址诊断靶场基类。web-diag 迁移到基类上后，360 个脚本回合逐一复现、结果完全一致。
+- `hesp/uploadapp.py`：留出任务族 upload-diag，与 web-diag 的结构不同（最优首探针是成本为 2 的 dry-run；只靠排除法不能通过验证）。
+- 状态守卫 finish：要求引用当前状态版本下被采用、且支持该假设的证据，并且得分 ≥ 0.8；否则拒绝，并把原因作为工具反馈返回。
+- 预算感知 lookahead 选择器（3 层期望最大后验搜索）。
+- vLLM / OpenAI 兼容客户端；`run_suite` 支持线程池并发执行。
+- `scripts/run_v04_study.py`、`scripts/server/run_v04_all.sh`、`scripts/v04_summary.py`；图 `fig-v04-models`。
+- 测试增加到 97 项。
+
+### 实验
+
+- v0.4 主研究：Qwen2.5 7B / 32B-AWQ / 72B-AWQ × 9 个 arm × 48 个任务 × 3 次重复，共 3888 个回合，预先登记，全部通过审计。见 [RESULTS.md](hesp_research/docs/RESULTS.md)。
+- 选择规则消融增加 lookahead（v0.3.1，5880 个回合）。
+
 ## 0.3 · 2026-09-23
 
 ### 新增

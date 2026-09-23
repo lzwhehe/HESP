@@ -271,11 +271,62 @@ def fig_calibration():
     c.save("fig-calibration.svg")
 
 
+# --------------------------------------------------------------------- Fig. 5 (v0.4)
+V04_ARMS = [("react_style", "A · ReAct-style"), ("memory_only", "B · Memory-only"),
+            ("memory_guard", "B + guard"), ("hesp_eigc", "C · EIG/c"), ("hesp_eigc_guard", "C · EIG/c + guard"),
+            ("hesp_la", "C · lookahead"), ("hesp_la_guard", "C · lookahead + guard"),
+            ("hesp_random", "C · random picks"), ("hesp_llmp", "C · self-elicited P")]
+V04_MODELS = [("7b", "7B"), ("32b", "32B-AWQ"), ("72b", "72B-AWQ")]
+
+
+def fig_v04():
+    models = [(k, n) for k, n in V04_MODELS if (RES / f"v04_{k}" / "outcomes.jsonl").exists()]
+    rows = {k: [json.loads(l) for l in (RES / f"v04_{k}" / "outcomes.jsonl").read_text(encoding="utf-8").splitlines()]
+            for k, _ in models}
+    color = {k: SLOTS[i] for i, (k, _) in enumerate(V04_MODELS)}      # 3 slots validate all-pairs
+    mark = {k: MARKERS[i] for i, (k, _) in enumerate(V04_MODELS)}
+    c = Canvas(1480, 640, "v0.4 verified completion by arm, model and task family")
+    lx = 40
+    c.text(lx, 30, "Qwen2.5 planners (local vLLM), 24 tasks x 3 repeats per cell, paired. "
+                   "Whiskers: 95% bootstrap over task clusters.", 12.5, 400, color=SUB, style="italic")
+    lx = 900
+    for k, n in models:
+        c.marker(mark[k], lx, 26, color[k], 5.5)
+        c.text(lx + 12, 30.5, n, 12.5, 600, color=INK)
+        lx += 110
+    top, rowh, lab_w, w = 92, 52, 170, 440
+    for pi, (fam, title) in enumerate([("upload-diag", "(a) upload-diag · held-out (primary)"),
+                                        ("web-diag", "(b) web-diag · development")]):
+        x0 = 30 + pi * 730
+        xmap = lambda v, x0=x0: x0 + lab_w + v * w
+        c.text(x0, top - 36, title, 14, 700)
+        for t in (0, .25, .5, .75, 1):
+            c.line(xmap(t), top - 18, xmap(t), top + rowh * len(V04_ARMS) - 18, GRID, 1)
+            c.text(xmap(t), top + rowh * len(V04_ARMS) + 2, f"{t:.2f}", 11.5, 400, "middle", SUB)
+        c.text(xmap(.5), top + rowh * len(V04_ARMS) + 24, "verified rate", 12.5, 500, "middle", SUB)
+        for i, (arm, label) in enumerate(V04_ARMS):
+            y0 = top + i * rowh
+            if fam == "upload-diag" and arm in ("hesp_la_guard", "memory_only"):
+                c.rect(x0 + 4, y0 - 20, lab_w + w + 20, rowh - 6, "#F4F6FA", 6)
+            c.text(x0 + lab_w - 14, y0 + 6, label, 12.5, 700 if arm == "hesp_la_guard" else 400, "end", INK)
+            for j, (k, _) in enumerate(models):
+                sub = [r for r in rows[k] if r["family"] == fam]
+                m, lo, hi = cluster_ci(sub, arm)
+                y = y0 - 10 + j * 10
+                c.line(xmap(lo), y, xmap(hi), y, color[k], 1.8)
+                c.marker(mark[k], xmap(m), y, color[k], 4.2)
+    c.text(30, 628, "Shaded rows: pre-registered primary comparison (C · lookahead + guard vs B · Memory-only) "
+                    "on the held-out family.", 12, 400, color=SUB, style="italic")
+    c.save("fig-v04-models.svg")
+
+
 if __name__ == "__main__":
-    which = set(sys.argv[1:]) or {"ablation", "pilot", "calibration"}
+    which = set(sys.argv[1:]) or {"ablation", "pilot", "calibration", "v04"}
     if "ablation" in which:
         fig_ablation()
     if "calibration" in which:
         fig_calibration()
     if "pilot" in which:
         fig_pilot()
+    if "v04" in which:
+        fig_v04()

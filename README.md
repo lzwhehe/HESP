@@ -8,10 +8,10 @@
 
 [![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square)
-![Version 0.2](https://img.shields.io/badge/version-0.2-14B8A6?style=flat-square)
+![Version 0.4](https://img.shields.io/badge/version-0.4-14B8A6?style=flat-square)
 ![Research prototype](https://img.shields.io/badge/stage-research_prototype-64748B?style=flat-square)
 
-[快速开始](#快速开始) · [工作原理](#工作原理) · [验证记录](#验证记录) · [研究路线](#研究路线) · [English](docs/README.en.md)
+[快速开始](#快速开始) · [工作原理](#工作原理) · [实验结果](#实验结果) · [研究路线](#研究路线) · [English](docs/README.en.md)
 
 </div>
 
@@ -23,20 +23,26 @@
 
 HESP 将调查过程组织为可追溯的循环：建立局部假设、登记测试预测、选择行动、记录观察、更新证据，并在业务状态变化后重新规划。研究关注的问题是：在相同模型、工具和预算下，诊断式行动选择能否在结构化记忆之外带来额外收益？
 
-> **研究阶段：工程验证。** 当前使用手工模拟任务与脚本策略，未执行真实 LLM 或 Web CTF 实验。测试数据说明软件流程可运行，不代表方法优于其他 Agent。
+> **研究阶段：本地靶场上的受控实验。** v0.4 在两个自建的本地 Web 诊断靶场上，用三档本地部署的开源模型（Qwen2.5 7B / 32B / 72B）完成了 3888 个预先登记、配对进行的回合。结论只适用于这些靶场，**不是** Web CTF 或真实网站上的结论。
 
 ## 核心能力
 
 | 能力 | 实现方式 |
 | :--- | :--- |
-| **假设驱动的选择** | 根据给定预测表计算预期信息增益，并按工具成本排序 |
+| **假设驱动的选择** | 根据给定预测表计算预期信息增益；可选 EIG/cost、预算感知的前瞻（lookahead）等选择器 |
 | **可追溯的证据** | 执行前登记预测，执行后保存原始观察、来源与更新记录 |
-| **感知业务状态** | 状态版本变化时重置当前分数，保留历史证据 |
+| **感知业务状态** | 状态版本变化时重置当前分数；状态守卫拒绝引用旧状态证据下的结论 |
+| **授权本地靶场** | 仅监听 127.0.0.1 的 HTTP 诊断应用（web-diag / upload-diag），含状态漂移与噪声变体 |
+| **本地大模型** | Ollama 与 vLLM（OpenAI 兼容）后端，服务端报告 usage，无需任何 API 密钥 |
 | **统一对照条件** | 三种模式共享工具、预算、精确去重和独立验证器 |
 | **可复现的执行** | 固定种子、随机运行顺序、冻结 manifest 与源码哈希 |
 | **可检查的结果** | 日志审计、失败分类、未知用量处理与配对统计 |
 
 ## 工作原理
+
+![HESP 框架总览](docs/assets/hesp-framework.png)
+
+<sub>(a) 决策环路：① 假设 ② 执行前登记的预测 ③ 诊断选择器 ④ 登记并执行 ⑤ 证据账本 ⑥ 状态监控，围绕 LLM Planner 运转；(b) 授权沙箱与对 Planner 隐藏的独立验证器；(c) 对照评估与审计。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
 
 ```mermaid
 flowchart LR
@@ -60,7 +66,7 @@ flowchart LR
 | `memory_only` | 上述信息 + 结构化假设、状态与证据 | Planner 决定 |
 | `hesp` | 上述信息 + 候选信息增益与成本 | 控制器按信息增益 / 成本选择 |
 
-`react_style` 是接口形态，不是 ReAct 论文的忠实复现。目前三组共用脚本策略，仅用于验证控制流程。
+`react_style` 是接口形态，不是 ReAct 论文的忠实复现。三组使用同一个模型、同一套提示模板、同样的工具、预算、精确去重和验证器，区别只在于请求中包含哪些段落，以及由谁来选动作。
 
 ## 快速开始
 
@@ -81,6 +87,13 @@ python scripts/run_study.py --output runs/study --repeats 3 --seed 42
 
 # 4. 审计单次运行
 python scripts/audit_run.py runs/first_run
+
+# 5. 本地 Web 靶场 + 选择器消融（脚本 Planner，无需模型）
+python -m hesp --env web --case owner_policy --variant drift --output runs/web_demo
+python scripts/run_web_ablation.py --output runs/ablation --repeats 1
+
+# 6. 接本地模型（需 Ollama 或 vLLM，见模型适配协议）
+python -m hesp --env web --mode hesp --llm qwen2.5:7b-instruct --output runs/llm_demo
 ```
 
 输出目录必须不存在，以避免覆盖历史结果。完整参数和外部进程接口见 [原型使用说明](hesp_research/README.md) 和 [模型适配协议](hesp_research/docs/MODEL_ADAPTER.md)。
@@ -101,18 +114,31 @@ runs/study/
 └── run*/             # 每次运行的完整记录
 ```
 
-## 验证记录
+## 实验结果
 
-以下为 **2026-09-22 本机 v0.2 工程验证**，不是实时 CI 指标。顶部徽章展示远端 CI 状态。
+完整报告：[**RESULTS.md**](hesp_research/docs/RESULTS.md)。分析口径在运行前登记于 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)；每个数字都能追溯到 `hesp_research/results/` 中的原始日志，所有回合都通过了日志审计。
 
-| 验证项 | 已记录结果 | 原始证据 |
+![v0.4 结果](docs/assets/fig-v04-models.png)
+
+**v0.4 主研究**（留出任务族 upload-diag，9 个 arm × 48 个任务 × 3 次重复 × 3 个模型）。预先登记的主要终点是完整 HESP 相对结构化记忆（Memory-only）的验证完成率配对差：
+
+| Planner | 完整 HESP − Memory-only [95% 任务聚类区间] | Memory-only 完成率 |
+| --- | --- | ---: |
+| Qwen2.5-7B | **+0.625** [+0.44, +0.79] | 0.236 |
+| Qwen2.5-32B-AWQ | **+0.000** [−0.12, +0.12] | 0.944 |
+| Qwen2.5-72B-AWQ | **+0.111** [+0.03, +0.22] | 0.819 |
+
+- **收益随 Planner 变强而缩小。** 7B 自己决策时会过早下结论，由控制器挑选探针弥补了这一点；32B 上优势消失。
+- **探索性发现：** EIG/cost + 状态守卫在留出族上三个模型都达到 1.000，需要新的预注册研究来确认。
+- **负面结果：** 预算感知 lookahead 在开发族上更好，在留出族上却没有更好，改进没有跨任务族泛化；模型自己生成的预测表校准较差（KL 0.86–1.76 比特）。
+
+| 记录 | 规模 | 原始证据 |
 | :--- | :--- | :--- |
-| 单元与集成测试 | **50 / 50 通过** | [测试记录](hesp_research/results/verification_v02/unittest.txt) |
-| 配对模拟 | **36 次完成**，4 类原因 × 3 模式 × 3 次重复 | [运行清单](hesp_research/results/study_v02/manifest.json) |
-| 模拟独立验证 | **36 / 36 通过** | [完整结果](hesp_research/results/study_v02/summary.json) |
-| 统计管线 | 失败保留在分母，未知用量保留为 null | [分析输出](hesp_research/results/study_v02/analysis.json) |
-
-固定策略与确定性任务的重复执行用于验证管线。这里的完成率、工具调用差异和区间不能用于真实模型效果或统计显著性结论。
+| v0.4 三档模型主研究 | 3888 回合，源码哈希固定，全部通过审计 | [汇总](hesp_research/results/v04_summary.md) |
+| v0.3 笔记本 Pilot（7B Q4） | 240 回合 | [报告](hesp_research/results/llm_pilot_v03/report.md) |
+| 选择规则消融（无模型） | 5880 回合 × 7 档预算 | [曲线](hesp_research/results/web_ablation_v031/curve.json) |
+| 预测校准 | 3 个模型 × 2 个任务族 | [RESULTS §4–5](hesp_research/docs/RESULTS.md) |
+| 软件测试 | 97 项，Windows / Linux | `python -m unittest discover -s tests` |
 
 ## 项目导航
 
@@ -130,6 +156,7 @@ HESP/
 
 | 想了解什么 | 从这里开始 |
 | :--- | :--- |
+| 全部实验结果与局限 | [实验结果](hesp_research/docs/RESULTS.md) |
 | 研究问题、对照与统计口径 | [研究协议](hesp_research/docs/PROTOCOL.md) |
 | 原始模拟演示发生了什么 | [第一阶段运行说明](hesp_research/docs/FIRST_RUN.md) |
 | 如何接入外部 Planner | [模型适配协议](hesp_research/docs/MODEL_ADAPTER.md) |
@@ -141,11 +168,13 @@ HESP/
 
 - [x] **01 · 原型** — 调查状态、证据更新、信息增益、三组控制流程。
 - [x] **02 · 工程验证** — 配对模拟、日志审计、统计管线与自动检查配置。
-- [ ] **03 · 模型 Pilot** — 真实模型、候选与预测生成、完整费用记录。
-- [ ] **04 · 授权 Web 环境** — 隔离任务、独立验证器、环境重置与访问边界。
-- [ ] **05 · 正式研究** — 冻结任务划分与指标，执行对照、消融并报告负结果。
+- [x] **03 · 模型 Pilot** — 本地 7B 模型、预测抽取、完整 usage 记录（v0.3）。
+- [x] **04 · 授权本地 Web 环境** — 仅回环地址的两个诊断靶场、独立验证器、每回合重置（v0.3–v0.4）。
+- [x] **05a · 受控主研究** — 预先登记、留出任务族、三档模型、因子化消融，报告负面结果（v0.4）。
+- [ ] **05b · 确认性研究** — 以 EIG/cost + 守卫为新的主要 arm 预先登记；增加他人编写的第三个任务族和其他模型家族。
+- [ ] **06 · 开放式假设** — 由模型生成并扩展假设集合，而不是由任务提供。
 
-当前按“暂不付费，先完成工程与实验准备”推进。真实实验需先确定模型、费用上限和授权任务范围。
+所有模型都在本地运行（Ollama / vLLM），不产生 API 费用。
 
 ---
 

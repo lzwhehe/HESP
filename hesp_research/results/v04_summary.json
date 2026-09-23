@@ -1,0 +1,159 @@
+{
+  "models": [
+    "Qwen2.5-7B",
+    "Qwen2.5-32B-AWQ",
+    "Qwen2.5-72B-AWQ"
+  ],
+  "families": {
+    "upload-diag": {
+      "react_style": {
+        "Qwen2.5-7B": 0.19444444444444445,
+        "Qwen2.5-32B-AWQ": 0.875,
+        "Qwen2.5-72B-AWQ": 0.8055555555555556
+      },
+      "memory_only": {
+        "Qwen2.5-7B": 0.2361111111111111,
+        "Qwen2.5-32B-AWQ": 0.9444444444444444,
+        "Qwen2.5-72B-AWQ": 0.8194444444444444
+      },
+      "memory_guard": {
+        "Qwen2.5-7B": 0.2361111111111111,
+        "Qwen2.5-32B-AWQ": 0.9583333333333334,
+        "Qwen2.5-72B-AWQ": 0.8472222222222222
+      },
+      "hesp_eigc": {
+        "Qwen2.5-7B": 1,
+        "Qwen2.5-32B-AWQ": 0.875,
+        "Qwen2.5-72B-AWQ": 0.9166666666666666
+      },
+      "hesp_eigc_guard": {
+        "Qwen2.5-7B": 1,
+        "Qwen2.5-32B-AWQ": 1,
+        "Qwen2.5-72B-AWQ": 1
+      },
+      "hesp_la": {
+        "Qwen2.5-7B": 0.875,
+        "Qwen2.5-32B-AWQ": 0.8194444444444444,
+        "Qwen2.5-72B-AWQ": 0.8888888888888888
+      },
+      "hesp_la_guard": {
+        "Qwen2.5-7B": 0.8611111111111112,
+        "Qwen2.5-32B-AWQ": 0.9444444444444444,
+        "Qwen2.5-72B-AWQ": 0.9305555555555556
+      },
+      "hesp_random": {
+        "Qwen2.5-7B": 0.8472222222222222,
+        "Qwen2.5-32B-AWQ": 0.8888888888888888,
+        "Qwen2.5-72B-AWQ": 0.8888888888888888
+      },
+      "hesp_llmp": {
+        "Qwen2.5-7B": 0.7916666666666666,
+        "Qwen2.5-32B-AWQ": 0.8055555555555556,
+        "Qwen2.5-72B-AWQ": 0.8333333333333334
+      }
+    },
+    "web-diag": {
+      "react_style": {
+        "Qwen2.5-7B": 0.4444444444444444,
+        "Qwen2.5-32B-AWQ": 0.6805555555555556,
+        "Qwen2.5-72B-AWQ": 0.75
+      },
+      "memory_only": {
+        "Qwen2.5-7B": 0.6388888888888888,
+        "Qwen2.5-32B-AWQ": 0.8888888888888888,
+        "Qwen2.5-72B-AWQ": 0.8055555555555556
+      },
+      "memory_guard": {
+        "Qwen2.5-7B": 0.75,
+        "Qwen2.5-32B-AWQ": 0.9444444444444444,
+        "Qwen2.5-72B-AWQ": 0.9444444444444444
+      },
+      "hesp_eigc": {
+        "Qwen2.5-7B": 0.75,
+        "Qwen2.5-32B-AWQ": 0.7638888888888888,
+        "Qwen2.5-72B-AWQ": 0.8055555555555556
+      },
+      "hesp_eigc_guard": {
+        "Qwen2.5-7B": 0.8194444444444444,
+        "Qwen2.5-32B-AWQ": 0.9722222222222222,
+        "Qwen2.5-72B-AWQ": 0.8055555555555556
+      },
+      "hesp_la": {
+        "Qwen2.5-7B": 0.9583333333333334,
+        "Qwen2.5-32B-AWQ": 0.9722222222222222,
+        "Qwen2.5-72B-AWQ": 0.9722222222222222
+      },
+      "hesp_la_guard": {
+        "Qwen2.5-7B": 0.9722222222222222,
+        "Qwen2.5-32B-AWQ": 0.9722222222222222,
+        "Qwen2.5-72B-AWQ": 0.9722222222222222
+      },
+      "hesp_random": {
+        "Qwen2.5-7B": 0.8888888888888888,
+        "Qwen2.5-32B-AWQ": 0.9027777777777778,
+        "Qwen2.5-72B-AWQ": 0.875
+      },
+      "hesp_llmp": {
+        "Qwen2.5-7B": 1,
+        "Qwen2.5-32B-AWQ": 0.9305555555555556,
+        "Qwen2.5-72B-AWQ": 0.9583333333333334
+      }
+    }
+  },
+  "calibration": {
+    "Qwen2.5-7B": {
+      "upload-diag": {
+        "cells": 90,
+        "expected_log_loss_bits": 0.9055103203698659,
+        "kl_bits": 0.8638218231619299,
+        "expected_brier": 0.3765234783742816,
+        "argmax_agreement": 0.7333333333333333,
+        "uniform_fallback_rows": 0
+      },
+      "web-diag": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.4979364969130435,
+        "kl_bits": 1.4574060135164388,
+        "expected_brier": 0.5485447709952931,
+        "argmax_agreement": 0.5185185185185185,
+        "uniform_fallback_rows": 0
+      }
+    },
+    "Qwen2.5-32B-AWQ": {
+      "upload-diag": {
+        "cells": 90,
+        "expected_log_loss_bits": 1.3164951669387628,
+        "kl_bits": 1.274806669730827,
+        "expected_brier": 0.5007547616961452,
+        "argmax_agreement": 0.7555555555555555,
+        "uniform_fallback_rows": 7
+      },
+      "web-diag": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.7964314965269272,
+        "kl_bits": 1.7559010131303223,
+        "expected_brier": 0.6581621730964978,
+        "argmax_agreement": 0.5555555555555556,
+        "uniform_fallback_rows": 0
+      }
+    },
+    "Qwen2.5-72B-AWQ": {
+      "upload-diag": {
+        "cells": 90,
+        "expected_log_loss_bits": 1.1176695358727602,
+        "kl_bits": 1.075981038664824,
+        "expected_brier": 0.3393492320952381,
+        "argmax_agreement": 0.8777777777777778,
+        "uniform_fallback_rows": 1
+      },
+      "web-diag": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.2695722894196058,
+        "kl_bits": 1.2290418060230013,
+        "expected_brier": 0.4603317073746535,
+        "argmax_agreement": 0.654320987654321,
+        "uniform_fallback_rows": 0
+      }
+    }
+  }
+}

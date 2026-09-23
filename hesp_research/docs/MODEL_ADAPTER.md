@@ -64,3 +64,22 @@ python -m hesp --env web --mode memory_only --case owner_policy --llm qwen2.5:7b
 本机环境记录（2026-09-23）：Ollama 0.34.3 便携版；RTX 3080 Laptop，驱动 546.33 过旧导致 CUDA 后端报 `device kernel image is invalid`，改用 Ollama 自带的 Vulkan 后端（`CUDA_VISIBLE_DEVICES=-1 OLLAMA_VULKAN=1`）。模型 `qwen2.5:7b-instruct`（Q4_K_M，digest 记录在每个 manifest 中）。
 
 所有 arm 都会收到 `blocked_proposals` 字段：被控制器拦截的重复提议会作为工具反馈告知 Planner。v0.2 的请求中没有这一反馈，在真实模型上会导致同一提示词、同一种子反复生成同一个被拦截的动作。
+
+## vLLM / OpenAI 兼容接口（v0.4）
+
+`hesp.llm.OpenAICompatClient` 与 `OllamaClient` 接口相同，连接本机 `http://127.0.0.1:8000/v1`（非回环地址直接拒绝）。`fmt="json"` 映射为 `response_format={"type":"json_object"}`，字典则作为 JSON Schema（结构化输出）。usage 取服务端 `usage.prompt_tokens / completion_tokens`，缓存前缀 token 取 `prompt_tokens_details.cached_tokens`（服务端未提供时记为 0，总输入 token 仍来自服务端）。
+
+**v0.4 实测环境（2026-09-23）：** 租用的单卡 NVIDIA RTX 6000D（84 GB，Blackwell sm_120），驱动 595.71，Ubuntu 22.04；vLLM 0.30.0、torch 2.13.0+cu130，均装在数据盘上的虚拟环境中。
+
+```bash
+# 一次性准备（数据盘 /root/autodl-tmp/hesp）
+python -m pip install uv && python -m uv venv venv && python -m uv pip install --python venv/bin/python vllm
+hf download Qwen/Qwen2.5-7B-Instruct --local-dir models/Qwen2.5-7B-Instruct   # 以及 32B-AWQ、72B-AWQ
+
+# 一键运行：每个模型依次 启动 vLLM(127.0.0.1) → 抽取预测表 → 9 arm × 48 任务 × 3 次 → 停止
+nohup hesp_research/scripts/server/run_v04_all.sh > logs/v04_all.log 2>&1 &
+```
+
+**已知问题：** 镜像自带的系统 nvcc 为 12.8，而 FlashInfer 在 sm_120 上即时编译采样内核需要 CUDA ≥ 12.9，否则报 `FlashInfer requires GPUs with sm75 or higher`。脚本通过 `VLLM_USE_FLASHINFER_SAMPLER=0` 改用 PyTorch 原生采样（注意力后端为 FLASH_ATTN），不改变输出分布。在远程 shell 中不要用 `pkill -f "vllm serve"`：它会匹配到执行它的 shell 自身并断开连接。
+
+**吞吐量：** 32 个回合并发，7B 跑 1296 个回合用时 3.3 分钟，32B-AWQ 用时 14 分钟（笔记本上的 Ollama/Vulkan 跑 240 个回合约 3 小时）。

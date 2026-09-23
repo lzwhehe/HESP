@@ -4,7 +4,7 @@
 
 **Evidence-driven planning, with an auditable experimental record.**
 
-[中文](../README.md) · [Protocol](../hesp_research/docs/PROTOCOL.md) · [Results](../hesp_research/results/study_v02/report.md)
+[中文](../README.md) · [Results](../hesp_research/docs/RESULTS.md) · [Protocol](../hesp_research/docs/PROTOCOL.md)
 
 </div>
 
@@ -12,46 +12,40 @@
 
 Under the same model, tools, and budget, can diagnostic action selection improve progress beyond structured memory alone?
 
-HESP organizes local hypotheses, predicted outcomes, observations, and business state into an auditable planning loop. It computes expected information gain under a supplied predictive model, ranks actions by gain per cost, registers predictions before execution, and requires independent outcome verification.
+HESP organizes local hypotheses, pre-registered outcome predictions, observations, and versioned business state into an auditable planning loop. It computes expected information gain (EIG) under a supplied predictive model, selects probes (EIG/cost or a budget-aware lookahead), rejects conclusions that rely on stale-state evidence (state guard), and requires an independent verifier.
 
-**Current scope:** a Python standard-library research prototype with handwritten synthetic tasks and a scripted policy. No real LLM or Web CTF experiment has been performed. Software validation is not evidence of method superiority.
+![Framework](assets/hesp-framework.png)
 
-## Experimental modes
+**Scope.** Two self-built, loopback-only web diagnosis sandboxes (web-diag, upload-diag) and locally served open-weight models (Qwen2.5 7B / 32B-AWQ / 72B-AWQ via Ollama or vLLM). These are controlled sandbox experiments, **not** Web CTF or real-website results.
 
-| Mode | Planner context | Selection |
-| --- | --- | --- |
-| `react_style` | Goal, tools, execution history | Planner |
-| `memory_only` | Above + structured hypotheses, state, evidence | Planner |
-| `hesp` | Above + information gain and cost | Controller |
+## Results (v0.4, pre-registered)
 
-The ReAct-style interface is not a faithful reproduction of the original paper. All modes share budgets, tools, exact duplicate prevention, and the same scripted fixture policy.
+![v0.4](assets/fig-v04-models.png)
+
+Primary endpoint: paired difference in verified completion, full HESP − Memory-only, on the held-out upload-diag family (24 tasks × 3 repeats, task-cluster bootstrap):
+
+| Planner | Δ [95% CI] | Memory-only rate |
+| --- | --- | ---: |
+| Qwen2.5-7B | **+0.625** [+0.44, +0.79] | 0.236 |
+| Qwen2.5-32B-AWQ | **+0.000** [−0.12, +0.12] | 0.944 |
+| Qwen2.5-72B-AWQ | **+0.111** [+0.03, +0.22] | 0.819 |
+
+The benefit shrinks as the planner gets stronger. EIG/cost + state guard reached 1.000 on the held-out family for all three models (exploratory, not pre-registered). The lookahead selector helped on the development family but not on the held-out one, and self-elicited predictive tables were poorly calibrated (KL 0.86–1.76 bits). All 3888 episodes share one frozen source hash and pass the journal audit. Full report: [RESULTS.md](../hesp_research/docs/RESULTS.md).
 
 ## Quick start
 
-Requires Python 3.10+. No dependencies or API keys are needed for the fixture runs.
+Python 3.10+, standard library only for everything except serving a model.
 
 ```bash
 git clone https://github.com/lzwhehe/HESP.git
 cd HESP/hesp_research
-python -m unittest discover -s tests -v
-python -m hesp --mode hesp --case owner_policy --output runs/first_run
-python scripts/run_study.py --output runs/study --repeats 3 --seed 42
-python scripts/audit_run.py runs/first_run
+python -m unittest discover -s tests
+python -m hesp --env web --case owner_policy --variant drift --output runs/web_demo
+python scripts/run_web_ablation.py --output runs/ablation --repeats 1
+# with a local model (Ollama or vLLM): see docs/MODEL_ADAPTER.md
+python -m hesp --env web --mode hesp --llm qwen2.5:7b-instruct --output runs/llm_demo
 ```
 
-Output directories must be new. Each run stores configuration, an event journal, and a result. Paired studies add a frozen manifest, durable outcomes, analysis, and a readable report.
-
-## Recorded verification
-
-The local v0.2 record dated 2026-09-22 includes **50 passing tests** and **36 verified fixture runs**. See the [test transcript](../hesp_research/results/verification_v02/unittest.txt) and [study report](../hesp_research/results/study_v02/report.md).
-
-Repeated deterministic fixtures exercise the pipeline; their intervals and tool counts do not establish real-world efficacy. Missing usage remains unknown, failures stay in the denominator, and paired analysis resamples tasks rather than treating repeated runs as independent tasks.
-
-## Next research stages
-
-1. Select a model and budget, then implement provider-backed decisions and candidate predictions.
-2. Introduce authorized, isolated Web tasks with reset support and independent verification.
-3. Run a pilot, freeze the protocol and task splits, and conduct controlled experiments.
-4. Report costs, negative results, ablations, and limitations alongside any positive findings.
+Output directories must be new. Every run stores its configuration, an append-only event journal, and a result; studies add a frozen manifest, durable outcomes, paired analysis, and a report.
 
 See [contributing](../CONTRIBUTING.md), [changelog](../CHANGELOG.md), and [continuation notes](../hesp_research/docs/CONTINUATION.md). No open-source license has been selected.
