@@ -23,8 +23,8 @@ ASSETS = ROOT / "docs" / "assets"
 SANS = "Helvetica Neue, Helvetica, Arial, sans-serif"
 MONO = "Consolas, Menlo, monospace"
 INK, SUB, MUTED, GRID, SURF = "#1F2937", "#52514E", "#8A8984", "#E7E6E2", "#FFFFFF"
-SLOTS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
-MARKERS = ["circle", "square", "diamond", "triangle", "tri_down", "cross"]
+SLOTS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7"]
+MARKERS = ["circle", "square", "diamond", "triangle", "tri_down", "cross", "ring"]
 
 
 class Canvas:
@@ -61,6 +61,8 @@ class Canvas:
             self.add(f'<path d="M{x} {y - r * 1.25} L{x + r * 1.2} {y + r} L{x - r * 1.2} {y + r} Z" fill="{color}" {ring}/>')
         elif kind == "tri_down":
             self.add(f'<path d="M{x} {y + r * 1.25} L{x + r * 1.2} {y - r} L{x - r * 1.2} {y - r} Z" fill="{color}" {ring}/>')
+        elif kind == "ring":
+            self.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{SURF}" stroke="{color}" stroke-width="2.4"/>')
         else:
             self.add(f'<path d="M{x - r} {y - r} L{x + r} {y + r} M{x + r} {y - r} L{x - r} {y + r}" stroke="{color}" stroke-width="2.6" stroke-linecap="round"/>')
 
@@ -90,16 +92,19 @@ def axes(c, x0, y0, w, h, yticks, ylab, fmt=lambda v: f"{v:.1f}", xlab=None, xti
 
 # --------------------------------------------------------------------- Fig. 2
 ABL_LABELS = {"sequential": "sequential (B)", "eig_cost": "EIG / cost (C)", "eig": "EIG only",
-              "map_greedy": "MAP-greedy", "random": "random legal", "eig_cost_llmP": "EIG / cost, LLM-P"}
+              "map_greedy": "MAP-greedy", "random": "random legal", "eig_cost_llmP": "EIG / cost, LLM-P",
+              "lookahead": "lookahead (budget-aware)"}
 
 
 def fig_ablation():
-    data = json.loads((RES / "web_ablation_v03" / "curve.json").read_text(encoding="utf-8"))
+    folder = RES / "web_ablation_v031" if (RES / "web_ablation_v031").exists() else RES / "web_ablation_v03"
+    data = json.loads((folder / "curve.json").read_text(encoding="utf-8"))
     budgets, arms, curve = data["budgets"], data["arms"], data["curve"]
-    order = ["eig_cost", "sequential", "eig", "map_greedy", "random", "eig_cost_llmP"]
+    # Colour follows the entity (fixed slot per arm), never its rank or presence.
+    order = ["eig_cost", "sequential", "eig", "map_greedy", "random", "eig_cost_llmP", "lookahead"]
+    color = {a: SLOTS[i] for i, a in enumerate(order)}
+    mark = {a: MARKERS[i] for i, a in enumerate(order)}
     arms = [a for a in order if a in arms]
-    color = {a: SLOTS[i] for i, a in enumerate(arms)}
-    mark = {a: MARKERS[i] for i, a in enumerate(arms)}
     c = Canvas(1480, 430, "Selector ablation: verified rate versus tool budget")
     panels = [("overall", "All 24 tasks"), ("base", "base"), ("drift", "drift (state change)"), ("noise", "noise (503s, audit lag)")]
     pw, ph, gap, top = 300, 260, 60, 92
@@ -108,8 +113,8 @@ def fig_ablation():
     for a in arms:
         c.line(lx, 30, lx + 26, 30, color[a], 2.4)
         c.marker(mark[a], lx + 13, 30, color[a], 4.5)
-        c.text(lx + 34, 34.5, ABL_LABELS[a], 12.5, 600 if a == "eig_cost" else 400, color=INK)
-        lx += 44 + len(ABL_LABELS[a]) * 7.1
+        c.text(lx + 34, 34.5, ABL_LABELS[a], 12.5, 600 if a in ("eig_cost", "lookahead") else 400, color=INK)
+        lx += 40 + len(ABL_LABELS[a]) * 6.9
     c.text(70, 62, f"Model-free planner (finish at posterior ≥ 0.9); only the probe-selection rule differs.  "
                    f"{data['repeats']} seeded repeats per task; failures stay in the denominator.", 12, 400, color=SUB, style="italic")
     for pi, (key, title) in enumerate(panels):
@@ -122,7 +127,7 @@ def fig_ablation():
             vals = [(curve[str(b)]["overall"][a] if key == "overall" else curve[str(b)]["by_variant"][key][a])
                     for b in budgets]
             pts = " ".join(f"{xmap(b):.1f},{ymap(v):.1f}" for b, v in zip(budgets, vals))
-            sw = 2.6 if a == "eig_cost" else 1.8
+            sw = 2.6 if a in ("eig_cost", "lookahead") else 1.8
             c.add(f'<polyline points="{pts}" fill="none" stroke="{color[a]}" stroke-width="{sw}" '
                   f'stroke-linejoin="round" stroke-linecap="round"/>')
             for b, v in zip(budgets, vals):
@@ -185,9 +190,11 @@ def fig_pilot():
     # (c) failure modes: stacked horizontal bars of status shares
     x0, w = 990, 300
     c.text(x0, top - 40, "(c) Episode outcome", 13.5, 700)
-    statuses = [("VERIFIED_SIMULATION", "verified", "#2a78d6"), ("UNVERIFIED_CLAIM", "wrong claim", "#eb6834"),
-                ("DECISION_BUDGET_EXCEEDED", "decision budget (loops)", "#8A8984"),
-                ("TOOL_BUDGET_EXCEEDED", "tool budget", "#eda100"), ("OTHER", "other stop / error", "#C9C7C0")]
+    # Neutral ramp for outcome types so no series colour is reused with a different meaning;
+    # only the "wrong claim" failure gets an accent.
+    statuses = [("VERIFIED_SIMULATION", "verified", "#374151"), ("UNVERIFIED_CLAIM", "wrong claim", "#e34948"),
+                ("DECISION_BUDGET_EXCEEDED", "decision budget (loops)", "#9CA3AF"),
+                ("TOOL_BUDGET_EXCEEDED", "tool budget", "#C9CDD3"), ("OTHER", "other stop / error", "#E5E7EB")]
     for i, a in enumerate(arms):
         y = top + i * rowh
         c.text(x0 + lab_w - 12, y + 12.5, PILOT_LABELS[a], 12.5, 600 if a == "hesp" else 400, "end", INK)
@@ -200,7 +207,7 @@ def fig_pilot():
             if seg > 0:
                 c.rect(xx, y, seg - 2, 17, col, 3)
                 if seg > 26:
-                    c.text(xx + seg / 2 - 1, y + 12.5, n, 11, 700, "middle", "#FFFFFF" if col not in ("#C9C7C0", "#eda100") else INK)
+                    c.text(xx + seg / 2 - 1, y + 12.5, n, 11, 700, "middle", "#FFFFFF" if col in ("#374151", "#e34948") else INK)
             xx += seg
     lx, ly = x0 + lab_w, top + rowh * len(arms) + 6
     for i, (_, name, col) in enumerate(statuses):

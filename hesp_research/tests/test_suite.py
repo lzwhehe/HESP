@@ -40,6 +40,37 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(Selector("map_greedy").choose(rankings, scores, {"confirm_a": confirm_a, "split_bc": split_bc}),
                          "confirm_a")
 
+    def test_lookahead_is_budget_aware_where_eig_cost_is_myopic(self):
+        hyps = ("a", "b", "c", "d")
+        cheap = act("cheap", 1, {h: ({"y": .99, "n": .01} if h == "a" else {"y": .01, "n": .99}) for h in hyps})
+        decisive = act("decisive", 3, {h: {o: (.97 if o == h else .01) for o in hyps} for h in hyps})
+        scores = {h: .25 for h in hyps}
+        from hesp.core import expected_information_gain as eig
+        rankings = [{"action_id": a.id, "expected_information_gain_bits": eig(scores, a), "cost": a.cost,
+                     "score": eig(scores, a) / a.cost} for a in (cheap, decisive)]
+        amap = {"cheap": cheap, "decisive": decisive}
+        self.assertEqual(Selector("eig_cost").choose(rankings, scores, amap), "cheap")
+        self.assertEqual(Selector("lookahead").choose(rankings, scores, amap, remaining_cost=3, remaining_calls=3),
+                         "decisive")
+        # With plenty of budget both orders reach certainty; ties fall back to EIG / cost.
+        self.assertEqual(Selector("lookahead").choose(rankings, scores, amap, remaining_cost=4, remaining_calls=3),
+                         "cheap")
+
+    def test_source_hash_ignores_line_endings(self):
+        from unittest import mock
+        from hesp import controller
+        hashes = []
+        with tempfile.TemporaryDirectory() as root:
+            for style in ("lf", "crlf"):
+                folder = Path(root) / style
+                folder.mkdir()
+                for src in Path(controller.__file__).parent.glob("*.py"):
+                    data = src.read_bytes().replace(b"\r\n", b"\n")
+                    (folder / src.name).write_bytes(data if style == "lf" else data.replace(b"\n", b"\r\n"))
+                with mock.patch.object(controller, "__file__", str(folder / "controller.py")):
+                    hashes.append(controller.source_hash())
+        self.assertEqual(hashes[0], hashes[1])
+
     def test_unknown_selector_and_empty(self):
         with self.assertRaises(ValueError):
             Selector("oracle")

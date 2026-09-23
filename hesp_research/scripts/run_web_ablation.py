@@ -8,6 +8,7 @@ current-state supporting evidence). Only *who picks the probe, and how* differs:
   eig            HESP controller, EIG ignoring cost     (designer table)
   map_greedy     HESP controller, confirm the MAP cause (designer table)
   random         HESP controller, random legal probe
+  lookahead      HESP controller, budget-aware depth-3 expectimax of the max posterior (v0.3.1)
   eig_cost_llmP  HESP controller, EIG / cost with frozen LLM-elicited P(o|h,a)
 
 This isolates the selection rule; it says nothing about LLM planners by itself.
@@ -41,13 +42,13 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     planner = lambda seed: PosteriorPlanner(0.9)
     arms = {"sequential": {"mode": "memory_only", "planner": planner}}
-    for sel in ("eig_cost", "eig", "map_greedy", "random"):
+    for sel in ("eig_cost", "eig", "map_greedy", "random", "lookahead"):
         arms[sel] = {"mode": "hesp", "planner": planner, "selector": sel}
     if args.elicitation:
         e = json.loads(Path(args.elicitation).read_text(encoding="utf-8"))
         arms["eig_cost_llmP"] = {"mode": "hesp", "planner": planner, "selector": "eig_cost",
                                  "predictor": FrozenPredictor(e["tables"], e["source"])}
-    comparisons = [("eig_cost", a) for a in arms if a != "eig_cost"]
+    comparisons = [("eig_cost", a) for a in arms if a != "eig_cost"] + [("lookahead", "eig"), ("lookahead", "sequential")]
     curve, start = {}, time.time()
     for b in args.budgets:
         budget = Budget(max_tool_calls=b, max_decisions=b + 6, max_tool_cost=b, max_seconds=60.0)

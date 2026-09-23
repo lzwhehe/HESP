@@ -52,7 +52,8 @@ def source_hash():
     digest = hashlib.sha256()
     for path in sorted(Path(__file__).parent.glob("*.py")):
         digest.update(path.name.encode())
-        digest.update(path.read_bytes())
+        # Normalize line endings so Windows (CRLF) and Linux (LF) checkouts hash identically.
+        digest.update(path.read_bytes().replace(b"\r\n", b"\n"))
     return digest.hexdigest()
 
 
@@ -207,7 +208,8 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
             if not rankings:
                 status = "NO_LEGAL_ACTION"
                 break
-            chosen_id = selector.choose(rankings, ledger.scores, action_map)
+            chosen_id = selector.choose(rankings, ledger.scores, action_map,
+                                        budget.max_tool_cost - tool_cost, budget.max_tool_calls - tool_calls)
         else:
             chosen_id = proposed_id
         action = action_map[chosen_id]

@@ -184,7 +184,7 @@ class SandboxControllerTests(unittest.TestCase):
         self.assertTrue(audit_run(self.root / "run")["passed"])
 
     def test_selectors_all_run(self):
-        for sel in ("eig_cost", "eig", "map_greedy", "random"):
+        for sel in ("eig_cost", "eig", "map_greedy", "random", "lookahead"):
             result = self.episode(selector=sel, name=sel)
             self.assertTrue(result["verified_simulation"], sel)
             self.assertEqual(result["selector"], sel)

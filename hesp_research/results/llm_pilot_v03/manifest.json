@@ -1,0 +1,1432 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "3364da44d901c28ac4d611626be3f2f6001e70f7bbdbbd59a23d11728a18483d",
+  "seed": 42,
+  "repeats": 2,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "react_style": {
+      "mode": "react_style",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct"
+    },
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct"
+    },
+    "hesp": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct"
+    },
+    "hesp_llm_pred": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "planner": "ollama:qwen2.5:7b-instruct"
+    },
+    "hesp_random": {
+      "mode": "hesp",
+      "selector": "random",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct"
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "web-base-00",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "session_expired",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-01",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "role_readonly",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-02",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "owner_policy",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-03",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "document_archived",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-04",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "workflow_locked",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-05",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "quota_exceeded",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-06",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "edit_conflict",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-base-07",
+      "family": "web-diag",
+      "variant": "base",
+      "cause": "feature_disabled",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-drift-00",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "session_expired",
+      "drift_to": "document_archived"
+    },
+    {
+      "task_id": "web-drift-01",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "role_readonly",
+      "drift_to": "workflow_locked"
+    },
+    {
+      "task_id": "web-drift-02",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "owner_policy",
+      "drift_to": "quota_exceeded"
+    },
+    {
+      "task_id": "web-drift-03",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "document_archived",
+      "drift_to": "edit_conflict"
+    },
+    {
+      "task_id": "web-drift-04",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "workflow_locked",
+      "drift_to": "feature_disabled"
+    },
+    {
+      "task_id": "web-drift-05",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "quota_exceeded",
+      "drift_to": "session_expired"
+    },
+    {
+      "task_id": "web-drift-06",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "edit_conflict",
+      "drift_to": "role_readonly"
+    },
+    {
+      "task_id": "web-drift-07",
+      "family": "web-diag",
+      "variant": "drift",
+      "cause": "feature_disabled",
+      "drift_to": "owner_policy"
+    },
+    {
+      "task_id": "web-noise-00",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "session_expired",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-01",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "role_readonly",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-02",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "owner_policy",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-03",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "document_archived",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-04",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "workflow_locked",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-05",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "quota_exceeded",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-06",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "edit_conflict",
+      "drift_to": null
+    },
+    {
+      "task_id": "web-noise-07",
+      "family": "web-diag",
+      "variant": "noise",
+      "cause": "feature_disabled",
+      "drift_to": null
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "web-base-04",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-05",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-01",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-04",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-00",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-04",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-03",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-03",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-06",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-drift-06",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-drift-04",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-02",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-drift-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-drift-05",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-noise-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-01",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-base-03",
+      "repeat": 1,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-base-05",
+      "repeat": 1,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-06",
+      "repeat": 0,
+      "arm": "hesp"
+    },
+    {
+      "task_id": "web-base-07",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "web-noise-02",
+      "repeat": 1,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "web-base-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "web-base-02",
+      "repeat": 1,
+      "arm": "hesp_llm_pred"
+    },
+    {
+      "task_id": "web-noise-00",
+      "repeat": 0,
+      "arm": "hesp_llm_pred"
+    }
+  ],
+  "purpose": "local_llm_model_pilot",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "temperature": 0.2,
+  "elicitation_file": "results\\elicitation_v03\\elicitation.json",
+  "elicitation_sha256": "f3b25ecaf7a245f5e966f6d700746cfbfb66b8824005df01e5f64b2e0f98d44c",
+  "created_utc": "2026-09-23T05:59:09.638456+00:00"
+}
