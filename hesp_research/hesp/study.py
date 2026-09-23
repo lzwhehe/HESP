@@ -74,14 +74,18 @@ def cell_seed(seed, task_id, repeat):
 
 
 def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None, comparisons=None,
-              extra_manifest=None, resume=False, progress=None, purpose="scripted_ablation"):
+              extra_manifest=None, resume=False, progress=None, purpose="scripted_ablation", workers=1):
     """Paired, shuffled, resumable study over arbitrary arms.
 
     tasks: list of dicts with a unique ``task_id`` (hidden fields stay out of planner requests).
     arms:  {name: {"mode", "planner": callable(seed)->planner, "selector": str,
-                   "predictor": object | None}}
+                   "predictor": object | None, "finish_guard": bool}}
     env_factory: callable(task, seed) -> environment (context manager or with close()).
+    workers: episodes run concurrently in threads (each has its own sandbox server and
+             planner); outcomes are appended under a lock in completion order.
     """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
     from .selectors import Selector
     budget = budget or Budget()
     budget.validate()
@@ -91,7 +95,8 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
     random.Random(seed).shuffle(schedule)
     arm_specs = {name: {"mode": s["mode"], "selector": s.get("selector", "eig_cost"),
                         "prediction_source": getattr(s.get("predictor"), "source", "designer_table"),
-                        "planner": s["planner"](0).name} for name, s in arms.items()}
+                        "planner": s["planner"](0).name, "finish_guard": bool(s.get("finish_guard"))}
+                 for name, s in arms.items()}
     manifest = {
         "schema": "hesp.suite.v1", "source_sha256": source_hash(), "seed": seed, "repeats": repeats,
         "budget": asdict(budget), "arms": arm_specs, "tasks": tasks, "schedule": schedule,
@@ -115,7 +120,7 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
         write_json(output / "manifest.json", manifest)
     manifest_hash = hashlib.sha256((output / "manifest.json").read_bytes()).hexdigest()
     task_map = {t["task_id"]: t for t in tasks}
-    rows = []
+    rows, todo = [], []
     for index, cell in enumerate(schedule):
         key = (cell["task_id"], cell["repeat"], cell["arm"])
         folder = f"run{index:04d}_{cell['task_id']}_{cell['repeat']}_{cell['arm']}"
@@ -125,21 +130,37 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
         if (output / folder).exists():
             # An interrupted attempt is kept for the audit trail, never silently reused.
             (output / folder).rename(output / f"_aborted_{datetime.now(timezone.utc):%Y%m%dT%H%M%S}_{folder}")
+        todo.append((index, cell, folder))
+    lock = threading.Lock()
+    finished = [len(rows)]
+
+    def execute(index, cell, folder):
         spec = arms[cell["arm"]]
         s = cell_seed(seed, cell["task_id"], cell["repeat"])
         env = env_factory(task_map[cell["task_id"]], s)
         try:
             result = run(env, spec["planner"](s), spec["mode"], output / folder, budget,
                          predictor=spec.get("predictor"), selector=Selector(spec.get("selector", "eig_cost"), s),
-                         arm=cell["arm"], metadata={"task_id": cell["task_id"], "repeat": cell["repeat"]})
+                         arm=cell["arm"], metadata={"task_id": cell["task_id"], "repeat": cell["repeat"]},
+                         finish_guard=bool(spec.get("finish_guard")))
         finally:
             env.close()
-        row = {**{k: v for k, v in task_map[cell["task_id"]].items()}, **cell, **result, "run_directory": folder}
-        rows.append(row)
-        with (output / "outcomes.jsonl").open("a", encoding="utf-8") as stream:
-            stream.write(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n")
-        if progress:
-            progress(index + 1, len(schedule), row)
+        row = {**task_map[cell["task_id"]], **cell, **result, "run_directory": folder}
+        with lock:
+            rows.append(row)
+            with (output / "outcomes.jsonl").open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n")
+            finished[0] += 1
+            if progress:
+                progress(finished[0], len(schedule), row)
+
+    if workers <= 1:
+        for item in todo:
+            execute(*item)
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for future in as_completed([pool.submit(execute, *item) for item in todo]):
+                future.result()    # surface worker exceptions
     report = summarize(rows, seed=seed, arms=list(arms), comparisons=comparisons)
     report["purpose"] = purpose
     report["warning"] = ("Paired local-sandbox study. Intervals are over task clusters of a small, "

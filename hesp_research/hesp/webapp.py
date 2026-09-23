@@ -1,15 +1,9 @@
-"""Local, authorized web diagnosis sandbox (v0.3).
+"""Task family ``web-diag`` (v0.3): why can't alice save document #42?
 
-A tiny document-management app is served by the standard library on 127.0.0.1 with an
-ephemeral port, one fresh instance per episode. One hidden *fault* makes
-``POST /documents/42/save`` fail. The agent may only send the fixed read-only probes
-below; each probe returns a real HTTP response that a per-probe classifier maps to a
-finite outcome class. An independent verifier, not reachable through the planner
-API, checks the final diagnosis.
-
-Safety scope: loopback only, fixed path allowlist, redirects refused, short timeouts,
-no payloads, no credentials, no external network. This is a *diagnosis* task, not an
-attack benchmark.
+A tiny document-management app on the shared loopback sandbox (``hesp/sandbox.py``).
+One hidden fault makes ``POST /documents/42/save`` fail; the agent may only send the
+fixed read-only probes below. This family was used during v0.3 development and serves
+as the *development* family from v0.4 on.
 
 Variants
   base   deterministic responses; the audit log lags with probability 0.10
@@ -19,19 +13,9 @@ Variants
          the business-state version advances and the hidden fault switches.
 """
 
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-import json
-import random
-import threading
-import urllib.error
-import urllib.parse
-import urllib.request
+from .sandbox import EPS, LABEL, LoopbackSandbox, probe, suite
 
-from .core import Action, Observation
-
-LABEL = "local_web_sandbox"
 TARGET = "sandbox://docs-app"
-
 CAUSES = ("session_expired", "role_readonly", "owner_policy", "document_archived",
           "workflow_locked", "quota_exceeded", "edit_conflict", "feature_disabled")
 HYPOTHESES = CAUSES + ("other",)
@@ -54,45 +38,37 @@ AUDIT_CODES = {
 }
 CODE_TO_CAUSE = {v: k for k, v in AUDIT_CODES.items()}
 VARIANTS = {
-    "base": {"audit_lag": 0.10, "transient": 0.0, "drift_after": None},
-    "noise": {"audit_lag": 0.30, "transient": 0.15, "drift_after": None},
-    "drift": {"audit_lag": 0.10, "transient": 0.0, "drift_after": 2},
+    "base": {"audit_lag": 0.10, "lag": 0.10, "transient": 0.0, "drift_after": None},
+    "noise": {"audit_lag": 0.30, "lag": 0.30, "transient": 0.15, "drift_after": None},
+    "drift": {"audit_lag": 0.10, "lag": 0.10, "transient": 0.0, "drift_after": 2},
 }
 # Designer's predictive model assumes one lag rate for every variant (it is not told the variant).
 TABLE_AUDIT_LAG = 0.15
-EPS = 0.01
-
-
-# ------------------------------------------------------------------ probe catalogue
-def _probe(pid, method, path, cost, description, notes):
-    return {"id": pid, "method": method, "path": path, "cost": cost,
-            "description": description, "outcome_notes": notes}
-
 
 PROBES = [
-    _probe("whoami", "GET", "/whoami", 1, "Show the authenticated user and current role.",
-           {"editor": "200, role=editor", "viewer": "200, role=viewer", "unauthorized": "401"}),
-    _probe("doc_meta", "GET", "/documents/42", 1, "Read document #42 metadata (owner, status).",
-           {"own_active": "200, owned by the user, status active", "owner_other": "200, owned by another user",
-            "archived": "200, status archived", "unauthorized": "401"}),
-    _probe("workflow", "GET", "/workflow/42", 1, "Read the approval-workflow state of document #42.",
-           {"open": "200, no lock", "locked": "200, lock held by another user", "unauthorized": "401"}),
-    _probe("quota", "GET", "/quota", 1, "Read the user's storage quota.",
-           {"ok": "200, usage below limit", "exceeded": "200, usage at limit", "unauthorized": "401"}),
-    _probe("features", "GET", "/features", 1, "Read workspace feature flags.",
-           {"editing_on": "200, doc_editing=true", "editing_off": "200, doc_editing=false",
-            "unauthorized": "401"}),
-    _probe("versions", "GET", "/documents/42/versions", 1, "Compare the user's base revision with the head.",
-           {"consistent": "200, base equals head", "concurrent_edit": "200, head is ahead of base",
-            "unauthorized": "401"}),
-    _probe("save_dry_run", "POST", "/documents/42/save?dry_run=1", 1,
-           "Replay the failing save in dry-run mode (no write).",
-           {"forbidden": "403 generic 'operation not permitted'", "conflict": "409",
-            "unauthorized": "401"}),
-    _probe("audit", "GET", "/audit?doc=42", 3, "Read the security audit log for document #42 (slow).",
-           {**{"deny:" + c: f"200, last denial reason {AUDIT_CODES[c]}" for c in AUDIT_CODES},
-            "no_entry": "200, no entry yet (log may lag)", "unauthorized": "401"}),
-    _probe("help", "GET", "/help", 1, "Read the generic help page.", {"generic": "200, generic advice"}),
+    probe("whoami", "GET", "/whoami", 1, "Show the authenticated user and current role.",
+          {"editor": "200, role=editor", "viewer": "200, role=viewer", "unauthorized": "401"}),
+    probe("doc_meta", "GET", "/documents/42", 1, "Read document #42 metadata (owner, status).",
+          {"own_active": "200, owned by the user, status active", "owner_other": "200, owned by another user",
+           "archived": "200, status archived", "unauthorized": "401"}),
+    probe("workflow", "GET", "/workflow/42", 1, "Read the approval-workflow state of document #42.",
+          {"open": "200, no lock", "locked": "200, lock held by another user", "unauthorized": "401"}),
+    probe("quota", "GET", "/quota", 1, "Read the user's storage quota.",
+          {"ok": "200, usage below limit", "exceeded": "200, usage at limit", "unauthorized": "401"}),
+    probe("features", "GET", "/features", 1, "Read workspace feature flags.",
+          {"editing_on": "200, doc_editing=true", "editing_off": "200, doc_editing=false",
+           "unauthorized": "401"}),
+    probe("versions", "GET", "/documents/42/versions", 1, "Compare the user's base revision with the head.",
+          {"consistent": "200, base equals head", "concurrent_edit": "200, head is ahead of base",
+           "unauthorized": "401"}),
+    probe("save_dry_run", "POST", "/documents/42/save?dry_run=1", 1,
+          "Replay the failing save in dry-run mode (no write).",
+          {"forbidden": "403 generic 'operation not permitted'", "conflict": "409",
+           "unauthorized": "401"}),
+    probe("audit", "GET", "/audit?doc=42", 3, "Read the security audit log for document #42 (slow).",
+          {**{"deny:" + c: f"200, last denial reason {AUDIT_CODES[c]}" for c in AUDIT_CODES},
+           "no_entry": "200, no entry yet (log may lag)", "unauthorized": "401"}),
+    probe("help", "GET", "/help", 1, "Read the generic help page.", {"generic": "200, generic advice"}),
 ]
 PROBE_BY_ID = {p["id"]: p for p in PROBES}
 ALLOWED = {(p["method"], p["path"]) for p in PROBES}
@@ -128,98 +104,34 @@ def true_outcome_distribution(probe_id, cause, audit_lag):
     raise ValueError("unknown probe")
 
 
-def likelihood_table(probe_id, audit_lag=TABLE_AUDIT_LAG, eps=EPS):
-    """P(o | h, a) over the full outcome vocabulary with epsilon smoothing."""
-    vocab = list(PROBE_BY_ID[probe_id]["outcome_notes"])
-    table = {}
-    for h in HYPOTHESES:
-        dist = true_outcome_distribution(probe_id, h, audit_lag)
-        row = {o: dist.get(o, 0.0) * (1 - eps) + eps / len(vocab) for o in vocab}
-        total = sum(row.values())
-        table[h] = {o: v / total for o, v in row.items()}
-    return table
-
-
-def catalog(audit_lag=TABLE_AUDIT_LAG):
-    return [Action(p["id"], TARGET, f'{p["method"]} {p["path"]}', p["cost"], likelihood_table(p["id"], audit_lag),
-                   prediction_source="designer_table_eps0.01", description=p["description"],
-                   outcome_notes=dict(p["outcome_notes"]))
-            for p in PROBES]
-
-
-# ------------------------------------------------------------------ HTTP application
-class _App:
-    def __init__(self, cause, variant, seed):
-        self.cause = cause
-        self.variant = VARIANTS[variant]
-        self.rng = random.Random(seed)
-        self.lock = threading.Lock()
-
-    def respond(self, method, path):
-        with self.lock:
-            cause, rng, v = self.cause, self.rng, self.variant
-            if v["transient"] and path != "/help" and rng.random() < v["transient"]:
-                return 503, {"error": "service temporarily unavailable"}
-            if (method, path) not in ALLOWED:
-                return 404, {"error": "not found"}
-            if path == "/help":
-                return 200, {"text": "If saving fails, check your permissions or contact support."}
-            if cause == "session_expired":
-                return 401, {"error": "unauthorized", "detail": "session token expired"}
-            if path == "/whoami":
-                return 200, {"user": "alice", "role": "viewer" if cause == "role_readonly" else "editor"}
-            if path == "/documents/42":
-                return 200, {"id": 42, "title": "Q3 plan", "owner": "bob" if cause == "owner_policy" else "alice",
-                             "status": "archived" if cause == "document_archived" else "active"}
-            if path == "/workflow/42":
-                return 200, {"doc": 42, "stage": "review",
-                             "lock": {"held_by": "carol"} if cause == "workflow_locked" else None}
-            if path == "/quota":
-                return 200, {"used_mb": 1024 if cause == "quota_exceeded" else 312, "limit_mb": 1024}
-            if path == "/features":
-                return 200, {"doc_editing": cause != "feature_disabled", "comments": True}
-            if path == "/documents/42/versions":
-                return 200, {"head": 17, "your_base": 16 if cause == "edit_conflict" else 17}
-            if path == "/documents/42/save?dry_run=1":
-                if cause == "edit_conflict":
-                    return 409, {"error": "conflict"}
-                return 403, {"error": "operation not permitted"}
-            if path == "/audit?doc=42":
-                if cause in AUDIT_CODES and rng.random() >= v["audit_lag"]:
-                    return 200, {"entries": [{"event": "save_denied", "user": "alice",
-                                              "reason": AUDIT_CODES[cause]}]}
-                return 200, {"entries": []}
-            return 404, {"error": "not found"}
-
-
-def _handler(app):
-    class Handler(BaseHTTPRequestHandler):
-        def _serve(self, method):
-            status, body = app.respond(method, self.path)
-            data = json.dumps(body).encode()
-            self.send_response(status)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(data)))
-            self.end_headers()
-            self.wfile.write(data)
-
-        def do_GET(self):
-            self._serve("GET")
-
-        def do_POST(self):
-            length = int(self.headers.get("Content-Length") or 0)
-            if length:
-                self.rfile.read(min(length, 4096))
-            self._serve("POST")
-
-        def log_message(self, *args):
-            pass
-    return Handler
-
-
-class _NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, *args, **kwargs):
-        return None
+def respond(cause, method, path, rng, v):
+    if path == "/help":
+        return 200, {"text": "If saving fails, check your permissions or contact support."}
+    if cause == "session_expired":
+        return 401, {"error": "unauthorized", "detail": "session token expired"}
+    if path == "/whoami":
+        return 200, {"user": "alice", "role": "viewer" if cause == "role_readonly" else "editor"}
+    if path == "/documents/42":
+        return 200, {"id": 42, "title": "Q3 plan", "owner": "bob" if cause == "owner_policy" else "alice",
+                     "status": "archived" if cause == "document_archived" else "active"}
+    if path == "/workflow/42":
+        return 200, {"doc": 42, "stage": "review",
+                     "lock": {"held_by": "carol"} if cause == "workflow_locked" else None}
+    if path == "/quota":
+        return 200, {"used_mb": 1024 if cause == "quota_exceeded" else 312, "limit_mb": 1024}
+    if path == "/features":
+        return 200, {"doc_editing": cause != "feature_disabled", "comments": True}
+    if path == "/documents/42/versions":
+        return 200, {"head": 17, "your_base": 16 if cause == "edit_conflict" else 17}
+    if path == "/documents/42/save?dry_run=1":
+        if cause == "edit_conflict":
+            return 409, {"error": "conflict"}
+        return 403, {"error": "operation not permitted"}
+    if path == "/audit?doc=42":
+        if cause in AUDIT_CODES and rng.random() >= v["audit_lag"]:
+            return 200, {"entries": [{"event": "save_denied", "user": "alice", "reason": AUDIT_CODES[cause]}]}
+        return 200, {"entries": []}
+    return 404, {"error": "not found"}
 
 
 def classify(probe_id, status, body):
@@ -267,131 +179,39 @@ for _c in AUDIT_CODES:
     SIGNATURES[_c].add(("audit", "deny:" + _c))
 
 
-class WebDiagEnvironment:
-    """One episode of the local web diagnosis task. Use as a context manager."""
-    label = LABEL
+class WebDiagEnvironment(LoopbackSandbox):
+    """One episode of the web-diag family. Use as a context manager."""
     family = "web-diag"
-    hypotheses = HYPOTHESES
-    max_citations = 3
+    TARGET = TARGET
+    CAUSES = CAUSES
+    DESCRIPTIONS = DESCRIPTIONS
+    PROBES = PROBES
+    VARIANTS = VARIANTS
+    TABLE_LAG = TABLE_AUDIT_LAG
+    NOISE_EXEMPT = frozenset({"/help"})
+    SIGNATURES = SIGNATURES
+    STATE_FIELDS = {"user": "alice", "page": "document/42"}
+    respond = staticmethod(respond)
+    classify = staticmethod(classify)
+    true_outcome_distribution = staticmethod(true_outcome_distribution)
 
-    def __init__(self, cause="owner_policy", variant="base", seed=0, drift_to=None, timeout=5.0):
-        if cause not in CAUSES or variant not in VARIANTS:
-            raise ValueError("Unknown web fixture")
-        if VARIANTS[variant]["drift_after"] and (drift_to not in CAUSES or drift_to == cause):
-            raise ValueError("Drift variant needs a different drift_to cause")
-        self.variant = variant
-        self._drift_to = drift_to
-        self._app = _App(cause, variant, seed)
-        self._server = ThreadingHTTPServer(("127.0.0.1", 0), _handler(self._app))
-        self._server.daemon_threads = True
-        self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
-        self._thread.start()
-        self._base = f"http://127.0.0.1:{self._server.server_address[1]}"
-        self._opener = urllib.request.build_opener(_NoRedirect)
-        self._timeout = timeout
-        self._version = 0
-        self._calls = 0
-        self._counter = 0
-        self._observations = {}
-        self._catalog = {a.id: a for a in catalog()}
+    @classmethod
+    def public_task(cls):
+        return {"objective": "Diagnose why user alice cannot save document #42 in a local test application",
+                "initial_observation": "POST /documents/42/save returned an error page: 'Save failed'"}
 
-    # -- lifecycle
-    def close(self):
-        if self._server is not None:
-            self._server.shutdown()
-            self._server.server_close()
-            self._server = None
 
-    def __enter__(self):
-        return self
+def likelihood_table(probe_id, audit_lag=TABLE_AUDIT_LAG, eps=EPS):
+    return WebDiagEnvironment.likelihood_table(probe_id, audit_lag, eps)
 
-    def __exit__(self, *exc):
-        self.close()
 
-    # -- public interface
-    def catalog(self):
-        return list(self._catalog.values())
-
-    def describe(self):
-        return {
-            "objective": "Diagnose why user alice cannot save document #42 in a local test application",
-            "initial_observation": "POST /documents/42/save returned an error page: 'Save failed'",
-            "environment": LABEL,
-            "allowed_targets": [TARGET],
-            "answer_options": dict(DESCRIPTIONS),
-            "finish_rule": ("Cite 1-3 observation IDs from the current state version whose response "
-                            "directly shows the cause."),
-        }
-
-    def state(self):
-        return {"user": "alice", "page": "document/42", "version": self._version}
-
-    def _request(self, method, path):
-        if (method, path) not in ALLOWED:
-            raise ValueError("Path not in sandbox allowlist")
-        url = self._base + path
-        parsed = urllib.parse.urlsplit(url)
-        if parsed.hostname != "127.0.0.1":
-            raise ValueError("Sandbox is loopback-only")
-        req = urllib.request.Request(url, method=method, data=b"{}" if method == "POST" else None,
-                                     headers={"Content-Type": "application/json"})
-        try:
-            with self._opener.open(req, timeout=self._timeout) as resp:
-                status, raw = resp.status, resp.read(4096)
-        except urllib.error.HTTPError as err:
-            status, raw = err.code, err.read(4096)
-        except (urllib.error.URLError, TimeoutError, OSError):
-            raise RuntimeError("Sandbox request failed") from None
-        try:
-            body = json.loads(raw.decode("utf-8"))
-        except (ValueError, UnicodeDecodeError):
-            body = None
-        return status, body, raw.decode("utf-8", "replace")
-
-    def execute(self, action):
-        known = self._catalog.get(action.id)
-        if known is None or (known.target, known.purpose, known.cost) != (action.target, action.purpose, action.cost):
-            raise ValueError("Only catalogued sandbox probes are allowed")
-        probe = PROBE_BY_ID[action.id]
-        status, body, raw = self._request(probe["method"], probe["path"])
-        self._counter += 1
-        outcome = classify(action.id, status, body)
-        valid = status != 503
-        observation = Observation(
-            f"o{self._counter:04d}", action.id, self._version,
-            outcome if outcome is not None else ("transient_error" if not valid else "unclassified"),
-            {"http_status": status}, f"{probe['method']} {probe['path']} -> HTTP {status} {raw}", valid)
-        self._observations[observation.id] = observation
-        self._calls += 1
-        drift_after = VARIANTS[self.variant]["drift_after"]
-        if drift_after and self._calls == drift_after:
-            # Another user changes the document: state version advances and the fault changes.
-            with self._app.lock:
-                self._app.cause = self._drift_to
-            self._version += 1
-        return observation
-
-    def verify(self, hypothesis, evidence_ids):
-        """Independent oracle; inaccessible through the planner API."""
-        cause = self._app.cause
-        if hypothesis != cause or not evidence_ids or len(evidence_ids) > self.max_citations:
-            return False
-        cited = [self._observations.get(i) for i in evidence_ids]
-        if any(o is None for o in cited):
-            return False
-        return any(o.state_version == self._version and (o.action_id, o.outcome) in SIGNATURES[cause]
-                   for o in cited)
+def catalog(audit_lag=TABLE_AUDIT_LAG):
+    return WebDiagEnvironment.build_catalog(audit_lag)
 
 
 def web_suite(variants=("base", "drift", "noise")):
     """24 task specs (8 causes x 3 variants). Hidden causes live only in these specs."""
-    tasks = []
-    for variant in variants:
-        for i, cause in enumerate(CAUSES):
-            drift_to = CAUSES[(i + 3) % len(CAUSES)] if variant == "drift" else None
-            tasks.append({"task_id": f"web-{variant}-{i:02d}", "family": "web-diag", "variant": variant,
-                          "cause": cause, "drift_to": drift_to})
-    return tasks
+    return suite(WebDiagEnvironment, "web", variants)
 
 
 def make_web_env(task, seed):

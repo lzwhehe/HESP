@@ -86,3 +86,23 @@ H1：控制模型、工具、可见任务信息与总预算后，HESP 在结构�
 **脚本消融。** 同一个无模型策略（后验 ≥ 0.9 且有当前状态支持证据时结束），只改变选择规则：sequential / eig_cost / eig / map_greedy / random / eig_cost_llmP。工具预算扫描 {2,3,4,5,6,8,10}，每任务 5 次重复。它只回答“在给定预测模型下，选择规则本身的影响”，不涉及 LLM 行为。
 
 **已知局限（事先声明）。** 设计者预测表与靶场生成器几乎一致（KL≈0.01 bit），相当于接近 oracle 的预测模型，会高估 HESP 在真实环境中的收益；LLM 抽取的预测表用来衡量这一差距。假设集合由任务提供，尚未实现开放式假设生成与扩展。
+
+---
+
+## v0.4 预先登记（2026-09-23，写于任何 v0.4 结果产生之前）
+
+**动机（来自 v0.3 Pilot）。** ① `hesp − memory_only` 区间包含 0；② HESP 在 drift 变体上最差（用旧状态证据下结论）；③ 脚本消融中 EIG/cost 在紧预算下短视；④ HESP 的 token 反而更少（约 11k vs 17k），因此“同等计算量反思”对照不再必要，删除。
+
+**任务。** web-diag（v0.3 开发族，24 任务）+ **upload-diag（新留出族，24 任务，本次主分析）**。upload-diag 在看到任何 v0.4 结果前设计并冻结；它的最优首探针是成本 2 的 dry-run，且只有“排除法”不能通过独立验证器（必须引用直接显示原因的观察）。
+
+**模型。** Qwen2.5-7B-Instruct（bf16）、Qwen2.5-32B-Instruct-AWQ、Qwen2.5-72B-Instruct-AWQ，本地 vLLM（OpenAI 兼容接口，仅 127.0.0.1），温度 0.2，每次调用不同种子。每个模型先自行抽取两族的 `P(o|h,a)` 并冻结。
+
+**9 个 arm。** react_style、memory_only、memory_guard、hesp_eigc、hesp_eigc_guard、hesp_la、hesp_la_guard、hesp_random、hesp_llmp（定义见 `scripts/run_v04_study.py`）。状态守卫：finish 需引用当前状态版本下被账本采用且支持该假设的观察，且当前得分 ≥ 0.8；否则拒绝并作为工具反馈返回。守卫只读取账本，不接触隐藏答案。
+
+**规模。** 每个模型 9 arm × 48 任务 × 3 次重复 = 1296 回合，配对、按种子 2026 打乱。预算：10 次工具调用 / 10 成本单位 / 12 次决策。
+
+**主要终点。** upload-diag 上 `hesp_la_guard − memory_only` 的验证完成率配对差（任务聚类 bootstrap 95% 区间），每个模型分别报告。
+**次要。** 同一差值在 web-diag 上；`hesp_la_guard − react_style`；`memory_only − react_style`；守卫效应（`hesp_eigc_guard − hesp_eigc`、`memory_guard − memory_only`）；守卫下的选择效应（`hesp_la_guard − memory_guard`）；选择器效应（`hesp_la − hesp_eigc`）；排序 vs 随机（`hesp_eigc − hesp_random`）；设计表 vs 自抽取预测（`hesp_eigc − hesp_llmp`）；工具成本与 token 差；预测校准随模型规模的变化。
+**判读。** 3 个模型 × 10 个比较不做多重比较校正，因此只把主要终点作为确认性结论；其余均为探索性描述。区间不含 0 也只描述这两个手工靶场。所有失败留在分母，所有 arm 与模型全部报告。
+
+**冻结。** 运行前提交代码并记录源码哈希；运行期间不修改 `hesp/`（v0.3 中曾因运行中修改源码导致 15 个回合记录的哈希不一致，已作废重跑，此后禁止）。

@@ -79,9 +79,28 @@ def validate_decision(value, valid_hypotheses):
                 raise ValueError("Reported token counts must be nonnegative integers")
 
 
+def finish_guard_reasons(ledger, hypothesis, evidence_ids, threshold):
+    """State-guarded finish (v0.4): reasons to reject a finish claim, empty if acceptable.
+
+    Requires a current-state, used ledger entry among the citations that supports the
+    claimed hypothesis, and a current-state score of at least ``threshold``. Only the
+    ledger (shared by B and C arms) is consulted - never the hidden cause.
+    """
+    reasons = []
+    version = ledger.state["version"]
+    cited = [e for e in ledger.evidence if e["observation_id"] in set(evidence_ids)]
+    if not any(e["used"] and e["state_version"] == version and e["relations"].get(hypothesis) == "support"
+               for e in cited):
+        reasons.append("no cited evidence from the current state supports this hypothesis")
+    if ledger.scores.get(hypothesis, 0.0) < threshold:
+        reasons.append(f"current-state score {ledger.scores.get(hypothesis, 0.0):.2f} < {threshold}")
+    return reasons
+
+
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
-        metadata=None):
-    """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm."""
+        metadata=None, finish_guard=False, guard_threshold=0.8):
+    """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
+    ``finish_guard`` rejects finish claims not backed by current-state ledger evidence."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
@@ -108,6 +127,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     config = {
         "version": __version__, "mode": mode, "arm": arm or mode, "planner": planner.name,
         "selector": selector.name, "prediction_source": getattr(predictor, "source", "designer_table"),
+        "finish_guard": finish_guard, "guard_threshold": guard_threshold if finish_guard else None,
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -119,7 +139,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     history = []
     blocked = []   # tool-level feedback shared by every arm (like an error message from a tool)
     seen = set()
-    tool_calls = tool_cost = blocked_repeats = decisions = replan_signals = 0
+    tool_calls = tool_cost = blocked_repeats = decisions = replan_signals = finish_rejections = 0
     input_tokens = output_tokens = 0
     unknown_usage_calls = 0
     zero_information_streak = 0
@@ -190,6 +210,17 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         if decision["kind"] == "stop":
             status = "STOPPED_UNRESOLVED"
             break
+        if decision["kind"] == "finish" and finish_guard:
+            reasons = finish_guard_reasons(ledger, decision["hypothesis"], decision["evidence_ids"],
+                                           guard_threshold)
+            if reasons:
+                finish_rejections += 1
+                blocked.append({"action_id": "finish:" + decision["hypothesis"],
+                                "reason": "finish rejected - " + "; ".join(reasons),
+                                "state_version": ledger.state["version"]})
+                journal.write("finish_rejected", hypothesis=decision["hypothesis"],
+                              evidence_ids=decision["evidence_ids"], reasons=reasons)
+                continue
         if decision["kind"] == "finish":
             verified = environment.verify(decision["hypothesis"], decision["evidence_ids"])
             journal.write("independent_verification", passed=verified,
@@ -267,7 +298,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "status": status, "verified_simulation": verified, "tool_calls": tool_calls,
         "tool_cost_units": tool_cost, "planner_calls": decisions,
         "blocked_duplicate_proposals": blocked_repeats,
-        "replan_signals": replan_signals,
+        "replan_signals": replan_signals, "finish_rejections": finish_rejections,
         "reported_input_tokens": input_tokens if unknown_usage_calls == 0 else None,
         "reported_output_tokens": output_tokens if unknown_usage_calls == 0 else None,
         "usage_unknown_calls": unknown_usage_calls,
