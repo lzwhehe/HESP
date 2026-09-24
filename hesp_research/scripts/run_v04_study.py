@@ -81,7 +81,9 @@ def elicit(client, out, seed, families):
     record.update({"seconds": round(time.time() - start, 1), "usage": predictor.usage,
                    "calls": len(predictor.records), "records": predictor.records,
                    "uniform_fallback_rows": sum(r["uniform_fallback"] for r in predictor.records)})
-    path.write_text(json.dumps(record, indent=2, ensure_ascii=False), encoding="utf-8")
+    # LF bytes: the manifest records this file's SHA256, and git normalises line endings,
+    # so CRLF written on Windows would fail verification on any other checkout.
+    path.write_bytes((json.dumps(record, indent=2, ensure_ascii=False) + "\n").encode("utf-8"))
     return record, path
 
 
