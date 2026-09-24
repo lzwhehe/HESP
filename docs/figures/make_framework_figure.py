@@ -1,438 +1,396 @@
-"""Generate the HESP framework overview figure (stdlib only).
+"""HESP framework figure (paper mechanism figure, formal-roman preset).
 
 Output: docs/assets/hesp-framework.svg. Render to PDF/PNG with
     python docs/figures/render_figures.py docs/assets/hesp-framework.svg
 
-Numbers inside the mini-plots are illustrative and only show the *shape* of each
-quantity; they are not experimental results.
-"""
+Every number in the figure is computed here from the code, not typed in: the script
+replays one real sec-triage episode (task sec-base-00, hidden cause credential_stuffing)
+with the non-oracle table counted from 20 development episodes per (cause, variant)
+(results/v06_tables/empirical_20.json), the EIG/cost selector, and the finish guard. The
+posterior values, the t=0 ranking, the planner's overridden proposal, the executed probe
+and its outcome all come from that episode's journal.
 
+Design: 7.0 in final width on a 1536 px canvas (1 pt = 3.048 px); Times New Roman for text,
+Consolas only for code identifiers. Blue = the HESP controller (the contribution), red =
+the trust boundary the planner cannot see, neutral = the LLM planner and the inputs.
+Every text element records the box it must fit in; ``--check`` measures the rendered text
+in headless Chrome (the same renderer as the PDF/PNG) and fails on any overflow.
+"""
+import argparse
+import json
 from pathlib import Path
 import re
+import subprocess
+import sys
+import tempfile
 from xml.sax.saxutils import escape
 
-W, H = 1800, 904
-SANS = "Helvetica Neue, Helvetica, Arial, sans-serif"
-MATH = "Cambria Math, STIX Two Math, Times New Roman, serif"
-MONO = "Consolas, Menlo, monospace"
+ROOT = Path(__file__).resolve().parents[2]
+CODE = ROOT / "hesp_research"
+sys.path.insert(0, str(CODE))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hesp.controller import Budget, run                      # noqa: E402
+from hesp.planner import PosteriorPlanner                    # noqa: E402
+from hesp.predictors import FrozenPredictor                  # noqa: E402
+from hesp.secapp import HYPOTHESES, SecTriageEnvironment, make_sec_env, sec_suite   # noqa: E402
+from hesp.selectors import Selector                          # noqa: E402
+from hesp.study import cell_seed                             # noqa: E402
+from render_figures import browser                           # noqa: E402
 
-C = {
-    "ink": "#1F2937", "sub": "#6B7280", "line": "#CBD5E1",
-    "H": "#2F5D9E", "Hf": "#EEF3FB", "Ha": "#5B8BD0",
-    "E": "#0F766E", "Ef": "#E8F6F3", "Ea": "#2BB3A3",
-    "S": "#B45309", "Sf": "#FEF5E6", "Sa": "#F0A43A",
-    "P": "#5B3F99", "Pf": "#F3EFFB", "Pa": "#8C6FD6",
-    "N": "#475569", "Nf": "#F6F8FA",
-    "V": "#B42318", "Vf": "#FDEEEC",
-}
-out = []
+OUT = ROOT / "docs" / "assets" / "hesp-framework.svg"
+W, H = 1536, 752
+SERIF = "'Times New Roman', Times, serif"
+MONO = "Consolas, 'DejaVu Sans Mono', monospace"
+# ccfa_ink roles
+INK, INK2, MUTED, RULE = "#111827", "#374151", "#6B7280", "#9CA3AF"
+BLUE, BLUE_TINT, BLUE_EDGE = "#1D4ED8", "#EEF3FD", "#C9D8F7"
+RED, RED_TINT = "#BE123C", "#FDF2F4"
+GREEN = "#059669"
+# type scale at 7.0 in (pt x 3.048 px): headings 10.2 pt, labels 8.2 pt, secondary >= 7.5 pt,
+# code identifiers 7.2 pt (Consolas has a larger x-height than Times at the same size)
+H1, LABEL, CODE_PX = 31, 25, 22
+PAD = 16
+
+TASK_ID, REPEAT, SEED = "sec-base-00", 1, 2026
+TABLE = CODE / "results" / "v06_tables" / "empirical_20.json"
+
+
+# ---------------------------------------------------------------- episode replay
+def replay():
+    tables = json.loads(TABLE.read_text(encoding="utf-8"))["tables"]
+    task = next(t for t in sec_suite() if t["task_id"] == TASK_ID)
+    seed = cell_seed(SEED, TASK_ID, REPEAT)
+    with tempfile.TemporaryDirectory() as tmp:
+        with make_sec_env(task, seed) as env:
+            result = run(env, PosteriorPlanner(), "hesp", Path(tmp) / "r", Budget(10, 12, 10, 900),
+                         predictor=FrozenPredictor(tables, "empirical_20"), selector=Selector("eig_cost", seed),
+                         finish_guard=True)
+        with (Path(tmp) / "r" / "events.jsonl").open(encoding="utf-8") as stream:
+            events = [json.loads(line) for line in stream]
+    requests = [e["request"] for e in events if e["kind"] == "planner_request"]
+    decisions = [e["decision"] for e in events if e["kind"] == "planner_decision"]
+    executed = [e["action"]["id"] for e in events if e["kind"] == "prediction_registered"]
+    observations = [e["observation"] for e in events if e["kind"] == "observation"]
+    posteriors = [{h["id"]: h["score"] for h in r["investigation"]["hypotheses"]} for r in requests]
+    assert result["verified_simulation"] and result["claimed_hypothesis"] == task["cause"]
+    assert decisions[0]["kind"] == "action" and decisions[0]["action_id"] != executed[0], \
+        "the figure shows the planner's proposal being overridden; the replay no longer shows that"
+    return {"task": task, "result": result, "rank0": requests[0]["action_rankings"],
+            "proposed0": decisions[0]["action_id"], "executed": executed, "obs": observations,
+            "post": posteriors}
+
+
+# ---------------------------------------------------------------- svg helpers
+parts = []
 
 
 def add(s):
-    out.append(s)
+    parts.append(s)
 
 
-def rect(x, y, w, h, fill="none", stroke="none", sw=1.5, rx=10, dash=None, opacity=None, extra=""):
+def rect(x0, y0, x1, y1, fill="#FFFFFF", stroke=RULE, sw=1.5, rx=4, dash=None, opacity=None):
     d = f' stroke-dasharray="{dash}"' if dash else ""
-    o = f' fill-opacity="{opacity}"' if opacity is not None else ""
-    add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{fill}"{o} '
-        f'stroke="{stroke}" stroke-width="{sw}"{d} {extra}/>')
+    o = f' fill-opacity="{opacity:.3f}"' if opacity is not None else ""
+    add(f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" rx="{rx}" fill="{fill}"{o} '
+        f'stroke="{stroke}" stroke-width="{sw}"{d}/>')
 
 
-def _markup(s):
-    """Tiny TeX-like markup: a_{sub}, a^{sup}. Everything else is escaped."""
-    s = escape(s)
-    s = re.sub(r"_\{([^}]*)\}", r'<tspan baseline-shift="sub" font-size="68%">\1</tspan>', s)
-    s = re.sub(r"\^\{([^}]*)\}", r'<tspan baseline-shift="super" font-size="68%">\1</tspan>', s)
-    return s
-
-
-def text(x, y, s, size=15, weight=400, anchor="start", color=None, family=SANS, style="normal"):
+def text(x, y, content, fit, size=LABEL, weight=400, anchor="start", color=INK, family=SERIF,
+         style="normal", raw=False):
+    """``fit`` = (x0, x1) that the rendered text must stay inside (checked by --check)."""
+    body = content if raw else escape(content)
     add(f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" font-weight="{weight}" '
-        f'font-style="{style}" text-anchor="{anchor}" fill="{color or C["ink"]}">{_markup(s)}</text>')
+        f'font-style="{style}" fill="{color}" text-anchor="{anchor}" data-fit="{fit[0]},{fit[1]}">{body}</text>')
 
 
-def math(x, y, s, size=16, color=None, anchor="start"):
-    text(x, y, s, size, 400, anchor, color, MATH, "italic")
+def i(s):
+    """Italic math variable."""
+    return f'<tspan font-style="italic">{escape(s)}</tspan>'
 
 
-def line(x1, y1, x2, y2, color, sw=1.5, dash=None):
-    d = f' stroke-dasharray="{dash}"' if dash else ""
-    add(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{color}" stroke-width="{sw}"{d}/>')
+def sub(base, index, size):
+    return (f'{i(base)}<tspan baseline-shift="sub" font-size="{round(size * 0.68)}">{escape(index)}</tspan>')
 
 
-def arrow(d, key, sw=2.2, dash=None):
-    ds = f' stroke-dasharray="{dash}"' if dash else ""
-    add(f'<path d="{d}" fill="none" stroke="{C[key]}" stroke-width="{sw}" stroke-linecap="round" '
-        f'stroke-linejoin="round"{ds} marker-end="url(#arr-{key})"/>')
+def path(points, color=INK2, sw=2.0, dash=None, marker="ink"):
+    d = " ".join(f"{'M' if k == 0 else 'L'}{x},{y}" for k, (x, y) in enumerate(points))
+    dd = f' stroke-dasharray="{dash}"' if dash else ""
+    add(f'<path d="{d}" fill="none" stroke="{color}" stroke-width="{sw}"{dd} marker-end="url(#arrow-{marker})" '
+        f'stroke-linejoin="round"/>')
 
 
-def pill(x, y, label, key, size=12.5, mono=False, fill="#FFFFFF", h=24):
-    w = len(label) * (size * 0.58 if mono else size * 0.56) + 18
-    rect(x, y, w, h, fill, C[key], 1.2, h / 2)
-    text(x + w / 2, y + h / 2 + size * 0.36, label, size, 500, "middle", C[key], MONO if mono else SANS)
-    return w
+def defs():
+    add("<defs>")
+    for name, color in (("ink", INK2), ("blue", BLUE), ("red", RED), ("green", GREEN), ("muted", MUTED)):
+        add(f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" '
+            f'markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{color}"/></marker>')
+    add("</defs>")
 
 
-def pill_flow(x0, y0, labels, key, xmax, size=12, gap=6, h=22):
-    x, y = x0, y0
-    for label in labels:
-        w = len(label) * size * 0.56 + 16
-        if x + w > xmax:
-            x, y = x0, y + h + 6
-        pill(x, y, label, key, size, h=h)
-        x += w + gap
+def prob(p):
+    """Two decimals without the leading zero; values below .01 keep three."""
+    return f"{p:.3f}"[1:] if p < 0.01 else f"{p:.2f}"[1:]
 
 
-def badge(cx, cy, n, key, r=13):
-    add(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{C[key]}"/>')
-    text(cx, cy + 5, str(n), 14, 700, "middle", "#FFFFFF")
+# ---------------------------------------------------------------- figure
+def build(ep):
+    add(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">')
+    defs()
+    add(f'<rect width="{W}" height="{H}" fill="#FFFFFF"/>')
+
+    # anchors: three columns (inputs | HESP controller | trust boundary), three rows
+    A0, A1 = 48, 368                      # inputs
+    C0, C1 = 400, 1164                    # controller tint; lane C0..B0 carries the update edge
+    B0, B1 = 424, 1140                    # controller boxes
+    PI1, GD0 = 700, 860                   # planner right edge, guard left edge (gap holds typed edges)
+    POST1, SEL0 = 842, 866                # posterior | selector
+    T0, T1 = 1194, 1488                   # trust boundary
+    TB0, TB1 = 1210, 1472                 # trust boxes
+    R0, R1 = 48, 196                      # decision row
+    L0, L1 = 232, 448                     # posterior / selector row
+    P0, P1 = 472, 556                     # predictive model
+    E0, E1 = 580, 690                     # evidence ledger
+    GBOT = 726                            # bottom of both containers
+
+    # containers: the controller tint wraps the loop and reaches up around the guard
+    add(f'<path d="M{C0},{L0 - 12} L{GD0 - 12},{L0 - 12} L{GD0 - 12},36 L{C1},36 L{C1},{GBOT} '
+        f'L{C0},{GBOT} Z" fill="{BLUE_TINT}" stroke="{BLUE_EDGE}" stroke-width="1.5"/>')
+    rect(T0, 36, T1, GBOT, fill=RED_TINT, stroke=RED, sw=1.6, rx=6, dash="7 5")
+    text(C0 + 14, GBOT - 12, "HESP controller", (C0, C1), LABEL, 700, color=BLUE)
+    text(T0 + 16, GBOT - 12, "Hidden from π", (T0, T1), LABEL, color=RED, style="italic")
+
+    # ---- inputs
+    rect(A0, R0, A1, R1, stroke=INK2)
+    fa = (A0 + PAD, A1 - PAD)
+    text(A0 + PAD, R0 + 36, "Alert τ", fa, H1, 700)
+    text(A1 - PAD, R0 + 36, SecTriageEnvironment.STATE_FIELDS["case"], fa, CODE_PX, family=MONO,
+         color=MUTED, anchor="end")
+    for k, s in enumerate(("Spike in auth failures", "and 4xx/5xx errors on", "the web tier, last hour")):
+        text(A0 + PAD, R0 + 74 + k * 30, s, fa, LABEL, color=INK2)
+
+    rect(A0, L0, A1, E1, stroke=INK2)
+    add(f'<text x="{A0 + PAD}" y="{L0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" fill="{INK}" '
+        f'data-fit="{fa[0]},{fa[1]}">Hypotheses {i("H")}</text>')
+    cause = ep["task"]["cause"]
+    for k, h in enumerate(HYPOTHESES):
+        strong = h == cause
+        text(A0 + PAD, L0 + 78 + k * 36, h, fa, CODE_PX, 700 if strong else 400, family=MONO,
+             color=INK if strong else INK2)
+    text(A0 + PAD, E1 - 44, f"uniform prior 1/{len(HYPOTHESES)};", fa, LABEL - 2, color=MUTED, style="italic")
+    text(A0 + PAD, E1 - 16, "other = unknown cause", fa, LABEL - 2, color=MUTED, style="italic")
+
+    # ---- LLM planner (neutral: consulted, not the contribution)
+    rect(B0, R0, PI1, R1, stroke=INK, sw=1.8)
+    fp = (B0 + PAD, PI1 - PAD)
+    text(B0 + PAD, R0 + 36, "LLM planner π", fp, H1, 700)
+    text(B0 + PAD, R0 + 74, "Qwen2.5 7B–72B, local", fp, LABEL, color=INK2, style="italic")
+    text(B0 + PAD, R0 + 104, "one decision per step", fp, LABEL - 2, color=INK2)
+    add(f'<text x="{B0 + PAD}" y="{R0 + 134}" font-family="{MONO}" font-size="{CODE_PX}" fill="{INK2}" '
+        f'data-fit="{fp[0]},{fp[1]}">stop <tspan font-family="{SERIF}" font-size="{LABEL - 2}">→ unresolved</tspan></text>')
+
+    # ---- finish guard (part of the controller)
+    rect(GD0, R0, B1, R1, stroke=BLUE, sw=1.8)
+    fg = (GD0 + PAD, B1 - PAD)
+    text(GD0 + PAD, R0 + 36, "Finish guard", fg, H1, 700, color=BLUE)
+    text(GD0 + PAD, R0 + 72, "cites current-state", fg, LABEL, color=INK2)
+    text(GD0 + PAD, R0 + 100, "evidence for ĥ and", fg, LABEL, color=INK2)
+    add(f'<text x="{GD0 + PAD}" y="{R0 + 130}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
+        f'data-fit="{fg[0]},{fg[1]}">{sub("p", "t", LABEL)}({i("ĥ")}) ≥ 0.8</text>')
+
+    # ---- verifier (inside the trust boundary)
+    rect(TB0, R0, TB1, R1, stroke=RED, sw=1.8)
+    fv = (TB0 + PAD, TB1 - PAD)
+    add(f'<text x="{TB0 + PAD}" y="{R0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
+        f'fill="{RED}" data-fit="{fv[0]},{fv[1]}">Verifier {i("V")}</text>')
+    add(f'<text x="{TB0 + PAD}" y="{R0 + 72}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
+        f'data-fit="{fv[0]},{fv[1]}">pass iff {i("ĥ")} = {i("h")}* and</text>')
+    add(f'<text x="{TB0 + PAD}" y="{R0 + 100}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
+        f'data-fit="{fv[0]},{fv[1]}">{i("E")} has {i("h")}*’s signature</text>')
+    add(f'<path d="M{TB0 + PAD},{R0 + 122} l7,8 l14,-17" fill="none" stroke="{GREEN}" stroke-width="3" '
+        f'stroke-linecap="round" stroke-linejoin="round"/>')
+    text(TB0 + PAD + 30, R0 + 132, "verified", fv, LABEL, 700, color=GREEN)
+
+    # ---- posterior (values from the replayed episode)
+    rect(B0, L0, POST1, L1, stroke=BLUE)
+    fq = (B0 + PAD, POST1 - PAD)
+    add(f'<text x="{B0 + PAD}" y="{L0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
+        f'fill="{BLUE}" data-fit="{fq[0]},{fq[1]}">Posterior {sub("p", "t", H1)}({i("h")})</text>')
+    post = ep["post"]
+    others = [h for h in HYPOTHESES if h not in (cause, "other")]
+    rows = [(cause, [p[cause] for p in post], True),
+            ("other", [p["other"] for p in post], False),
+            (f"{len(others)} other causes, max", [max(p[h] for h in others) for p in post], False)]
+    cw = 50
+    cx0 = POST1 - PAD - cw * len(post)
+    text(cx0 - 10, L0 + 76, "t =", (cx0 - 60, cx0 - 4), LABEL - 2, anchor="end", color=MUTED, style="italic")
+    for j in range(len(post)):
+        text(cx0 + j * cw + cw / 2, L0 + 76, str(j), (cx0 + j * cw, cx0 + (j + 1) * cw), LABEL - 2,
+             anchor="middle", color=MUTED)
+    for k, (name, vals, strong) in enumerate(rows):
+        y = L0 + 114 + k * 38
+        code = not name[0].isdigit()
+        text(B0 + PAD, y, name, (B0 + PAD, cx0 - 6), CODE_PX if code else LABEL - 2, 700 if strong else 400,
+             family=MONO if code else SERIF, color=INK if strong else INK2, style="normal" if code else "italic")
+        for j, v in enumerate(vals):
+            x = cx0 + j * cw
+            rect(x + 3, y - 23, x + cw - 3, y + 8, fill=BLUE, stroke="none", sw=0, rx=3, opacity=0.08 + 0.82 * v)
+            text(x + cw / 2, y, prob(v), (x, x + cw), LABEL - 2, 700 if strong and j == len(vals) - 1 else 400,
+                 anchor="middle", color="#FFFFFF" if v > 0.55 else INK)
+
+    # ---- EIG / cost selector (ranking at t = 0, values from the replayed episode)
+    rect(SEL0, L0, B1, L1, stroke=BLUE)
+    fs = (SEL0 + PAD, B1 - PAD)
+    text(SEL0 + PAD, L0 + 36, "Probe selector", fs, H1, 700, color=BLUE)
+    add(f'<text x="{SEL0 + PAD}" y="{L0 + 70}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{INK2}" '
+        f'data-fit="{fs[0]},{B1 - 80}">argmax EIG/{i("c")}</text>')
+    text(B1 - PAD, L0 + 70, "t = 0", (B1 - 60, B1 - PAD), LABEL - 2, anchor="end", color=MUTED, style="italic")
+    ranking = ep["rank0"]
+    shown = ranking[:3]
+    if ep["proposed0"] not in [r["action_id"] for r in shown]:
+        shown.append(next(r for r in ranking if r["action_id"] == ep["proposed0"]))
+    for k, r in enumerate(shown):
+        y = L0 + 102 + k * 32
+        ran = r["action_id"] == ep["executed"][0]
+        proposed = r["action_id"] == ep["proposed0"]
+        if ran:
+            rect(SEL0 + 8, y - 23, B1 - 8, y + 8, fill=BLUE, stroke="none", sw=0, rx=3, opacity=0.14)
+        if proposed:
+            rect(SEL0 + 8, y - 23, B1 - 8, y + 8, fill="none", stroke=MUTED, sw=1.3, rx=3, dash="4 3")
+        text(SEL0 + PAD, y, r["action_id"], (SEL0 + PAD, B1 - 84), CODE_PX, 700 if ran else 400, family=MONO,
+             color=BLUE if ran else INK2)
+        text(B1 - 40, y, f"{r['score']:.2f}", (B1 - 84, B1 - 38), LABEL - 2, 700 if ran else 400, anchor="end",
+             color=BLUE if ran else INK2)
+        if ran:
+            run_y = y - 8
+        if proposed:
+            text(B1 - 22, y, "π", (B1 - 38, B1 - 8), LABEL - 2, anchor="middle", color=MUTED, style="italic")
+
+    # ---- predictive model, shared by the selector and the ledger
+    rect(B0, P0, B1, P1, stroke=BLUE)
+    fm = (B0 + PAD, B1 - PAD)
+    add(f'<text x="{B0 + PAD}" y="{P0 + 34}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
+        f'fill="{BLUE}" data-fit="{fm[0]},{fm[1]}">Predictive model {i("P")}({i("o")} | {i("h")}, {i("a")})</text>')
+    x = B0 + PAD
+    for label, used in (("designer (oracle)", False), ("counted, k dev episodes", True), ("LLM-elicited", False)):
+        w = len(label) * 10.6 + 26
+        rect(x, P0 + 48, x + w, P0 + 76, stroke=BLUE if used else RULE, sw=1.8 if used else 1.2, rx=14)
+        text(x + w / 2, P0 + 69, label, (x, x + w), LABEL - 3, 700 if used else 400, anchor="middle",
+             color=BLUE if used else INK2)
+        x += w + 12
+
+    # ---- evidence ledger
+    rect(B0, E0, B1, E1, stroke=BLUE)
+    fe = (B0 + PAD, B1 - PAD)
+    text(B0 + PAD, E0 + 36, "Evidence ledger", fe, H1, 700, color=BLUE)
+    add(f'<text x="{B0 + 262}" y="{E0 + 36}" font-family="{SERIF}" font-size="{LABEL + 1}" fill="{INK}" '
+        f'data-fit="{B0 + 262},{fe[1]}">{sub("p", "t+1", LABEL + 1)}({i("h")}) ∝ {sub("p", "t", LABEL + 1)}'
+        f'({i("h")}) · {i("P")}({sub("o", "t", LABEL + 1)} | {i("h")}, {sub("a", "t", LABEL + 1)})</text>')
+    text(B0 + PAD, E0 + 72, "skips duplicate, stale-state and transient observations;", fe, LABEL - 2, color=INK2)
+    add(f'<text x="{B0 + PAD}" y="{E0 + 98}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{MUTED}" '
+        f'font-style="italic" data-fit="{fe[0]},{fe[1]}">a change of state version {sub("s", "t", LABEL - 2)} '
+        f'resets current scores, keeps history</text>')
+
+    # ---- sandbox (inside the trust boundary)
+    rect(TB0, L0, TB1, E1, stroke=RED)
+    text(TB0 + PAD, L0 + 36, "Loopback app", fv, H1, 700, color=RED)
+    text(TB0 + PAD, L0 + 70, "127.0.0.1, read-only", fv, LABEL - 2, color=MUTED, style="italic")
+    first = ep["obs"][0]
+    probe = SecTriageEnvironment.probe_by_id()[first["action_id"]]
+    route = probe["path"].split("?")
+    text(TB0 + PAD, L0 + 116, f"{probe['method']} {route[0]}", fv, CODE_PX, family=MONO)
+    if len(route) > 1:
+        text(TB0 + PAD, L0 + 144, f"    ?{route[1]}", fv, CODE_PX, family=MONO, color=INK2)
+    text(TB0 + PAD, L0 + 186, "→ outcome class", fv, LABEL - 2, color=MUTED, style="italic")
+    text(TB0 + PAD, L0 + 216, first["outcome"], fv, CODE_PX, 700, family=MONO)
+    costs = sorted({p["cost"] for p in SecTriageEnvironment.PROBES})
+    text(TB0 + PAD, L0 + 272, f"{len(SecTriageEnvironment.PROBES)} probes, cost {costs[0]}–{costs[-1]}", fv,
+         LABEL - 2, color=INK2)
+    text(TB0 + PAD, L0 + 302, "reset per episode", fv, LABEL - 2, color=INK2)
+    add(f'<text x="{TB0 + PAD}" y="{L0 + 332}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{INK2}" '
+        f'data-fit="{fv[0]},{fv[1]}">versioned state {sub("s", "t", LABEL - 2)}</text>')
+    add(f'<text x="{TB0 + PAD}" y="{L0 + 380}" font-family="{SERIF}" font-size="{LABEL}" fill="{RED}" '
+        f'data-fit="{fv[0]},{fv[1]}">hidden cause {i("h")}*</text>')
+
+    # ---- typed connections
+    gap = (PI1 + 4, GD0 - 4)
+    path([(A1, 110), (B0, 110)])                                                    # alert -> planner
+    path([(A1, 300), (B0, 300)], color=BLUE, marker="blue")                         # H -> posterior
+    path([(500, L0), (500, R1)])                                                    # state -> planner
+    text(512, R1 + 26, "ledger, rankings", (506, 682), LABEL - 1, color=MUTED, style="italic")
+    path([(PI1, 96), (GD0, 96)], sw=2.2)                                            # finish -> guard
+    text((PI1 + GD0) / 2, 84, "finish(ĥ, E)", gap, CODE_PX, anchor="middle", family=MONO)
+    path([(GD0, 124), (PI1, 124)], color=MUTED, dash="5 4", marker="muted")         # rejection reason
+    text((PI1 + GD0) / 2, 150, "rejection", gap, LABEL - 1, anchor="middle", color=MUTED, style="italic")
+    path([(690, R1), (690, 208), (906, 208), (906, L0)], color=MUTED, dash="5 4", marker="muted")   # advisory
+    text(PI1 + 8, 200, "action a", (PI1 + 4, GD0 - 4), CODE_PX, family=MONO, color=MUTED)
+    path([(B1, 96), (TB0, 96)], color=GREEN, sw=2.4, marker="green")                # guard -> verifier
+    path([(POST1, 340), (SEL0, 340)], color=BLUE, sw=2.6, marker="blue")            # posterior -> selector
+    path([(B1 - 8, run_y), (TB0, run_y)], color=BLUE, sw=2.6, marker="blue")       # a_t leaves the executed row
+    add(f'<text x="{(B1 + TB0) / 2}" y="{run_y - 10}" font-family="{SERIF}" font-size="{LABEL}" fill="{BLUE}" '
+        f'text-anchor="middle" data-fit="{B1},{TB0}">{sub("a", "t", LABEL)}</text>')
+    path([(TB0, 640), (B1, 640)], color=BLUE, sw=2.6, marker="blue")                # o_t -> ledger
+    add(f'<text x="{(B1 + TB0) / 2}" y="630" font-family="{SERIF}" font-size="{LABEL}" fill="{BLUE}" '
+        f'text-anchor="middle" data-fit="{B1},{TB0}">{sub("o", "t", LABEL)}</text>')
+    path([(B0, 660), (412, 660), (412, 420), (B0, 420)], color=BLUE, sw=2.6, marker="blue")   # ledger -> posterior
+    path([(1000, P0), (1000, L1)], color=BLUE, sw=1.6, marker="blue")               # P -> selector
+    path([(1000, P1), (1000, E0)], color=BLUE, sw=1.6, marker="blue")               # P -> ledger
+    mid = (TB0 + TB1) / 2
+    path([(mid, L0), (mid, R1)], color=RED, sw=1.6, dash="3 3", marker="red")       # h* -> verifier
+    add(f'<text x="{mid + 10}" y="{R1 + 26}" font-family="{SERIF}" font-size="{LABEL - 1}" fill="{RED}" '
+        f'data-fit="{mid},{TB1}">{i("h")}*</text>')
+    add("</svg>")
 
 
-def module(x, y, w, h, key, n, title, note=None):
-    rect(x, y, w, h, C[key + "f"], C[key], 1.6, 12)
-    badge(x + 22, y + 24, n, key)
-    text(x + 42, y + 30, title, 17, 700, color=C[key])
-    if note:
-        text(x + w - 14, y + 29, note, 12.5, 400, "end", C["sub"], style="italic")
+# ---------------------------------------------------------------- render QA
+CHECK_JS = """
+<script>
+const bad = [];
+document.querySelectorAll('text[data-fit]').forEach(t => {
+  const [a, z] = t.dataset.fit.split(',').map(Number);
+  const b = t.getBBox();
+  if (b.x < a - 4 || b.x + b.width > z + 4)
+    bad.push(t.textContent.trim() + ' | ' + b.x.toFixed(1) + '..' + (b.x + b.width).toFixed(1) + ' not in ' + a + '..' + z);
+});
+document.body.setAttribute('data-overflow', JSON.stringify(bad));
+</script>"""
 
 
-# ---------------------------------------------------------------- icons
-def icon_lock(x, y, color):
-    add(f'<g transform="translate({x},{y})"><path d="M-7 -2 v-5 a7 7 0 0 1 14 0 v5" fill="none" '
-        f'stroke="{color}" stroke-width="2.2"/><rect x="-10" y="-2" width="20" height="15" rx="3" '
-        f'fill="{color}"/><circle cx="0" cy="5" r="2.3" fill="#FFFFFF"/></g>')
+def check_fit(svg_path):
+    """Measure every rendered text element in headless Chrome; return the overflowing ones."""
+    svg = Path(svg_path).read_text(encoding="utf-8")
+    with tempfile.TemporaryDirectory() as tmp:
+        page = Path(tmp) / "check.html"
+        page.write_text(f"<!doctype html><html><head><meta charset='utf-8'></head><body>{svg}{CHECK_JS}</body></html>",
+                        encoding="utf-8")
+        dom = subprocess.run([browser(), "--headless=new", "--disable-gpu", "--no-sandbox",
+                              f"--user-data-dir={Path(tmp) / 'profile'}", "--virtual-time-budget=3000",
+                              "--dump-dom", page.as_uri()], capture_output=True, timeout=120).stdout
+    match = re.search(rb'data-overflow="([^"]*)"', dom)
+    if not match:
+        raise SystemExit("render check failed: Chrome returned no measurement")
+    return json.loads(match.group(1).decode("utf-8").replace("&quot;", '"').replace("&amp;", "&"))
 
 
-def icon_doc(x, y, color):
-    add(f'<g transform="translate({x},{y})"><path d="M0 0 h14 l6 6 v20 h-20 z" fill="#FFFFFF" '
-        f'stroke="{color}" stroke-width="1.8"/><path d="M14 0 v6 h6" fill="none" stroke="{color}" '
-        f'stroke-width="1.8"/><path d="M4 12 h12 M4 16 h12 M4 20 h8" stroke="{color}" stroke-width="1.4"/></g>')
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--check", action="store_true", help="fail if any text overflows its box")
+    args = parser.parse_args()
+    sys.stdout.reconfigure(encoding="utf-8")
+    ep = replay()
+    build(ep)
+    OUT.write_bytes(("\n".join(parts) + "\n").encode("utf-8"))
+    print(OUT)
+    print("replayed:", TASK_ID, "->", ep["result"]["claimed_hypothesis"],
+          "| t=0 proposed", ep["proposed0"], "executed", ep["executed"][0],
+          "| posterior of cause", [round(p[ep["task"]["cause"]], 3) for p in ep["post"]])
+    if args.check:
+        bad = check_fit(OUT)
+        for b in bad:
+            print("OVERFLOW:", b)
+        print(f"text fit: {len(bad)} overflow(s)")
+        if bad:
+            raise SystemExit(1)
 
 
-def icon_server(x, y, color):
-    add(f'<g transform="translate({x},{y})">' + "".join(
-        f'<rect x="0" y="{i * 9}" width="24" height="7" rx="2" fill="#FFFFFF" stroke="{color}" stroke-width="1.6"/>'
-        f'<circle cx="19" cy="{i * 9 + 3.5}" r="1.5" fill="{color}"/>' for i in range(3)) + '</g>')
-
-
-def icon_llm(x, y, color):
-    add(f'<g transform="translate({x},{y})"><path d="M0 4 a4 4 0 0 1 4 -4 h22 a4 4 0 0 1 4 4 v13 '
-        f'a4 4 0 0 1 -4 4 h-14 l-6 6 v-6 h-2 a4 4 0 0 1 -4 -4 z" fill="#FFFFFF" stroke="{color}" '
-        f'stroke-width="1.8"/><path d="M15 4.5 l1.8 4.2 4.2 1.8 -4.2 1.8 -1.8 4.2 -1.8 -4.2 -4.2 -1.8 '
-        f'4.2 -1.8z" fill="{color}"/></g>')
-
-
-def icon_journal(x, y, color):
-    add(f'<g transform="translate({x},{y})"><rect x="0" y="0" width="20" height="25" rx="2" fill="#FFFFFF" '
-        f'stroke="{color}" stroke-width="1.8"/><path d="M4 7 h12 M4 12 h12 M4 17 h7" stroke="{color}" '
-        f'stroke-width="1.4"/><circle cx="18" cy="21" r="6" fill="{color}"/><path d="M15.2 21 l2 2 '
-        f'3.6 -3.8" stroke="#FFF" stroke-width="1.6" fill="none"/></g>')
-
-
-def icon_bolt(x, y, color, s=1.0):
-    add(f'<path transform="translate({x},{y}) scale({s})" d="M8 0 L0 13 H6 L4 24 L13 9 H7 L9 0 Z" fill="{color}"/>')
-
-
-def icon_shield(x, y, color):
-    add(f'<g transform="translate({x},{y})"><path d="M11 0 L22 4 V11 C22 18 17 23 11 26 C5 23 0 18 '
-        f'0 11 V4 Z" fill="#FFFFFF" stroke="{color}" stroke-width="1.8"/><path d="M6 13 l3.5 3.5 7 -7" '
-        f'stroke="{color}" stroke-width="2" fill="none"/></g>')
-
-
-# ---------------------------------------------------------------- canvas
-add(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" '
-    f'aria-labelledby="t d">')
-add('<title id="t">HESP framework overview</title>')
-add('<desc id="d">(a) The HESP decision loop: hypotheses, pre-registered predictions, diagnostic '
-    'selection, execution, evidence ledger and state monitor around an LLM planner. (b) The authorized '
-    'local sandbox with a hidden independent verifier. (c) Controlled three-arm evaluation and audit.</desc>')
-add('<defs>')
-for k in ("ink", "H", "E", "S", "P", "N", "V", "sub"):
-    add(f'<marker id="arr-{k}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" '
-        f'orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="{C[k]}"/></marker>')
-add('<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
-    f'<line x1="0" y1="0" x2="0" y2="7" stroke="{C["V"]}" stroke-opacity=".10" stroke-width="3"/></pattern>')
-add('<filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" '
-    'stdDeviation="2.2" flood-color="#0f172a" flood-opacity=".12"/></filter>')
-add('</defs>')
-rect(0, 0, W, H, "#FFFFFF", "none", 0, 0)
-
-PY, PH = 18, 868
-LOOP_X, LOOP_W = 16, 952
-ENV_X, ENV_W = 984, 372
-EVAL_X, EVAL_W = 1372, 412
-for x, w, tag, name in ((LOOP_X, LOOP_W, "(a)", "HESP Decision Loop"),
-                        (ENV_X, ENV_W, "(b)", "Authorized Sandbox"),
-                        (EVAL_X, EVAL_W, "(c)", "Controlled Evaluation & Audit")):
-    rect(x, PY, w, PH, "#FBFCFD", "#D5DBE3", 1.3, 16)
-    text(x + 20, PY + 34, f"{tag}  {name}", 19, 700)
-
-# ====================================================================== (a)
-MW, GAP = 288, 24
-X1, X2, X3 = 36, 36 + MW + GAP, 36 + 2 * (MW + GAP)
-R1Y, R1H = 70, 238
-R2Y, R2H = 552, 196
-HUB_W, HUB_H = 428, 128
-HUB_X, HUB_Y = 492 - HUB_W // 2, 372
-LEFT_SPINE = (HUB_X + X1 + MW) // 2          # overlap of module 1/6 and hub
-RIGHT_SPINE = (X3 + HUB_X + HUB_W) // 2      # overlap of module 3/4 and hub
-
-# -- (1) hypotheses
-module(X1, R1Y, MW, R1H, "H", 1, "Hypotheses", "task-supplied (v0.3)")
-text(X1 + 16, R1Y + 60, "competing local causes of one symptom", 12.5, 400, color=C["sub"], style="italic")
-hyps = [("session expired", .08), ("owner policy", .46), ("workflow lock", .24),
-        ("quota exceeded", .14), ("other / unknown", .08)]
-for i, (name, p) in enumerate(hyps):
-    yy = R1Y + 78 + i * 28
-    top = i == 1
-    text(X1 + 16, yy + 13, name, 13, 700 if top else 500)
-    rect(X1 + 130, yy, 110, 17, "#FFFFFF", C["line"], 1, 3)
-    rect(X1 + 130, yy, 110 * p / .5, 17, C["H"] if top else C["Ha"], "none", 0, 3, opacity=1 if top else .5)
-    text(X1 + 246, yy + 13, f"{p:.2f}", 12, 500, color=C["sub"], family=MONO)
-math(X1 + 130, R1Y + 226, "posterior  p_{t}(h)", 14, C["H"])
-
-# -- (2) predictions
-module(X2, R1Y, MW, R1H, "P", 2, "Pre-registered Predictions")
-math(X2 + 16, R1Y + 60, "P(o | h, a),   a = GET /workflow/42", 14, C["P"])
-outs = ["200", "403", "423", "401"]
-mat = [[.80, .05, .05, .10], [.10, .80, .05, .05], [.05, .05, .85, .05],
-       [.85, .05, .05, .05], [.40, .20, .20, .20]]
-short = ["session", "owner", "workflow", "quota", "other"]
-hx, hy, cw, ch = X2 + 104, R1Y + 90, 40, 24
-for j, o in enumerate(outs):
-    text(hx + j * cw + cw / 2, hy - 7, o, 12, 600, "middle", C["sub"], MONO)
-for i, row in enumerate(mat):
-    text(hx - 10, hy + i * ch + 17, short[i], 12.5, 500, "end")
-    for j, v in enumerate(row):
-        add(f'<rect x="{hx + j * cw + 1}" y="{hy + i * ch + 1}" width="{cw - 2}" height="{ch - 2}" rx="3" '
-            f'fill="{C["P"]}" fill-opacity="{0.06 + 0.9 * v:.2f}"/>')
-        text(hx + j * cw + cw / 2, hy + i * ch + 16.5, f"{v:.2f}".lstrip("0"), 11, 500, "middle",
-             "#FFFFFF" if v > .5 else C["ink"], MONO)
-text(X2 + 16, R1Y + 226, "logged before execution · source:", 12, 400, color=C["sub"], style="italic")
-text(X2 + MW - 14, R1Y + 226, "LLM | table", 12, 700, "end", C["P"], MONO)
-
-# -- (3) selector
-module(X3, R1Y, MW, R1H, "P", 3, "Diagnostic Selector")
-math(X3 + 16, R1Y + 60, "legal probes ranked by  EIG(a) / c(a)", 14, C["P"])
-rank = [("/workflow/42", 1.00, 1, "sel"), ("/documents/42", .71, 1, ""), ("/audit", .55, 3, ""),
-        ("/whoami", .38, 1, ""), ("/quota", 0, 1, "dup"), ("/help", 0.02, 1, "")]
-for i, (name, v, cost, flag) in enumerate(rank):
-    yy = R1Y + 76 + i * 23
-    text(X3 + 16, yy + 13, name, 12.5, 700 if flag == "sel" else 400,
-         C["sub"] if flag == "dup" else C["ink"], MONO)
-    if flag == "dup":
-        line(X3 + 16, yy + 8.5, X3 + 16 + len(name) * 7.2, yy + 8.5, C["V"], 1.4)
-        text(X3 + 128, yy + 13, "duplicate · blocked", 12, 600, color=C["V"])
-        continue
-    bw = 96 * v + 3
-    rect(X3 + 128, yy + 2, bw, 14, C["P"] if flag == "sel" else C["Pa"], "none", 0, 3,
-         opacity=1 if flag == "sel" else .45)
-    text(X3 + 134 + bw, yy + 13.5, f"c={cost}", 11.5, 500, color=C["sub"], family=MONO)
-text(X3 + 16, R1Y + 226, "filters: scope · prerequisites · dedup · budget", 12, 400, color=C["sub"], style="italic")
-
-# -- hub: LLM planner
-rect(HUB_X, HUB_Y, HUB_W, HUB_H, "#FFFFFF", C["ink"], 2, 16, extra='filter="url(#sh)"')
-icon_llm(HUB_X + 18, HUB_Y + 16, C["ink"])
-text(HUB_X + 58, HUB_Y + 35, "LLM Planner  π", 18, 700)
-text(HUB_X + HUB_W - 16, HUB_Y + 34, "Qwen2.5-7B · local", 12, 500, "end", C["sub"], style="italic")
-text(HUB_X + 18, HUB_Y + 66, "reads the investigation state; returns one JSON decision", 13, 400, color=C["sub"])
-px = HUB_X + 18
-for label, key in (("action a", "P"), ("finish(ĥ, E)", "E"), ("stop", "N")):
-    px += pill(px, HUB_Y + 82, label, key, 13, mono=True) + 10
-text(HUB_X + HUB_W - 16, HUB_Y + 99, "usage logged", 12, 500, "end", C["sub"], style="italic")
-
-# -- (6) state monitor, (5) ledger, (4) execute   [bottom row, right-to-left flow]
-module(X1, R2Y, MW, R2H, "S", 6, "State Monitor")
-icon_bolt(X1 + 18, R2Y + 44, C["Sa"])
-math(X1 + 40, R2Y + 62, "v_{t} ≠ v_{t−1}", 17, C["S"])
-text(X1 + 118, R2Y + 61, "login · role switch · edit", 12.5, 500, color=C["S"])
-tx0, ty0 = X1 + 24, R2Y + 84
-line(tx0, ty0 + 10, tx0 + 240, ty0 + 10, C["S"], 1.6)
-for i, (xx, lab) in enumerate(((0, "v=1"), (80, "v=1"), (160, "v=2"), (236, "v=2"))):
-    add(f'<circle cx="{tx0 + xx}" cy="{ty0 + 10}" r="5" fill="{"#FFFFFF" if i < 2 else C["S"]}" '
-        f'stroke="{C["S"]}" stroke-width="1.6"/>')
-    text(tx0 + xx, ty0 + 32, lab, 11, 500, "middle", C["sub"], MONO)
-icon_bolt(tx0 + 114, ty0 - 2, C["Sa"], .9)
-text(X1 + 16, R2Y + 150, "reset current scores, keep history,", 12.5, 400)
-text(X1 + 16, R2Y + 168, "emit a replan signal to π", 12.5, 400)
-text(X1 + 16, R2Y + 186, "old-state evidence cannot be cited", 12.5, 400, color=C["sub"], style="italic")
-
-module(X2, R2Y, MW, R2H, "E", 5, "Evidence Ledger")
-math(X2 + 16, R2Y + 64, "p_{t+1}(h) ∝ p_{t}(h) · P(o_{t} | h, a_{t})", 17, C["E"])
-text(X2 + 16, R2Y + 92, "update skipped, uncertainty kept, if:", 12.5, 500)
-pill_flow(X2 + 16, R2Y + 102, ["duplicate", "stale state", "invalid", "unmodeled o", "model conflict"],
-          "E", X2 + MW - 10, 11.5)
-text(X2 + 16, R2Y + 184, "each entry: before · after · provenance", 12, 400, color=C["sub"], style="italic")
-
-module(X3, R2Y, MW, R2H, "N", 4, "Register → Execute")
-icon_journal(X3 + 16, R2Y + 46, C["N"])
-text(X3 + 46, R2Y + 58, "prediction_registered", 12.5, 700, color=C["N"], family=MONO)
-text(X3 + 46, R2Y + 76, "durable before the tool call", 12.5, 400, color=C["sub"])
-rect(X3 + 16, R2Y + 92, MW - 32, 88, "#FFFFFF", C["line"], 1, 8)
-math(X3 + 28, R2Y + 116, "o_{t}", 15)
-text(X3 + 48, R2Y + 115, "= 423 {\"state\":\"locked\"}", 12.5, 400, family=MONO)
-text(X3 + 28, R2Y + 140, "raw response + provenance", 12.5, 400, color=C["sub"])
-text(X3 + 28, R2Y + 162, "→ outcome class o ∈ 𝒪(a)", 12.5, 400, color=C["sub"])
-
-# -- loop arrows (no crossings)
-arrow(f"M{X1 + MW} {R1Y + 120} H{X2 - 4}", "H")                         # 1 -> 2
-arrow(f"M{X2 + MW} {R1Y + 120} H{X3 - 4}", "P")                         # 2 -> 3
-arrow(f"M{RIGHT_SPINE} {R1Y + R1H} V{HUB_Y - 4}", "P")                  # 3 -> hub
-text(RIGHT_SPINE + 10, R1Y + R1H + 36, "rankings", 12.5, 700, color=C["P"])
-text(RIGHT_SPINE + 10, R1Y + R1H + 52, "(HESP arm only)", 12, 500, color=C["P"], style="italic")
-arrow(f"M{RIGHT_SPINE} {HUB_Y + HUB_H} V{R2Y - 4}", "N")                # hub -> 4
-text(RIGHT_SPINE + 10, HUB_Y + HUB_H + 30, "chosen a", 12.5, 700, color=C["N"], family=MONO)
-arrow(f"M{X3} {R2Y + 110} H{X2 + MW + 4}", "E")                         # 4 -> 5
-arrow(f"M{X2} {R2Y + 110} H{X1 + MW + 4}", "S")                         # 5 -> 6
-arrow(f"M{LEFT_SPINE} {R2Y} V{HUB_Y + HUB_H + 4}", "S")                 # 6 -> hub
-text(LEFT_SPINE - 10, HUB_Y + HUB_H + 26, "investigation state", 12.5, 700, "end", C["S"])
-math(LEFT_SPINE - 10, HUB_Y + HUB_H + 44, "(H, E, s_{t})", 14, C["S"], "end")
-arrow(f"M{LEFT_SPINE} {HUB_Y} V{R1Y + R1H + 4}", "H")                   # hub -> 1
-text(LEFT_SPINE - 10, R1Y + R1H + 36, "replan signal", 12.5, 700, "end", C["H"])
-text(LEFT_SPINE - 10, R1Y + R1H + 52, "H expansion: future work", 12, 500, "end", C["H"], style="italic")
-
-# -- equation + legend strip
-EQ_Y = 770
-rect(X1, EQ_Y, X3 + MW - X1, 44, "#FFFFFF", "#D5DBE3", 1.1, 10)
-math(X1 + 28, EQ_Y + 29, "EIG(a) = H[p_{t}] − 𝔼_{o | a} H[p_{t}(· | o, a)]", 18)
-math(X3 + MW - 28, EQ_Y + 29, "a* = argmax_{a ∈ 𝒜(s_t) ∖ seen}  EIG(a) / c(a)", 18, anchor="end")
-LG_Y = 842
-text(X1 + 4, LG_Y, "Colours:", 12.5, 700, color=C["sub"])
-lx = X1 + 70
-for label, key in (("Hypotheses", "H"), ("Planning", "P"), ("Evidence", "E"), ("State", "S"),
-                   ("Execution", "N"), ("Hidden oracle", "V")):
-    rect(lx, LG_Y - 11, 14, 14, C[key + "f"], C[key], 1.5, 3)
-    text(lx + 20, LG_Y, label, 12.5, 500, color=C["sub"])
-    lx += len(label) * 7 + 44
-text(X3 + MW, LG_Y, "mini-plot values are illustrative", 12, 400, "end", C["sub"], style="italic")
-
-# ====================================================================== (b)
-ex, ew = ENV_X + 20, ENV_W - 40
-# public task
-rect(ex, 70, ew, 104, "#FFFFFF", C["N"], 1.4, 12, extra='filter="url(#sh)"')
-icon_doc(ex + 16, 84, C["N"])
-text(ex + 48, 100, "Public task  τ", 16, 700, color=C["N"])
-text(ex + 48, 120, "“Saving document #42 fails.”", 13.5, 400, style="italic")
-text(ex + 16, 148, "Diagnose the cause; cite observations.", 13, 400, color=C["sub"])
-text(ex + 16, 165, "No answer or write-up reaches π.", 13, 400, color=C["sub"])
-
-# business state
-rect(ex, 188, ew, 96, C["Sf"], C["S"], 1.4, 12)
-text(ex + 16, 212, "Business state  s_{t}", 16, 700, color=C["S"])
-px = ex + 16
-for label in ("role=editor", "page=doc", "v=2"):
-    px += pill(px, 226, label, "S", 12, mono=True) + 8
-text(ex + 16, 274, "versioned; advances on login / role / edits", 12.5, 400, color=C["sub"], style="italic")
-
-# hidden oracle region, aligned with the planner hub
-VY = HUB_Y - 22
-rect(ex - 6, VY, ew + 12, 170, "url(#hatch)", C["V"], 1.4, 14, dash="7 5")
-text(ex + ew, VY - 8, "hidden from π", 12, 700, "end", C["V"])
-rect(ex + 10, VY + 16, ew - 20, 138, "#FFFFFF", C["V"], 1.4, 12, extra='filter="url(#sh)"')
-icon_lock(ex + 36, VY + 46, C["V"])
-text(ex + 58, VY + 48, "Hidden cause  h*", 16, 700, color=C["V"])
-text(ex + 58, VY + 72, "Independent verifier  V(ĥ, E)", 15, 600, color=C["V"])
-text(ex + 26, VY + 104, "passes iff ĥ = h* and a cited", 13, 400)
-text(ex + 26, VY + 122, "observation from the current state", 13, 400)
-text(ex + 26, VY + 140, "carries the cause's signature", 13, 400)
-
-# local web app, aligned with (4)
-WY = 560
-rect(ex, WY, ew, 196, "#FFFFFF", C["N"], 1.4, 12, extra='filter="url(#sh)"')
-icon_server(ex + 16, WY + 14, C["N"])
-text(ex + 50, WY + 31, "Local web app", 16, 700, color=C["N"])
-text(ex + ew - 14, WY + 31, "127.0.0.1", 12, 500, "end", C["sub"], MONO)
-eps = ["GET  /whoami", "GET  /documents/42", "POST /documents/42/save", "GET  /workflow/42",
-       "GET  /audit?doc=42", "POST /login"]
-for i, e in enumerate(eps):
-    yy = WY + 58 + i * 21
-    rect(ex + 14, yy - 15, ew - 28, 20, "#F4F6F9" if i % 2 == 0 else "#FFFFFF", "none", 0, 4)
-    text(ex + 22, yy, e, 12.5, 400, family=MONO)
-text(ex + 16, WY + 186, "fresh instance per episode · reset", 12, 400, color=C["sub"], style="italic")
-
-# guardrails
-GY = 772
-rect(ex, GY, ew, 98, "#FFFFFF", C["N"], 1.4, 12)
-icon_shield(ex + 16, GY + 12, C["N"])
-text(ex + 48, GY + 30, "Guardrails · shared by all arms", 14.5, 700, color=C["N"])
-pill_flow(ex + 16, GY + 44, ["path allowlist", "no redirects", "timeout", "tool budget", "exact dedup"],
-          "N", ex + ew - 8, 11.5)
-
-# loop <-> sandbox arrows (short and horizontal)
-arrow(f"M{X3 + MW} {R2Y + 62} H{ex - 4}", "N")
-text((X3 + MW + ex) / 2, R2Y + 54, "a", 13, 700, "middle", C["N"], MONO)
-arrow(f"M{ex} {R2Y + 150} H{X3 + MW + 4}", "E", dash="6 4")
-math((X3 + MW + ex) / 2, R2Y + 142, "o_{t}", 15, C["E"], "middle")
-arrow(f"M{HUB_X + HUB_W} {HUB_Y + 94} H{ex + 6}", "V")
-text(X3 + MW - 8, HUB_Y + 86, "finish(ĥ, E)", 13, 700, "end", C["V"], MONO)
-text(X3 + MW - 8, HUB_Y + 116, "→ independent check", 12, 500, "end", C["V"], style="italic")
-
-# ====================================================================== (c)
-cx = EVAL_X + 20
-text(cx, 82, "Same model, tools, budget, dedup and verifier", 13.5, 600, color=C["sub"])
-cols = ["goal +\nhistory", "H, E, s\nledger", "EIG / c\nrankings", "picks\naction"]
-arms = [("A", "ReAct-style", "N", [1, 0, 0, "π"]),
-        ("B", "Memory-only", "E", [1, 1, 0, "π"]),
-        ("C", "HESP", "P", [1, 1, 1, "ctrl"])]
-mx, my, colw, rowh = cx + 128, 96, 60, 52
-for j, col in enumerate(cols):
-    for k, part in enumerate(col.split("\n")):
-        text(mx + j * colw + colw / 2, my + 14 + k * 15, part, 12, 600, "middle", C["sub"])
-for i, (tag, name, key, vals) in enumerate(arms):
-    yy = my + 38 + i * rowh
-    rect(cx, yy, EVAL_W - 40, rowh - 8, C[key + "f"], C[key], 1.4, 10)
-    add(f'<circle cx="{cx + 20}" cy="{yy + 22}" r="12" fill="{C[key]}"/>')
-    text(cx + 20, yy + 27, tag, 13.5, 700, "middle", "#FFFFFF")
-    text(cx + 40, yy + 27, name, 14.5, 700, color=C[key])
-    for j, v in enumerate(vals):
-        xx = mx + j * colw + colw / 2
-        if v == 1:
-            add(f'<path d="M{xx - 7} {yy + 22} l5 5 l10 -11" fill="none" stroke="{C[key]}" stroke-width="2.6" '
-                f'stroke-linecap="round" stroke-linejoin="round"/>')
-        elif v == 0:
-            text(xx, yy + 28, "–", 16, 600, "middle", C["line"])
-        else:
-            text(xx, yy + 27, v, 13, 700, "middle", C[key], MONO if v == "ctrl" else MATH)
-
-AY = 298
-rect(cx, AY, EVAL_W - 40, 106, "#FFFFFF", "#D5DBE3", 1.3, 12)
-text(cx + 16, AY + 26, "Selector ablations", 15, 700, color=C["P"])
-text(cx + 160, AY + 26, "(C-family)", 12.5, 400, color=C["sub"], style="italic")
-abl = [("EIG / c", "full"), ("EIG only", "ignore cost"), ("MAP-greedy", "test top h"),
-       ("random", "legal probe"), ("oracle P", "true table"), ("LLM P", "elicited")]
-for i, (a, d) in enumerate(abl):
-    xx, yy = cx + 16 + (i % 2) * 180, AY + 50 + (i // 2) * 22
-    add(f'<circle cx="{xx + 4}" cy="{yy - 4}" r="3.5" fill="{C["Pa"]}"/>')
-    text(xx + 13, yy, a, 12.5, 700, family=MONO)
-    text(xx + 13 + len(a) * 7.3 + 6, yy, d, 12, 400, color=C["sub"], style="italic")
-
-TY = 418
-rect(cx, TY, EVAL_W - 40, 118, "#FFFFFF", "#D5DBE3", 1.3, 12)
-text(cx + 16, TY + 26, "Task suite", 15, 700, color=C["N"])
-text(cx + 102, TY + 26, "(paired, shuffled, seeded)", 12.5, 400, color=C["sub"], style="italic")
-suite = [("fixture", "synthetic, 4 causes (v0.2)"), ("web-diag", "local HTTP app, 8 causes"),
-         ("+ drift", "state change mid-episode"), ("+ noise", "flaky probe outcomes")]
-for i, (a, d) in enumerate(suite):
-    yy = TY + 50 + i * 19
-    text(cx + 16, yy, a, 12.5, 700, color=C["N"], family=MONO)
-    text(cx + 100, yy, d, 12.5, 400, color=C["sub"])
-
-PPY = 550
-steps = [("events.jsonl", "append-only journal per run", "N"), ("Journal audit", "order · counters · budget", "E"),
-         ("Paired analysis", "task-cluster bootstrap CIs", "P"), ("Calibration", "Brier · log-loss of P(o | h, a)", "H")]
-for i, (a, d, key) in enumerate(steps):
-    yy = PPY + i * 64
-    rect(cx, yy, EVAL_W - 40, 50, C[key + "f"], C[key], 1.3, 10)
-    text(cx + 16, yy + 22, a, 14.5, 700, color=C[key], family=MONO if i == 0 else SANS)
-    text(cx + 16, yy + 40, d, 12.5, 400, color=C["sub"])
-    if i < len(steps) - 1:
-        arrow(f"M{cx + 186} {yy + 50} V{yy + 62}", "sub", 1.8)
-text(cx, 832, "Primary: verified completion rate.", 12.5, 700)
-text(cx, 850, "Secondary: tool cost, tokens (unknown ≠ 0).", 12.5, 500, color=C["sub"])
-text(cx, 868, "Failures stay in the denominator.", 12.5, 500, color=C["sub"])
-
-add('</svg>')
-target = Path(__file__).resolve().parents[1] / "assets" / "hesp-framework.svg"
-target.write_text("\n".join(out), encoding="utf-8")
-print(target)
+if __name__ == "__main__":
+    main()

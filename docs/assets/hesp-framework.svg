@@ -1,367 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="904" viewBox="0 0 1800 904" role="img" aria-labelledby="t d">
-<title id="t">HESP framework overview</title>
-<desc id="d">(a) The HESP decision loop: hypotheses, pre-registered predictions, diagnostic selection, execution, evidence ledger and state monitor around an LLM planner. (b) The authorized local sandbox with a hidden independent verifier. (c) Controlled three-arm evaluation and audit.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 752" width="1536" height="752">
 <defs>
-<marker id="arr-ink" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1F2937"/></marker>
-<marker id="arr-H" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2F5D9E"/></marker>
-<marker id="arr-E" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0F766E"/></marker>
-<marker id="arr-S" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#B45309"/></marker>
-<marker id="arr-P" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5B3F99"/></marker>
-<marker id="arr-N" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#475569"/></marker>
-<marker id="arr-V" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#B42318"/></marker>
-<marker id="arr-sub" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B7280"/></marker>
-<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#B42318" stroke-opacity=".10" stroke-width="3"/></pattern>
-<filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.2" flood-color="#0f172a" flood-opacity=".12"/></filter>
+<marker id="arrow-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#374151"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1D4ED8"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#BE123C"/></marker>
+<marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6B7280"/></marker>
 </defs>
-<rect x="0" y="0" width="1800" height="904" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0" />
-<rect x="16" y="18" width="952" height="868" rx="16" fill="#FBFCFD" stroke="#D5DBE3" stroke-width="1.3" />
-<text x="36" y="52" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">(a)  HESP Decision Loop</text>
-<rect x="984" y="18" width="372" height="868" rx="16" fill="#FBFCFD" stroke="#D5DBE3" stroke-width="1.3" />
-<text x="1004" y="52" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">(b)  Authorized Sandbox</text>
-<rect x="1372" y="18" width="412" height="868" rx="16" fill="#FBFCFD" stroke="#D5DBE3" stroke-width="1.3" />
-<text x="1392" y="52" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">(c)  Controlled Evaluation &amp; Audit</text>
-<rect x="36" y="70" width="288" height="238" rx="12" fill="#EEF3FB" stroke="#2F5D9E" stroke-width="1.6" />
-<circle cx="58" cy="94" r="13" fill="#2F5D9E"/>
-<text x="58" y="99" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">1</text>
-<text x="78" y="100" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#2F5D9E">Hypotheses</text>
-<text x="310" y="99" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="end" fill="#6B7280">task-supplied (v0.3)</text>
-<text x="52" y="130" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">competing local causes of one symptom</text>
-<text x="52" y="161" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" font-style="normal" text-anchor="start" fill="#1F2937">session expired</text>
-<rect x="166" y="148" width="110" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<rect x="166" y="148" width="17.6" height="17" rx="3" fill="#5B8BD0" fill-opacity="0.5" stroke="none" stroke-width="0" />
-<text x="282" y="161" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">0.08</text>
-<text x="52" y="189" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">owner policy</text>
-<rect x="166" y="176" width="110" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<rect x="166" y="176" width="101.2" height="17" rx="3" fill="#2F5D9E" fill-opacity="1" stroke="none" stroke-width="0" />
-<text x="282" y="189" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">0.46</text>
-<text x="52" y="217" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" font-style="normal" text-anchor="start" fill="#1F2937">workflow lock</text>
-<rect x="166" y="204" width="110" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<rect x="166" y="204" width="52.8" height="17" rx="3" fill="#5B8BD0" fill-opacity="0.5" stroke="none" stroke-width="0" />
-<text x="282" y="217" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">0.24</text>
-<text x="52" y="245" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" font-style="normal" text-anchor="start" fill="#1F2937">quota exceeded</text>
-<rect x="166" y="232" width="110" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<rect x="166" y="232" width="30.800000000000004" height="17" rx="3" fill="#5B8BD0" fill-opacity="0.5" stroke="none" stroke-width="0" />
-<text x="282" y="245" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">0.14</text>
-<text x="52" y="273" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" font-style="normal" text-anchor="start" fill="#1F2937">other / unknown</text>
-<rect x="166" y="260" width="110" height="17" rx="3" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<rect x="166" y="260" width="17.6" height="17" rx="3" fill="#5B8BD0" fill-opacity="0.5" stroke="none" stroke-width="0" />
-<text x="282" y="273" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">0.08</text>
-<text x="166" y="296" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="14" font-weight="400" font-style="italic" text-anchor="start" fill="#2F5D9E">posterior  p<tspan baseline-shift="sub" font-size="68%">t</tspan>(h)</text>
-<rect x="348" y="70" width="288" height="238" rx="12" fill="#F3EFFB" stroke="#5B3F99" stroke-width="1.6" />
-<circle cx="370" cy="94" r="13" fill="#5B3F99"/>
-<text x="370" y="99" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">2</text>
-<text x="390" y="100" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">Pre-registered Predictions</text>
-<text x="364" y="130" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="14" font-weight="400" font-style="italic" text-anchor="start" fill="#5B3F99">P(o | h, a),   a = GET /workflow/42</text>
-<text x="472.0" y="153" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">200</text>
-<text x="512.0" y="153" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">403</text>
-<text x="552.0" y="153" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">423</text>
-<text x="592.0" y="153" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">401</text>
-<text x="442" y="177" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="end" fill="#1F2937">session</text>
-<rect x="453" y="161" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.78"/>
-<text x="472.0" y="176.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#FFFFFF">.80</text>
-<rect x="493" y="161" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="512.0" y="176.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="533" y="161" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="552.0" y="176.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="573" y="161" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.15"/>
-<text x="592.0" y="176.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.10</text>
-<text x="442" y="201" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="end" fill="#1F2937">owner</text>
-<rect x="453" y="185" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.15"/>
-<text x="472.0" y="200.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.10</text>
-<rect x="493" y="185" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.78"/>
-<text x="512.0" y="200.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#FFFFFF">.80</text>
-<rect x="533" y="185" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="552.0" y="200.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="573" y="185" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="592.0" y="200.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<text x="442" y="225" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="end" fill="#1F2937">workflow</text>
-<rect x="453" y="209" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="472.0" y="224.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="493" y="209" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="512.0" y="224.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="533" y="209" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.82"/>
-<text x="552.0" y="224.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#FFFFFF">.85</text>
-<rect x="573" y="209" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="592.0" y="224.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<text x="442" y="249" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="end" fill="#1F2937">quota</text>
-<rect x="453" y="233" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.82"/>
-<text x="472.0" y="248.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#FFFFFF">.85</text>
-<rect x="493" y="233" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="512.0" y="248.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="533" y="233" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="552.0" y="248.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<rect x="573" y="233" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.11"/>
-<text x="592.0" y="248.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.05</text>
-<text x="442" y="273" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="end" fill="#1F2937">other</text>
-<rect x="453" y="257" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.42"/>
-<text x="472.0" y="272.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.40</text>
-<rect x="493" y="257" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.24"/>
-<text x="512.0" y="272.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.20</text>
-<rect x="533" y="257" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.24"/>
-<text x="552.0" y="272.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.20</text>
-<rect x="573" y="257" width="38" height="22" rx="3" fill="#5B3F99" fill-opacity="0.24"/>
-<text x="592.0" y="272.5" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#1F2937">.20</text>
-<text x="364" y="296" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">logged before execution · source:</text>
-<text x="622" y="296" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="700" font-style="normal" text-anchor="end" fill="#5B3F99">LLM | table</text>
-<rect x="660" y="70" width="288" height="238" rx="12" fill="#F3EFFB" stroke="#5B3F99" stroke-width="1.6" />
-<circle cx="682" cy="94" r="13" fill="#5B3F99"/>
-<text x="682" y="99" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">3</text>
-<text x="702" y="100" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">Diagnostic Selector</text>
-<text x="676" y="130" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="14" font-weight="400" font-style="italic" text-anchor="start" fill="#5B3F99">legal probes ranked by  EIG(a) / c(a)</text>
-<text x="676" y="159" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="#1F2937" fill="Consolas, Menlo, monospace">/workflow/42</text>
-<rect x="788" y="148" width="99.0" height="14" rx="3" fill="#5B3F99" fill-opacity="1" stroke="none" stroke-width="0" />
-<text x="893.0" y="159.5" font-family="Consolas, Menlo, monospace" font-size="11.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">c=1</text>
-<text x="676" y="182" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="#1F2937" fill="Consolas, Menlo, monospace">/documents/42</text>
-<rect x="788" y="171" width="71.16" height="14" rx="3" fill="#8C6FD6" fill-opacity="0.45" stroke="none" stroke-width="0" />
-<text x="865.16" y="182.5" font-family="Consolas, Menlo, monospace" font-size="11.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">c=1</text>
-<text x="676" y="205" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="#1F2937" fill="Consolas, Menlo, monospace">/audit</text>
-<rect x="788" y="194" width="55.800000000000004" height="14" rx="3" fill="#8C6FD6" fill-opacity="0.45" stroke="none" stroke-width="0" />
-<text x="849.8" y="205.5" font-family="Consolas, Menlo, monospace" font-size="11.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">c=3</text>
-<text x="676" y="228" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="#1F2937" fill="Consolas, Menlo, monospace">/whoami</text>
-<rect x="788" y="217" width="39.480000000000004" height="14" rx="3" fill="#8C6FD6" fill-opacity="0.45" stroke="none" stroke-width="0" />
-<text x="833.48" y="228.5" font-family="Consolas, Menlo, monospace" font-size="11.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">c=1</text>
-<text x="676" y="251" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="#6B7280" fill="Consolas, Menlo, monospace">/quota</text>
-<line x1="676" y1="246.5" x2="719.2" y2="246.5" stroke="#B42318" stroke-width="1.4"/>
-<text x="788" y="251" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="start" fill="#B42318">duplicate · blocked</text>
-<text x="676" y="274" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="#1F2937" fill="Consolas, Menlo, monospace">/help</text>
-<rect x="788" y="263" width="4.92" height="14" rx="3" fill="#8C6FD6" fill-opacity="0.45" stroke="none" stroke-width="0" />
-<text x="798.92" y="274.5" font-family="Consolas, Menlo, monospace" font-size="11.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">c=1</text>
-<text x="676" y="296" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">filters: scope · prerequisites · dedup · budget</text>
-<rect x="278" y="372" width="428" height="128" rx="16" fill="#FFFFFF" stroke="#1F2937" stroke-width="2" filter="url(#sh)"/>
-<g transform="translate(296,388)"><path d="M0 4 a4 4 0 0 1 4 -4 h22 a4 4 0 0 1 4 4 v13 a4 4 0 0 1 -4 4 h-14 l-6 6 v-6 h-2 a4 4 0 0 1 -4 -4 z" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.8"/><path d="M15 4.5 l1.8 4.2 4.2 1.8 -4.2 1.8 -1.8 4.2 -1.8 -4.2 -4.2 -1.8 4.2 -1.8z" fill="#1F2937"/></g>
-<text x="336" y="407" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">LLM Planner  π</text>
-<text x="690" y="406" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" font-style="italic" text-anchor="end" fill="#6B7280">Qwen2.5-7B · local</text>
-<text x="296" y="438" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">reads the investigation state; returns one JSON decision</text>
-<rect x="296" y="454" width="78.32" height="24" rx="12.0" fill="#FFFFFF" stroke="#5B3F99" stroke-width="1.2" />
-<text x="335.15999999999997" y="470.68" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="500" font-style="normal" text-anchor="middle" fill="#5B3F99">action a</text>
-<rect x="384.32" y="454" width="108.47999999999999" height="24" rx="12.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="438.56" y="470.68" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">finish(ĥ, E)</text>
-<rect x="502.79999999999995" y="454" width="48.16" height="24" rx="12.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="526.88" y="470.68" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">stop</text>
-<text x="690" y="471" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" font-style="italic" text-anchor="end" fill="#6B7280">usage logged</text>
-<rect x="36" y="552" width="288" height="196" rx="12" fill="#FEF5E6" stroke="#B45309" stroke-width="1.6" />
-<circle cx="58" cy="576" r="13" fill="#B45309"/>
-<text x="58" y="581" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">6</text>
-<text x="78" y="582" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#B45309">State Monitor</text>
-<path transform="translate(54,596) scale(1.0)" d="M8 0 L0 13 H6 L4 24 L13 9 H7 L9 0 Z" fill="#F0A43A"/>
-<text x="76" y="614" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="17" font-weight="400" font-style="italic" text-anchor="start" fill="#B45309">v<tspan baseline-shift="sub" font-size="68%">t</tspan> ≠ v<tspan baseline-shift="sub" font-size="68%">t−1</tspan></text>
-<text x="154" y="613" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#B45309">login · role switch · edit</text>
-<line x1="60" y1="646" x2="300" y2="646" stroke="#B45309" stroke-width="1.6"/>
-<circle cx="60" cy="646" r="5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.6"/>
-<text x="60" y="668" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#6B7280">v=1</text>
-<circle cx="140" cy="646" r="5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.6"/>
-<text x="140" y="668" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#6B7280">v=1</text>
-<circle cx="220" cy="646" r="5" fill="#B45309" stroke="#B45309" stroke-width="1.6"/>
-<text x="220" y="668" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#6B7280">v=2</text>
-<circle cx="296" cy="646" r="5" fill="#B45309" stroke="#B45309" stroke-width="1.6"/>
-<text x="296" y="668" font-family="Consolas, Menlo, monospace" font-size="11" font-weight="500" font-style="normal" text-anchor="middle" fill="#6B7280">v=2</text>
-<path transform="translate(174,634) scale(0.9)" d="M8 0 L0 13 H6 L4 24 L13 9 H7 L9 0 Z" fill="#F0A43A"/>
-<text x="52" y="702" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">reset current scores, keep history,</text>
-<text x="52" y="720" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">emit a replan signal to π</text>
-<text x="52" y="738" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">old-state evidence cannot be cited</text>
-<rect x="348" y="552" width="288" height="196" rx="12" fill="#E8F6F3" stroke="#0F766E" stroke-width="1.6" />
-<circle cx="370" cy="576" r="13" fill="#0F766E"/>
-<text x="370" y="581" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">5</text>
-<text x="390" y="582" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#0F766E">Evidence Ledger</text>
-<text x="364" y="616" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="17" font-weight="400" font-style="italic" text-anchor="start" fill="#0F766E">p<tspan baseline-shift="sub" font-size="68%">t+1</tspan>(h) ∝ p<tspan baseline-shift="sub" font-size="68%">t</tspan>(h) · P(o<tspan baseline-shift="sub" font-size="68%">t</tspan> | h, a<tspan baseline-shift="sub" font-size="68%">t</tspan>)</text>
-<text x="364" y="644" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#1F2937">update skipped, uncertainty kept, if:</text>
-<rect x="364" y="654" width="75.96000000000001" height="22" rx="11.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="401.98" y="669.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">duplicate</text>
-<rect x="443.96000000000004" y="654" width="88.84" height="22" rx="11.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="488.38000000000005" y="669.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">stale state</text>
-<rect x="536.8000000000001" y="654" width="63.080000000000005" height="22" rx="11.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="568.34" y="669.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">invalid</text>
-<rect x="364" y="682" width="88.84" height="22" rx="11.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="408.42" y="697.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">unmodeled o</text>
-<rect x="456.84000000000003" y="682" width="108.16000000000001" height="22" rx="11.0" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2" />
-<text x="510.92" y="697.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#0F766E">model conflict</text>
-<text x="364" y="736" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">each entry: before · after · provenance</text>
-<rect x="660" y="552" width="288" height="196" rx="12" fill="#F6F8FA" stroke="#475569" stroke-width="1.6" />
-<circle cx="682" cy="576" r="13" fill="#475569"/>
-<text x="682" y="581" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">4</text>
-<text x="702" y="582" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">Register → Execute</text>
-<g transform="translate(676,598)"><rect x="0" y="0" width="20" height="25" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1.8"/><path d="M4 7 h12 M4 12 h12 M4 17 h7" stroke="#475569" stroke-width="1.4"/><circle cx="18" cy="21" r="6" fill="#475569"/><path d="M15.2 21 l2 2 3.6 -3.8" stroke="#FFF" stroke-width="1.6" fill="none"/></g>
-<text x="706" y="610" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">prediction_registered</text>
-<text x="706" y="628" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">durable before the tool call</text>
-<rect x="676" y="644" width="256" height="88" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
-<text x="688" y="668" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="15" font-weight="400" font-style="italic" text-anchor="start" fill="#1F2937">o<tspan baseline-shift="sub" font-size="68%">t</tspan></text>
-<text x="708" y="667" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">= 423 {"state":"locked"}</text>
-<text x="688" y="692" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">raw response + provenance</text>
-<text x="688" y="714" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">→ outcome class o ∈ 𝒪(a)</text>
-<path d="M324 190 H344" fill="none" stroke="#2F5D9E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-H)"/>
-<path d="M636 190 H656" fill="none" stroke="#5B3F99" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-P)"/>
-<path d="M683 308 V368" fill="none" stroke="#5B3F99" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-P)"/>
-<text x="693" y="344" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">rankings</text>
-<text x="693" y="360" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" font-style="italic" text-anchor="start" fill="#5B3F99">(HESP arm only)</text>
-<path d="M683 500 V548" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-N)"/>
-<text x="693" y="530" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">chosen a</text>
-<path d="M660 662 H640" fill="none" stroke="#0F766E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-E)"/>
-<path d="M348 662 H328" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-S)"/>
-<path d="M301 552 V504" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-S)"/>
-<text x="291" y="526" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="end" fill="#B45309">investigation state</text>
-<text x="291" y="544" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="14" font-weight="400" font-style="italic" text-anchor="end" fill="#B45309">(H, E, s<tspan baseline-shift="sub" font-size="68%">t</tspan>)</text>
-<path d="M301 372 V312" fill="none" stroke="#2F5D9E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-H)"/>
-<text x="291" y="344" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="end" fill="#2F5D9E">replan signal</text>
-<text x="291" y="360" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" font-style="italic" text-anchor="end" fill="#2F5D9E">H expansion: future work</text>
-<rect x="36" y="770" width="912" height="44" rx="10" fill="#FFFFFF" stroke="#D5DBE3" stroke-width="1.1" />
-<text x="64" y="799" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="18" font-weight="400" font-style="italic" text-anchor="start" fill="#1F2937">EIG(a) = H[p<tspan baseline-shift="sub" font-size="68%">t</tspan>] − 𝔼<tspan baseline-shift="sub" font-size="68%">o | a</tspan> H[p<tspan baseline-shift="sub" font-size="68%">t</tspan>(· | o, a)]</text>
-<text x="920" y="799" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="18" font-weight="400" font-style="italic" text-anchor="end" fill="#1F2937">a* = argmax<tspan baseline-shift="sub" font-size="68%">a ∈ 𝒜(s_t) ∖ seen</tspan>  EIG(a) / c(a)</text>
-<text x="40" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#6B7280">Colours:</text>
-<rect x="106" y="831" width="14" height="14" rx="3" fill="#EEF3FB" stroke="#2F5D9E" stroke-width="1.5" />
-<text x="126" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Hypotheses</text>
-<rect x="220" y="831" width="14" height="14" rx="3" fill="#F3EFFB" stroke="#5B3F99" stroke-width="1.5" />
-<text x="240" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Planning</text>
-<rect x="320" y="831" width="14" height="14" rx="3" fill="#E8F6F3" stroke="#0F766E" stroke-width="1.5" />
-<text x="340" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Evidence</text>
-<rect x="420" y="831" width="14" height="14" rx="3" fill="#FEF5E6" stroke="#B45309" stroke-width="1.5" />
-<text x="440" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">State</text>
-<rect x="499" y="831" width="14" height="14" rx="3" fill="#F6F8FA" stroke="#475569" stroke-width="1.5" />
-<text x="519" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Execution</text>
-<rect x="606" y="831" width="14" height="14" rx="3" fill="#FDEEEC" stroke="#B42318" stroke-width="1.5" />
-<text x="626" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Hidden oracle</text>
-<text x="948" y="842" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="end" fill="#6B7280">mini-plot values are illustrative</text>
-<rect x="1004" y="70" width="332" height="104" rx="12" fill="#FFFFFF" stroke="#475569" stroke-width="1.4" filter="url(#sh)"/>
-<g transform="translate(1020,84)"><path d="M0 0 h14 l6 6 v20 h-20 z" fill="#FFFFFF" stroke="#475569" stroke-width="1.8"/><path d="M14 0 v6 h6" fill="none" stroke="#475569" stroke-width="1.8"/><path d="M4 12 h12 M4 16 h12 M4 20 h8" stroke="#475569" stroke-width="1.4"/></g>
-<text x="1052" y="100" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">Public task  τ</text>
-<text x="1052" y="120" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" font-style="italic" text-anchor="start" fill="#1F2937">“Saving document #42 fails.”</text>
-<text x="1020" y="148" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">Diagnose the cause; cite observations.</text>
-<text x="1020" y="165" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">No answer or write-up reaches π.</text>
-<rect x="1004" y="188" width="332" height="96" rx="12" fill="#FEF5E6" stroke="#B45309" stroke-width="1.4" />
-<text x="1020" y="212" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" font-style="normal" text-anchor="start" fill="#B45309">Business state  s<tspan baseline-shift="sub" font-size="68%">t</tspan></text>
-<rect x="1020" y="226" width="94.55999999999999" height="24" rx="12.0" fill="#FFFFFF" stroke="#B45309" stroke-width="1.2" />
-<text x="1067.28" y="242.32" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="middle" fill="#B45309">role=editor</text>
-<rect x="1122.56" y="226" width="73.67999999999999" height="24" rx="12.0" fill="#FFFFFF" stroke="#B45309" stroke-width="1.2" />
-<text x="1159.3999999999999" y="242.32" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="middle" fill="#B45309">page=doc</text>
-<rect x="1204.24" y="226" width="38.879999999999995" height="24" rx="12.0" fill="#FFFFFF" stroke="#B45309" stroke-width="1.2" />
-<text x="1223.68" y="242.32" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="middle" fill="#B45309">v=2</text>
-<text x="1020" y="274" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">versioned; advances on login / role / edits</text>
-<rect x="998" y="350" width="344" height="170" rx="14" fill="url(#hatch)" stroke="#B42318" stroke-width="1.4" stroke-dasharray="7 5" />
-<text x="1336" y="342" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" font-style="normal" text-anchor="end" fill="#B42318">hidden from π</text>
-<rect x="1014" y="366" width="312" height="138" rx="12" fill="#FFFFFF" stroke="#B42318" stroke-width="1.4" filter="url(#sh)"/>
-<g transform="translate(1040,396)"><path d="M-7 -2 v-5 a7 7 0 0 1 14 0 v5" fill="none" stroke="#B42318" stroke-width="2.2"/><rect x="-10" y="-2" width="20" height="15" rx="3" fill="#B42318"/><circle cx="0" cy="5" r="2.3" fill="#FFFFFF"/></g>
-<text x="1062" y="398" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" font-style="normal" text-anchor="start" fill="#B42318">Hidden cause  h*</text>
-<text x="1062" y="422" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" font-style="normal" text-anchor="start" fill="#B42318">Independent verifier  V(ĥ, E)</text>
-<text x="1030" y="454" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">passes iff ĥ = h* and a cited</text>
-<text x="1030" y="472" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">observation from the current state</text>
-<text x="1030" y="490" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">carries the cause's signature</text>
-<rect x="1004" y="560" width="332" height="196" rx="12" fill="#FFFFFF" stroke="#475569" stroke-width="1.4" filter="url(#sh)"/>
-<g transform="translate(1020,574)"><rect x="0" y="0" width="24" height="7" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1.6"/><circle cx="19" cy="3.5" r="1.5" fill="#475569"/><rect x="0" y="9" width="24" height="7" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1.6"/><circle cx="19" cy="12.5" r="1.5" fill="#475569"/><rect x="0" y="18" width="24" height="7" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1.6"/><circle cx="19" cy="21.5" r="1.5" fill="#475569"/></g>
-<text x="1054" y="591" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">Local web app</text>
-<text x="1322" y="591" font-family="Consolas, Menlo, monospace" font-size="12" font-weight="500" font-style="normal" text-anchor="end" fill="#6B7280">127.0.0.1</text>
-<rect x="1018" y="603" width="304" height="20" rx="4" fill="#F4F6F9" stroke="none" stroke-width="0" />
-<text x="1026" y="618" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">GET  /whoami</text>
-<rect x="1018" y="624" width="304" height="20" rx="4" fill="#FFFFFF" stroke="none" stroke-width="0" />
-<text x="1026" y="639" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">GET  /documents/42</text>
-<rect x="1018" y="645" width="304" height="20" rx="4" fill="#F4F6F9" stroke="none" stroke-width="0" />
-<text x="1026" y="660" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">POST /documents/42/save</text>
-<rect x="1018" y="666" width="304" height="20" rx="4" fill="#FFFFFF" stroke="none" stroke-width="0" />
-<text x="1026" y="681" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">GET  /workflow/42</text>
-<rect x="1018" y="687" width="304" height="20" rx="4" fill="#F4F6F9" stroke="none" stroke-width="0" />
-<text x="1026" y="702" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">GET  /audit?doc=42</text>
-<rect x="1018" y="708" width="304" height="20" rx="4" fill="#FFFFFF" stroke="none" stroke-width="0" />
-<text x="1026" y="723" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#1F2937">POST /login</text>
-<text x="1020" y="746" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">fresh instance per episode · reset</text>
-<rect x="1004" y="772" width="332" height="98" rx="12" fill="#FFFFFF" stroke="#475569" stroke-width="1.4" />
-<g transform="translate(1020,784)"><path d="M11 0 L22 4 V11 C22 18 17 23 11 26 C5 23 0 18 0 11 V4 Z" fill="#FFFFFF" stroke="#475569" stroke-width="1.8"/><path d="M6 13 l3.5 3.5 7 -7" stroke="#475569" stroke-width="2" fill="none"/></g>
-<text x="1052" y="802" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">Guardrails · shared by all arms</text>
-<rect x="1020" y="816" width="108.16000000000001" height="22" rx="11.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="1074.08" y="831.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">path allowlist</text>
-<rect x="1132.16" y="816" width="95.28" height="22" rx="11.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="1179.8000000000002" y="831.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">no redirects</text>
-<rect x="1231.44" y="816" width="63.080000000000005" height="22" rx="11.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="1262.98" y="831.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">timeout</text>
-<rect x="1020" y="844" width="88.84" height="22" rx="11.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="1064.42" y="859.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">tool budget</text>
-<rect x="1112.84" y="844" width="88.84" height="22" rx="11.0" fill="#FFFFFF" stroke="#475569" stroke-width="1.2" />
-<text x="1157.26" y="859.14" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#475569">exact dedup</text>
-<path d="M948 614 H1000" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-N)"/>
-<text x="976.0" y="606" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="700" font-style="normal" text-anchor="middle" fill="#475569">a</text>
-<path d="M1004 702 H952" fill="none" stroke="#0F766E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4" marker-end="url(#arr-E)"/>
-<text x="976.0" y="694" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="15" font-weight="400" font-style="italic" text-anchor="middle" fill="#0F766E">o<tspan baseline-shift="sub" font-size="68%">t</tspan></text>
-<path d="M706 466 H1010" fill="none" stroke="#B42318" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-V)"/>
-<text x="940" y="458" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="700" font-style="normal" text-anchor="end" fill="#B42318">finish(ĥ, E)</text>
-<text x="940" y="488" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" font-style="italic" text-anchor="end" fill="#B42318">→ independent check</text>
-<text x="1392" y="82" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" font-style="normal" text-anchor="start" fill="#6B7280">Same model, tools, budget, dedup and verifier</text>
-<text x="1550.0" y="110" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">goal +</text>
-<text x="1550.0" y="125" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">history</text>
-<text x="1610.0" y="110" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">H, E, s</text>
-<text x="1610.0" y="125" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">ledger</text>
-<text x="1670.0" y="110" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">EIG / c</text>
-<text x="1670.0" y="125" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">rankings</text>
-<text x="1730.0" y="110" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">picks</text>
-<text x="1730.0" y="125" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" font-style="normal" text-anchor="middle" fill="#6B7280">action</text>
-<rect x="1392" y="134" width="372" height="44" rx="10" fill="#F6F8FA" stroke="#475569" stroke-width="1.4" />
-<circle cx="1412" cy="156" r="12" fill="#475569"/>
-<text x="1412" y="161" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">A</text>
-<text x="1432" y="161" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">ReAct-style</text>
-<path d="M1543.0 156 l5 5 l10 -11" fill="none" stroke="#475569" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="1610.0" y="162" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" font-style="normal" text-anchor="middle" fill="#CBD5E1">–</text>
-<text x="1670.0" y="162" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" font-style="normal" text-anchor="middle" fill="#CBD5E1">–</text>
-<text x="1730.0" y="161" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="13" font-weight="700" font-style="normal" text-anchor="middle" fill="#475569">π</text>
-<rect x="1392" y="186" width="372" height="44" rx="10" fill="#E8F6F3" stroke="#0F766E" stroke-width="1.4" />
-<circle cx="1412" cy="208" r="12" fill="#0F766E"/>
-<text x="1412" y="213" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">B</text>
-<text x="1432" y="213" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#0F766E">Memory-only</text>
-<path d="M1543.0 208 l5 5 l10 -11" fill="none" stroke="#0F766E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1603.0 208 l5 5 l10 -11" fill="none" stroke="#0F766E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="1670.0" y="214" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" font-style="normal" text-anchor="middle" fill="#CBD5E1">–</text>
-<text x="1730.0" y="213" font-family="Cambria Math, STIX Two Math, Times New Roman, serif" font-size="13" font-weight="700" font-style="normal" text-anchor="middle" fill="#0F766E">π</text>
-<rect x="1392" y="238" width="372" height="44" rx="10" fill="#F3EFFB" stroke="#5B3F99" stroke-width="1.4" />
-<circle cx="1412" cy="260" r="12" fill="#5B3F99"/>
-<text x="1412" y="265" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" font-style="normal" text-anchor="middle" fill="#FFFFFF">C</text>
-<text x="1432" y="265" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">HESP</text>
-<path d="M1543.0 260 l5 5 l10 -11" fill="none" stroke="#5B3F99" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1603.0 260 l5 5 l10 -11" fill="none" stroke="#5B3F99" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M1663.0 260 l5 5 l10 -11" fill="none" stroke="#5B3F99" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="1730.0" y="265" font-family="Consolas, Menlo, monospace" font-size="13" font-weight="700" font-style="normal" text-anchor="middle" fill="#5B3F99">ctrl</text>
-<rect x="1392" y="298" width="372" height="106" rx="12" fill="#FFFFFF" stroke="#D5DBE3" stroke-width="1.3" />
-<text x="1408" y="324" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">Selector ablations</text>
-<text x="1552" y="324" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">(C-family)</text>
-<circle cx="1412" cy="344" r="3.5" fill="#8C6FD6"/>
-<text x="1421" y="348" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">EIG / c</text>
-<text x="1478.1" y="348" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">full</text>
-<circle cx="1592" cy="344" r="3.5" fill="#8C6FD6"/>
-<text x="1601" y="348" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">EIG only</text>
-<text x="1665.4" y="348" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">ignore cost</text>
-<circle cx="1412" cy="366" r="3.5" fill="#8C6FD6"/>
-<text x="1421" y="370" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">MAP-greedy</text>
-<text x="1500.0" y="370" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">test top h</text>
-<circle cx="1592" cy="366" r="3.5" fill="#8C6FD6"/>
-<text x="1601" y="370" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">random</text>
-<text x="1650.8" y="370" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">legal probe</text>
-<circle cx="1412" cy="388" r="3.5" fill="#8C6FD6"/>
-<text x="1421" y="392" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">oracle P</text>
-<text x="1485.4" y="392" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">true table</text>
-<circle cx="1592" cy="388" r="3.5" fill="#8C6FD6"/>
-<text x="1601" y="392" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">LLM P</text>
-<text x="1643.5" y="392" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">elicited</text>
-<rect x="1392" y="418" width="372" height="118" rx="12" fill="#FFFFFF" stroke="#D5DBE3" stroke-width="1.3" />
-<text x="1408" y="444" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">Task suite</text>
-<text x="1494" y="444" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#6B7280">(paired, shuffled, seeded)</text>
-<text x="1408" y="468" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">fixture</text>
-<text x="1492" y="468" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">synthetic, 4 causes (v0.2)</text>
-<text x="1408" y="487" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">web-diag</text>
-<text x="1492" y="487" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">local HTTP app, 8 causes</text>
-<text x="1408" y="506" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">+ drift</text>
-<text x="1492" y="506" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">state change mid-episode</text>
-<text x="1408" y="525" font-family="Consolas, Menlo, monospace" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">+ noise</text>
-<text x="1492" y="525" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">flaky probe outcomes</text>
-<rect x="1392" y="550" width="372" height="50" rx="10" fill="#F6F8FA" stroke="#475569" stroke-width="1.3" />
-<text x="1408" y="572" font-family="Consolas, Menlo, monospace" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#475569">events.jsonl</text>
-<text x="1408" y="590" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">append-only journal per run</text>
-<path d="M1578 600 V612" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-sub)"/>
-<rect x="1392" y="614" width="372" height="50" rx="10" fill="#E8F6F3" stroke="#0F766E" stroke-width="1.3" />
-<text x="1408" y="636" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#0F766E">Journal audit</text>
-<text x="1408" y="654" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">order · counters · budget</text>
-<path d="M1578 664 V676" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-sub)"/>
-<rect x="1392" y="678" width="372" height="50" rx="10" fill="#F3EFFB" stroke="#5B3F99" stroke-width="1.3" />
-<text x="1408" y="700" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#5B3F99">Paired analysis</text>
-<text x="1408" y="718" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">task-cluster bootstrap CIs</text>
-<path d="M1578 728 V740" fill="none" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr-sub)"/>
-<rect x="1392" y="742" width="372" height="50" rx="10" fill="#EEF3FB" stroke="#2F5D9E" stroke-width="1.3" />
-<text x="1408" y="764" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" font-style="normal" text-anchor="start" fill="#2F5D9E">Calibration</text>
-<text x="1408" y="782" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="start" fill="#6B7280">Brier · log-loss of P(o | h, a)</text>
-<text x="1392" y="832" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="start" fill="#1F2937">Primary: verified completion rate.</text>
-<text x="1392" y="850" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Secondary: tool cost, tokens (unknown ≠ 0).</text>
-<text x="1392" y="868" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="start" fill="#6B7280">Failures stay in the denominator.</text>
+<rect width="1536" height="752" fill="#FFFFFF"/>
+<path d="M400,220 L848,220 L848,36 L1164,36 L1164,726 L400,726 Z" fill="#EEF3FD" stroke="#C9D8F7" stroke-width="1.5"/>
+<rect x="1194" y="36" width="294" height="690" rx="6" fill="#FDF2F4" stroke="#BE123C" stroke-width="1.6" stroke-dasharray="7 5"/>
+<text x="414" y="714" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="start" data-fit="400,1164">HESP controller</text>
+<text x="1210" y="714" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="italic" fill="#BE123C" text-anchor="start" data-fit="1194,1488">Hidden from π</text>
+<rect x="48" y="48" width="320" height="148" rx="4" fill="#FFFFFF" stroke="#374151" stroke-width="1.5"/>
+<text x="64" y="84" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="64,352">Alert τ</text>
+<text x="352" y="84" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="64,352">INC-4271</text>
+<text x="64" y="122" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">Spike in auth failures</text>
+<text x="64" y="152" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">and 4xx/5xx errors on</text>
+<text x="64" y="182" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">the web tier, last hour</text>
+<rect x="48" y="232" width="320" height="458" rx="4" fill="#FFFFFF" stroke="#374151" stroke-width="1.5"/>
+<text x="64" y="268" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" fill="#111827" data-fit="64,352">Hypotheses <tspan font-style="italic">H</tspan></text>
+<text x="64" y="310" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="64,352">credential_stuffing</text>
+<text x="64" y="346" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">sqli_probe</text>
+<text x="64" y="382" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">misconfig_exposed_admin</text>
+<text x="64" y="418" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">authorized_scan</text>
+<text x="64" y="454" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">false_positive_monitor</text>
+<text x="64" y="490" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">insider_exfil</text>
+<text x="64" y="526" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">vuln_component</text>
+<text x="64" y="562" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">dns_c2</text>
+<text x="64" y="598" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="64,352">other</text>
+<text x="64" y="646" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="64,352">uniform prior 1/9;</text>
+<text x="64" y="674" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="64,352">other = unknown cause</text>
+<rect x="424" y="48" width="276" height="148" rx="4" fill="#FFFFFF" stroke="#111827" stroke-width="1.8"/>
+<text x="440" y="84" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="440,684">LLM planner π</text>
+<text x="440" y="122" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="italic" fill="#374151" text-anchor="start" data-fit="440,684">Qwen2.5 7B–72B, local</text>
+<text x="440" y="152" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="440,684">one decision per step</text>
+<text x="440" y="182" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" fill="#374151" data-fit="440,684">stop <tspan font-family="'Times New Roman', Times, serif" font-size="23">→ unresolved</tspan></text>
+<rect x="860" y="48" width="280" height="148" rx="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.8"/>
+<text x="876" y="84" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="start" data-fit="876,1124">Finish guard</text>
+<text x="876" y="120" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="876,1124">cites current-state</text>
+<text x="876" y="148" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="876,1124">evidence for ĥ and</text>
+<text x="876" y="178" font-family="'Times New Roman', Times, serif" font-size="25" fill="#374151" data-fit="876,1124"><tspan font-style="italic">p</tspan><tspan baseline-shift="sub" font-size="17">t</tspan>(<tspan font-style="italic">ĥ</tspan>) ≥ 0.8</text>
+<rect x="1210" y="48" width="262" height="148" rx="4" fill="#FFFFFF" stroke="#BE123C" stroke-width="1.8"/>
+<text x="1226" y="84" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" fill="#BE123C" data-fit="1226,1456">Verifier <tspan font-style="italic">V</tspan></text>
+<text x="1226" y="120" font-family="'Times New Roman', Times, serif" font-size="25" fill="#374151" data-fit="1226,1456">pass iff <tspan font-style="italic">ĥ</tspan> = <tspan font-style="italic">h</tspan>* and</text>
+<text x="1226" y="148" font-family="'Times New Roman', Times, serif" font-size="25" fill="#374151" data-fit="1226,1456"><tspan font-style="italic">E</tspan> has <tspan font-style="italic">h</tspan>*’s signature</text>
+<path d="M1226,170 l7,8 l14,-17" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1256" y="180" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="700" font-style="normal" fill="#059669" text-anchor="start" data-fit="1226,1456">verified</text>
+<rect x="424" y="232" width="418" height="216" rx="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="440" y="268" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" fill="#1D4ED8" data-fit="440,826">Posterior <tspan font-style="italic">p</tspan><tspan baseline-shift="sub" font-size="21">t</tspan>(<tspan font-style="italic">h</tspan>)</text>
+<text x="666" y="308" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="end" data-fit="616,672">t =</text>
+<text x="701.0" y="308" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="middle" data-fit="676,726">0</text>
+<text x="751.0" y="308" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="middle" data-fit="726,776">1</text>
+<text x="801.0" y="308" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="middle" data-fit="776,826">2</text>
+<text x="440" y="346" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="440,670">credential_stuffing</text>
+<rect x="679" y="323" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.171" stroke="none" stroke-width="0"/>
+<text x="701.0" y="346" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="676,726">.11</text>
+<rect x="729" y="323" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.754" stroke="none" stroke-width="0"/>
+<text x="751.0" y="346" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#FFFFFF" text-anchor="middle" data-fit="726,776">.82</text>
+<rect x="779" y="323" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.854" stroke="none" stroke-width="0"/>
+<text x="801.0" y="346" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="700" font-style="normal" fill="#FFFFFF" text-anchor="middle" data-fit="776,826">.94</text>
+<text x="440" y="384" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="440,670">other</text>
+<rect x="679" y="361" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.171" stroke="none" stroke-width="0"/>
+<text x="701.0" y="384" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="676,726">.11</text>
+<rect x="729" y="361" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.216" stroke="none" stroke-width="0"/>
+<text x="751.0" y="384" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="726,776">.17</text>
+<rect x="779" y="361" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.119" stroke="none" stroke-width="0"/>
+<text x="801.0" y="384" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="776,826">.05</text>
+<text x="440" y="422" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#374151" text-anchor="start" data-fit="440,670">7 other causes, max</text>
+<rect x="679" y="399" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.171" stroke="none" stroke-width="0"/>
+<text x="701.0" y="422" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="676,726">.11</text>
+<rect x="729" y="399" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.081" stroke="none" stroke-width="0"/>
+<text x="751.0" y="422" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="726,776">.002</text>
+<rect x="779" y="399" width="44" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.082" stroke="none" stroke-width="0"/>
+<text x="801.0" y="422" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="776,826">.002</text>
+<rect x="866" y="232" width="274" height="216" rx="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="882" y="268" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="start" data-fit="882,1124">Probe selector</text>
+<text x="882" y="302" font-family="'Times New Roman', Times, serif" font-size="23" fill="#374151" data-fit="882,1060">argmax EIG/<tspan font-style="italic">c</tspan></text>
+<text x="1124" y="302" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="end" data-fit="1080,1124">t = 0</text>
+<rect x="874" y="311" width="258" height="31" rx="3" fill="#1D4ED8" fill-opacity="0.140" stroke="none" stroke-width="0"/>
+<text x="882" y="334" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="start" data-fit="882,1056">source_ips</text>
+<text x="1100" y="334" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="end" data-fit="1056,1102">1.74</text>
+<text x="882" y="366" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="882,1056">access_pattern</text>
+<text x="1100" y="366" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="end" data-fit="1056,1102">1.36</text>
+<text x="882" y="398" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="882,1056">admin_exposure</text>
+<text x="1100" y="398" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="end" data-fit="1056,1102">0.51</text>
+<rect x="874" y="407" width="258" height="31" rx="3" fill="none" stroke="#6B7280" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="882" y="430" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="882,1056">auth_log</text>
+<text x="1100" y="430" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="end" data-fit="1056,1102">0.51</text>
+<text x="1118" y="430" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="middle" data-fit="1102,1132">π</text>
+<rect x="424" y="472" width="716" height="84" rx="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="440" y="506" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" fill="#1D4ED8" data-fit="440,1124">Predictive model <tspan font-style="italic">P</tspan>(<tspan font-style="italic">o</tspan> | <tspan font-style="italic">h</tspan>, <tspan font-style="italic">a</tspan>)</text>
+<rect x="440" y="520" width="206.20000000000005" height="28" rx="14" fill="#FFFFFF" stroke="#9CA3AF" stroke-width="1.2"/>
+<text x="543.1" y="541" font-family="'Times New Roman', Times, serif" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="middle" data-fit="440,646.2">designer (oracle)</text>
+<rect x="658.2" y="520" width="269.79999999999995" height="28" rx="14" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.8"/>
+<text x="793.1" y="541" font-family="'Times New Roman', Times, serif" font-size="22" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="middle" data-fit="658.2,928.0">counted, k dev episodes</text>
+<rect x="940.0" y="520" width="153.20000000000005" height="28" rx="14" fill="#FFFFFF" stroke="#9CA3AF" stroke-width="1.2"/>
+<text x="1016.6" y="541" font-family="'Times New Roman', Times, serif" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="middle" data-fit="940.0,1093.2">LLM-elicited</text>
+<rect x="424" y="580" width="716" height="110" rx="4" fill="#FFFFFF" stroke="#1D4ED8" stroke-width="1.5"/>
+<text x="440" y="616" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#1D4ED8" text-anchor="start" data-fit="440,1124">Evidence ledger</text>
+<text x="686" y="616" font-family="'Times New Roman', Times, serif" font-size="26" fill="#111827" data-fit="686,1124"><tspan font-style="italic">p</tspan><tspan baseline-shift="sub" font-size="18">t+1</tspan>(<tspan font-style="italic">h</tspan>) ∝ <tspan font-style="italic">p</tspan><tspan baseline-shift="sub" font-size="18">t</tspan>(<tspan font-style="italic">h</tspan>) · <tspan font-style="italic">P</tspan>(<tspan font-style="italic">o</tspan><tspan baseline-shift="sub" font-size="18">t</tspan> | <tspan font-style="italic">h</tspan>, <tspan font-style="italic">a</tspan><tspan baseline-shift="sub" font-size="18">t</tspan>)</text>
+<text x="440" y="652" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="440,1124">skips duplicate, stale-state and transient observations;</text>
+<text x="440" y="678" font-family="'Times New Roman', Times, serif" font-size="23" fill="#6B7280" font-style="italic" data-fit="440,1124">a change of state version <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">t</tspan> resets current scores, keeps history</text>
+<rect x="1210" y="232" width="262" height="458" rx="4" fill="#FFFFFF" stroke="#BE123C" stroke-width="1.5"/>
+<text x="1226" y="268" font-family="'Times New Roman', Times, serif" font-size="31" font-weight="700" font-style="normal" fill="#BE123C" text-anchor="start" data-fit="1226,1456">Loopback app</text>
+<text x="1226" y="302" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="1226,1456">127.0.0.1, read-only</text>
+<text x="1226" y="348" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#111827" text-anchor="start" data-fit="1226,1456">GET /siem/sources</text>
+<text x="1226" y="376" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="1226,1456">    ?window=1h</text>
+<text x="1226" y="418" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="1226,1456">→ outcome class</text>
+<text x="1226" y="448" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="1226,1456">many_residential</text>
+<text x="1226" y="504" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="1226,1456">10 probes, cost 1–3</text>
+<text x="1226" y="534" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="1226,1456">reset per episode</text>
+<text x="1226" y="564" font-family="'Times New Roman', Times, serif" font-size="23" fill="#374151" data-fit="1226,1456">versioned state <tspan font-style="italic">s</tspan><tspan baseline-shift="sub" font-size="16">t</tspan></text>
+<text x="1226" y="612" font-family="'Times New Roman', Times, serif" font-size="25" fill="#BE123C" data-fit="1226,1456">hidden cause <tspan font-style="italic">h</tspan>*</text>
+<path d="M368,110 L424,110" fill="none" stroke="#374151" stroke-width="2.0" marker-end="url(#arrow-ink)" stroke-linejoin="round"/>
+<path d="M368,300 L424,300" fill="none" stroke="#1D4ED8" stroke-width="2.0" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<path d="M500,232 L500,196" fill="none" stroke="#374151" stroke-width="2.0" marker-end="url(#arrow-ink)" stroke-linejoin="round"/>
+<text x="512" y="222" font-family="'Times New Roman', Times, serif" font-size="24" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="506,682">ledger, rankings</text>
+<path d="M700,96 L860,96" fill="none" stroke="#374151" stroke-width="2.2" marker-end="url(#arrow-ink)" stroke-linejoin="round"/>
+<text x="780.0" y="84" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="704,856">finish(ĥ, E)</text>
+<path d="M860,124 L700,124" fill="none" stroke="#6B7280" stroke-width="2.0" stroke-dasharray="5 4" marker-end="url(#arrow-muted)" stroke-linejoin="round"/>
+<text x="780.0" y="150" font-family="'Times New Roman', Times, serif" font-size="24" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="middle" data-fit="704,856">rejection</text>
+<path d="M690,196 L690,208 L906,208 L906,232" fill="none" stroke="#6B7280" stroke-width="2.0" stroke-dasharray="5 4" marker-end="url(#arrow-muted)" stroke-linejoin="round"/>
+<text x="708" y="200" font-family="Consolas, 'DejaVu Sans Mono', monospace" font-size="22" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="start" data-fit="704,856">action a</text>
+<path d="M1140,96 L1210,96" fill="none" stroke="#059669" stroke-width="2.4" marker-end="url(#arrow-green)" stroke-linejoin="round"/>
+<path d="M842,340 L866,340" fill="none" stroke="#1D4ED8" stroke-width="2.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<path d="M1132,326 L1210,326" fill="none" stroke="#1D4ED8" stroke-width="2.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<text x="1175.0" y="316" font-family="'Times New Roman', Times, serif" font-size="25" fill="#1D4ED8" text-anchor="middle" data-fit="1140,1210"><tspan font-style="italic">a</tspan><tspan baseline-shift="sub" font-size="17">t</tspan></text>
+<path d="M1210,640 L1140,640" fill="none" stroke="#1D4ED8" stroke-width="2.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<text x="1175.0" y="630" font-family="'Times New Roman', Times, serif" font-size="25" fill="#1D4ED8" text-anchor="middle" data-fit="1140,1210"><tspan font-style="italic">o</tspan><tspan baseline-shift="sub" font-size="17">t</tspan></text>
+<path d="M424,660 L412,660 L412,420 L424,420" fill="none" stroke="#1D4ED8" stroke-width="2.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<path d="M1000,472 L1000,448" fill="none" stroke="#1D4ED8" stroke-width="1.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<path d="M1000,556 L1000,580" fill="none" stroke="#1D4ED8" stroke-width="1.6" marker-end="url(#arrow-blue)" stroke-linejoin="round"/>
+<path d="M1341.0,232 L1341.0,196" fill="none" stroke="#BE123C" stroke-width="1.6" stroke-dasharray="3 3" marker-end="url(#arrow-red)" stroke-linejoin="round"/>
+<text x="1351.0" y="222" font-family="'Times New Roman', Times, serif" font-size="24" fill="#BE123C" data-fit="1341.0,1472"><tspan font-style="italic">h</tspan>*</text>
 </svg>

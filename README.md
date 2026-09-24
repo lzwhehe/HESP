@@ -42,7 +42,7 @@ HESP 将调查过程组织为可追溯的循环：建立局部假设、登记测
 
 ![HESP 框架总览](docs/assets/hesp-framework.png)
 
-<sub>(a) 决策环路：① 假设 ② 执行前登记的预测 ③ 诊断选择器 ④ 登记并执行 ⑤ 证据账本 ⑥ 状态监控，围绕 LLM Planner 运转；(b) 授权沙箱与对 Planner 隐藏的独立验证器；(c) 对照评估与审计。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
+<sub>HESP 的调查环路，以 sec-triage 告警 INC-4271 为例，图中数值取自一个真实回合（由 `docs/figures/make_framework_figure.py` 重放生成）。蓝色为控制器：它维护候选原因的后验 <i>p<sub>t</sub>(h)</i>，按单位成本的期望信息增益 EIG/<i>c</i> 选择只读探针，并用预测模型 <i>P</i>(<i>o</i> | <i>h</i>, <i>a</i>) 做贝叶斯更新；<i>P</i> 可来自设计者（oracle 上界）、<i>k</i> 个开发回合的计数（本例，<i>k</i> = 20）或模型自抽取。LLM 规划器 π 读取账本与排序，但它提议的探针只在基线中生效——本例中 π 提议 <code>auth_log</code>，控制器执行 <code>source_ips</code>。π 提交的结论须先通过结案守卫，再由能看到隐藏真因 <i>h</i>* 的独立验证器判定；守卫拒绝时把原因返回给 π。红色虚线内的一切对 π 不可见。评估协议见 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
 
 ```mermaid
 flowchart LR

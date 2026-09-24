@@ -16,6 +16,8 @@ HESP organizes local hypotheses, pre-registered outcome predictions, observation
 
 ![Framework](assets/hesp-framework.png)
 
+<sub>The HESP investigation loop on sec-triage alert INC-4271; every number is taken from one real episode replayed by `docs/figures/make_framework_figure.py`. The controller (blue) keeps a posterior <i>p<sub>t</sub>(h)</i> over candidate causes, selects read-only probes by expected information gain per unit cost (EIG/<i>c</i>), and updates with a predictive model <i>P</i>(<i>o</i> | <i>h</i>, <i>a</i>) taken from the designer (oracle bound), counted from <i>k</i> development episodes (shown, <i>k</i> = 20), or elicited from the LLM. The LLM planner π reads the ledger and rankings, but its proposed probe binds only in the baselines: here π proposed <code>auth_log</code> and the controller ran <code>source_ips</code>. A verdict passes the finish guard before the independent verifier, which alone sees the hidden cause <i>h</i>*; a rejection returns its reason to π. Everything inside the red dashed boundary is hidden from π.</sub>
+
 **Scope.** Two self-built, loopback-only web diagnosis sandboxes (web-diag, upload-diag) and locally served open-weight models (Qwen2.5 7B / 32B-AWQ / 72B-AWQ via Ollama or vLLM). These are controlled sandbox experiments, **not** Web CTF or real-website results.
 
 ## Results (v0.4, pre-registered)
