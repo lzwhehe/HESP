@@ -118,7 +118,21 @@ runs/study/
 
 完整报告：[**RESULTS.md**](hesp_research/docs/RESULTS.md)。分析口径在运行前登记于 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)；每个数字都能追溯到 `hesp_research/results/` 中的原始日志，所有回合都通过了日志审计。
 
-![v0.4 结果](docs/assets/fig-v04-models.png)
+![v0.5 安全分诊结果](docs/assets/fig-v05-sec.png)
+
+**v0.5 主研究(防御安全告警分诊,留出任务族)。** 把 v0.4 事后发现的"EIG/cost + 状态守卫"作为**预先登记的主方案**在全新的安全任务族上确认。预先登记的主要终点(相对结构化记忆的验证完成率配对差)**在三个模型上区间都不含 0**——这是本项目第一个达到此标准的结果:
+
+| Planner | 主要终点 Δ [95% 区间] | Memory-only 自身 |
+| --- | --- | ---: |
+| Qwen2.5-7B | +0.889 [+0.76, +1.00] | 0.111 |
+| Qwen2.5-32B-AWQ | +0.250 [+0.10, +0.42] | 0.750 |
+| Qwen2.5-72B-AWQ | +0.111 [+0.00, +0.24] | 0.889 |
+
+弱模型在安全分诊上几乎完全靠 HESP 才能完成(7B 自己查只有 0.03–0.11,陷入"探测→再确认→不下结论"死循环;HESP 升到 0.96–1.00 且成本更低)。完整数据见 [RESULTS.md §8](hesp_research/docs/RESULTS.md)。
+
+---
+
+**v0.4 主研究(运维/上传诊断)。**
 
 **v0.4 主研究**（留出任务族 upload-diag，9 个 arm × 48 个任务 × 3 次重复 × 3 个模型）。预先登记的主要终点是完整 HESP 相对结构化记忆（Memory-only）的验证完成率配对差：
 

@@ -1,5 +1,16 @@
 # 更新日志
 
+## 0.5 · 2026-09-24
+
+### 新增
+- `hesp/secapp.py`:防御向安全告警分诊任务族 sec-triage(8 类隐藏原因 × base/drift/noise;蓝队分析员诊断告警真实性质,全程只读,不发攻击载荷)。接入 CLI(`--env sec`)。
+- `scripts/run_v04_study.py` 增加 `--backend {vllm,ollama}`、`--arms`、`--variants` 子集选项;`scripts/server/run_v05_all.sh`;`fig-v05-sec` 图。
+- 测试增至 107 项。
+
+### 实验
+- v0.5 主研究:三档模型 × 9 arm × 24 任务 × 3 重复 = 1944 个回合,预先登记,全部通过审计,源码哈希 `5a5fccd2`。**预先登记的主要终点(EIG/cost + 守卫 − Memory-only)在三个模型上区间都不含 0**(7B +0.889、32B +0.250、72B +0.111)。见 [RESULTS.md §8](hesp_research/docs/RESULTS.md)。
+- v0.5 前先做了本地 7B 小验证(`results/v05_sec_local_pilot`)。
+
 ## 0.4 · 2026-09-23
 
 ### 新增

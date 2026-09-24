@@ -320,8 +320,49 @@ def fig_v04():
     c.save("fig-v04-models.svg")
 
 
+# --------------------------------------------------------------------- Fig. 6 (v0.5)
+def fig_v05():
+    models = [(k, n) for k, n in V04_MODELS if (RES / f"v05_{k}" / "outcomes.jsonl").exists()]
+    rows = {k: [json.loads(l) for l in (RES / f"v05_{k}" / "outcomes.jsonl").read_text(encoding="utf-8").splitlines()]
+            for k, _ in models}
+    color = {k: SLOTS[i] for i, (k, _) in enumerate(V04_MODELS)}
+    mark = {k: MARKERS[i] for i, (k, _) in enumerate(V04_MODELS)}
+    arms = [("react_style", "A · ReAct-style"), ("memory_only", "B · Memory-only"),
+            ("memory_guard", "B + guard"), ("hesp_eigc", "C · EIG/c"), ("hesp_eigc_guard", "C · EIG/c + guard"),
+            ("hesp_la", "C · lookahead"), ("hesp_la_guard", "C · lookahead + guard"),
+            ("hesp_random", "C · random picks"), ("hesp_llmp", "C · self-elicited P")]
+    c = Canvas(1180, 660, "v0.5 sec-triage verified completion by arm and model")
+    c.text(40, 28, "Defensive security alert-triage (held-out). Qwen2.5 planners (local vLLM), 24 tasks x 3 "
+                   "repeats per cell, paired.", 12.5, 400, color=SUB, style="italic")
+    c.text(40, 48, "Whiskers: 95% bootstrap over task clusters.", 12.5, 400, color=SUB, style="italic")
+    lx = 470
+    for k, n in models:
+        c.marker(mark[k], lx, 44, color[k], 5.5)
+        c.text(lx + 12, 48.5, n, 12.5, 600, color=INK)
+        lx += 110
+    top, rowh, lab_w, w = 108, 56, 200, 560
+    xmap = lambda v: 40 + lab_w + v * w
+    for t in (0, .25, .5, .75, 1):
+        c.line(xmap(t), top - 18, xmap(t), top + rowh * len(arms) - 18, GRID, 1)
+        c.text(xmap(t), top + rowh * len(arms) + 2, f"{t:.2f}", 11.5, 400, "middle", SUB)
+    c.text(xmap(.5), top + rowh * len(arms) + 24, "verified rate", 12.5, 500, "middle", SUB)
+    for i, (arm, label) in enumerate(arms):
+        y0 = top + i * rowh
+        if arm in ("hesp_eigc_guard", "memory_only"):
+            c.rect(40 + 4, y0 - 20, lab_w + w + 20, rowh - 6, "#F4F6FA", 6)
+        c.text(40 + lab_w - 14, y0 + 6, label, 12.5, 700 if arm == "hesp_eigc_guard" else 400, "end", INK)
+        for j, (k, _) in enumerate(models):
+            m, lo, hi = cluster_ci(rows[k], arm)
+            y = y0 - 10 + j * 11
+            c.line(xmap(lo), y, xmap(hi), y, color[k], 1.9)
+            c.marker(mark[k], xmap(m), y, color[k], 4.4)
+    c.text(40, 622, "Shaded rows: pre-registered primary comparison (C · EIG/cost + guard vs B · Memory-only).",
+           12, 400, color=SUB, style="italic")
+    c.save("fig-v05-sec.svg")
+
+
 if __name__ == "__main__":
-    which = set(sys.argv[1:]) or {"ablation", "pilot", "calibration", "v04"}
+    which = set(sys.argv[1:]) or {"ablation", "pilot", "calibration", "v04", "v05"}
     if "ablation" in which:
         fig_ablation()
     if "calibration" in which:
@@ -330,3 +371,5 @@ if __name__ == "__main__":
         fig_pilot()
     if "v04" in which:
         fig_v04()
+    if "v05" in which:
+        fig_v05()
