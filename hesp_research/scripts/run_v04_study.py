@@ -28,7 +28,7 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from hesp.analysis import summarize
 from hesp.controller import Budget
-from hesp.llm import LLMPlanner, LLMPredictor, OpenAICompatClient
+from hesp.llm import LLMPlanner, LLMPredictor, OllamaClient, OpenAICompatClient
 from hesp.predictors import FrozenPredictor, calibration
 from hesp.study import run_suite, write_json
 from hesp.secapp import SecTriageEnvironment, make_sec_env, sec_suite
@@ -56,7 +56,7 @@ COMPARISONS = [
 ]
 
 
-def elicit(client, out, seed):
+def elicit(client, out, seed, families):
     path = out.parent / f"{out.name}_elicitation.json"
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8")), path
@@ -64,7 +64,8 @@ def elicit(client, out, seed):
     record = {"schema": "hesp.elicitation.v2", "model": client.info(), "source": predictor.source,
               "eps_floor": predictor.eps, "families": {}}
     start = time.time()
-    for name, (env_cls, _, _) in FAMILIES.items():
+    for name in families:
+        env_cls = FAMILIES[name][0]
         tables = predictor.elicit(env_cls.build_catalog(), env_cls.DESCRIPTIONS,
                                   context=env_cls.public_task()["objective"])
         fam = {p["id"]: tables[p["id"]] for p in env_cls.PROBES}
@@ -88,17 +89,23 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--model", required=True, help="served model name")
     parser.add_argument("--base-url", default="http://127.0.0.1:8000/v1")
+    parser.add_argument("--backend", choices=("vllm", "ollama"), default="vllm",
+                        help="vllm = OpenAI-compatible server; ollama = local Ollama")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--families", nargs="+", default=V04_FAMILIES, choices=list(FAMILIES))
+    parser.add_argument("--arms", nargs="+", default=None, help="subset of arm names (default: all 9)")
+    parser.add_argument("--variants", nargs="+", default=["base", "drift", "noise"],
+                        choices=["base", "drift", "noise"])
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--task-stride", type=int, default=1, help="smoke tests only: keep every k-th task")
     args = parser.parse_args()
     out = Path(args.output)
-    client = OpenAICompatClient(args.model, args.base_url)
-    elicitation, epath = elicit(client, out, args.seed)
+    client = (OllamaClient(args.model) if args.backend == "ollama"
+              else OpenAICompatClient(args.model, args.base_url))
+    elicitation, epath = elicit(client, out, args.seed, args.families)
     tables = {}
     for fam in elicitation["families"].values():
         tables.update(fam["tables"])
@@ -115,7 +122,11 @@ def main():
         "hesp_random": {"mode": "hesp", "planner": planner, "selector": "random"},
         "hesp_llmp": {"mode": "hesp", "planner": planner, "selector": "eig_cost", "predictor": llm_p},
     }
-    tasks = [t for name in args.families for t in FAMILIES[name][1]()[::args.task_stride]]
+    if args.arms:
+        arms = {k: v for k, v in arms.items() if k in args.arms}
+    comparisons = [(t, b) for t, b in COMPARISONS if t in arms and b in arms]
+    tasks = [t for name in args.families
+             for t in FAMILIES[name][1](tuple(args.variants))[::args.task_stride]]
     factory = lambda task, seed: FAMILIES[task["family"]][2](task, seed)
     budget = Budget(max_tool_calls=10, max_decisions=12, max_tool_cost=10, max_seconds=900.0)
     start = time.time()
@@ -128,7 +139,7 @@ def main():
 
     report, rows = run_suite(
         out, tasks, arms, factory, repeats=args.repeats, seed=args.seed, budget=budget,
-        comparisons=COMPARISONS, resume=args.resume, progress=progress, workers=args.workers,
+        comparisons=comparisons, resume=args.resume, progress=progress, workers=args.workers,
         purpose="v0.4_main_study",
         extra_manifest={"model": elicitation["model"], "temperature": args.temperature,
                         "families": args.families, "primary_family": PRIMARY_FAMILY,
@@ -137,7 +148,7 @@ def main():
     by_family = {}
     for name in args.families:
         subset = [r for r in rows if r["family"] == name]
-        by_family[name] = summarize(subset, seed=args.seed, arms=list(arms), comparisons=COMPARISONS)
+        by_family[name] = summarize(subset, seed=args.seed, arms=list(arms), comparisons=comparisons)
         write_report(out / f"report_{name}.md", f"v0.4 · {args.model} · {name}", by_family[name])
     write_json(out / "analysis_by_family.json", by_family)
     write_report(out / "report.md", f"v0.4 · {args.model} · all families", report,
