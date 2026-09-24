@@ -185,7 +185,11 @@ def render_request(request):
                          f"cost={r['cost']}, EIG/cost={r['score']:.3f}")
         if not request["action_rankings"]:
             lines.append("(no legal probe left)")
-        lines.append("If you reply kind=action, the controller executes the top-ranked probe above.")
+        # The executed probe is chosen by the controller's selector, which is NOT always the
+        # top-ranked one (random / lookahead ignore this ranking). Say what actually happens.
+        lines.append(f"If you reply kind=action, the controller picks the probe itself: "
+                     f"{request.get('selection_policy', 'controller selection')}. "
+                     f"Your action_id is not guaranteed to be the one executed.")
     if request.get("blocked_proposals"):
         lines += ["", "## Controller feedback"]
         for b in request["blocked_proposals"]:

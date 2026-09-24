@@ -8,8 +8,19 @@
 - 测试增至 107 项。
 
 ### 实验
-- v0.5 主研究:三档模型 × 9 arm × 24 任务 × 3 重复 = 1944 个回合,预先登记,全部通过审计,源码哈希 `5a5fccd2`。**预先登记的主要终点(EIG/cost + 守卫 − Memory-only)在三个模型上区间都不含 0**(7B +0.889、32B +0.250、72B +0.111)。见 [RESULTS.md §8](hesp_research/docs/RESULTS.md)。
+- v0.5 主研究:三档模型 × 9 arm × 24 任务 × 3 重复 = 1944 个回合,预先登记,源码哈希 `5a5fccd2`。预先登记的主要终点(EIG/cost + 守卫 − Memory-only):7B **+0.8889** [+0.7500, +1.0000]、32B **+0.2500** [+0.0972, +0.4167]、72B +0.1111 [**0.0000**, +0.2361]——**7B 与 32B 的区间不含 0,72B 包含 0**。见 [RESULTS.md §8](hesp_research/docs/RESULTS.md)。
 - v0.5 前先做了本地 7B 小验证(`results/v05_sec_local_pilot`)。
+
+### 勘误（2026-09-24，见 [RESULTS.md §9](hesp_research/docs/RESULTS.md)）
+- **更正**:本条目原写"三个模型区间都不含 0",经从 `outcomes.jsonl` 复算,72B 的下界恰好为 0。7B / 32B 不受影响。
+- v0.5 的逐回合事件日志未随仓库保存(GPU 实例已释放);汇总可复算,原始事件不可第三方复查。
+- v0.5 的 manifest 沿用了 v0.4 的 `purpose` / `primary_family` 字段,预登记的主要比较未进入自动分析文件。
+- `hesp_random` / `hesp_la` 仍能看到 EIG/cost 排序,且提示词曾错误声称"控制器执行排名第一的探针"。提示词已修正(v0.5 运行之后)。
+
+### 修复
+- `hesp/llm.py`:控制器排序段落改为陈述真实的选择策略,不再声称总是执行排名第一的探针。
+- `scripts/run_v04_study.py`:新增 `--purpose` / `--primary-family`;`COMPARISONS` 加入 `hesp_eigc_guard − memory_only`。
+- 新增 `scripts/v05_summary.py`:v0.5 主要终点表的唯一生成入口,不再手工填写。
 
 ## 0.4 · 2026-09-23
 

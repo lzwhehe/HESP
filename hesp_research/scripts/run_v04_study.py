@@ -43,7 +43,8 @@ FAMILIES = {"web-diag": (WebDiagEnvironment, web_suite, make_web_env),
 V04_FAMILIES = ["web-diag", "upload-diag"]
 PRIMARY_FAMILY = "upload-diag"
 COMPARISONS = [
-    ("hesp_la_guard", "memory_only"),       # primary endpoint (on the held-out family)
+    ("hesp_la_guard", "memory_only"),       # v0.4 primary endpoint (held-out family)
+    ("hesp_eigc_guard", "memory_only"),     # v0.5 primary endpoint (pre-registered confirmatory)
     ("hesp_la_guard", "react_style"),
     ("memory_only", "react_style"),
     ("hesp_eigc", "memory_only"),
@@ -101,6 +102,9 @@ def main():
                         choices=["base", "drift", "noise"])
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--task-stride", type=int, default=1, help="smoke tests only: keep every k-th task")
+    parser.add_argument("--purpose", default="v0.4_main_study", help="recorded in the manifest")
+    parser.add_argument("--primary-family", default=PRIMARY_FAMILY, choices=list(FAMILIES),
+                        help="pre-registered primary family, recorded in the manifest")
     args = parser.parse_args()
     out = Path(args.output)
     client = (OllamaClient(args.model) if args.backend == "ollama"
@@ -140,9 +144,9 @@ def main():
     report, rows = run_suite(
         out, tasks, arms, factory, repeats=args.repeats, seed=args.seed, budget=budget,
         comparisons=comparisons, resume=args.resume, progress=progress, workers=args.workers,
-        purpose="v0.4_main_study",
+        purpose=args.purpose,
         extra_manifest={"model": elicitation["model"], "temperature": args.temperature,
-                        "families": args.families, "primary_family": PRIMARY_FAMILY,
+                        "families": args.families, "primary_family": args.primary_family,
                         "elicitation_file": epath.name,
                         "elicitation_sha256": hashlib.sha256(epath.read_bytes()).hexdigest()})
     by_family = {}
@@ -151,8 +155,9 @@ def main():
         by_family[name] = summarize(subset, seed=args.seed, arms=list(arms), comparisons=comparisons)
         write_report(out / f"report_{name}.md", f"v0.4 · {args.model} · {name}", by_family[name])
     write_json(out / "analysis_by_family.json", by_family)
-    write_report(out / "report.md", f"v0.4 · {args.model} · all families", report,
-                 ["", f"Primary family (pre-registered): {PRIMARY_FAMILY}; see report_{PRIMARY_FAMILY}.md."])
+    write_report(out / "report.md", f"{args.purpose} · {args.model} · all families", report,
+                 ["", f"Primary family (pre-registered): {args.primary_family}; "
+                  f"see report_{args.primary_family}.md."])
     print(f"done in {(time.time() - start) / 60:.1f} min")
 
 
