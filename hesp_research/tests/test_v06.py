@@ -154,6 +154,38 @@ class SecurityMetricTests(unittest.TestCase):
         self.assertEqual(m["false_escalation_rate"], 1.0)   # 1 of 1 benign episodes with a claim
         self.assertEqual(m["unresolved_rate"], 1.0)         # over all 3 episodes
 
+    def test_drift_verdicts_are_scored_against_the_final_cause(self):
+        """Regression: v0.6's first run scored every correct drift verdict as wrong."""
+        drift = {"variant": "drift", "verified_simulation": True, "claim_citation_validity": 1.0}
+        rows = [{**drift, "cause": "dns_c2", "drift_to": "authorized_scan", "tool_calls": 3,
+                 "claimed_hypothesis": "authorized_scan"},                      # after the switch
+                {**drift, "cause": "authorized_scan", "drift_to": "dns_c2", "tool_calls": 2,
+                 "claimed_hypothesis": "dns_c2"},                               # exactly at the switch
+                {**drift, "cause": "false_positive_monitor", "drift_to": "dns_c2", "tool_calls": 1,
+                 "claimed_hypothesis": "false_positive_monitor"}]               # before the switch
+        m = security_metrics(rows)
+        self.assertEqual(m["wrong_cause_rate"], 0.0)
+        self.assertEqual(m["missed_attack_rate"], 0.0)
+        self.assertEqual(m["false_escalation_rate"], 0.0)
+
+    def test_every_verified_v06_claim_equals_the_true_cause(self):
+        """Invariant over the real data: the verifier and true_cause must agree on every row."""
+        from hesp.analysis import true_cause
+        results = Path(__file__).resolve().parents[1] / "results"
+        checked = 0
+        for model in ("7b", "32b", "72b"):
+            path = results / f"v06_{model}" / "outcomes.jsonl"
+            if not path.exists():
+                continue
+            with path.open(encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            for r in rows:
+                if r["verified_simulation"]:
+                    self.assertEqual(r["claimed_hypothesis"], true_cause(r), (model, r["task_id"], r["arm"]))
+                    checked += 1
+        if checked == 0:
+            self.skipTest("v0.6 outcomes not present")
+
     def test_empty_denominators_report_none_not_zero(self):
         m = security_metrics([{"cause": "dns_c2", "claimed_hypothesis": None,
                                "verified_simulation": False, "claim_citation_validity": None}])

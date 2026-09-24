@@ -26,6 +26,27 @@ def _bootstrap(values, samples, seed):
 BENIGN_CAUSES = frozenset({"authorized_scan", "false_positive_monitor"})
 
 
+def true_cause(row):
+    """The cause in effect when the verdict was given -- exactly what the verifier checks.
+
+    In drift tasks the hidden cause switches to ``drift_to`` right after the variant's
+    ``drift_after``-th probe call. A verdict given before that point is judged against the
+    initial ``cause``; one given after it, against ``drift_to``.
+
+    v0.6 errata: the first version scored every drift verdict against the initial cause; the
+    first correction scored every drift verdict against ``drift_to``. Both were wrong for part
+    of the drift episodes (e.g. strong models that closed a drift task after a single probe,
+    before the switch). The invariant "a verified claim equals the true cause" now holds on
+    every row and is checked in tests and in scripts/v06_summary.py.
+    """
+    if row.get("drift_to"):
+        from .secapp import SecTriageEnvironment          # security metrics are sec-triage only
+        drift_after = SecTriageEnvironment.VARIANTS[row["variant"]]["drift_after"]
+        if drift_after and row["tool_calls"] >= drift_after:
+            return row["drift_to"]
+    return row["cause"]
+
+
 def security_metrics(rows, benign=BENIGN_CAUSES):
     """Descriptive security-facing rates for one arm (PROTOCOL.md v0.6).
 
@@ -35,8 +56,8 @@ def security_metrics(rows, benign=BENIGN_CAUSES):
     Returns ``None`` for a rate whose denominator is empty.
     """
     claimed = [r for r in rows if r.get("claimed_hypothesis")]
-    actionable = [r for r in claimed if r["cause"] not in benign]
-    harmless = [r for r in claimed if r["cause"] in benign]
+    actionable = [r for r in claimed if true_cause(r) not in benign]
+    harmless = [r for r in claimed if true_cause(r) in benign]
     cited = [r["claim_citation_validity"] for r in claimed
              if r.get("claim_citation_validity") is not None]
     return {
@@ -47,7 +68,7 @@ def security_metrics(rows, benign=BENIGN_CAUSES):
                                if actionable else None),
         "false_escalation_rate": (statistics.mean(r["claimed_hypothesis"] not in benign for r in harmless)
                                   if harmless else None),
-        "wrong_cause_rate": (statistics.mean(r["claimed_hypothesis"] != r["cause"] for r in claimed)
+        "wrong_cause_rate": (statistics.mean(r["claimed_hypothesis"] != true_cause(r) for r in claimed)
                              if claimed else None),
         "evidence_citation_validity": statistics.mean(cited) if cited else None,
     }

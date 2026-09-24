@@ -1,5 +1,21 @@
 # 更新日志
 
+## 0.6 · 2026-09-24
+
+### 新增
+- **非 oracle 预测表**：`hesp.predictors.EmpiricalEstimator` 与 `scripts/estimate_empirical_tables.py`，只从不含 LLM 的开发回合计数估计 P(o|h,a)；k 档嵌套抽样；冻结文件以 LF 字节写入并记录 SHA256。
+- `build_catalog(oracle=False)` / 环境 `oracle=False`：从结构上保证估计器碰不到生成函数（测试在生成函数被替换为抛异常的条件下通过）。
+- 每个回合记录 `claimed_hypothesis`、`claimed_evidence_ids`、`claim_citation_validity`；`hesp.analysis.security_metrics` 与 `true_cause`（漏判攻击、误升级、错因、未决、引用有效性，仅 sec-triage，描述性）。
+- `scripts/run_v06_study.py`、`scripts/server/run_v06_all.sh`（带按显卡进程清理，以及"先审计、再归档、后停机"的流程）、`scripts/v06_summary.py`（v0.6 数字的唯一来源）。
+- 测试增至 124 项。
+
+### 实验
+- v0.6（RQ3）：预先登记并冻结（修订 R-1 至 R-9），三档模型 × 8 arm × 24 任务 × 3 重复 = **1728 个回合**，源码哈希 `dcf1e79e`，全部通过审计，逐回合日志已归档并核对 SHA256。
+- **主要终点（7B，`emp20 − memory_only`）：+0.875 [+0.736, +0.972]，成立。** 成功率上的 oracle 差距三个模型都是 0，代价是更高的探针成本；这部分差距全部来自开发数据观测不到的"未知原因"那一行（探索性、不含 LLM 的检验）。数据效率曲线在 k=5 饱和，这是靶场近乎确定性所致。见 [RESULTS.md §10](hesp_research/docs/RESULTS.md)。
+
+### 勘误
+- E-6：运行时生成的安全指标把 drift 结论与初始原因比较，结果有误；第一次更正又一律改用 `drift_to`，仍然不对。最终按"结案时实际生效的原因"判定，并加入"通过验证的结论必须等于真因"这条不变式（1728 行全部成立）。运行时的 `report.md` 保留不改，更正后的数字见 `results/v06_summary.md`。
+
 ## 0.5 · 2026-09-24
 
 ### 新增
