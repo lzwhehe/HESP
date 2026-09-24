@@ -6,17 +6,21 @@ from .controller import Budget, MODES, run
 from .environment import CAUSES, SimulatedEnvironment
 from .planner import PosteriorPlanner, ScriptedPlanner, SubprocessPlanner
 from .selectors import SELECTORS, Selector
-from . import webapp
+from . import secapp, uploadapp, webapp
+
+FAMILIES = {"web": webapp, "upload": uploadapp, "sec": secapp}
 
 
 def main():
     parser = argparse.ArgumentParser(description="HESP prototype: one auditable local episode")
-    parser.add_argument("--env", choices=("fixture", "web"), default="fixture",
-                        help="in-process fixture (v0.1) or the loopback web sandbox (v0.3)")
+    parser.add_argument("--env", choices=("fixture", "web", "upload", "sec"), default="fixture",
+                        help="fixture (v0.1), or a loopback sandbox family: web/upload (v0.3-4) or sec (v0.5)")
     parser.add_argument("--mode", choices=MODES, default="hesp")
-    parser.add_argument("--case", choices=sorted(set(CAUSES) | set(webapp.CAUSES)), default="owner_policy")
-    parser.add_argument("--variant", choices=sorted(webapp.VARIANTS), default="base")
-    parser.add_argument("--drift-to", choices=webapp.CAUSES, default="workflow_locked")
+    all_causes = set(CAUSES).union(*(m.CAUSES for m in FAMILIES.values()))
+    parser.add_argument("--case", default="owner_policy",
+                        help="hidden cause; valid values depend on --env (see each family's CAUSES)")
+    parser.add_argument("--variant", choices=("base", "drift", "noise"), default="base")
+    parser.add_argument("--drift-to", default=None, help="cause after drift (drift variant only)")
     parser.add_argument("--selector", choices=SELECTORS, default="eig_cost")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--output", required=True, help="New run directory; never overwrite")
@@ -40,8 +44,15 @@ def main():
         if args.env == "fixture":
             env = SimulatedEnvironment(args.case)
         else:
-            env = webapp.WebDiagEnvironment(args.case, args.variant, args.seed,
-                                            args.drift_to if args.variant == "drift" else None)
+            family = FAMILIES[args.env]
+            env_cls = next(v for k, v in vars(family).items() if isinstance(v, type)
+                           and getattr(v, "family", None) == {"web": "web-diag", "upload": "upload-diag",
+                                                              "sec": "sec-triage"}[args.env])
+            case = args.case if args.case in family.CAUSES else family.CAUSES[0]
+            drift_to = args.drift_to if (args.variant == "drift") else None
+            if args.variant == "drift" and drift_to not in family.CAUSES:
+                drift_to = family.CAUSES[(family.CAUSES.index(case) + 3) % len(family.CAUSES)]
+            env = env_cls(case, args.variant, args.seed, drift_to)
         result = run(env, planner, args.mode, args.output,
                      Budget(args.max_tool_calls, args.max_decisions, args.max_tool_cost, args.max_seconds),
                      selector=Selector(args.selector, args.seed))

@@ -31,12 +31,16 @@ from hesp.controller import Budget
 from hesp.llm import LLMPlanner, LLMPredictor, OpenAICompatClient
 from hesp.predictors import FrozenPredictor, calibration
 from hesp.study import run_suite, write_json
+from hesp.secapp import SecTriageEnvironment, make_sec_env, sec_suite
 from hesp.uploadapp import UploadDiagEnvironment, make_upload_env, upload_suite
 from hesp.webapp import WebDiagEnvironment, make_web_env, web_suite
 from suite_report import write_report
 
 FAMILIES = {"web-diag": (WebDiagEnvironment, web_suite, make_web_env),
-            "upload-diag": (UploadDiagEnvironment, upload_suite, make_upload_env)}
+            "upload-diag": (UploadDiagEnvironment, upload_suite, make_upload_env),
+            "sec-triage": (SecTriageEnvironment, sec_suite, make_sec_env)}
+# v0.4 default: the two families the v0.4 study used; sec-triage (v0.5) is opt-in via --families.
+V04_FAMILIES = ["web-diag", "upload-diag"]
 PRIMARY_FAMILY = "upload-diag"
 COMPARISONS = [
     ("hesp_la_guard", "memory_only"),       # primary endpoint (on the held-out family)
@@ -88,7 +92,7 @@ def main():
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--workers", type=int, default=24)
-    parser.add_argument("--families", nargs="+", default=list(FAMILIES), choices=list(FAMILIES))
+    parser.add_argument("--families", nargs="+", default=V04_FAMILIES, choices=list(FAMILIES))
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--task-stride", type=int, default=1, help="smoke tests only: keep every k-th task")
     args = parser.parse_args()
