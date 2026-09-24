@@ -9,3 +9,7 @@ __pycache__/
 *.key
 dist/
 runs_*.log
+external/excytin/data_anonymized*
+external/excytin/graphs/
+external/excytin/questions/
+external/excytin/
