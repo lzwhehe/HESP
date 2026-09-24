@@ -1,0 +1,219 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "dcf1e79ec1116f9b53bf531b08e59a9a036ac1f83e4732e205e164613a758ce5",
+  "seed": 2026,
+  "repeats": 1,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "react_style": {
+      "mode": "react_style",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "hesp_eigc_guard_designer": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_eigc_guard_emp1": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_1",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_eigc_guard_emp5": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_5",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_eigc_guard_emp20": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_eigc_guard_emp100": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_100",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_eigc_guard_llmp": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sec-base-00",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-drift-04",
+      "family": "sec-triage",
+      "variant": "drift",
+      "cause": "false_positive_monitor",
+      "drift_to": "dns_c2"
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp1"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_designer"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp100"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp5"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_llmp"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp100"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp5"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_llmp"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_designer"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp20"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp20"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard_emp1"
+    }
+  ],
+  "purpose": "v0.6_rq3_study",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "temperature": 0.2,
+  "families": [
+    "sec-triage"
+  ],
+  "primary_family": "sec-triage",
+  "primary_endpoint": "hesp_eigc_guard_emp20_minus_memory_only",
+  "empirical_tables": {
+    "empirical_1": {
+      "file": "empirical_1.json",
+      "sha256": "c2eb5ee783d54170304f116558b6ef9a286ccf9199ff1eaea2eecb26f0ea2a81",
+      "dev_episodes": 16,
+      "cell_coverage": 0.8888888888888888,
+      "skipped_invalid_observations": 9
+    },
+    "empirical_5": {
+      "file": "empirical_5.json",
+      "sha256": "7aa984f1138514a36e3db7774128ce834b271e25ae17a8bb6cb0d8c193e9b2a4",
+      "dev_episodes": 80,
+      "cell_coverage": 0.8888888888888888,
+      "skipped_invalid_observations": 50
+    },
+    "empirical_20": {
+      "file": "empirical_20.json",
+      "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7",
+      "dev_episodes": 320,
+      "cell_coverage": 0.8888888888888888,
+      "skipped_invalid_observations": 231
+    },
+    "empirical_100": {
+      "file": "empirical_100.json",
+      "sha256": "7019884f1793f804a90295f05c80383d010202602b1890fe2b3df0f0d81d5db9",
+      "dev_episodes": 1600,
+      "cell_coverage": 0.8888888888888888,
+      "skipped_invalid_observations": 1024
+    }
+  },
+  "elicitation_file": "v06_smoke_elicitation.json",
+  "elicitation_sha256": "ad49cfe16352a1fbbe798cb0f3349db412f0c905af59f9562e55d527af402b9f",
+  "created_utc": "2026-09-24T12:43:47.297774+00:00"
+}

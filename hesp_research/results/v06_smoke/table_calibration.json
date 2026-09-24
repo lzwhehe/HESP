@@ -1,0 +1,94 @@
+{
+  "empirical_1": {
+    "base": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.1835754692225683,
+      "kl_bits": 0.1627312206186003,
+      "expected_brier": 0.07109099999999996,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "noise": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.24112877053685472,
+      "kl_bits": 0.2019602861266017,
+      "expected_brier": 0.08429099999999995,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "drift": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.1835754692225683,
+      "kl_bits": 0.1627312206186003,
+      "expected_brier": 0.07109099999999996,
+      "argmax_agreement": 0.9444444444444444
+    }
+  },
+  "empirical_5": {
+    "base": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16502913081305515,
+      "kl_bits": 0.1441848822090871,
+      "expected_brier": 0.06717524444444439,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "noise": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.18999378028760563,
+      "kl_bits": 0.15082529587735266,
+      "expected_brier": 0.08027746666666663,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "drift": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16502913081305515,
+      "kl_bits": 0.1441848822090871,
+      "expected_brier": 0.06717524444444439,
+      "argmax_agreement": 0.9444444444444444
+    }
+  },
+  "empirical_20": {
+    "base": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16592024612003248,
+      "kl_bits": 0.14507599751606445,
+      "expected_brier": 0.06750474772622339,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "noise": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.18598729214138152,
+      "kl_bits": 0.14681880773112851,
+      "expected_brier": 0.07902322725838715,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "drift": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16592024612003248,
+      "kl_bits": 0.14507599751606445,
+      "expected_brier": 0.06750474772622339,
+      "argmax_agreement": 0.9444444444444444
+    }
+  },
+  "empirical_100": {
+    "base": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16668822281956164,
+      "kl_bits": 0.14584397421559359,
+      "expected_brier": 0.06784445791079086,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "noise": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.18496904417591042,
+      "kl_bits": 0.1458005597656574,
+      "expected_brier": 0.07862187695972095,
+      "argmax_agreement": 0.9444444444444444
+    },
+    "drift": {
+      "cells": 90,
+      "expected_log_loss_bits": 0.16668822281956164,
+      "kl_bits": 0.14584397421559359,
+      "expected_brier": 0.06784445791079086,
+      "argmax_agreement": 0.9444444444444444
+    }
+  }
+}
