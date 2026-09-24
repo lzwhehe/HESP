@@ -1,0 +1,26 @@
+{
+  "empirical_1": {
+    "file": "empirical_1.json",
+    "sha256": "c2eb5ee783d54170304f116558b6ef9a286ccf9199ff1eaea2eecb26f0ea2a81",
+    "dev_episodes": 16,
+    "cell_coverage": 0.8888888888888888
+  },
+  "empirical_5": {
+    "file": "empirical_5.json",
+    "sha256": "7aa984f1138514a36e3db7774128ce834b271e25ae17a8bb6cb0d8c193e9b2a4",
+    "dev_episodes": 80,
+    "cell_coverage": 0.8888888888888888
+  },
+  "empirical_20": {
+    "file": "empirical_20.json",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7",
+    "dev_episodes": 320,
+    "cell_coverage": 0.8888888888888888
+  },
+  "empirical_100": {
+    "file": "empirical_100.json",
+    "sha256": "7019884f1793f804a90295f05c80383d010202602b1890fe2b3df0f0d81d5db9",
+    "dev_episodes": 1600,
+    "cell_coverage": 0.8888888888888888
+  }
+}

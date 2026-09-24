@@ -22,6 +22,37 @@ def _bootstrap(values, samples, seed):
     return [draws[int((samples - 1) * .025)], draws[int((samples - 1) * .975)]]
 
 
+# Defensive triage causes that a SOC would close as "no action" (PROTOCOL.md v0.6).
+BENIGN_CAUSES = frozenset({"authorized_scan", "false_positive_monitor"})
+
+
+def security_metrics(rows, benign=BENIGN_CAUSES):
+    """Descriptive security-facing rates for one arm (PROTOCOL.md v0.6).
+
+    Pre-registered as descriptive only, never as a primary endpoint. A high unresolved
+    rate is not a safety property: the guard refusing an unsupported claim is not the
+    same thing as the investigation being right, so the two are reported separately.
+    Returns ``None`` for a rate whose denominator is empty.
+    """
+    claimed = [r for r in rows if r.get("claimed_hypothesis")]
+    actionable = [r for r in claimed if r["cause"] not in benign]
+    harmless = [r for r in claimed if r["cause"] in benign]
+    cited = [r["claim_citation_validity"] for r in claimed
+             if r.get("claim_citation_validity") is not None]
+    return {
+        "episodes": len(rows),
+        "episodes_with_a_claim": len(claimed),
+        "unresolved_rate": statistics.mean(not r["verified_simulation"] for r in rows) if rows else None,
+        "missed_attack_rate": (statistics.mean(r["claimed_hypothesis"] in benign for r in actionable)
+                               if actionable else None),
+        "false_escalation_rate": (statistics.mean(r["claimed_hypothesis"] not in benign for r in harmless)
+                                  if harmless else None),
+        "wrong_cause_rate": (statistics.mean(r["claimed_hypothesis"] != r["cause"] for r in claimed)
+                             if claimed else None),
+        "evidence_citation_validity": statistics.mean(cited) if cited else None,
+    }
+
+
 def summarize(rows, bootstrap_samples=2000, seed=42, arms=None, comparisons=None):
     """Summarize a complete paired study.
 
@@ -84,4 +115,9 @@ def summarize(rows, bootstrap_samples=2000, seed=42, arms=None, comparisons=None
         "warning": "Fixture repetitions are deterministic; intervals are pipeline checks, not efficacy evidence.",
         "bootstrap_samples": bootstrap_samples, "bootstrap_seed": seed, "arms": list(arms),
         "modes": summaries, "paired_verification": paired, "paired_tool_cost": paired_cost,
+        # Descriptive only, and only meaningful for the defensive triage family: the benign /
+        # actionable split is defined over sec-triage causes. Absent for older studies.
+        "security_metrics": ({arm: security_metrics(groups[arm]) for arm in arms}
+                             if rows and all(r.get("family") == "sec-triage" and "claimed_hypothesis" in r
+                                             for r in rows) else None),
     }

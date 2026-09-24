@@ -139,14 +139,26 @@ class LoopbackSandbox:
         return table
 
     @classmethod
-    def build_catalog(cls, lag=None):
-        return [Action(p["id"], cls.TARGET, f'{p["method"]} {p["path"]}', p["cost"], cls.likelihood_table(p["id"], lag),
-                       prediction_source="designer_table_eps0.01", description=p["description"],
+    def uniform_table(cls, probe_id):
+        """An uninformed table: every outcome equally likely under every hypothesis."""
+        vocab = list(cls.probe_by_id()[probe_id]["outcome_notes"])
+        return {h: {o: 1.0 / len(vocab) for o in vocab} for h in cls.hypotheses_()}
+
+    @classmethod
+    def build_catalog(cls, lag=None, oracle=True):
+        """Probe catalogue. ``oracle=False`` never calls ``true_outcome_distribution``: it
+        attaches uninformed tables instead, so code that must not see the generative model
+        (the v0.6 empirical estimator) cannot reach it even by accident. Execution only
+        checks an action's identity, so probing behaves identically either way."""
+        table = (lambda pid: cls.likelihood_table(pid, lag)) if oracle else cls.uniform_table
+        source = "designer_table_eps0.01" if oracle else "uninformed_uniform"
+        return [Action(p["id"], cls.TARGET, f'{p["method"]} {p["path"]}', p["cost"], table(p["id"]),
+                       prediction_source=source, description=p["description"],
                        outcome_notes=dict(p["outcome_notes"]))
                 for p in cls.PROBES]
 
     # ---- episode ----------------------------------------------------------------------
-    def __init__(self, cause, variant="base", seed=0, drift_to=None, timeout=5.0):
+    def __init__(self, cause, variant="base", seed=0, drift_to=None, timeout=5.0, oracle=True):
         if cause not in self.CAUSES or variant not in self.VARIANTS:
             raise ValueError("Unknown sandbox fixture")
         if self.VARIANTS[variant]["drift_after"] and (drift_to not in self.CAUSES or drift_to == cause):
@@ -166,7 +178,7 @@ class LoopbackSandbox:
         self._calls = 0
         self._counter = 0
         self._observations = {}
-        self._catalog = {a.id: a for a in self.build_catalog()}
+        self._catalog = {a.id: a for a in self.build_catalog(oracle=oracle)}
 
     def close(self):
         if self._server is not None:

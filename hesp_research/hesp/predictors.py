@@ -1,5 +1,6 @@
 """Sources of the pre-registered predictive model P(o | h, a), and calibration metrics."""
 
+from collections import defaultdict
 import math
 
 
@@ -19,6 +20,55 @@ class FrozenPredictor:
 
     def likelihoods(self, action, hypotheses):
         return self.tables[action.id]
+
+
+class EmpiricalEstimator:
+    """Estimate P(o | h, a) by counting observed outcomes (PROTOCOL.md v0.6, RQ3).
+
+    This is the non-oracle prediction source. It never sees the environment's generative
+    function ``true_outcome_distribution`` -- it only counts what probing actually returned,
+    exactly as a deployment would have to. Unobserved outcomes receive the epsilon share
+    only, so a cell that was never exercised degrades to near-uniform rather than to a
+    confident wrong answer.
+    """
+
+    def __init__(self, eps=0.01):
+        self.eps = eps
+        self.counts = defaultdict(lambda: defaultdict(int))
+        self.episodes = 0
+        self.skipped_invalid = 0
+
+    def snapshot(self):
+        """Independent copy of the current counts (for nested data-efficiency curves)."""
+        copy = EmpiricalEstimator(eps=self.eps)
+        for key, row in self.counts.items():
+            copy.counts[key].update(row)
+        copy.episodes, copy.skipped_invalid = self.episodes, self.skipped_invalid
+        return copy
+
+    def observe(self, action_id, hypothesis, outcome):
+        self.counts[(action_id, hypothesis)][outcome] += 1
+
+    def tables(self, catalog, hypotheses):
+        """Smoothed tables keyed by action id; ``catalog`` supplies each action's vocabulary."""
+        out = {}
+        for action in catalog:
+            vocab = list(action.outcome_notes)
+            rows = {}
+            for h in hypotheses:
+                seen = self.counts.get((action.id, h), {})
+                total = sum(seen.values())
+                row = {o: (seen.get(o, 0) / total if total else 0.0) * (1 - self.eps) + self.eps / len(vocab)
+                       for o in vocab}
+                norm = sum(row.values())
+                rows[h] = {o: v / norm for o, v in row.items()}
+            out[action.id] = rows
+        return out
+
+    def coverage(self, catalog, hypotheses):
+        """Share of (action, hypothesis) cells that were observed at least once."""
+        cells = [(a.id, h) for a in catalog for h in hypotheses]
+        return sum(1 for c in cells if self.counts.get(c)) / len(cells)
 
 
 def calibration(pred_tables, true_fn, hypotheses, action_ids):

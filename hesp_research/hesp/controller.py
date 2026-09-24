@@ -97,6 +97,25 @@ def finish_guard_reasons(ledger, hypothesis, evidence_ids, threshold):
     return reasons
 
 
+def citation_validity(ledger, hypothesis, evidence_ids):
+    """Share of cited observation IDs that exist, are current-state, and support the claim.
+
+    Recorded for every arm, including those without the finish guard, so the security
+    metrics in PROTOCOL.md v0.6 can be computed without re-reading the event journal.
+    Returns None when nothing was cited.
+    """
+    ids = list(evidence_ids or [])
+    if not ids:
+        return None
+    version = ledger.state["version"]
+    by_id = {e["observation_id"]: e for e in ledger.evidence}
+    ok = sum(1 for i in ids
+             if (e := by_id.get(i)) is not None
+             and e["used"] and e["state_version"] == version
+             and e["relations"].get(hypothesis) == "support")
+    return ok / len(ids)
+
+
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
         metadata=None, finish_guard=False, guard_threshold=0.8):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
@@ -145,6 +164,9 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     zero_information_streak = 0
     status = "DECISION_BUDGET_EXCEEDED"
     verified = False
+    claimed_hypothesis = None
+    claimed_evidence_ids = None
+    claim_citation_validity = None
     start = time.monotonic()
     for _ in range(budget.max_decisions):
         if time.monotonic() - start >= budget.max_seconds:
@@ -222,6 +244,9 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                               evidence_ids=decision["evidence_ids"], reasons=reasons)
                 continue
         if decision["kind"] == "finish":
+            claimed_hypothesis = decision["hypothesis"]
+            claimed_evidence_ids = list(decision["evidence_ids"])
+            claim_citation_validity = citation_validity(ledger, claimed_hypothesis, claimed_evidence_ids)
             verified = environment.verify(decision["hypothesis"], decision["evidence_ids"])
             journal.write("independent_verification", passed=verified,
                           hypothesis=decision["hypothesis"], evidence_ids=decision["evidence_ids"])
@@ -303,6 +328,9 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "reported_output_tokens": output_tokens if unknown_usage_calls == 0 else None,
         "usage_unknown_calls": unknown_usage_calls,
         "wall_seconds": round(time.monotonic() - start, 6),
+        "claimed_hypothesis": claimed_hypothesis,
+        "claimed_evidence_ids": claimed_evidence_ids,
+        "claim_citation_validity": claim_citation_validity,
         "final_scores": ledger.scores, "source_sha256": config["source_sha256"],
         "research_claim_allowed": False,
         "warning": config["warning"],

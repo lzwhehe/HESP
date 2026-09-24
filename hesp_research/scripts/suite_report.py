@@ -30,5 +30,16 @@ def write_report(path, title, report, notes=()):
             lines.append(f"| {name} | {v['task_clusters']} | {v['difference']:+.3f} | "
                          f"{ci(v['cluster_bootstrap_percentile_95'])} | {v['tasks_better']} / {v['tasks_worse']} | "
                          f"{c['difference']:+.2f} | {ci(c['cluster_bootstrap_percentile_95'])} |")
+    if report.get("security_metrics"):
+        lines += ["", "## Security-facing metrics (descriptive only; PROTOCOL.md v0.6)", "",
+                  "A guard that refuses an unsupported claim lowers the missed-attack rate by producing "
+                  "no claim at all; read these together with the unresolved rate.", "",
+                  "| Arm | Episodes with a claim | Unresolved | Missed attack | False escalation | "
+                  "Wrong cause | Citation validity |",
+                  "| --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for arm, m in report["security_metrics"].items():
+            lines.append(f"| {arm} | {m['episodes_with_a_claim']} / {m['episodes']} | {fmt(m['unresolved_rate'])} | "
+                         f"{fmt(m['missed_attack_rate'])} | {fmt(m['false_escalation_rate'])} | "
+                         f"{fmt(m['wrong_cause_rate'])} | {fmt(m['evidence_citation_validity'])} |")
     lines += ["", "All failures remain in the denominator; unknown usage stays null.", *notes]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
