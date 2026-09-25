@@ -13,3 +13,5 @@ external/excytin/data_anonymized*
 external/excytin/graphs/
 external/excytin/questions/
 external/excytin/
+external/GUIDE_*.csv
+external/
