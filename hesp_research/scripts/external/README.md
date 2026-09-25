@@ -29,3 +29,11 @@ CSV 分隔符是 `❖`（U+2756），不是逗号。单个事件约 87MB，**不
 
 数据为 Microsoft 演示租户 "Alpine Ski House" 的**合成**攻击数据，其 Transparency Note 明确
 "released for research purposes only"，不得用于商业或真实环境。
+
+## OTRF Security-Datasets（第三个候选）
+
+```bash
+python otrf_alert_audit.py   # 告警文字本身能否区分攻击与正常；数据放在 external/otrf/（不入库）
+```
+
+数据来源、下载清单与结论见 [`docs/EXTERNAL_BENCHMARKS.md`](../../docs/EXTERNAL_BENCHMARKS.md) 末节。`otrf_load.py` 只解析 JSON 日志，不执行其中任何内容。
