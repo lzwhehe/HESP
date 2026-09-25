@@ -1,0 +1,145 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "b7b821b9091ad6fa95371c91ee149b1bba168b2e27dcdb53e41687241d7fe7d0",
+  "seed": 2027,
+  "repeats": 1,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "memory_only_autostop": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "auto_finish": 0.8
+    },
+    "hesp_eigc_blind": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "show_rankings": false
+    },
+    "hesp_eigc_blind_autostop": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    },
+    "hesp_random_blind_autostop": {
+      "mode": "hesp",
+      "selector": "random",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sec-base-00",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-drift-04",
+      "family": "sec-triage",
+      "variant": "drift",
+      "cause": "false_positive_monitor",
+      "drift_to": "dns_c2"
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    }
+  ],
+  "purpose": "v0.9_study",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "temperature": 0.2,
+  "families": [
+    "sec-triage"
+  ],
+  "primary_family": "sec-triage",
+  "table": {
+    "name": "empirical_20",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7"
+  },
+  "created_utc": "2026-09-25T16:52:05.249906+00:00"
+}

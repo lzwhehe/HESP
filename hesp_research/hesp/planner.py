@@ -97,3 +97,19 @@ class PosteriorPlanner:
             return {"kind": "stop", "reason": "No affordable untried probe", "usage": zero}
         return {"kind": "action", "action_id": options[0]["id"], "reason": "Next probe in catalogue order",
                 "usage": zero}
+
+
+class NeverFinishPlanner:
+    """Deterministic stand-in for a planner that never concludes (v0.9; not an LLM, not a baseline).
+
+    Mirrors the v0.8 Llama-3.1-8B behaviour: every decision is an action, never finish or stop.
+    Proposes the next untried probe in catalogue order, and the first probe once all are tried.
+    """
+    name = "never_finish_script"
+
+    def decide(self, request):
+        version = request["state_version"]
+        tried = {(o["action_id"], o["state_version"]) for o in request["history"]}
+        options = [t for t in request["tools"] if (t["id"], version) not in tried] or request["tools"]
+        return {"kind": "action", "action_id": options[0]["id"], "reason": "Never concludes",
+                "usage": {"input_tokens": 0, "output_tokens": 0}}

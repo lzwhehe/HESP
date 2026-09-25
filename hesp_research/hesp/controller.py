@@ -117,10 +117,29 @@ def citation_validity(ledger, hypothesis, evidence_ids):
     return ok / len(ids)
 
 
+def controller_claim(ledger, threshold, max_citations=3):
+    """Controller-side stop (v0.9): the claim the controller makes on its own, or None.
+
+    Same acceptance rule as the state-guarded finish: the current-state leader has score at
+    least ``threshold`` and at least one used, current-state observation supports it. Cites the
+    most recent such observations. Only the ledger is consulted - never the hidden cause.
+    """
+    top = max(sorted(ledger.scores), key=lambda h: ledger.scores[h])
+    if ledger.scores[top] < threshold:
+        return None
+    version = ledger.state["version"]
+    support = [e["observation_id"] for e in reversed(ledger.evidence)
+               if e["used"] and e["state_version"] == version and e["relations"].get(top) == "support"]
+    return (top, support[:max_citations]) if support else None
+
+
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
-        metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True):
+        metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True, auto_finish=None):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
-    ``finish_guard`` rejects finish claims not backed by current-state ledger evidence."""
+    ``finish_guard`` rejects finish claims not backed by current-state ledger evidence;
+    ``auto_finish`` (a threshold) lets the controller conclude by ``controller_claim`` before
+    each planner call and when a tool or decision budget runs out; the planner may still
+    finish or stop earlier on its own."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
@@ -153,7 +172,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "version": __version__, "mode": mode, "arm": arm or mode, "planner": planner.name,
         "selector": selector.name, "prediction_source": getattr(predictor, "source", "designer_table"),
         "finish_guard": finish_guard, "guard_threshold": guard_threshold if finish_guard else None,
-        "show_rankings": show_rankings,
+        "show_rankings": show_rankings, "auto_finish": auto_finish,
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -174,6 +193,28 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     claimed_hypothesis = None
     claimed_evidence_ids = None
     claim_citation_validity = None
+    finished_by = None
+    max_citations = getattr(environment, "max_citations", 3)
+
+    def conclude(hypothesis, evidence_ids, by):
+        nonlocal claimed_hypothesis, claimed_evidence_ids, claim_citation_validity, verified, status, finished_by
+        claimed_hypothesis = hypothesis
+        claimed_evidence_ids = list(evidence_ids)
+        claim_citation_validity = citation_validity(ledger, hypothesis, claimed_evidence_ids)
+        verified = environment.verify(hypothesis, claimed_evidence_ids)
+        finished_by = by
+        journal.write("independent_verification", passed=verified, hypothesis=hypothesis,
+                      evidence_ids=claimed_evidence_ids, finished_by=by)
+        status = "VERIFIED_SIMULATION" if verified else "UNVERIFIED_CLAIM"
+
+    def controller_stop():
+        claim = controller_claim(ledger, auto_finish, max_citations) if auto_finish is not None else None
+        if claim:
+            journal.write("controller_finish", hypothesis=claim[0], evidence_ids=claim[1],
+                          scores=ledger.scores, threshold=auto_finish)
+            conclude(*claim, by="controller")
+        return bool(claim)
+
     start = time.monotonic()
     for _ in range(budget.max_decisions):
         if time.monotonic() - start >= budget.max_seconds:
@@ -183,6 +224,8 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
             replan_signals += 1
             journal.write("replan_signal", reason="state_version_changed", new_state=ledger.state,
                           policy="Reset current scores; keep historical evidence")
+        if controller_stop():
+            break
         rankings = []
         for action in catalog:
             fingerprint = action.fingerprint(ledger.state["version"])
@@ -255,13 +298,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                               evidence_ids=decision["evidence_ids"], reasons=reasons)
                 continue
         if decision["kind"] == "finish":
-            claimed_hypothesis = decision["hypothesis"]
-            claimed_evidence_ids = list(decision["evidence_ids"])
-            claim_citation_validity = citation_validity(ledger, claimed_hypothesis, claimed_evidence_ids)
-            verified = environment.verify(decision["hypothesis"], decision["evidence_ids"])
-            journal.write("independent_verification", passed=verified,
-                          hypothesis=decision["hypothesis"], evidence_ids=decision["evidence_ids"])
-            status = "VERIFIED_SIMULATION" if verified else "UNVERIFIED_CLAIM"
+            conclude(decision["hypothesis"], decision["evidence_ids"], by="planner")
             break
         proposed_id = decision["action_id"]
         if proposed_id not in action_map:
@@ -328,6 +365,16 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
             journal.write("replan_signal", reason=entry["skip_reason"] or "no_modeled_information",
                           note="v0.1 reranks existing catalog; does not generate new hypotheses")
             zero_information_streak = 0
+    else:
+        # Decision budget spent; the last observation has not been looked at by the controller
+        # yet. Arms without auto_finish keep their pre-v0.9 behaviour exactly.
+        if auto_finish is not None and ledger.set_state(environment.state()):
+            replan_signals += 1
+            journal.write("replan_signal", reason="state_version_changed", new_state=ledger.state,
+                          policy="Reset current scores; keep historical evidence")
+        controller_stop()
+    if finished_by is None and status in {"TOOL_BUDGET_EXCEEDED", "NO_LEGAL_ACTION"}:
+        controller_stop()
     result = {
         "mode": mode, "arm": arm or mode, "planner": planner.name, "selector": selector.name,
         "prediction_source": config["prediction_source"], "environment": environment.label,
@@ -341,7 +388,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "wall_seconds": round(time.monotonic() - start, 6),
         "claimed_hypothesis": claimed_hypothesis,
         "claimed_evidence_ids": claimed_evidence_ids,
-        "claim_citation_validity": claim_citation_validity,
+        "claim_citation_validity": claim_citation_validity, "finished_by": finished_by,
         "final_scores": ledger.scores, "source_sha256": config["source_sha256"],
         "research_claim_allowed": False,
         "warning": config["warning"],

@@ -45,6 +45,12 @@ def audit_run(directory):
         elif kind == "evidence_update":
             if event["evidence"]["observation_id"] not in observations:
                 errors.append("Evidence refers to an unseen observation")
+        elif kind == "controller_finish":
+            scores = event["scores"]
+            if scores.get(event["hypothesis"], 0.0) < event["threshold"] or                     scores.get(event["hypothesis"], 0.0) < max(scores.values()):
+                errors.append("Controller finish below threshold or not the leading hypothesis")
+            if not event["evidence_ids"] or not set(event["evidence_ids"]) <= observations:
+                errors.append("Controller finish cites absent evidence")
         elif kind == "independent_verification":
             verification = event["passed"] is True
             if verification and (not event["evidence_ids"] or not set(event["evidence_ids"]) <= observations):
