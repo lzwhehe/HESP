@@ -118,7 +118,7 @@ def citation_validity(ledger, hypothesis, evidence_ids):
 
 
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
-        metadata=None, finish_guard=False, guard_threshold=0.8):
+        metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
     ``finish_guard`` rejects finish claims not backed by current-state ledger evidence."""
     if mode not in MODES:
@@ -153,6 +153,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "version": __version__, "mode": mode, "arm": arm or mode, "planner": planner.name,
         "selector": selector.name, "prediction_source": getattr(predictor, "source", "designer_table"),
         "finish_guard": finish_guard, "guard_threshold": guard_threshold if finish_guard else None,
+        "show_rankings": show_rankings,
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -212,8 +213,12 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         if mode != "react_style":
             request["investigation"] = ledger.public()
         if mode == "hesp":
-            request["action_rankings"] = rankings
+            # show_rankings=False (v0.8 "blind" arms): the planner gets the same information under
+            # every selector -- that the controller picks, and whether any legal probe is left --
+            # so selector comparisons no longer leak the EIG ranking to the planner (errata E-4).
+            request["action_rankings"] = rankings if show_rankings else None
             request["selection_policy"] = f"Controller selects legal actions by '{selector.name}'"
+            request["no_legal_probe_left"] = not rankings
         # Serialize snapshot before external code can mutate the request.
         journal.write("planner_request", request=request)
         decisions += 1

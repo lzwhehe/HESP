@@ -95,7 +95,8 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
     random.Random(seed).shuffle(schedule)
     arm_specs = {name: {"mode": s["mode"], "selector": s.get("selector", "eig_cost"),
                         "prediction_source": getattr(s.get("predictor"), "source", "designer_table"),
-                        "planner": s["planner"](0).name, "finish_guard": bool(s.get("finish_guard"))}
+                        "planner": s["planner"](0).name, "finish_guard": bool(s.get("finish_guard")),
+                        **({"show_rankings": False} if s.get("show_rankings") is False else {})}
                  for name, s in arms.items()}
     manifest = {
         "schema": "hesp.suite.v1", "source_sha256": source_hash(), "seed": seed, "repeats": repeats,
@@ -142,7 +143,8 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
             result = run(env, spec["planner"](s), spec["mode"], output / folder, budget,
                          predictor=spec.get("predictor"), selector=Selector(spec.get("selector", "eig_cost"), s),
                          arm=cell["arm"], metadata={"task_id": cell["task_id"], "repeat": cell["repeat"]},
-                         finish_guard=bool(spec.get("finish_guard")))
+                         finish_guard=bool(spec.get("finish_guard")),
+                         show_rankings=spec.get("show_rankings", True))
         finally:
             env.close()
         row = {**task_map[cell["task_id"]], **cell, **result, "run_directory": folder}

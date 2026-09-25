@@ -190,6 +190,13 @@ def render_request(request):
         lines.append(f"If you reply kind=action, the controller picks the probe itself: "
                      f"{request.get('selection_policy', 'controller selection')}. "
                      f"Your action_id is not guaranteed to be the one executed.")
+    elif request.get("mode") == "hesp":
+        # Blind arm (v0.8): identical text whatever the selector -- no ranking, no selector name.
+        lines += ["", "## Probe selection",
+                  "If you reply kind=action, the controller picks the probe itself; "
+                  "your action_id is not guaranteed to be the one executed."]
+        if request.get("no_legal_probe_left"):
+            lines.append("(no legal probe left)")
     if request.get("blocked_proposals"):
         lines += ["", "## Controller feedback"]
         for b in request["blocked_proposals"]:
