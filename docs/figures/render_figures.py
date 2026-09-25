@@ -51,6 +51,37 @@ def render(svg_path, scale=2):
     print(png)
 
 
+CHECK_JS = """
+<script>
+const bad = [];
+document.querySelectorAll('text[data-fit]').forEach(t => {
+  const [a, z] = t.dataset.fit.split(',').map(Number);
+  const b = t.getBBox();
+  if (b.x < a - 4 || b.x + b.width > z + 4)
+    bad.push(t.textContent.trim() + ' | ' + b.x.toFixed(1) + '..' + (b.x + b.width).toFixed(1) + ' not in ' + a + '..' + z);
+});
+document.body.setAttribute('data-overflow', JSON.stringify(bad));
+</script>"""
+
+
+def check_fit(svg_path):
+    """Measure every <text data-fit="x0,x1"> in headless Chrome (the renderer used for the
+    PDF/PNG) and return the ones whose rendered box leaves its allowed span."""
+    import json
+    svg = Path(svg_path).read_text(encoding="utf-8")
+    with tempfile.TemporaryDirectory() as tmp:
+        page = Path(tmp) / "check.html"
+        page.write_text(f"<!doctype html><html><head><meta charset='utf-8'></head><body>{svg}{CHECK_JS}</body></html>",
+                        encoding="utf-8")
+        dom = subprocess.run([browser(), "--headless=new", "--disable-gpu", "--no-sandbox",
+                              f"--user-data-dir={Path(tmp) / 'profile'}", "--virtual-time-budget=3000",
+                              "--dump-dom", page.as_uri()], capture_output=True, timeout=120).stdout
+    match = re.search(rb'data-overflow="([^"]*)"', dom)
+    if not match:
+        raise SystemExit("render check failed: Chrome returned no measurement")
+    return json.loads(match.group(1).decode("utf-8").replace("&quot;", '"').replace("&amp;", "&"))
+
+
 if __name__ == "__main__":
     for arg in sys.argv[1:]:
         render(arg)

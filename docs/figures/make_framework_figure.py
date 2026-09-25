@@ -1,86 +1,100 @@
-"""HESP framework figure (paper mechanism figure, formal-roman preset).
+"""HESP framework figure: the method shown as two real investigations, side by side.
 
-Output: docs/assets/hesp-framework.svg. Render to PDF/PNG with
-    python docs/figures/render_figures.py docs/assets/hesp-framework.svg
+Output: docs/assets/hesp-framework.svg (render PDF/PNG with render_figures.py).
 
-Every number in the figure is computed here from the code, not typed in: the script
-replays one real sec-triage episode (task sec-base-00, hidden cause credential_stuffing)
-with the non-oracle table counted from 20 development episodes per (cause, variant)
-(results/v06_tables/empirical_20.json), the EIG/cost selector, and the finish guard. The
-posterior values, the t=0 ranking, the planner's overridden proposal, the executed probe
-and its outcome all come from that episode's journal.
+The same alert (sec-triage task sec-base-00, hidden cause credential_stuffing), the same
+local Qwen2.5-7B planner, the same probes, budget and verifier -- one run where the planner
+chooses every probe (Memory-only) and one where the HESP controller chooses and the planner
+only concludes. Rows are decision steps. Everything is read from the v0.6 per-episode
+journals inside results/v06_7b/runs_archive.tar.gz (repeat 0 of both arms), and the
+72-episode totals from results/v06_7b/outcomes.jsonl; nothing is typed in by hand.
 
-Design: 7.0 in final width on a 1536 px canvas (1 pt = 3.048 px); Times New Roman for text,
-Consolas only for code identifiers. Blue = the HESP controller (the contribution), red =
-the trust boundary the planner cannot see, neutral = the LLM planner and the inputs.
-Every text element records the box it must fit in; ``--check`` measures the rendered text
-in headless Chrome (the same renderer as the PDF/PNG) and fails on any overflow.
+Design: 7.0 in full-width float on a 1536 px canvas (1 pt = 3.048 px); Times New Roman,
+Consolas for probe and outcome identifiers. ``--check`` measures every text element in
+headless Chrome and fails on overflow.
 """
 import argparse
 import json
 from pathlib import Path
-import re
-import subprocess
 import sys
-import tempfile
+import tarfile
 from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parents[2]
-CODE = ROOT / "hesp_research"
-sys.path.insert(0, str(CODE))
+RUN = ROOT / "hesp_research" / "results" / "v06_7b"
+sys.path.insert(0, str(ROOT / "hesp_research"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from hesp.controller import Budget, run                      # noqa: E402
-from hesp.planner import PosteriorPlanner                    # noqa: E402
-from hesp.predictors import FrozenPredictor                  # noqa: E402
-from hesp.secapp import HYPOTHESES, SecTriageEnvironment, make_sec_env, sec_suite   # noqa: E402
-from hesp.selectors import Selector                          # noqa: E402
-from hesp.study import cell_seed                             # noqa: E402
-from render_figures import browser                           # noqa: E402
+from hesp.secapp import HYPOTHESES, SecTriageEnvironment   # noqa: E402
 
 OUT = ROOT / "docs" / "assets" / "hesp-framework.svg"
-W, H = 1536, 752
+TASK, REPEAT = "sec-base-00", 0
+ARMS = ("memory_only", "hesp_eigc_guard_emp20")
+W = 1536
 SERIF = "'Times New Roman', Times, serif"
 MONO = "Consolas, 'DejaVu Sans Mono', monospace"
-# ccfa_ink roles
-INK, INK2, MUTED, RULE = "#111827", "#374151", "#6B7280", "#9CA3AF"
-BLUE, BLUE_TINT, BLUE_EDGE = "#1D4ED8", "#EEF3FD", "#C9D8F7"
+INK, INK2, MUTED, RULE, TRACK = "#111827", "#374151", "#6B7280", "#D1D5DB", "#EEF0F3"
+BLUE, BLUE_TINT = "#1D4ED8", "#EEF3FD"
 RED, RED_TINT = "#BE123C", "#FDF2F4"
-GREEN = "#059669"
-# type scale at 7.0 in (pt x 3.048 px): headings 10.2 pt, labels 8.2 pt, secondary >= 7.5 pt,
-# code identifiers 7.2 pt (Consolas has a larger x-height than Times at the same size)
-H1, LABEL, CODE_PX = 31, 25, 22
-PAD = 16
-
-TASK_ID, REPEAT, SEED = "sec-base-00", 1, 2026
-TABLE = CODE / "results" / "v06_tables" / "empirical_20.json"
+GREEN, GREEN_TINT = "#047857", "#ECFDF5"
+TITLE, LABEL, SMALL, CODE = 29, 25, 23, 22
 
 
-# ---------------------------------------------------------------- episode replay
-def replay():
-    tables = json.loads(TABLE.read_text(encoding="utf-8"))["tables"]
-    task = next(t for t in sec_suite() if t["task_id"] == TASK_ID)
-    seed = cell_seed(SEED, TASK_ID, REPEAT)
-    with tempfile.TemporaryDirectory() as tmp:
-        with make_sec_env(task, seed) as env:
-            result = run(env, PosteriorPlanner(), "hesp", Path(tmp) / "r", Budget(10, 12, 10, 900),
-                         predictor=FrozenPredictor(tables, "empirical_20"), selector=Selector("eig_cost", seed),
-                         finish_guard=True)
-        with (Path(tmp) / "r" / "events.jsonl").open(encoding="utf-8") as stream:
-            events = [json.loads(line) for line in stream]
-    requests = [e["request"] for e in events if e["kind"] == "planner_request"]
-    decisions = [e["decision"] for e in events if e["kind"] == "planner_decision"]
-    executed = [e["action"]["id"] for e in events if e["kind"] == "prediction_registered"]
-    observations = [e["observation"] for e in events if e["kind"] == "observation"]
-    posteriors = [{h["id"]: h["score"] for h in r["investigation"]["hypotheses"]} for r in requests]
-    assert result["verified_simulation"] and result["claimed_hypothesis"] == task["cause"]
-    assert decisions[0]["kind"] == "action" and decisions[0]["action_id"] != executed[0], \
-        "the figure shows the planner's proposal being overridden; the replay no longer shows that"
-    return {"task": task, "result": result, "rank0": requests[0]["action_rankings"],
-            "proposed0": decisions[0]["action_id"], "executed": executed, "obs": observations,
-            "post": posteriors}
+# ---------------------------------------------------------------- data
+def journal(arm):
+    with tarfile.open(RUN / "runs_archive.tar.gz") as tar:
+        name = next(m.name for m in tar.getmembers()
+                    if m.name.endswith("events.jsonl") and f"_{TASK}_{REPEAT}_{arm}/" in m.name)
+        return [json.loads(line) for line in tar.extractfile(name).read().decode("utf-8").splitlines()]
 
 
-# ---------------------------------------------------------------- svg helpers
+def steps(events, cause):
+    """One record per planner decision: what was proposed, what ran, what came back."""
+    out, cur, spent, belief, status = [], None, 0, None, None
+    for e in events:
+        k = e["kind"]
+        if k == "planner_request":
+            ranks = e["request"].get("action_rankings")
+            cur = {"ranks": {r["action_id"]: r["score"] for r in ranks} if ranks is not None else None,
+                   "no_legal": ranks == [], "belief_before": belief}
+            out.append(cur)
+        elif k == "planner_decision":
+            d = e["decision"]
+            cur["kind"], cur["proposed"] = d["kind"], d.get("action_id") or d.get("hypothesis")
+            cur["cited"] = d.get("evidence_ids")
+        elif k == "action_blocked":
+            cur["blocked"] = e["reason"]
+        elif k == "prediction_registered":
+            cur["ran"], cur["cost"] = e["action"]["id"], e["action"]["cost"]
+            spent += e["action"]["cost"]
+            cur["spent"] = spent
+        elif k == "observation":
+            cur["obs"], cur["outcome"] = e["observation"]["id"], e["observation"]["outcome"]
+        elif k == "evidence_update":
+            belief = e["evidence"]["after"][cause]
+            cur["belief"] = belief
+        elif k == "independent_verification":
+            cur["verified"] = e["passed"]
+        elif k == "run_finished":
+            status = e["result"]["status"]
+    for s in out:
+        s.setdefault("belief", s["belief_before"])
+    return out, status
+
+
+def gather():
+    with (RUN / "outcomes.jsonl").open(encoding="utf-8") as stream:
+        rows = [json.loads(line) for line in stream]
+    cause = next(r for r in rows if r["task_id"] == TASK)["cause"]
+    runs = {}
+    for arm in ARMS:
+        s, status = steps(journal(arm), cause)
+        runs[arm] = {"steps": s, "status": status,
+                     "verified_total": sum(r["verified_simulation"] for r in rows if r["arm"] == arm),
+                     "n": sum(1 for r in rows if r["arm"] == arm)}
+    return cause, runs
+
+
+# ---------------------------------------------------------------- svg primitives
 parts = []
 
 
@@ -88,302 +102,203 @@ def add(s):
     parts.append(s)
 
 
-def rect(x0, y0, x1, y1, fill="#FFFFFF", stroke=RULE, sw=1.5, rx=4, dash=None, opacity=None):
+def text(x, y, s, fit, size=LABEL, weight=400, anchor="start", color=INK, family=SERIF, style="normal", raw=False):
+    body = s if raw else escape(s)
+    add(f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{size}" font-weight="{weight}" '
+        f'font-style="{style}" fill="{color}" text-anchor="{anchor}" data-fit="{fit[0]:.1f},{fit[1]:.1f}">{body}</text>')
+
+
+def rect(x, y, w, h, fill, stroke="none", sw=0, rx=0, dash=None):
     d = f' stroke-dasharray="{dash}"' if dash else ""
-    o = f' fill-opacity="{opacity:.3f}"' if opacity is not None else ""
-    add(f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" rx="{rx}" fill="{fill}"{o} '
+    add(f'<rect x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" height="{h:.1f}" rx="{rx}" fill="{fill}" '
         f'stroke="{stroke}" stroke-width="{sw}"{d}/>')
 
 
-def text(x, y, content, fit, size=LABEL, weight=400, anchor="start", color=INK, family=SERIF,
-         style="normal", raw=False):
-    """``fit`` = (x0, x1) that the rendered text must stay inside (checked by --check)."""
-    body = content if raw else escape(content)
-    add(f'<text x="{x}" y="{y}" font-family="{family}" font-size="{size}" font-weight="{weight}" '
-        f'font-style="{style}" fill="{color}" text-anchor="{anchor}" data-fit="{fit[0]},{fit[1]}">{body}</text>')
+def line(x1, y1, x2, y2, color, sw=1.5, dash=None):
+    d = f' stroke-dasharray="{dash}"' if dash else ""
+    add(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{color}" stroke-width="{sw}"{d}/>')
 
 
-def i(s):
-    """Italic math variable."""
-    return f'<tspan font-style="italic">{escape(s)}</tspan>'
+def check(x, y, color, s=1.0):
+    add(f'<path d="M{x:.1f},{y:.1f} l{7 * s:.1f},{8 * s:.1f} l{14 * s:.1f},{-17 * s:.1f}" fill="none" '
+        f'stroke="{color}" stroke-width="{3 * s:.1f}" stroke-linecap="round" stroke-linejoin="round"/>')
 
 
-def sub(base, index, size):
-    return (f'{i(base)}<tspan baseline-shift="sub" font-size="{round(size * 0.68)}">{escape(index)}</tspan>')
-
-
-def path(points, color=INK2, sw=2.0, dash=None, marker="ink"):
-    d = " ".join(f"{'M' if k == 0 else 'L'}{x},{y}" for k, (x, y) in enumerate(points))
-    dd = f' stroke-dasharray="{dash}"' if dash else ""
-    add(f'<path d="{d}" fill="none" stroke="{color}" stroke-width="{sw}"{dd} marker-end="url(#arrow-{marker})" '
-        f'stroke-linejoin="round"/>')
-
-
-def defs():
-    add("<defs>")
-    for name, color in (("ink", INK2), ("blue", BLUE), ("red", RED), ("green", GREEN), ("muted", MUTED)):
-        add(f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" '
-            f'markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{color}"/></marker>')
-    add("</defs>")
-
-
-def prob(p):
-    """Two decimals without the leading zero; values below .01 keep three."""
-    return f"{p:.3f}"[1:] if p < 0.01 else f"{p:.2f}"[1:]
+def belief_txt(p):
+    return "≈1" if p >= 0.995 else f"{p:.2f}"[1:]
 
 
 # ---------------------------------------------------------------- figure
-def build(ep):
+def build(cause, runs):
+    step_count = max(len(runs[a]["steps"]) for a in ARMS)
+    ROW = 48
+    Y_ROWS = 336
+    H = Y_ROWS + step_count * ROW + 172
     add(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">')
-    defs()
     add(f'<rect width="{W}" height="{H}" fill="#FFFFFF"/>')
 
-    # anchors: three columns (inputs | HESP controller | trust boundary), three rows
-    A0, A1 = 48, 368                      # inputs
-    C0, C1 = 400, 1164                    # controller tint; lane C0..B0 carries the update edge
-    B0, B1 = 424, 1140                    # controller boxes
-    PI1, GD0 = 700, 860                   # planner right edge, guard left edge (gap holds typed edges)
-    POST1, SEL0 = 842, 866                # posterior | selector
-    T0, T1 = 1194, 1488                   # trust boundary
-    TB0, TB1 = 1210, 1472                 # trust boxes
-    R0, R1 = 48, 196                      # decision row
-    L0, L1 = 232, 448                     # posterior / selector row
-    P0, P1 = 472, 556                     # predictive model
-    E0, E1 = 580, 690                     # evidence ledger
-    GBOT = 726                            # bottom of both containers
+    L0, L1 = 48, 740          # Memory-only column
+    S0, S1 = 740, 796         # step spine
+    R0, R1 = 796, 1488        # HESP column
 
-    # containers: the controller tint wraps the loop and reaches up around the guard
-    add(f'<path d="M{C0},{L0 - 12} L{GD0 - 12},{L0 - 12} L{GD0 - 12},36 L{C1},36 L{C1},{GBOT} '
-        f'L{C0},{GBOT} Z" fill="{BLUE_TINT}" stroke="{BLUE_EDGE}" stroke-width="1.5"/>')
-    rect(T0, 36, T1, GBOT, fill=RED_TINT, stroke=RED, sw=1.6, rx=6, dash="7 5")
-    text(C0 + 14, GBOT - 12, "HESP controller", (C0, C1), LABEL, 700, color=BLUE)
-    text(T0 + 16, GBOT - 12, "Hidden from π", (T0, T1), LABEL, color=RED, style="italic")
+    # ---- shared setting (identical for both runs)
+    case = SecTriageEnvironment.STATE_FIELDS["case"]
+    add(f'<text x="48" y="64" font-family="{SERIF}" font-size="{TITLE}" fill="{INK}" data-fit="48,1488">'
+        f'<tspan font-weight="700">Alert {escape(case)}</tspan>'
+        f'<tspan fill="{INK2}" font-size="{LABEL}">   spike in authentication failures and 4xx/5xx errors '
+        f'on the web tier, last hour</tspan></text>')
+    add(f'<text x="48" y="102" font-family="{SERIF}" font-size="{SMALL}" fill="{INK2}" data-fit="48,1488">'
+        f'{len(HYPOTHESES) - 1} candidate causes + other; hidden true cause '
+        f'<tspan font-family="{MONO}" font-size="{CODE}" fill="{RED}">{escape(cause)}</tspan></text>')
+    text(48, 132, "Both runs: the same Qwen2.5-7B planner, read-only probes, budget (10 cost units, 12 decisions) "
+         "and independent verifier", (48, 1488), SMALL, color=INK2)
+    line(48, 156, 1488, 156, RULE, 1.2)
 
-    # ---- inputs
-    rect(A0, R0, A1, R1, stroke=INK2)
-    fa = (A0 + PAD, A1 - PAD)
-    text(A0 + PAD, R0 + 36, "Alert τ", fa, H1, 700)
-    text(A1 - PAD, R0 + 36, SecTriageEnvironment.STATE_FIELDS["case"], fa, CODE_PX, family=MONO,
-         color=MUTED, anchor="end")
-    for k, s in enumerate(("Spike in auth failures", "and 4xx/5xx errors on", "the web tier, last hour")):
-        text(A0 + PAD, R0 + 74 + k * 30, s, fa, LABEL, color=INK2)
+    # ---- column headers
+    text(L0, 202, "The planner chooses every probe", (L0, L1), TITLE, 700, color=INK)
+    text(L0, 236, "Memory-only: π reads the evidence ledger and", (L0, L1), SMALL, color=INK2)
+    text(L0, 264, "picks the next probe itself.", (L0, L1), SMALL, color=INK2)
+    text(R0, 202, "The controller chooses, the planner concludes", (R0, R1), TITLE, 700, color=BLUE)
+    add(f'<text x="{R0}" y="236" font-family="{SERIF}" font-size="{SMALL}" fill="{INK2}" data-fit="{R0},{R1}">'
+        f'HESP: probes are picked by argmax EIG/<tspan font-style="italic">c</tspan> over legal, unseen probes;</text>')
+    text(R0, 264, "π proposes and concludes; a guard and the verifier check the verdict.", (R0, R1), SMALL,
+         color=INK2)
 
-    rect(A0, L0, A1, E1, stroke=INK2)
-    add(f'<text x="{A0 + PAD}" y="{L0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" fill="{INK}" '
-        f'data-fit="{fa[0]},{fa[1]}">Hypotheses {i("H")}</text>')
-    cause = ep["task"]["cause"]
-    for k, h in enumerate(HYPOTHESES):
-        strong = h == cause
-        text(A0 + PAD, L0 + 78 + k * 36, h, fa, CODE_PX, 700 if strong else 400, family=MONO,
-             color=INK if strong else INK2)
-    text(A0 + PAD, E1 - 44, f"uniform prior 1/{len(HYPOTHESES)};", fa, LABEL - 2, color=MUTED, style="italic")
-    text(A0 + PAD, E1 - 16, "other = unknown cause", fa, LABEL - 2, color=MUTED, style="italic")
+    # sub-column anchors (same offsets in both columns)
+    def cols(c0):
+        return {"chip": c0 + 4, "eig": c0 + 446, "cost": c0 + 506, "spent": c0 + 548, "used_r": c0 + 604,
+                "bar": c0 + 614, "bar_w": 50, "val": c0 + 692}
+    for c0, c1, hesp in ((L0, L1, False), (R0, R1, True)):
+        k = cols(c0)
+        y = Y_ROWS - 26
+        text(k["chip"], y, "probe → observed outcome", (c0, k["eig"] - 8), SMALL - 1, color=MUTED, style="italic")
+        if hesp:
+            text(k["eig"], y, "EIG/c", (k["eig"] - 6, k["cost"] - 4), SMALL - 1, color=BLUE, style="italic")
+        text(k["cost"], y, "cost", (k["cost"] - 4, k["spent"] - 2), SMALL - 1, color=MUTED, style="italic")
+        text(k["used_r"], y, "used", (k["spent"] - 4, k["bar"] - 2), SMALL - 1, anchor="end", color=MUTED,
+             style="italic")
+        add(f'<text x="{k["val"]}" y="{y}" font-family="{SERIF}" font-size="{SMALL - 1}" fill="{MUTED}" '
+            f'font-style="italic" text-anchor="end" data-fit="{k["bar"] - 4},{c1 + 4}">'
+            f'p(<tspan font-family="{MONO}" font-size="{CODE - 4}" font-style="normal">h</tspan>*)</text>')
+        line(c0, Y_ROWS - 14, c1, Y_ROWS - 14, RULE, 1.2)
+    text((S0 + S1) / 2, Y_ROWS - 26, "step", (S0 - 4, S1 + 4), SMALL - 1, anchor="middle", color=MUTED,
+         style="italic")
 
-    # ---- LLM planner (neutral: consulted, not the contribution)
-    rect(B0, R0, PI1, R1, stroke=INK, sw=1.8)
-    fp = (B0 + PAD, PI1 - PAD)
-    text(B0 + PAD, R0 + 36, "LLM planner π", fp, H1, 700)
-    text(B0 + PAD, R0 + 74, "Qwen2.5 7B–72B, local", fp, LABEL, color=INK2, style="italic")
-    text(B0 + PAD, R0 + 104, "one decision per step", fp, LABEL - 2, color=INK2)
-    add(f'<text x="{B0 + PAD}" y="{R0 + 134}" font-family="{MONO}" font-size="{CODE_PX}" fill="{INK2}" '
-        f'data-fit="{fp[0]},{fp[1]}">stop <tspan font-family="{SERIF}" font-size="{LABEL - 2}">→ unresolved</tspan></text>')
+    # ---- decision rows
+    for i in range(step_count):
+        y = Y_ROWS + i * ROW
+        if i % 2 == 0:
+            rect(L0, y, R1 - L0, ROW, "#F9FAFB")
+        text((S0 + S1) / 2, y + 32, str(i + 1), (S0, S1), SMALL, anchor="middle", color=MUTED)
 
-    # ---- finish guard (part of the controller)
-    rect(GD0, R0, B1, R1, stroke=BLUE, sw=1.8)
-    fg = (GD0 + PAD, B1 - PAD)
-    text(GD0 + PAD, R0 + 36, "Finish guard", fg, H1, 700, color=BLUE)
-    text(GD0 + PAD, R0 + 72, "cites current-state", fg, LABEL, color=INK2)
-    text(GD0 + PAD, R0 + 100, "evidence for ĥ and", fg, LABEL, color=INK2)
-    add(f'<text x="{GD0 + PAD}" y="{R0 + 130}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
-        f'data-fit="{fg[0]},{fg[1]}">{sub("p", "t", LABEL)}({i("ĥ")}) ≥ 0.8</text>')
+    for arm, c0, c1, hesp in ((ARMS[0], L0, L1, False), (ARMS[1], R0, R1, True)):
+        k = cols(c0)
+        cited_ids = {c for s in runs[arm]["steps"] if s.get("kind") == "finish" for c in (s.get("cited") or [])}
+        for i, s in enumerate(runs[arm]["steps"]):
+            y = Y_ROWS + i * ROW
+            base = y + 32
+            if s.get("kind") == "finish":
+                ok = s.get("verified")
+                w = len("finish") * 12.2 + 20
+                rect(k["chip"], y + 7, w, ROW - 14, GREEN_TINT if ok else RED_TINT, GREEN if ok else RED, 1.5, 4)
+                text(k["chip"] + 10, base, "finish", (k["chip"] + 4, k["chip"] + w), CODE, 700,
+                     family=MONO, color=GREEN if ok else RED)
+                ox = k["chip"] + w + 10
+                add(f'<text x="{ox:.1f}" y="{base}" font-family="{SERIF}" font-size="{SMALL}" fill="{INK2}" '
+                    f'data-fit="{ox - 2:.1f},{k["eig"] - 6}">→ <tspan font-family="{MONO}" font-size="{CODE}" '
+                    f'font-weight="700" fill="{GREEN if ok else RED}">{escape(s["proposed"])}</tspan> '
+                    f'<tspan font-style="italic">with</tspan> <tspan font-style="italic" fill="{GREEN}">E</tspan></text>')
+                if hesp and s.get("no_legal"):
+                    text(k["eig"] + 50, base, "none", (k["eig"] - 4, k["cost"] + 30), SMALL - 1, anchor="end",
+                         color=BLUE, style="italic")
+            elif s.get("blocked"):
+                w = len(s["proposed"]) * 12.2 + 20
+                rect(k["chip"], y + 7, w, ROW - 14, RED_TINT, RED, 1.4, 4, dash="5 3")
+                text(k["chip"] + 10, base, s["proposed"], (k["chip"] + 4, k["chip"] + w), CODE, family=MONO,
+                     color=RED)
+                line(k["chip"] + 8, base - 7, k["chip"] + w - 8, base - 7, RED, 1.6)
+                text(k["chip"] + w + 12, base, "repeat, blocked", (k["chip"] + w + 8, k["eig"] - 6), SMALL - 1,
+                     color=RED, style="italic")
+            elif s.get("ran"):
+                w = len(s["ran"]) * 12.2 + 20
+                rect(k["chip"], y + 7, w, ROW - 14, BLUE_TINT if hesp else "#FFFFFF", BLUE if hesp else INK2, 1.4, 4)
+                text(k["chip"] + 10, base, s["ran"], (k["chip"] + 4, k["chip"] + w), CODE, family=MONO,
+                     color=BLUE if hesp else INK)
+                ox = k["chip"] + w + 10
+                arrow_out = f'→ <tspan font-family="{MONO}" font-size="{CODE}">{escape(s["outcome"])}</tspan>'
+                add(f'<text x="{ox:.1f}" y="{base}" font-family="{SERIF}" font-size="{SMALL}" fill="{INK2}" '
+                    f'data-fit="{ox - 2:.1f},{(k["eig"] if hesp else k["cost"]) - 6}">{arrow_out}</text>')
+                if s.get("obs") in cited_ids:
+                    ex = ox + 34 + len(s["outcome"]) * 12.2
+                    text(ex, base, "E", (ex - 2, k["eig"] - 6), SMALL, 700, color=GREEN, style="italic")
+                if hesp and s["proposed"] and s["proposed"] != s["ran"]:
+                    # the planner asked for something else; the controller ran the EIG/c choice
+                    ax = ox + 34 + len(s["outcome"]) * 12.2
+                    add(f'<text x="{ax:.1f}" y="{base}" font-family="{SERIF}" font-size="{SMALL - 1}" '
+                        f'fill="{MUTED}" font-style="italic" data-fit="{ax - 2:.1f},{k["eig"] - 6}">π: '
+                        f'<tspan font-family="{MONO}" font-style="normal" font-size="{CODE - 1}" '
+                        f'text-decoration="line-through">{escape(s["proposed"])}</tspan></text>')
+                if hesp and s["ranks"] is not None:
+                    text(k["eig"] + 50, base, f"{s['ranks'][s['ran']]:.2f}", (k["eig"] - 4, k["cost"] - 4),
+                         SMALL - 1, anchor="end", color=BLUE)
+                for p in range(s["cost"]):
+                    rect(k["cost"] + p * 13, y + 17, 9, 14, INK2, rx=1)
+                text(k["used_r"], base, f"{s['spent']}/10", (k["spent"] - 4, k["bar"] - 2), SMALL - 1,
+                     anchor="end", color=RED if s["spent"] >= 10 else MUTED)
+            else:   # a probe the controller refused because the budget was spent
+                w = len(s["proposed"]) * 12.2 + 20
+                rect(k["chip"], y + 7, w, ROW - 14, "#FFFFFF", RED, 1.4, 4, dash="5 3")
+                text(k["chip"] + 10, base, s["proposed"], (k["chip"] + 4, k["chip"] + w), CODE, family=MONO, color=RED)
+                text(k["chip"] + w + 12, base, "refused: budget spent", (k["chip"] + w + 8, k["eig"] - 6),
+                     SMALL - 1, color=RED, style="italic")
+            b = s.get("belief")
+            if b is not None:
+                rect(k["bar"], y + 17, k["bar_w"], 14, TRACK, rx=2)
+                rect(k["bar"], y + 17, k["bar_w"] * b, 14, BLUE if hesp else INK2, rx=2)
+                text(k["val"], base, belief_txt(b), (k["bar"] + k["bar_w"] + 2, c1 + 4), SMALL - 1, anchor="end",
+                     color=INK)
 
-    # ---- verifier (inside the trust boundary)
-    rect(TB0, R0, TB1, R1, stroke=RED, sw=1.8)
-    fv = (TB0 + PAD, TB1 - PAD)
-    add(f'<text x="{TB0 + PAD}" y="{R0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
-        f'fill="{RED}" data-fit="{fv[0]},{fv[1]}">Verifier {i("V")}</text>')
-    add(f'<text x="{TB0 + PAD}" y="{R0 + 72}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
-        f'data-fit="{fv[0]},{fv[1]}">pass iff {i("ĥ")} = {i("h")}* and</text>')
-    add(f'<text x="{TB0 + PAD}" y="{R0 + 100}" font-family="{SERIF}" font-size="{LABEL}" fill="{INK2}" '
-        f'data-fit="{fv[0]},{fv[1]}">{i("E")} has {i("h")}*’s signature</text>')
-    add(f'<path d="M{TB0 + PAD},{R0 + 122} l7,8 l14,-17" fill="none" stroke="{GREEN}" stroke-width="3" '
-        f'stroke-linecap="round" stroke-linejoin="round"/>')
-    text(TB0 + PAD + 30, R0 + 132, "verified", fv, LABEL, 700, color=GREEN)
-
-    # ---- posterior (values from the replayed episode)
-    rect(B0, L0, POST1, L1, stroke=BLUE)
-    fq = (B0 + PAD, POST1 - PAD)
-    add(f'<text x="{B0 + PAD}" y="{L0 + 36}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
-        f'fill="{BLUE}" data-fit="{fq[0]},{fq[1]}">Posterior {sub("p", "t", H1)}({i("h")})</text>')
-    post = ep["post"]
-    others = [h for h in HYPOTHESES if h not in (cause, "other")]
-    rows = [(cause, [p[cause] for p in post], True),
-            ("other", [p["other"] for p in post], False),
-            (f"{len(others)} other causes, max", [max(p[h] for h in others) for p in post], False)]
-    cw = 50
-    cx0 = POST1 - PAD - cw * len(post)
-    text(cx0 - 10, L0 + 76, "t =", (cx0 - 60, cx0 - 4), LABEL - 2, anchor="end", color=MUTED, style="italic")
-    for j in range(len(post)):
-        text(cx0 + j * cw + cw / 2, L0 + 76, str(j), (cx0 + j * cw, cx0 + (j + 1) * cw), LABEL - 2,
-             anchor="middle", color=MUTED)
-    for k, (name, vals, strong) in enumerate(rows):
-        y = L0 + 114 + k * 38
-        code = not name[0].isdigit()
-        text(B0 + PAD, y, name, (B0 + PAD, cx0 - 6), CODE_PX if code else LABEL - 2, 700 if strong else 400,
-             family=MONO if code else SERIF, color=INK if strong else INK2, style="normal" if code else "italic")
-        for j, v in enumerate(vals):
-            x = cx0 + j * cw
-            rect(x + 3, y - 23, x + cw - 3, y + 8, fill=BLUE, stroke="none", sw=0, rx=3, opacity=0.08 + 0.82 * v)
-            text(x + cw / 2, y, prob(v), (x, x + cw), LABEL - 2, 700 if strong and j == len(vals) - 1 else 400,
-                 anchor="middle", color="#FFFFFF" if v > 0.55 else INK)
-
-    # ---- EIG / cost selector (ranking at t = 0, values from the replayed episode)
-    rect(SEL0, L0, B1, L1, stroke=BLUE)
-    fs = (SEL0 + PAD, B1 - PAD)
-    text(SEL0 + PAD, L0 + 36, "Probe selector", fs, H1, 700, color=BLUE)
-    add(f'<text x="{SEL0 + PAD}" y="{L0 + 70}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{INK2}" '
-        f'data-fit="{fs[0]},{B1 - 80}">argmax EIG/{i("c")}</text>')
-    text(B1 - PAD, L0 + 70, "t = 0", (B1 - 60, B1 - PAD), LABEL - 2, anchor="end", color=MUTED, style="italic")
-    ranking = ep["rank0"]
-    shown = ranking[:3]
-    if ep["proposed0"] not in [r["action_id"] for r in shown]:
-        shown.append(next(r for r in ranking if r["action_id"] == ep["proposed0"]))
-    for k, r in enumerate(shown):
-        y = L0 + 102 + k * 32
-        ran = r["action_id"] == ep["executed"][0]
-        proposed = r["action_id"] == ep["proposed0"]
-        if ran:
-            rect(SEL0 + 8, y - 23, B1 - 8, y + 8, fill=BLUE, stroke="none", sw=0, rx=3, opacity=0.14)
-        if proposed:
-            rect(SEL0 + 8, y - 23, B1 - 8, y + 8, fill="none", stroke=MUTED, sw=1.3, rx=3, dash="4 3")
-        text(SEL0 + PAD, y, r["action_id"], (SEL0 + PAD, B1 - 84), CODE_PX, 700 if ran else 400, family=MONO,
-             color=BLUE if ran else INK2)
-        text(B1 - 40, y, f"{r['score']:.2f}", (B1 - 84, B1 - 38), LABEL - 2, 700 if ran else 400, anchor="end",
-             color=BLUE if ran else INK2)
-        if ran:
-            run_y = y - 8
-        if proposed:
-            text(B1 - 22, y, "π", (B1 - 38, B1 - 8), LABEL - 2, anchor="middle", color=MUTED, style="italic")
-
-    # ---- predictive model, shared by the selector and the ledger
-    rect(B0, P0, B1, P1, stroke=BLUE)
-    fm = (B0 + PAD, B1 - PAD)
-    add(f'<text x="{B0 + PAD}" y="{P0 + 34}" font-family="{SERIF}" font-size="{H1}" font-weight="700" '
-        f'fill="{BLUE}" data-fit="{fm[0]},{fm[1]}">Predictive model {i("P")}({i("o")} | {i("h")}, {i("a")})</text>')
-    x = B0 + PAD
-    for label, used in (("designer (oracle)", False), ("counted, k dev episodes", True), ("LLM-elicited", False)):
-        w = len(label) * 10.6 + 26
-        rect(x, P0 + 48, x + w, P0 + 76, stroke=BLUE if used else RULE, sw=1.8 if used else 1.2, rx=14)
-        text(x + w / 2, P0 + 69, label, (x, x + w), LABEL - 3, 700 if used else 400, anchor="middle",
-             color=BLUE if used else INK2)
-        x += w + 12
-
-    # ---- evidence ledger
-    rect(B0, E0, B1, E1, stroke=BLUE)
-    fe = (B0 + PAD, B1 - PAD)
-    text(B0 + PAD, E0 + 36, "Evidence ledger", fe, H1, 700, color=BLUE)
-    add(f'<text x="{B0 + 262}" y="{E0 + 36}" font-family="{SERIF}" font-size="{LABEL + 1}" fill="{INK}" '
-        f'data-fit="{B0 + 262},{fe[1]}">{sub("p", "t+1", LABEL + 1)}({i("h")}) ∝ {sub("p", "t", LABEL + 1)}'
-        f'({i("h")}) · {i("P")}({sub("o", "t", LABEL + 1)} | {i("h")}, {sub("a", "t", LABEL + 1)})</text>')
-    text(B0 + PAD, E0 + 72, "skips duplicate, stale-state and transient observations;", fe, LABEL - 2, color=INK2)
-    add(f'<text x="{B0 + PAD}" y="{E0 + 98}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{MUTED}" '
-        f'font-style="italic" data-fit="{fe[0]},{fe[1]}">a change of state version {sub("s", "t", LABEL - 2)} '
-        f'resets current scores, keeps history</text>')
-
-    # ---- sandbox (inside the trust boundary)
-    rect(TB0, L0, TB1, E1, stroke=RED)
-    text(TB0 + PAD, L0 + 36, "Loopback app", fv, H1, 700, color=RED)
-    text(TB0 + PAD, L0 + 70, "127.0.0.1, read-only", fv, LABEL - 2, color=MUTED, style="italic")
-    first = ep["obs"][0]
-    probe = SecTriageEnvironment.probe_by_id()[first["action_id"]]
-    route = probe["path"].split("?")
-    text(TB0 + PAD, L0 + 116, f"{probe['method']} {route[0]}", fv, CODE_PX, family=MONO)
-    if len(route) > 1:
-        text(TB0 + PAD, L0 + 144, f"    ?{route[1]}", fv, CODE_PX, family=MONO, color=INK2)
-    text(TB0 + PAD, L0 + 186, "→ outcome class", fv, LABEL - 2, color=MUTED, style="italic")
-    text(TB0 + PAD, L0 + 216, first["outcome"], fv, CODE_PX, 700, family=MONO)
-    costs = sorted({p["cost"] for p in SecTriageEnvironment.PROBES})
-    text(TB0 + PAD, L0 + 272, f"{len(SecTriageEnvironment.PROBES)} probes, cost {costs[0]}–{costs[-1]}", fv,
-         LABEL - 2, color=INK2)
-    text(TB0 + PAD, L0 + 302, "reset per episode", fv, LABEL - 2, color=INK2)
-    add(f'<text x="{TB0 + PAD}" y="{L0 + 332}" font-family="{SERIF}" font-size="{LABEL - 2}" fill="{INK2}" '
-        f'data-fit="{fv[0]},{fv[1]}">versioned state {sub("s", "t", LABEL - 2)}</text>')
-    add(f'<text x="{TB0 + PAD}" y="{L0 + 380}" font-family="{SERIF}" font-size="{LABEL}" fill="{RED}" '
-        f'data-fit="{fv[0]},{fv[1]}">hidden cause {i("h")}*</text>')
-
-    # ---- typed connections
-    gap = (PI1 + 4, GD0 - 4)
-    path([(A1, 110), (B0, 110)])                                                    # alert -> planner
-    path([(A1, 300), (B0, 300)], color=BLUE, marker="blue")                         # H -> posterior
-    path([(500, L0), (500, R1)])                                                    # state -> planner
-    text(512, R1 + 26, "ledger, rankings", (506, 682), LABEL - 1, color=MUTED, style="italic")
-    path([(PI1, 96), (GD0, 96)], sw=2.2)                                            # finish -> guard
-    text((PI1 + GD0) / 2, 84, "finish(ĥ, E)", gap, CODE_PX, anchor="middle", family=MONO)
-    path([(GD0, 124), (PI1, 124)], color=MUTED, dash="5 4", marker="muted")         # rejection reason
-    text((PI1 + GD0) / 2, 150, "rejection", gap, LABEL - 1, anchor="middle", color=MUTED, style="italic")
-    path([(690, R1), (690, 208), (906, 208), (906, L0)], color=MUTED, dash="5 4", marker="muted")   # advisory
-    text(PI1 + 8, 200, "action a", (PI1 + 4, GD0 - 4), CODE_PX, family=MONO, color=MUTED)
-    path([(B1, 96), (TB0, 96)], color=GREEN, sw=2.4, marker="green")                # guard -> verifier
-    path([(POST1, 340), (SEL0, 340)], color=BLUE, sw=2.6, marker="blue")            # posterior -> selector
-    path([(B1 - 8, run_y), (TB0, run_y)], color=BLUE, sw=2.6, marker="blue")       # a_t leaves the executed row
-    add(f'<text x="{(B1 + TB0) / 2}" y="{run_y - 10}" font-family="{SERIF}" font-size="{LABEL}" fill="{BLUE}" '
-        f'text-anchor="middle" data-fit="{B1},{TB0}">{sub("a", "t", LABEL)}</text>')
-    path([(TB0, 640), (B1, 640)], color=BLUE, sw=2.6, marker="blue")                # o_t -> ledger
-    add(f'<text x="{(B1 + TB0) / 2}" y="630" font-family="{SERIF}" font-size="{LABEL}" fill="{BLUE}" '
-        f'text-anchor="middle" data-fit="{B1},{TB0}">{sub("o", "t", LABEL)}</text>')
-    path([(B0, 660), (412, 660), (412, 420), (B0, 420)], color=BLUE, sw=2.6, marker="blue")   # ledger -> posterior
-    path([(1000, P0), (1000, L1)], color=BLUE, sw=1.6, marker="blue")               # P -> selector
-    path([(1000, P1), (1000, E0)], color=BLUE, sw=1.6, marker="blue")               # P -> ledger
-    mid = (TB0 + TB1) / 2
-    path([(mid, L0), (mid, R1)], color=RED, sw=1.6, dash="3 3", marker="red")       # h* -> verifier
-    add(f'<text x="{mid + 10}" y="{R1 + 26}" font-family="{SERIF}" font-size="{LABEL - 1}" fill="{RED}" '
-        f'data-fit="{mid},{TB1}">{i("h")}*</text>')
+    # ---- how each run ends
+    yb = Y_ROWS + step_count * ROW + 22
+    for arm, c0, c1, hesp in ((ARMS[0], L0, L1, False), (ARMS[1], R0, R1, True)):
+        r = runs[arm]
+        ok = r["status"] == "VERIFIED_SIMULATION"
+        rect(c0, yb, c1 - c0, 118, GREEN_TINT if ok else "#F3F4F6", GREEN if ok else "#9CA3AF", 1.5, 6)
+        if ok:
+            check(c0 + 20, yb + 36, GREEN)
+            text(c0 + 52, yb + 44, "Verdict passes the guard and the verifier", (c0 + 48, c1 - 12), LABEL, 700,
+                 color=GREEN)
+        else:
+            text(c0 + 20, yb + 44, "No verdict: budget spent, no conclusion", (c0 + 16, c1 - 12), LABEL, 700,
+                 color=INK2)
+        text(c0 + 20, yb + 78, f"Qwen2.5-7B over all 24 alerts × 3 repeats: {r['verified_total']}/{r['n']} "
+             f"verified", (c0 + 16, c1 - 12), SMALL, color=INK2)
+        if not ok:
+            first = next(i for i, s in enumerate(r["steps"]) if (s.get("belief") or 0) > 0.9)
+            text(c0 + 20, yb + 106, f"p(h*) passed .9 at step {first + 1}; "
+                 f"{sum(1 for s in r['steps'] if s.get('blocked'))} steps lost to repeats",
+                 (c0 + 16, c1 - 12), SMALL - 1, color=MUTED, style="italic")
+        else:
+            text(c0 + 20, yb + 106, "no legal probe left → π concludes and the check passes",
+                 (c0 + 16, c1 - 12), SMALL - 1, color=MUTED, style="italic")
     add("</svg>")
-
-
-# ---------------------------------------------------------------- render QA
-CHECK_JS = """
-<script>
-const bad = [];
-document.querySelectorAll('text[data-fit]').forEach(t => {
-  const [a, z] = t.dataset.fit.split(',').map(Number);
-  const b = t.getBBox();
-  if (b.x < a - 4 || b.x + b.width > z + 4)
-    bad.push(t.textContent.trim() + ' | ' + b.x.toFixed(1) + '..' + (b.x + b.width).toFixed(1) + ' not in ' + a + '..' + z);
-});
-document.body.setAttribute('data-overflow', JSON.stringify(bad));
-</script>"""
-
-
-def check_fit(svg_path):
-    """Measure every rendered text element in headless Chrome; return the overflowing ones."""
-    svg = Path(svg_path).read_text(encoding="utf-8")
-    with tempfile.TemporaryDirectory() as tmp:
-        page = Path(tmp) / "check.html"
-        page.write_text(f"<!doctype html><html><head><meta charset='utf-8'></head><body>{svg}{CHECK_JS}</body></html>",
-                        encoding="utf-8")
-        dom = subprocess.run([browser(), "--headless=new", "--disable-gpu", "--no-sandbox",
-                              f"--user-data-dir={Path(tmp) / 'profile'}", "--virtual-time-budget=3000",
-                              "--dump-dom", page.as_uri()], capture_output=True, timeout=120).stdout
-    match = re.search(rb'data-overflow="([^"]*)"', dom)
-    if not match:
-        raise SystemExit("render check failed: Chrome returned no measurement")
-    return json.loads(match.group(1).decode("utf-8").replace("&quot;", '"').replace("&amp;", "&"))
+    return H
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--check", action="store_true", help="fail if any text overflows its box")
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
-    ep = replay()
-    build(ep)
+    cause, runs = gather()
+    build(cause, runs)
     OUT.write_bytes(("\n".join(parts) + "\n").encode("utf-8"))
     print(OUT)
-    print("replayed:", TASK_ID, "->", ep["result"]["claimed_hypothesis"],
-          "| t=0 proposed", ep["proposed0"], "executed", ep["executed"][0],
-          "| posterior of cause", [round(p[ep["task"]["cause"]], 3) for p in ep["post"]])
+    for arm in ARMS:
+        r = runs[arm]
+        print(arm, r["status"], "steps", len(r["steps"]), f"| {r['verified_total']}/{r['n']} verified")
     if args.check:
+        from render_figures import check_fit
         bad = check_fit(OUT)
         for b in bad:
             print("OVERFLOW:", b)

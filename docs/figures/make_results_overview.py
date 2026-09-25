@@ -356,7 +356,7 @@ def main():
               "| random-memory", round(d["v05"][key]["take_choice"]["difference"], 3),
               "| eigc-random", round(d["v05"][key]["add_ranking"]["difference"], 3))
     if args.check:
-        from make_framework_figure import check_fit
+        from render_figures import check_fit
         bad = check_fit(OUT)
         for b in bad:
             print("OVERFLOW:", b)

@@ -42,7 +42,7 @@ HESP 将调查过程组织为可追溯的循环：建立局部假设、登记测
 
 ![HESP 框架总览](docs/assets/hesp-framework.png)
 
-<sub>HESP 的调查环路，以 sec-triage 告警 INC-4271 为例，图中数值取自一个真实回合（由 `docs/figures/make_framework_figure.py` 重放生成）。蓝色为控制器：它维护候选原因的后验 <i>p<sub>t</sub>(h)</i>，按单位成本的期望信息增益 EIG/<i>c</i> 选择只读探针，并用预测模型 <i>P</i>(<i>o</i> | <i>h</i>, <i>a</i>) 做贝叶斯更新；<i>P</i> 可来自设计者（oracle 上界）、<i>k</i> 个开发回合的计数（本例，<i>k</i> = 20）或模型自抽取。LLM 规划器 π 读取账本与排序，但它提议的探针只在基线中生效——本例中 π 提议 <code>auth_log</code>，控制器执行 <code>source_ips</code>。π 提交的结论须先通过结案守卫，再由能看到隐藏真因 <i>h</i>* 的独立验证器判定；守卫拒绝时把原因返回给 π。红色虚线内的一切对 π 不可见。评估协议见 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
+<sub>同一条告警（INC-4271，真因为撞库 <code>credential_stuffing</code>）、同一个本地 Qwen2.5-7B、同样的预算与验证器，两次真实运行逐步对照（v0.6 日志，重复 0），由 <code>docs/figures/make_framework_figure.py</code> 直接从日志归档生成。左：模型自己选每一步探针——第 1 步后账本置信度已达 .96，但它重复提议被拦下、把预算花在低价值探针上，最终没有结论。右：HESP 控制器按单位成本期望信息增益（EIG/<i>c</i>）选不重复的探针，模型只负责提议与结案；第 2 步模型提议 <code>auth_log</code>，控制器执行 <code>access_pattern</code>；无可用探针时模型结案，绿色 <i>E</i> 为被引用的证据，结论通过结案守卫与独立验证。<i>p</i>(<i>h</i>*) 为账本中对真因的后验：左侧用设计者预测表，右侧用 20 个开发回合计数得到的表。底部为该模型在全部 24 条告警 × 3 次重复上的结果。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>(h)</i>，按单位成本的期望信息增益 EIG/<i>c</i> 选择只读探针，并用预测模型 <i>P</i>(<i>o</i> | <i>h</i>, <i>a</i>) 做贝叶斯更新；<i>P</i> 可来自设计者（oracle 上界）、<i>k</i> 个开发回合的计数（本例，<i>k</i> = 20）或模型自抽取。LLM 规划器 π 读取账本与排序，但它提议的探针只在基线中生效——本例中 π 提议 <code>auth_log</code>，控制器执行 <code>source_ips</code>。π 提交的结论须先通过结案守卫，再由能看到隐藏真因 <i>h</i>* 的独立验证器判定；守卫拒绝时把原因返回给 π。红色虚线内的一切对 π 不可见。评估协议见 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
 
 ```mermaid
 flowchart LR
