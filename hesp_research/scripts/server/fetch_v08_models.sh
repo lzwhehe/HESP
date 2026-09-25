@@ -9,13 +9,17 @@ set -euo pipefail
 ROOT=${HESP_ROOT:-/root/autodl-tmp/hesp}
 . "$ROOT/venv/bin/activate"
 export HF_HOME=${HF_HOME:-$ROOT/hf_cache}
+# The provider's no-GPU mode caps the container at 2 GB of RAM; the Xet backend's parallel
+# buffers got the downloader killed there. Plain HTTP streaming with few workers stays small.
+export HF_HUB_DISABLE_XET=1
+WORKERS=${FETCH_WORKERS:-2}
 mkdir -p "$ROOT/models"
 fetch() {  # $1 = repo id, $2 = local directory name
   echo "=== $(date -Is) $1"
   if command -v hf > /dev/null; then
-    hf download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" --exclude "*.pth"
+    hf download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" --exclude "*.pth" --max-workers "$WORKERS"
   else
-    huggingface-cli download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" "*.pth"
+    huggingface-cli download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" "*.pth" --max-workers "$WORKERS"
   fi
   du -sh "$ROOT/models/$2"
   touch "$ROOT/models/$2/.fetch_complete"   # run_v08_all.sh waits for this before serving
