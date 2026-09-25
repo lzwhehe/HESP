@@ -16,6 +16,7 @@ MODES = ("react_style", "memory_only", "hesp")
 ENVIRONMENTS = {
     "synthetic_software_test_only": "Software smoke test, not real Web CTF research evidence",
     "local_web_sandbox": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim",
+    "guide_replay": "Replay of real, anonymised GUIDE incident metadata (alert triage only; no raw logs)",
 }
 
 
@@ -141,7 +142,12 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     output.mkdir(parents=True, exist_ok=False)
     journal = Journal(output / "events.jsonl")
     action_map = {a.id: a for a in catalog}
-    priors = {h: 1 / len(hypotheses) for h in hypotheses}
+    # An environment may supply its own prior (v0.7: an organisation's historical grade mix);
+    # every earlier task family has none and keeps the uniform prior.
+    supplied = getattr(environment, "priors", None)
+    priors = dict(supplied()) if callable(supplied) else {h: 1 / len(hypotheses) for h in hypotheses}
+    if set(priors) != set(hypotheses):
+        raise ValueError("Environment prior must cover exactly the environment's hypotheses")
     ledger = Ledger(priors, environment.state())
     config = {
         "version": __version__, "mode": mode, "arm": arm or mode, "planner": planner.name,
