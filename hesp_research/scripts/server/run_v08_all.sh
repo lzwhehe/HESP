@@ -4,7 +4,7 @@
 # server and wait until the GPU is really free. Usage:
 #   nohup scripts/server/run_v08_all.sh [MODEL_KEY ...] > logs/v08_all.log 2>&1 &
 # MODEL_KEY in: qwen7b qwen32b qwen72b llama8b llama70b (default: all five, as pre-registered).
-# Download the Llama weights first with scripts/server/fetch_v08_models.sh.
+# Start scripts/server/fetch_v08_models.sh alongside; Llama runs wait for its completion markers.
 set -uo pipefail
 ROOT=${HESP_ROOT:-/root/autodl-tmp/hesp}
 CODE=$ROOT/HESP/hesp_research
@@ -39,8 +39,18 @@ gpu_free() {  # kill every compute process on the GPU and wait until memory is r
   sleep 10
 }
 
+wait_weights() {  # $1 = model key. Llama weights may still be downloading (fetch_v08_models.sh).
+  local d="$ROOT/models/${DIR[$1]}"
+  case "$1" in llama*) ;; *) [ -d "$d" ]; return;; esac
+  for _ in $(seq 1 720); do   # up to 2 h
+    [ -f "$d/.fetch_complete" ] && return 0
+    sleep 10
+  done
+  echo "weights not complete after 2 h: $d"; return 1
+}
+
 serve() {  # $1 = model key
-  [ -d "$ROOT/models/${DIR[$1]}" ] || { echo "missing weights: $ROOT/models/${DIR[$1]}"; return 1; }
+  wait_weights "$1" || { echo "missing weights: $ROOT/models/${DIR[$1]}"; return 1; }
   vllm serve "$ROOT/models/${DIR[$1]}" --served-model-name "${NAME[$1]}" \
     --host 127.0.0.1 --port "$PORT" --max-model-len 8192 --gpu-memory-utilization 0.90 \
     --enable-prefix-caching --max-num-seqs 64 --seed 0 \
@@ -65,7 +75,7 @@ archive() {  # $1 = results dir. Pre-registered rule (errata E-2): archive befor
 }
 
 gpu_free
-for key in ${@:-qwen7b llama8b qwen32b qwen72b llama70b}; do
+for key in ${@:-qwen7b qwen32b qwen72b llama8b llama70b}; do   # Qwen first: its weights are on disk
   echo "=== $(date -Is) model $key"
   serve "$key" || { gpu_free; continue; }
   python -u scripts/run_v08_study.py --output "results/v08_$key" --model "${NAME[$key]}" \

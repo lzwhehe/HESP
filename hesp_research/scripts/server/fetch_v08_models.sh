@@ -3,6 +3,8 @@
 # use is governed by the Llama 3.1 Community License). Set HF_ENDPOINT to a mirror if the
 # server cannot reach huggingface.co directly. Usage:
 #   nohup scripts/server/fetch_v08_models.sh > logs/fetch_v08.log 2>&1 &
+# Run it alongside run_v08_all.sh: the Qwen models (already on disk) go first, so the download
+# overlaps with GPU work; each finished model gets a .fetch_complete marker.
 set -euo pipefail
 ROOT=${HESP_ROOT:-/root/autodl-tmp/hesp}
 . "$ROOT/venv/bin/activate"
@@ -11,11 +13,12 @@ mkdir -p "$ROOT/models"
 fetch() {  # $1 = repo id, $2 = local directory name
   echo "=== $(date -Is) $1"
   if command -v hf > /dev/null; then
-    hf download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" "*.pth"
+    hf download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" --exclude "*.pth"
   else
     huggingface-cli download "$1" --local-dir "$ROOT/models/$2" --exclude "original/*" "*.pth"
   fi
   du -sh "$ROOT/models/$2"
+  touch "$ROOT/models/$2/.fetch_complete"   # run_v08_all.sh waits for this before serving
 }
 fetch unsloth/Llama-3.1-8B-Instruct Llama-3.1-8B-Instruct
 fetch hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4 Meta-Llama-3.1-70B-Instruct-AWQ-INT4
