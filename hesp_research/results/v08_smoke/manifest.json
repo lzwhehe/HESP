@@ -1,0 +1,141 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "8c355d975f0f6d6b7f3c49c12449922a6bb8c60f937181a98134b996281a962a",
+  "seed": 2026,
+  "repeats": 1,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "hesp_random_blind": {
+      "mode": "hesp",
+      "selector": "random",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "show_rankings": false
+    },
+    "hesp_eigc_blind": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false,
+      "show_rankings": false
+    },
+    "hesp_eigc": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "hesp_eigc_guard": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sec-base-00",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-drift-04",
+      "family": "sec-triage",
+      "variant": "drift",
+      "cause": "false_positive_monitor",
+      "drift_to": "dns_c2"
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_random_blind"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-drift-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_random_blind"
+    }
+  ],
+  "purpose": "v0.8_study",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "temperature": 0.2,
+  "families": [
+    "sec-triage"
+  ],
+  "primary_family": "sec-triage",
+  "table": {
+    "name": "empirical_20",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7"
+  },
+  "created_utc": "2026-09-25T11:05:45.470668+00:00"
+}

@@ -20,7 +20,13 @@ def actions():
 
 
 class SimulatedEnvironment:
+    """Original v0.1 fixture. Implements the generic environment interface:
+
+    hypotheses, catalog(), describe(), state(), execute(action), verify(h, ids), close().
+    """
     label = "synthetic_software_test_only"
+    family = "fixture"
+    hypotheses = CAUSES
 
     def __init__(self, cause="owner_policy"):
         if cause not in CAUSES:
@@ -31,6 +37,12 @@ class SimulatedEnvironment:
         self._actions = {a.id: a for a in actions()}
         self._version = 0
 
+    def catalog(self):
+        return actions()
+
+    def close(self):
+        pass
+
     def describe(self):
         # Never expose the cause or choose a task ID encoding the cause here.
         return {
@@ -38,13 +50,15 @@ class SimulatedEnvironment:
             "initial_observation": "Document operation did not complete",
             "environment": self.label,
             "allowed_targets": ["fixture://documents"],
+            "answer_options": {h: h.replace("_", " ") for h in CAUSES},
         }
 
     def state(self):
         return {"role": "tester", "page": "document", "version": self._version}
 
     def execute(self, action):
-        if self._actions.get(action.id) != action:
+        known = self._actions.get(action.id)
+        if known is None or (known.target, known.purpose, known.cost) != (action.target, action.purpose, action.cost):
             raise ValueError("Only exact fixture actions are allowed")
         self._counter += 1
         if action.id == "read_help":

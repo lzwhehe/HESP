@@ -1,0 +1,1891 @@
+{
+  "schema": "hesp.elicitation.v1",
+  "created_utc": "2026-09-23T05:59:09.299504+00:00",
+  "source_sha256": "3364da44d901c28ac4d611626be3f2f6001e70f7bbdbbd59a23d11728a18483d",
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "seed": 0,
+  "temperature": 0.0,
+  "eps_floor": 0.01,
+  "source": "llm_elicited:qwen2.5:7b-instruct",
+  "seconds": 548.7,
+  "usage": {
+    "input_tokens": 24039,
+    "output_tokens": 3082,
+    "cached_input_tokens": 9360
+  },
+  "calls": 81,
+  "uniform_fallback_rows": 0,
+  "tables": {
+    "whoami": {
+      "session_expired": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "role_readonly": {
+        "editor": 0.10233333333333333,
+        "viewer": 0.8943333333333333,
+        "unauthorized": 0.0033333333333333335
+      },
+      "owner_policy": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "document_archived": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "workflow_locked": {
+        "editor": 0.5973333333333334,
+        "viewer": 0.3003333333333334,
+        "unauthorized": 0.10233333333333335
+      },
+      "quota_exceeded": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "edit_conflict": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "feature_disabled": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "other": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      }
+    },
+    "doc_meta": {
+      "session_expired": {
+        "own_active": 0.5964999999999999,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "role_readonly": {
+        "own_active": 0.20050000000000004,
+        "owner_other": 0.4975000000000001,
+        "archived": 0.20050000000000004,
+        "unauthorized": 0.10150000000000002
+      },
+      "owner_policy": {
+        "own_active": 0.10150000000000002,
+        "owner_other": 0.6955,
+        "archived": 0.10150000000000002,
+        "unauthorized": 0.10150000000000002
+      },
+      "document_archived": {
+        "own_active": 0.1015,
+        "owner_other": 0.2005,
+        "archived": 0.5964999999999999,
+        "unauthorized": 0.1015
+      },
+      "workflow_locked": {
+        "own_active": 0.10150000000000002,
+        "owner_other": 0.6955,
+        "archived": 0.10150000000000002,
+        "unauthorized": 0.10150000000000002
+      },
+      "quota_exceeded": {
+        "own_active": 0.7945,
+        "owner_other": 0.1015,
+        "archived": 0.052000000000000005,
+        "unauthorized": 0.052000000000000005
+      },
+      "edit_conflict": {
+        "own_active": 0.4975,
+        "owner_other": 0.2995,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "feature_disabled": {
+        "own_active": 0.2995,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.3985
+      },
+      "other": {
+        "own_active": 0.3985000000000001,
+        "owner_other": 0.29950000000000004,
+        "archived": 0.20050000000000004,
+        "unauthorized": 0.10150000000000002
+      }
+    },
+    "workflow": {
+      "session_expired": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "role_readonly": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "owner_policy": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "document_archived": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "workflow_locked": {
+        "open": 0.10233333333333333,
+        "locked": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "quota_exceeded": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "edit_conflict": {
+        "open": 0.30033333333333334,
+        "locked": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "feature_disabled": {
+        "open": 0.6963333333333334,
+        "locked": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "other": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      }
+    },
+    "quota": {
+      "session_expired": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "role_readonly": {
+        "ok": 0.20133333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "owner_policy": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "document_archived": {
+        "ok": 0.052833333333333336,
+        "exceeded": 0.8448333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "workflow_locked": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "quota_exceeded": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "edit_conflict": {
+        "ok": 0.20133333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "feature_disabled": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "other": {
+        "ok": 0.3993333333333334,
+        "exceeded": 0.3993333333333334,
+        "unauthorized": 0.20133333333333334
+      }
+    },
+    "features": {
+      "session_expired": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "role_readonly": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "owner_policy": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "document_archived": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "workflow_locked": {
+        "editing_on": 0.6963333333333334,
+        "editing_off": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "quota_exceeded": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "edit_conflict": {
+        "editing_on": 0.6963333333333334,
+        "editing_off": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "feature_disabled": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "other": {
+        "editing_on": 0.5973333333333334,
+        "editing_off": 0.3003333333333334,
+        "unauthorized": 0.10233333333333335
+      }
+    },
+    "versions": {
+      "session_expired": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "role_readonly": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "owner_policy": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.30033333333333334,
+        "unauthorized": 0.49833333333333335
+      },
+      "document_archived": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "workflow_locked": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "quota_exceeded": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "edit_conflict": {
+        "consistent": 0.20133333333333336,
+        "concurrent_edit": 0.6963333333333334,
+        "unauthorized": 0.10233333333333335
+      },
+      "feature_disabled": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "other": {
+        "consistent": 0.3993333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.20133333333333334
+      }
+    },
+    "save_dry_run": {
+      "session_expired": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.20133333333333334,
+        "unauthorized": 0.6963333333333332
+      },
+      "role_readonly": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "owner_policy": {
+        "forbidden": 0.8943333333333333,
+        "conflict": 0.052833333333333336,
+        "unauthorized": 0.052833333333333336
+      },
+      "document_archived": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.20133333333333334,
+        "unauthorized": 0.0033333333333333335
+      },
+      "workflow_locked": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "quota_exceeded": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "edit_conflict": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "feature_disabled": {
+        "forbidden": 0.8943333333333333,
+        "conflict": 0.052833333333333336,
+        "unauthorized": 0.052833333333333336
+      },
+      "other": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      }
+    },
+    "audit": {
+      "session_expired": {
+        "deny:role_readonly": 0.048253968253968264,
+        "deny:owner_policy": 0.048253968253968264,
+        "deny:document_archived": 0.048253968253968264,
+        "deny:workflow_locked": 0.048253968253968264,
+        "deny:quota_exceeded": 0.048253968253968264,
+        "deny:edit_conflict": 0.048253968253968264,
+        "deny:feature_disabled": 0.048253968253968264,
+        "no_entry": 0.09539682539682541,
+        "unauthorized": 0.5668253968253969
+      },
+      "role_readonly": {
+        "deny:role_readonly": 0.8912210012210012,
+        "deny:owner_policy": 0.05056166056166057,
+        "deny:document_archived": 0.030781440781440784,
+        "deny:workflow_locked": 0.011001221001221003,
+        "deny:quota_exceeded": 0.006056166056166057,
+        "deny:edit_conflict": 0.004078144078144079,
+        "deny:feature_disabled": 0.0021001221001221,
+        "no_entry": 0.0021001221001221,
+        "unauthorized": 0.0021001221001221
+      },
+      "owner_policy": {
+        "deny:role_readonly": 0.049640522875816995,
+        "deny:owner_policy": 0.874640522875817,
+        "deny:document_archived": 0.020522875816993465,
+        "deny:workflow_locked": 0.010816993464052288,
+        "deny:quota_exceeded": 0.010816993464052288,
+        "deny:edit_conflict": 0.010816993464052288,
+        "deny:feature_disabled": 0.010816993464052288,
+        "no_entry": 0.010816993464052288,
+        "unauthorized": 0.0011111111111111111
+      },
+      "document_archived": {
+        "deny:role_readonly": 0.0457057057057057,
+        "deny:owner_policy": 0.0457057057057057,
+        "deny:document_archived": 0.8038138138138137,
+        "deny:workflow_locked": 0.018948948948948947,
+        "deny:quota_exceeded": 0.01003003003003003,
+        "deny:edit_conflict": 0.01003003003003003,
+        "deny:feature_disabled": 0.01003003003003003,
+        "no_entry": 0.0457057057057057,
+        "unauthorized": 0.01003003003003003
+      },
+      "workflow_locked": {
+        "deny:role_readonly": 0.044154589371980676,
+        "deny:owner_policy": 0.044154589371980676,
+        "deny:document_archived": 0.044154589371980676,
+        "deny:workflow_locked": 0.6898067632850241,
+        "deny:quota_exceeded": 0.044154589371980676,
+        "deny:edit_conflict": 0.044154589371980676,
+        "deny:feature_disabled": 0.044154589371980676,
+        "no_entry": 0.044154589371980676,
+        "unauthorized": 0.0011111111111111111
+      },
+      "quota_exceeded": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.991111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "edit_conflict": {
+        "deny:role_readonly": 0.04825396825396825,
+        "deny:owner_policy": 0.04825396825396825,
+        "deny:document_archived": 0.04825396825396825,
+        "deny:workflow_locked": 0.04825396825396825,
+        "deny:quota_exceeded": 0.04825396825396825,
+        "deny:edit_conflict": 0.5668253968253968,
+        "deny:feature_disabled": 0.04825396825396825,
+        "no_entry": 0.09539682539682538,
+        "unauthorized": 0.04825396825396825
+      },
+      "feature_disabled": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.991111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "other": {
+        "deny:role_readonly": 0.050611111111111114,
+        "deny:owner_policy": 0.050611111111111114,
+        "deny:document_archived": 0.050611111111111114,
+        "deny:workflow_locked": 0.050611111111111114,
+        "deny:quota_exceeded": 0.050611111111111114,
+        "deny:edit_conflict": 0.050611111111111114,
+        "deny:feature_disabled": 0.050611111111111114,
+        "no_entry": 0.10011111111111111,
+        "unauthorized": 0.545611111111111
+      }
+    },
+    "help": {
+      "session_expired": {
+        "generic": 1.0
+      },
+      "role_readonly": {
+        "generic": 1.0
+      },
+      "owner_policy": {
+        "generic": 1.0
+      },
+      "document_archived": {
+        "generic": 1.0
+      },
+      "workflow_locked": {
+        "generic": 1.0
+      },
+      "quota_exceeded": {
+        "generic": 1.0
+      },
+      "edit_conflict": {
+        "generic": 1.0
+      },
+      "feature_disabled": {
+        "generic": 1.0
+      },
+      "other": {
+        "generic": 1.0
+      }
+    }
+  },
+  "records": [
+    {
+      "action_id": "whoami",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"editor\": 0.7,\n  \"viewer\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 239,
+        "output_tokens": 31,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "role_readonly",
+      "raw": "{\n  \"editor\": 0.1,\n  \"viewer\": 0.9,\n  \"unauthorized\": 0.0\n}",
+      "row": {
+        "editor": 0.10233333333333333,
+        "viewer": 0.8943333333333333,
+        "unauthorized": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 264,
+        "output_tokens": 31,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"editor\": 0.4,\n  \"viewer\": 0.3,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 268,
+        "output_tokens": 31,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"editor\": 0.4,\n  \"viewer\": 0.3,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 231,
+        "output_tokens": 31,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"editor\": 0.6,\n  \"viewer\": 0.3,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editor": 0.5973333333333334,
+        "viewer": 0.3003333333333334,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 258,
+        "output_tokens": 31,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"editor\": 0.4, \"viewer\": 0.3, \"unauthorized\": 0.3}",
+      "row": {
+        "editor": 0.3993333333333334,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 262,
+        "output_tokens": 26,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"editor\": 0.7,\n  \"viewer\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 272,
+        "output_tokens": 31,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"editor\": 0.7,\n  \"viewer\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editor": 0.6963333333333334,
+        "viewer": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 258,
+        "output_tokens": 31,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "other",
+      "raw": "{\"editor\": 0.5, \"viewer\": 0.3, \"unauthorized\": 0.2}",
+      "row": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 227,
+        "output_tokens": 26,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"own_active\": 0.6,\n  \"owner_other\": 0.2,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.5964999999999999,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 289,
+        "output_tokens": 43,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "role_readonly",
+      "raw": "{\n  \"own_active\": 0.2,\n  \"owner_other\": 0.5,\n  \"archived\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.20050000000000004,
+        "owner_other": 0.4975000000000001,
+        "archived": 0.20050000000000004,
+        "unauthorized": 0.10150000000000002
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 287,
+        "output_tokens": 43,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"own_active\": 0.1,\n  \"owner_other\": 0.7,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.10150000000000002,
+        "owner_other": 0.6955,
+        "archived": 0.10150000000000002,
+        "unauthorized": 0.10150000000000002
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 291,
+        "output_tokens": 43,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"own_active\": 0.1,\n  \"owner_other\": 0.2,\n  \"archived\": 0.6,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.1015,
+        "owner_other": 0.2005,
+        "archived": 0.5964999999999999,
+        "unauthorized": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 273,
+        "output_tokens": 43,
+        "cached_input_tokens": 91
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"own_active\": 0.1,\n  \"owner_other\": 0.7,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.10150000000000002,
+        "owner_other": 0.6955,
+        "archived": 0.10150000000000002,
+        "unauthorized": 0.10150000000000002
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 281,
+        "output_tokens": 43,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"own_active\": 0.8, \"owner_other\": 0.1, \"archived\": 0.05, \"unauthorized\": 0.05}",
+      "row": {
+        "own_active": 0.7945,
+        "owner_other": 0.1015,
+        "archived": 0.052000000000000005,
+        "unauthorized": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 285,
+        "output_tokens": 39,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"own_active\": 0.5,\n  \"owner_other\": 0.3,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "own_active": 0.4975,
+        "owner_other": 0.2995,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 295,
+        "output_tokens": 43,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"own_active\": 0.3,\n  \"owner_other\": 0.2,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.4\n}",
+      "row": {
+        "own_active": 0.2995,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 281,
+        "output_tokens": 43,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "other",
+      "raw": "{\"own_active\": 0.4, \"owner_other\": 0.3, \"archived\": 0.2, \"unauthorized\": 0.1}",
+      "row": {
+        "own_active": 0.3985000000000001,
+        "owner_other": 0.29950000000000004,
+        "archived": 0.20050000000000004,
+        "unauthorized": 0.10150000000000002
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 265,
+        "output_tokens": 37,
+        "cached_input_tokens": 87
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "session_expired",
+      "raw": "{\"open\": 0.4, \"locked\": 0.3, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 273,
+        "output_tokens": 26,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "role_readonly",
+      "raw": "{\"open\": 0.4, \"locked\": 0.3, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 271,
+        "output_tokens": 26,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"open\": 0.1,\n  \"locked\": 0.3,\n  \"unauthorized\": 0.6\n}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 275,
+        "output_tokens": 31,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "document_archived",
+      "raw": "{\"open\": 0.1, \"locked\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 257,
+        "output_tokens": 26,
+        "cached_input_tokens": 91
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"open\": 0.1, \"locked\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 265,
+        "output_tokens": 26,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"open\": 0.1, \"locked\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 269,
+        "output_tokens": 26,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"open\": 0.3,\n  \"locked\": 0.5,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 279,
+        "output_tokens": 31,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"open\": 0.7,\n  \"locked\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "open": 0.6963333333333334,
+        "locked": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 265,
+        "output_tokens": 31,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "other",
+      "raw": "{\"open\": 0.4, \"locked\": 0.3, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.3993333333333334,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 249,
+        "output_tokens": 26,
+        "cached_input_tokens": 87
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "session_expired",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 264,
+        "output_tokens": 27,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "role_readonly",
+      "raw": "{\"ok\": 0.2, \"exceeded\": 0.5, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.20133333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 262,
+        "output_tokens": 27,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "owner_policy",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 266,
+        "output_tokens": 27,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "document_archived",
+      "raw": "{\"ok\": 0.05, \"exceeded\": 0.85, \"unauthorized\": 0.1}",
+      "row": {
+        "ok": 0.052833333333333336,
+        "exceeded": 0.8448333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 248,
+        "output_tokens": 29,
+        "cached_input_tokens": 91
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 256,
+        "output_tokens": 27,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 260,
+        "output_tokens": 27,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"ok\": 0.2, \"exceeded\": 0.5, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.20133333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 270,
+        "output_tokens": 27,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 256,
+        "output_tokens": 27,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "other",
+      "raw": "{\"ok\": 0.4, \"exceeded\": 0.4, \"unauthorized\": 0.2}",
+      "row": {
+        "ok": 0.3993333333333334,
+        "exceeded": 0.3993333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 240,
+        "output_tokens": 27,
+        "cached_input_tokens": 87
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"editing_on\": 0.1,\n  \"editing_off\": 0.7,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 266,
+        "output_tokens": 33,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "role_readonly",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 264,
+        "output_tokens": 28,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"editing_on\": 0.1,\n  \"editing_off\": 0.6,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 268,
+        "output_tokens": 33,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"editing_on\": 0.1,\n  \"editing_off\": 0.7,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 250,
+        "output_tokens": 33,
+        "cached_input_tokens": 91
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"editing_on\": 0.7,\n  \"editing_off\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editing_on": 0.6963333333333334,
+        "editing_off": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 258,
+        "output_tokens": 33,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\n  \"editing_on\": 0.1,\n  \"editing_off\": 0.7,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 262,
+        "output_tokens": 33,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"editing_on\": 0.7,\n  \"editing_off\": 0.2,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editing_on": 0.6963333333333334,
+        "editing_off": 0.20133333333333336,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 272,
+        "output_tokens": 33,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 258,
+        "output_tokens": 28,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "other",
+      "raw": "{\"editing_on\": 0.6, \"editing_off\": 0.3, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.5973333333333334,
+        "editing_off": 0.3003333333333334,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 242,
+        "output_tokens": 28,
+        "cached_input_tokens": 87
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 275,
+        "output_tokens": 33,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "role_readonly",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 273,
+        "output_tokens": 33,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.3,\n  \"unauthorized\": 0.5\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.30033333333333334,
+        "unauthorized": 0.49833333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 277,
+        "output_tokens": 33,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 259,
+        "output_tokens": 33,
+        "cached_input_tokens": 91
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"consistent\": 0.3,\n  \"concurrent_edit\": 0.4,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 267,
+        "output_tokens": 33,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 271,
+        "output_tokens": 33,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.7,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "consistent": 0.20133333333333336,
+        "concurrent_edit": 0.6963333333333334,
+        "unauthorized": 0.10233333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 281,
+        "output_tokens": 33,
+        "cached_input_tokens": 102
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"consistent\": 0.2,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.3\n}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 267,
+        "output_tokens": 33,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "other",
+      "raw": "{\n  \"consistent\": 0.4,\n  \"concurrent_edit\": 0.4,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "consistent": 0.3993333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 251,
+        "output_tokens": 33,
+        "cached_input_tokens": 87
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "session_expired",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.2, \"unauthorized\": 0.7}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.20133333333333334,
+        "unauthorized": 0.6963333333333332
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 273,
+        "output_tokens": 28,
+        "cached_input_tokens": 97
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "role_readonly",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 271,
+        "output_tokens": 28,
+        "cached_input_tokens": 96
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "owner_policy",
+      "raw": "{\"forbidden\": 0.9, \"conflict\": 0.05, \"unauthorized\": 0.05}",
+      "row": {
+        "forbidden": 0.8943333333333333,
+        "conflict": 0.052833333333333336,
+        "unauthorized": 0.052833333333333336
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 275,
+        "output_tokens": 30,
+        "cached_input_tokens": 98
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "document_archived",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.2, \"unauthorized\": 0.0}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.20133333333333334,
+        "unauthorized": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 257,
+        "output_tokens": 28,
+        "cached_input_tokens": 89
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.7, \"unauthorized\": 0.2}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 265,
+        "output_tokens": 28,
+        "cached_input_tokens": 93
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 269,
+        "output_tokens": 28,
+        "cached_input_tokens": 95
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.7, \"unauthorized\": 0.2}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 279,
+        "output_tokens": 28,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"forbidden\": 0.9, \"conflict\": 0.05, \"unauthorized\": 0.05}",
+      "row": {
+        "forbidden": 0.8943333333333333,
+        "conflict": 0.052833333333333336,
+        "unauthorized": 0.052833333333333336
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 265,
+        "output_tokens": 30,
+        "cached_input_tokens": 93
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "other",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 249,
+        "output_tokens": 28,
+        "cached_input_tokens": 85
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.05,\n  \"deny:workflow_locked\": 0.05,\n  \"deny:quota_exceeded\": 0.05,\n  \"deny:edit_conflict\": 0.05,\n  \"deny:feature_disabled\": 0.05,\n  \"no_entry\": 0.1,\n  \"unauthorized\": 0.6\n}",
+      "row": {
+        "deny:role_readonly": 0.048253968253968264,
+        "deny:owner_policy": 0.048253968253968264,
+        "deny:document_archived": 0.048253968253968264,
+        "deny:workflow_locked": 0.048253968253968264,
+        "deny:quota_exceeded": 0.048253968253968264,
+        "deny:edit_conflict": 0.048253968253968264,
+        "deny:feature_disabled": 0.048253968253968264,
+        "no_entry": 0.09539682539682541,
+        "unauthorized": 0.5668253968253969
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 599,
+        "output_tokens": 118,
+        "cached_input_tokens": 299
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "role_readonly",
+      "raw": "{\n  \"deny:role_readonly\": 0.9,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.03,\n  \"deny:workflow_locked\": 0.01,\n  \"deny:quota_exceeded\": 0.005,\n  \"deny:edit_conflict\": 0.003,\n  \"deny:feature_disabled\": 0.001,\n  \"no_entry\": 0.001,\n  \"unauthorized\": 0.001\n}",
+      "row": {
+        "deny:role_readonly": 0.8912210012210012,
+        "deny:owner_policy": 0.05056166056166057,
+        "deny:document_archived": 0.030781440781440784,
+        "deny:workflow_locked": 0.011001221001221003,
+        "deny:quota_exceeded": 0.006056166056166057,
+        "deny:edit_conflict": 0.004078144078144079,
+        "deny:feature_disabled": 0.0021001221001221,
+        "no_entry": 0.0021001221001221,
+        "unauthorized": 0.0021001221001221
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 597,
+        "output_tokens": 124,
+        "cached_input_tokens": 298
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.9,\n  \"deny:document_archived\": 0.02,\n  \"deny:workflow_locked\": 0.01,\n  \"deny:quota_exceeded\": 0.01,\n  \"deny:edit_conflict\": 0.01,\n  \"deny:feature_disabled\": 0.01,\n  \"no_entry\": 0.01,\n  \"unauthorized\": 0.00\n}",
+      "row": {
+        "deny:role_readonly": 0.049640522875816995,
+        "deny:owner_policy": 0.874640522875817,
+        "deny:document_archived": 0.020522875816993465,
+        "deny:workflow_locked": 0.010816993464052288,
+        "deny:quota_exceeded": 0.010816993464052288,
+        "deny:edit_conflict": 0.010816993464052288,
+        "deny:feature_disabled": 0.010816993464052288,
+        "no_entry": 0.010816993464052288,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 601,
+        "output_tokens": 119,
+        "cached_input_tokens": 300
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.9,\n  \"deny:workflow_locked\": 0.02,\n  \"deny:quota_exceeded\": 0.01,\n  \"deny:edit_conflict\": 0.01,\n  \"deny:feature_disabled\": 0.01,\n  \"no_entry\": 0.05,\n  \"unauthorized\": 0.01\n}",
+      "row": {
+        "deny:role_readonly": 0.0457057057057057,
+        "deny:owner_policy": 0.0457057057057057,
+        "deny:document_archived": 0.8038138138138137,
+        "deny:workflow_locked": 0.018948948948948947,
+        "deny:quota_exceeded": 0.01003003003003003,
+        "deny:edit_conflict": 0.01003003003003003,
+        "deny:feature_disabled": 0.01003003003003003,
+        "no_entry": 0.0457057057057057,
+        "unauthorized": 0.01003003003003003
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 583,
+        "output_tokens": 119,
+        "cached_input_tokens": 291
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.05,\n  \"deny:workflow_locked\": 0.8,\n  \"deny:quota_exceeded\": 0.05,\n  \"deny:edit_conflict\": 0.05,\n  \"deny:feature_disabled\": 0.05,\n  \"no_entry\": 0.05,\n  \"unauthorized\": 0.0\n}",
+      "row": {
+        "deny:role_readonly": 0.044154589371980676,
+        "deny:owner_policy": 0.044154589371980676,
+        "deny:document_archived": 0.044154589371980676,
+        "deny:workflow_locked": 0.6898067632850241,
+        "deny:quota_exceeded": 0.044154589371980676,
+        "deny:edit_conflict": 0.044154589371980676,
+        "deny:feature_disabled": 0.044154589371980676,
+        "no_entry": 0.044154589371980676,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 591,
+        "output_tokens": 118,
+        "cached_input_tokens": 295
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 1,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.991111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 595,
+        "output_tokens": 93,
+        "cached_input_tokens": 297
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.05,\n  \"deny:workflow_locked\": 0.05,\n  \"deny:quota_exceeded\": 0.05,\n  \"deny:edit_conflict\": 0.6,\n  \"deny:feature_disabled\": 0.05,\n  \"no_entry\": 0.1,\n  \"unauthorized\": 0.05\n}",
+      "row": {
+        "deny:role_readonly": 0.04825396825396825,
+        "deny:owner_policy": 0.04825396825396825,
+        "deny:document_archived": 0.04825396825396825,
+        "deny:workflow_locked": 0.04825396825396825,
+        "deny:quota_exceeded": 0.04825396825396825,
+        "deny:edit_conflict": 0.5668253968253968,
+        "deny:feature_disabled": 0.04825396825396825,
+        "no_entry": 0.09539682539682538,
+        "unauthorized": 0.04825396825396825
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 605,
+        "output_tokens": 118,
+        "cached_input_tokens": 302
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 1,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.991111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 591,
+        "output_tokens": 93,
+        "cached_input_tokens": 295
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "other",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.05,\n  \"deny:workflow_locked\": 0.05,\n  \"deny:quota_exceeded\": 0.05,\n  \"deny:edit_conflict\": 0.05,\n  \"deny:feature_disabled\": 0.05,\n  \"no_entry\": 0.1,\n  \"unauthorized\": 0.55\n}",
+      "row": {
+        "deny:role_readonly": 0.050611111111111114,
+        "deny:owner_policy": 0.050611111111111114,
+        "deny:document_archived": 0.050611111111111114,
+        "deny:workflow_locked": 0.050611111111111114,
+        "deny:quota_exceeded": 0.050611111111111114,
+        "deny:edit_conflict": 0.050611111111111114,
+        "deny:feature_disabled": 0.050611111111111114,
+        "no_entry": 0.10011111111111111,
+        "unauthorized": 0.545611111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 575,
+        "output_tokens": 119,
+        "cached_input_tokens": 287
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "session_expired",
+      "raw": "{\"generic\": 0.95}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 242,
+        "output_tokens": 10,
+        "cached_input_tokens": 99
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "role_readonly",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 238,
+        "output_tokens": 9,
+        "cached_input_tokens": 96
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "owner_policy",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 216,
+        "output_tokens": 9,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "document_archived",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 207,
+        "output_tokens": 9,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"generic\": 0.95}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 211,
+        "output_tokens": 10,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"generic\": 0.95}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 213,
+        "output_tokens": 10,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 246,
+        "output_tokens": 9,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"generic\": 0.95}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 211,
+        "output_tokens": 10,
+        "cached_input_tokens": 72
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "other",
+      "raw": "{\"generic\": 0.85}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 203,
+        "output_tokens": 10,
+        "cached_input_tokens": 72
+      }
+    }
+  ],
+  "calibration_vs_true_model": {
+    "base": {
+      "llm": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.492051795591489,
+        "kl_bits": 1.4515213121948844,
+        "expected_brier": 0.5715141011030682,
+        "argmax_agreement": 0.5925925925925926
+      },
+      "designer_table": {
+        "cells": 81,
+        "expected_log_loss_bits": 0.05085930262988137,
+        "kl_bits": 0.01032881923327682,
+        "expected_brier": 0.016108598765432098,
+        "argmax_agreement": 1.0
+      }
+    },
+    "noise": {
+      "llm": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.6040052477685096,
+        "kl_bits": 1.527844305859684,
+        "expected_brier": 0.5992085863474257,
+        "argmax_agreement": 0.5925925925925926
+      },
+      "designer_table": {
+        "cells": 81,
+        "expected_log_loss_bits": 0.09395941946472061,
+        "kl_bits": 0.017798477555895312,
+        "expected_brier": 0.04006415432098766,
+        "argmax_agreement": 1.0
+      }
+    },
+    "drift": {
+      "llm": {
+        "cells": 81,
+        "expected_log_loss_bits": 1.492051795591489,
+        "kl_bits": 1.4515213121948844,
+        "expected_brier": 0.5715141011030682,
+        "argmax_agreement": 0.5925925925925926
+      },
+      "designer_table": {
+        "cells": 81,
+        "expected_log_loss_bits": 0.05085930262988137,
+        "kl_bits": 0.01032881923327682,
+        "expected_brier": 0.016108598765432098,
+        "argmax_agreement": 1.0
+      }
+    }
+  },
+  "note": "Calibration is measured against the sandbox generator, which is visible in code; it quantifies how well the model predicts probe outcomes from the tool contract."
+}

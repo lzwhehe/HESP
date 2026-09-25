@@ -8,3 +8,10 @@ __pycache__/
 *.pem
 *.key
 dist/
+runs_*.log
+external/excytin/data_anonymized*
+external/excytin/graphs/
+external/excytin/questions/
+external/excytin/
+external/GUIDE_*.csv
+/external/

@@ -1,0 +1,397 @@
+{
+  "purpose": "scripted_selector_ablation",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 42,
+  "arms": [
+    "sequential",
+    "eig_cost",
+    "eig",
+    "map_greedy",
+    "random",
+    "lookahead",
+    "eig_cost_llmP"
+  ],
+  "modes": {
+    "sequential": {
+      "runs": 120,
+      "verified_fraction": 0.4,
+      "statuses": {
+        "VERIFIED_SIMULATION": 48,
+        "STOPPED_UNRESOLVED": 72
+      },
+      "tool_calls": {
+        "mean_known": 1.7666666666666666,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.7666666666666666,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.7666666666666666,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.011841666666666667,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.4166666666666667
+    },
+    "eig_cost": {
+      "runs": 120,
+      "verified_fraction": 0.45,
+      "statuses": {
+        "VERIFIED_SIMULATION": 54,
+        "STOPPED_UNRESOLVED": 66
+      },
+      "tool_calls": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.65,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.012975,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.2222222222222223
+    },
+    "eig": {
+      "runs": 120,
+      "verified_fraction": 0.45,
+      "statuses": {
+        "VERIFIED_SIMULATION": 54,
+        "STOPPED_UNRESOLVED": 66
+      },
+      "tool_calls": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.65,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.011983333333333334,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.2222222222222223
+    },
+    "map_greedy": {
+      "runs": 120,
+      "verified_fraction": 0.45,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 66,
+        "VERIFIED_SIMULATION": 54
+      },
+      "tool_calls": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.65,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.012175,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.2222222222222223
+    },
+    "random": {
+      "runs": 120,
+      "verified_fraction": 0.3333333333333333,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 80,
+        "VERIFIED_SIMULATION": 40
+      },
+      "tool_calls": {
+        "mean_known": 1.75,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.75,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.75,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.013133333333333334,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.25
+    },
+    "lookahead": {
+      "runs": 120,
+      "verified_fraction": 0.45,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 66,
+        "VERIFIED_SIMULATION": 54
+      },
+      "tool_calls": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.65,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.65,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.015241666666666667,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1.2222222222222223
+    },
+    "eig_cost_llmP": {
+      "runs": 120,
+      "verified_fraction": 0,
+      "statuses": {
+        "STOPPED_UNRESOLVED": 120
+      },
+      "tool_calls": {
+        "mean_known": 2,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 3,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.0155,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 0,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    }
+  },
+  "paired_verification": {
+    "eig_cost_minus_sequential": {
+      "task_clusters": 24,
+      "difference": 0.05,
+      "cluster_bootstrap_percentile_95": [
+        -0.16666666666666666,
+        0.25833333333333336
+      ],
+      "tasks_better": 6,
+      "tasks_worse": 3
+    },
+    "eig_cost_minus_eig": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "eig_cost_minus_map_greedy": {
+      "task_clusters": 24,
+      "difference": 0.0,
+      "cluster_bootstrap_percentile_95": [
+        -0.15,
+        0.15833333333333333
+      ],
+      "tasks_better": 2,
+      "tasks_worse": 2
+    },
+    "eig_cost_minus_random": {
+      "task_clusters": 24,
+      "difference": 0.11666666666666667,
+      "cluster_bootstrap_percentile_95": [
+        -0.07500000000000001,
+        0.325
+      ],
+      "tasks_better": 9,
+      "tasks_worse": 11
+    },
+    "eig_cost_minus_lookahead": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "eig_cost_minus_eig_cost_llmP": {
+      "task_clusters": 24,
+      "difference": 0.45,
+      "cluster_bootstrap_percentile_95": [
+        0.25,
+        0.6583333333333333
+      ],
+      "tasks_better": 11,
+      "tasks_worse": 0
+    },
+    "lookahead_minus_eig": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "lookahead_minus_sequential": {
+      "task_clusters": 24,
+      "difference": 0.05,
+      "cluster_bootstrap_percentile_95": [
+        -0.16666666666666666,
+        0.25833333333333336
+      ],
+      "tasks_better": 6,
+      "tasks_worse": 3
+    }
+  },
+  "paired_tool_cost": {
+    "eig_cost_minus_sequential": {
+      "task_clusters": 24,
+      "difference": -0.11666666666666667,
+      "cluster_bootstrap_percentile_95": [
+        -0.3416666666666667,
+        0.11666666666666667
+      ]
+    },
+    "eig_cost_minus_eig": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "eig_cost_minus_map_greedy": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "eig_cost_minus_random": {
+      "task_clusters": 24,
+      "difference": -0.1,
+      "cluster_bootstrap_percentile_95": [
+        -0.3,
+        0.07500000000000001
+      ]
+    },
+    "eig_cost_minus_lookahead": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "eig_cost_minus_eig_cost_llmP": {
+      "task_clusters": 24,
+      "difference": -0.35,
+      "cluster_bootstrap_percentile_95": [
+        -0.5416666666666666,
+        -0.18333333333333335
+      ]
+    },
+    "lookahead_minus_eig": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "lookahead_minus_sequential": {
+      "task_clusters": 24,
+      "difference": -0.11666666666666667,
+      "cluster_bootstrap_percentile_95": [
+        -0.3416666666666667,
+        0.11666666666666667
+      ]
+    }
+  },
+  "manifest_sha256": "837dee45c39490475ce4fe1d60823a9cfd96da64fe1cc1197978afade340405d"
+}

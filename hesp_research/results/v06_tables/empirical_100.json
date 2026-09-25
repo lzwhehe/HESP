@@ -1,0 +1,452 @@
+{
+  "schema": "hesp.empirical_table.v1",
+  "source": "empirical_100",
+  "family": "sec-triage",
+  "k_per_cause_variant": 100,
+  "dev_variants": [
+    "base",
+    "noise"
+  ],
+  "dev_seed_base": 900000,
+  "nested": true,
+  "dev_episodes": 1600,
+  "eps": 0.01,
+  "skipped_invalid_observations": 1024,
+  "cell_coverage": 0.8888888888888888,
+  "tables": {
+    "auth_log": {
+      "credential_stuffing": {
+        "distributed_failures": 0.995,
+        "none": 0.005
+      },
+      "sqli_probe": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "misconfig_exposed_admin": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "authorized_scan": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "false_positive_monitor": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "insider_exfil": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "vuln_component": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "dns_c2": {
+        "distributed_failures": 0.005,
+        "none": 0.995
+      },
+      "other": {
+        "distributed_failures": 0.5,
+        "none": 0.5
+      }
+    },
+    "access_pattern": {
+      "credential_stuffing": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.9925
+      },
+      "sqli_probe": {
+        "sqli_payloads": 0.9925000000000002,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.0025000000000000005
+      },
+      "misconfig_exposed_admin": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.9925
+      },
+      "authorized_scan": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.9925000000000002,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.0025000000000000005
+      },
+      "false_positive_monitor": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.9925
+      },
+      "insider_exfil": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.9925,
+        "normal": 0.0025000000000000005
+      },
+      "vuln_component": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.9925
+      },
+      "dns_c2": {
+        "sqli_payloads": 0.0025000000000000005,
+        "path_scanning": 0.0025000000000000005,
+        "large_response": 0.0025000000000000005,
+        "normal": 0.9925
+      },
+      "other": {
+        "sqli_payloads": 0.25,
+        "path_scanning": 0.25,
+        "large_response": 0.25,
+        "normal": 0.25
+      }
+    },
+    "source_ips": {
+      "credential_stuffing": {
+        "many_residential": 0.992,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.002
+      },
+      "sqli_probe": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.992
+      },
+      "misconfig_exposed_admin": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.992
+      },
+      "authorized_scan": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.992,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.002
+      },
+      "false_positive_monitor": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.992,
+        "internal_host": 0.002,
+        "normal": 0.002
+      },
+      "insider_exfil": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.992,
+        "normal": 0.002
+      },
+      "vuln_component": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.992
+      },
+      "dns_c2": {
+        "many_residential": 0.002,
+        "known_scanner_asn": 0.002,
+        "monitoring_range": 0.002,
+        "internal_host": 0.002,
+        "normal": 0.992
+      },
+      "other": {
+        "many_residential": 0.2,
+        "known_scanner_asn": 0.2,
+        "monitoring_range": 0.2,
+        "internal_host": 0.2,
+        "normal": 0.2
+      }
+    },
+    "admin_exposure": {
+      "credential_stuffing": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "sqli_probe": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "misconfig_exposed_admin": {
+        "protected": 0.005,
+        "exposed_no_auth": 0.995
+      },
+      "authorized_scan": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "false_positive_monitor": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "insider_exfil": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "vuln_component": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "dns_c2": {
+        "protected": 0.995,
+        "exposed_no_auth": 0.005
+      },
+      "other": {
+        "protected": 0.5,
+        "exposed_no_auth": 0.5
+      }
+    },
+    "user_activity": {
+      "credential_stuffing": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "sqli_probe": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "misconfig_exposed_admin": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "authorized_scan": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "false_positive_monitor": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "insider_exfil": {
+        "normal": 0.005,
+        "one_user_spike": 0.995
+      },
+      "vuln_component": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "dns_c2": {
+        "normal": 0.995,
+        "one_user_spike": 0.005
+      },
+      "other": {
+        "normal": 0.5,
+        "one_user_spike": 0.5
+      }
+    },
+    "dns_logs": {
+      "credential_stuffing": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "sqli_probe": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "misconfig_exposed_admin": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "authorized_scan": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "false_positive_monitor": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "insider_exfil": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "vuln_component": {
+        "normal": 0.995,
+        "high_entropy": 0.005
+      },
+      "dns_c2": {
+        "normal": 0.005,
+        "high_entropy": 0.995
+      },
+      "other": {
+        "normal": 0.5,
+        "high_entropy": 0.5
+      }
+    },
+    "component_versions": {
+      "credential_stuffing": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "sqli_probe": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "misconfig_exposed_admin": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "authorized_scan": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "false_positive_monitor": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "insider_exfil": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "vuln_component": {
+        "up_to_date": 0.005,
+        "known_cve": 0.995
+      },
+      "dns_c2": {
+        "up_to_date": 0.995,
+        "known_cve": 0.005
+      },
+      "other": {
+        "up_to_date": 0.5,
+        "known_cve": 0.5
+      }
+    },
+    "change_ticket": {
+      "credential_stuffing": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "sqli_probe": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "misconfig_exposed_admin": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "authorized_scan": {
+        "authorized_window": 0.995,
+        "none": 0.005
+      },
+      "false_positive_monitor": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "insider_exfil": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "vuln_component": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "dns_c2": {
+        "authorized_window": 0.005,
+        "none": 0.995
+      },
+      "other": {
+        "authorized_window": 0.5,
+        "none": 0.5
+      }
+    },
+    "threat_intel": {
+      "credential_stuffing": {
+        "malicious_campaign": 0.8008870967741937,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.0025000000000000005,
+        "inconclusive": 0.19411290322580652
+      },
+      "sqli_probe": {
+        "malicious_campaign": 0.8275000000000001,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.0025000000000000005,
+        "inconclusive": 0.1675
+      },
+      "misconfig_exposed_admin": {
+        "malicious_campaign": 0.0025000000000000005,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.9925,
+        "inconclusive": 0.0025000000000000005
+      },
+      "authorized_scan": {
+        "malicious_campaign": 0.0025000000000000005,
+        "benign_scanner": 0.7528157894736843,
+        "clean": 0.0025000000000000005,
+        "inconclusive": 0.2421842105263158
+      },
+      "false_positive_monitor": {
+        "malicious_campaign": 0.0025000000000000005,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.9925,
+        "inconclusive": 0.0025000000000000005
+      },
+      "insider_exfil": {
+        "malicious_campaign": 0.0025000000000000005,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.9925,
+        "inconclusive": 0.0025000000000000005
+      },
+      "vuln_component": {
+        "malicious_campaign": 0.0025000000000000005,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.9925,
+        "inconclusive": 0.0025000000000000005
+      },
+      "dns_c2": {
+        "malicious_campaign": 0.8212567567567569,
+        "benign_scanner": 0.0025000000000000005,
+        "clean": 0.0025000000000000005,
+        "inconclusive": 0.17374324324324328
+      },
+      "other": {
+        "malicious_campaign": 0.25,
+        "benign_scanner": 0.25,
+        "clean": 0.25,
+        "inconclusive": 0.25
+      }
+    },
+    "runbook": {
+      "credential_stuffing": {
+        "generic": 1.0
+      },
+      "sqli_probe": {
+        "generic": 1.0
+      },
+      "misconfig_exposed_admin": {
+        "generic": 1.0
+      },
+      "authorized_scan": {
+        "generic": 1.0
+      },
+      "false_positive_monitor": {
+        "generic": 1.0
+      },
+      "insider_exfil": {
+        "generic": 1.0
+      },
+      "vuln_component": {
+        "generic": 1.0
+      },
+      "dns_c2": {
+        "generic": 1.0
+      },
+      "other": {
+        "generic": 1.0
+      }
+    }
+  }
+}

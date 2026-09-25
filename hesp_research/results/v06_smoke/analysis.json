@@ -1,0 +1,504 @@
+{
+  "purpose": "v0.6_rq3_study",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 2026,
+  "arms": [
+    "react_style",
+    "memory_only",
+    "hesp_eigc_guard_designer",
+    "hesp_eigc_guard_emp1",
+    "hesp_eigc_guard_emp5",
+    "hesp_eigc_guard_emp20",
+    "hesp_eigc_guard_emp100",
+    "hesp_eigc_guard_llmp"
+  ],
+  "modes": {
+    "react_style": {
+      "runs": 2,
+      "verified_fraction": 0,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 1,
+        "TOOL_BUDGET_EXCEEDED": 1
+      },
+      "tool_calls": {
+        "mean_known": 4.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 6,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 11.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 23.898,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 26912.5,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 314.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "memory_only": {
+      "runs": 2,
+      "verified_fraction": 0,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 2
+      },
+      "tool_calls": {
+        "mean_known": 5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 5.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 12,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 28.015500000000003,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 31834,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 322,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_eigc_guard_designer": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "VERIFIED_SIMULATION": 1,
+        "DECISION_BUDGET_EXCEEDED": 1
+      },
+      "tool_calls": {
+        "mean_known": 5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 5.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 22.703500000000002,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 24689.5,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 347.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 3
+    },
+    "hesp_eigc_guard_emp1": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 1,
+        "VERIFIED_SIMULATION": 1
+      },
+      "tool_calls": {
+        "mean_known": 8,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 20.366999999999997,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 32491,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 362.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 9
+    },
+    "hesp_eigc_guard_emp5": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "VERIFIED_SIMULATION": 1,
+        "DECISION_BUDGET_EXCEEDED": 1
+      },
+      "tool_calls": {
+        "mean_known": 8.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 10.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 28.203000000000003,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 33988,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 379,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 10
+    },
+    "hesp_eigc_guard_emp20": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 1,
+        "VERIFIED_SIMULATION": 1
+      },
+      "tool_calls": {
+        "mean_known": 8.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 10.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 26.2895,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 32173,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 380,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 10
+    },
+    "hesp_eigc_guard_emp100": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 1,
+        "VERIFIED_SIMULATION": 1
+      },
+      "tool_calls": {
+        "mean_known": 8.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 10.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 26.6795,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 32767.5,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 372.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 10
+    },
+    "hesp_eigc_guard_llmp": {
+      "runs": 2,
+      "verified_fraction": 0,
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 2
+      },
+      "tool_calls": {
+        "mean_known": 7,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 12,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 30.546999999999997,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 35947,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 434.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    }
+  },
+  "paired_verification": {
+    "hesp_eigc_guard_emp20_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_emp1_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_emp5_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_emp100_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_designer_minus_hesp_eigc_guard_emp20": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_emp20_minus_hesp_eigc_guard_llmp": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_designer_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ],
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "memory_only_minus_react_style": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    }
+  },
+  "paired_tool_cost": {
+    "hesp_eigc_guard_emp20_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 4.5,
+      "cluster_bootstrap_percentile_95": [
+        2,
+        7
+      ]
+    },
+    "hesp_eigc_guard_emp1_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 4,
+      "cluster_bootstrap_percentile_95": [
+        2,
+        6
+      ]
+    },
+    "hesp_eigc_guard_emp5_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 4.5,
+      "cluster_bootstrap_percentile_95": [
+        2,
+        7
+      ]
+    },
+    "hesp_eigc_guard_emp100_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 4.5,
+      "cluster_bootstrap_percentile_95": [
+        2,
+        7
+      ]
+    },
+    "hesp_eigc_guard_designer_minus_hesp_eigc_guard_emp20": {
+      "task_clusters": 2,
+      "difference": -4.5,
+      "cluster_bootstrap_percentile_95": [
+        -7,
+        -2
+      ]
+    },
+    "hesp_eigc_guard_emp20_minus_hesp_eigc_guard_llmp": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "hesp_eigc_guard_designer_minus_memory_only": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "memory_only_minus_react_style": {
+      "task_clusters": 2,
+      "difference": -0.5,
+      "cluster_bootstrap_percentile_95": [
+        -2,
+        1
+      ]
+    }
+  },
+  "security_metrics": {
+    "react_style": {
+      "episodes": 2,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "memory_only": {
+      "episodes": 2,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "hesp_eigc_guard_designer": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard_emp1": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard_emp5": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard_emp20": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard_emp100": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard_llmp": {
+      "episodes": 2,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    }
+  },
+  "manifest_sha256": "fd7725b8da495bba6418efdc061397dba4fefee4a6206e19b73da5a5484eabc9"
+}

@@ -1,0 +1,652 @@
+{
+ "qwen7b": {
+  "label": "Qwen2.5-7B",
+  "episodes": 360,
+  "source_hashes": [
+   "8c355d97"
+  ],
+  "verified": {
+   "memory_only": 0.08333333333333333,
+   "hesp_random_blind": 0.6388888888888888,
+   "hesp_eigc_blind": 0.9444444444444444,
+   "hesp_eigc": 1,
+   "hesp_eigc_guard": 1
+  },
+  "tool_cost": {
+   "memory_only": 9.458333333333334,
+   "hesp_random_blind": 9.26388888888889,
+   "hesp_eigc_blind": 7.319444444444445,
+   "hesp_eigc": 9.444444444444445,
+   "hesp_eigc_guard": 9.444444444444445
+  },
+  "terms": {
+   "hesp_eigc_guard - memory_only": {
+    "difference": 0.9166666666666666,
+    "ci": [
+     0.8333333333333334,
+     0.9861111111111112
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 24,
+    "worse": 0,
+    "name": "HESP vs Memory-only"
+   },
+   "hesp_random_blind - memory_only": {
+    "difference": 0.5555555555555556,
+    "ci": [
+     0.4027777777777778,
+     0.7083333333333334
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 19,
+    "worse": 0,
+    "name": "hand probe choice to controller"
+   },
+   "hesp_eigc_blind - hesp_random_blind": {
+    "difference": 0.3055555555555555,
+    "ci": [
+     0.1388888888888889,
+     0.4722222222222222
+    ],
+    "level": 0.975,
+    "tasks": 24,
+    "better": 14,
+    "worse": 1,
+    "name": "EIG/c ranking itself"
+   },
+   "hesp_eigc - hesp_eigc_blind": {
+    "difference": 0.05555555555555555,
+    "ci": [
+     0,
+     0.1527777777777778
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 2,
+    "worse": 0,
+    "name": "show ranking to planner"
+   },
+   "hesp_eigc_guard - hesp_eigc": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "finish guard"
+   }
+  },
+  "security": {
+   "memory_only": {
+    "episodes": 72,
+    "episodes_with_a_claim": 7,
+    "unresolved_rate": 0.9166666666666666,
+    "missed_attack_rate": 0.14285714285714285,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": 0.14285714285714285,
+    "evidence_citation_validity": 0.9285714285714286
+   },
+   "hesp_random_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 71,
+    "unresolved_rate": 0.3611111111111111,
+    "missed_attack_rate": 0.18867924528301888,
+    "false_escalation_rate": 0.16666666666666666,
+    "wrong_cause_rate": 0.23943661971830985,
+    "evidence_citation_validity": 0.852112676056338
+   },
+   "hesp_eigc_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.05555555555555555,
+    "missed_attack_rate": 0.07407407407407407,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.05555555555555555,
+    "evidence_citation_validity": 0.9675925925925926
+   },
+   "hesp_eigc": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   },
+   "hesp_eigc_guard": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   }
+  }
+ },
+ "qwen32b": {
+  "label": "Qwen2.5-32B-AWQ",
+  "episodes": 360,
+  "source_hashes": [
+   "8c355d97"
+  ],
+  "verified": {
+   "memory_only": 0.875,
+   "hesp_random_blind": 0.6527777777777778,
+   "hesp_eigc_blind": 1,
+   "hesp_eigc": 1,
+   "hesp_eigc_guard": 1
+  },
+  "tool_cost": {
+   "memory_only": 5.444444444444445,
+   "hesp_random_blind": 8.097222222222221,
+   "hesp_eigc_blind": 5.569444444444445,
+   "hesp_eigc": 6.111111111111111,
+   "hesp_eigc_guard": 6.111111111111111
+  },
+  "terms": {
+   "hesp_eigc_guard - memory_only": {
+    "difference": 0.125,
+    "ci": [
+     0.027777777777777776,
+     0.25
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 5,
+    "worse": 0,
+    "name": "HESP vs Memory-only"
+   },
+   "hesp_random_blind - memory_only": {
+    "difference": -0.2222222222222222,
+    "ci": [
+     -0.375,
+     -0.08333333333333333
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 4,
+    "worse": 13,
+    "name": "hand probe choice to controller"
+   },
+   "hesp_eigc_blind - hesp_random_blind": {
+    "difference": 0.3472222222222222,
+    "ci": [
+     0.2222222222222222,
+     0.4861111111111111
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 15,
+    "worse": 0,
+    "name": "EIG/c ranking itself"
+   },
+   "hesp_eigc - hesp_eigc_blind": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "show ranking to planner"
+   },
+   "hesp_eigc_guard - hesp_eigc": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "finish guard"
+   }
+  },
+  "security": {
+   "memory_only": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.125,
+    "missed_attack_rate": 0.018518518518518517,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.06944444444444445,
+    "evidence_citation_validity": 0.9722222222222222
+   },
+   "hesp_random_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.3472222222222222,
+    "missed_attack_rate": 0.25925925925925924,
+    "false_escalation_rate": 0.05555555555555555,
+    "wrong_cause_rate": 0.2361111111111111,
+    "evidence_citation_validity": 0.9074074074074074
+   },
+   "hesp_eigc_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   },
+   "hesp_eigc": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   },
+   "hesp_eigc_guard": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   }
+  }
+ },
+ "qwen72b": {
+  "label": "Qwen2.5-72B-AWQ",
+  "episodes": 360,
+  "source_hashes": [
+   "8c355d97"
+  ],
+  "verified": {
+   "memory_only": 0.8472222222222222,
+   "hesp_random_blind": 0.5694444444444444,
+   "hesp_eigc_blind": 0.9166666666666666,
+   "hesp_eigc": 0.9583333333333334,
+   "hesp_eigc_guard": 1
+  },
+  "tool_cost": {
+   "memory_only": 5.736111111111111,
+   "hesp_random_blind": 6.361111111111111,
+   "hesp_eigc_blind": 3.611111111111111,
+   "hesp_eigc": 5.083333333333333,
+   "hesp_eigc_guard": 5.333333333333333
+  },
+  "terms": {
+   "hesp_eigc_guard - memory_only": {
+    "difference": 0.1527777777777778,
+    "ci": [
+     0.041666666666666664,
+     0.2916666666666667
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 5,
+    "worse": 0,
+    "name": "HESP vs Memory-only"
+   },
+   "hesp_random_blind - memory_only": {
+    "difference": -0.2777777777777778,
+    "ci": [
+     -0.4305555555555555,
+     -0.125
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 3,
+    "worse": 14,
+    "name": "hand probe choice to controller"
+   },
+   "hesp_eigc_blind - hesp_random_blind": {
+    "difference": 0.3472222222222222,
+    "ci": [
+     0.18055555555555555,
+     0.5
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 16,
+    "worse": 2,
+    "name": "EIG/c ranking itself"
+   },
+   "hesp_eigc - hesp_eigc_blind": {
+    "difference": 0.041666666666666664,
+    "ci": [
+     -0.08333333333333333,
+     0.20833333333333334
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 2,
+    "worse": 1,
+    "name": "show ranking to planner"
+   },
+   "hesp_eigc_guard - hesp_eigc": {
+    "difference": 0.041666666666666664,
+    "ci": [
+     0,
+     0.125
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 1,
+    "worse": 0,
+    "name": "finish guard"
+   }
+  },
+  "security": {
+   "memory_only": {
+    "episodes": 72,
+    "episodes_with_a_claim": 71,
+    "unresolved_rate": 0.1527777777777778,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.056338028169014086,
+    "evidence_citation_validity": 0.9859154929577465
+   },
+   "hesp_random_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.4305555555555556,
+    "missed_attack_rate": 0.23636363636363636,
+    "false_escalation_rate": 0.11764705882352941,
+    "wrong_cause_rate": 0.2777777777777778,
+    "evidence_citation_validity": 0.9074074074074074
+   },
+   "hesp_eigc_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.08333333333333333,
+    "missed_attack_rate": 0.058823529411764705,
+    "false_escalation_rate": 0.14285714285714285,
+    "wrong_cause_rate": 0.08333333333333333,
+    "evidence_citation_validity": 0.9166666666666666
+   },
+   "hesp_eigc": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.041666666666666664,
+    "missed_attack_rate": 0.05555555555555555,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.041666666666666664,
+    "evidence_citation_validity": 0.9583333333333334
+   },
+   "hesp_eigc_guard": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   }
+  }
+ },
+ "llama8b": {
+  "label": "Llama-3.1-8B",
+  "episodes": 360,
+  "source_hashes": [
+   "8c355d97"
+  ],
+  "verified": {
+   "memory_only": 0,
+   "hesp_random_blind": 0,
+   "hesp_eigc_blind": 0,
+   "hesp_eigc": 0,
+   "hesp_eigc_guard": 0
+  },
+  "tool_cost": {
+   "memory_only": 9.680555555555555,
+   "hesp_random_blind": 9.972222222222221,
+   "hesp_eigc_blind": 10,
+   "hesp_eigc": 10,
+   "hesp_eigc_guard": 10
+  },
+  "terms": {
+   "hesp_eigc_guard - memory_only": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.975,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "HESP vs Memory-only"
+   },
+   "hesp_random_blind - memory_only": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "hand probe choice to controller"
+   },
+   "hesp_eigc_blind - hesp_random_blind": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "EIG/c ranking itself"
+   },
+   "hesp_eigc - hesp_eigc_blind": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "show ranking to planner"
+   },
+   "hesp_eigc_guard - hesp_eigc": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "finish guard"
+   }
+  },
+  "security": {
+   "memory_only": {
+    "episodes": 72,
+    "episodes_with_a_claim": 0,
+    "unresolved_rate": 1,
+    "missed_attack_rate": null,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": null,
+    "evidence_citation_validity": null
+   },
+   "hesp_random_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 0,
+    "unresolved_rate": 1,
+    "missed_attack_rate": null,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": null,
+    "evidence_citation_validity": null
+   },
+   "hesp_eigc_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 0,
+    "unresolved_rate": 1,
+    "missed_attack_rate": null,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": null,
+    "evidence_citation_validity": null
+   },
+   "hesp_eigc": {
+    "episodes": 72,
+    "episodes_with_a_claim": 0,
+    "unresolved_rate": 1,
+    "missed_attack_rate": null,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": null,
+    "evidence_citation_validity": null
+   },
+   "hesp_eigc_guard": {
+    "episodes": 72,
+    "episodes_with_a_claim": 0,
+    "unresolved_rate": 1,
+    "missed_attack_rate": null,
+    "false_escalation_rate": null,
+    "wrong_cause_rate": null,
+    "evidence_citation_validity": null
+   }
+  }
+ },
+ "llama70b": {
+  "label": "Llama-3.1-70B-AWQ",
+  "episodes": 360,
+  "source_hashes": [
+   "8c355d97"
+  ],
+  "verified": {
+   "memory_only": 0.8333333333333334,
+   "hesp_random_blind": 0.7361111111111112,
+   "hesp_eigc_blind": 1,
+   "hesp_eigc": 1,
+   "hesp_eigc_guard": 1
+  },
+  "tool_cost": {
+   "memory_only": 8.63888888888889,
+   "hesp_random_blind": 9.86111111111111,
+   "hesp_eigc_blind": 9.13888888888889,
+   "hesp_eigc": 9.36111111111111,
+   "hesp_eigc_guard": 9.36111111111111
+  },
+  "terms": {
+   "hesp_eigc_guard - memory_only": {
+    "difference": 0.16666666666666666,
+    "ci": [
+     0.05555555555555555,
+     0.2916666666666667
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 7,
+    "worse": 0,
+    "name": "HESP vs Memory-only"
+   },
+   "hesp_random_blind - memory_only": {
+    "difference": -0.09722222222222222,
+    "ci": [
+     -0.2777777777777778,
+     0.05555555555555556
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 4,
+    "worse": 8,
+    "name": "hand probe choice to controller"
+   },
+   "hesp_eigc_blind - hesp_random_blind": {
+    "difference": 0.2638888888888889,
+    "ci": [
+     0.1388888888888889,
+     0.4027777777777778
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 11,
+    "worse": 0,
+    "name": "EIG/c ranking itself"
+   },
+   "hesp_eigc - hesp_eigc_blind": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "show ranking to planner"
+   },
+   "hesp_eigc_guard - hesp_eigc": {
+    "difference": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "level": 0.95,
+    "tasks": 24,
+    "better": 0,
+    "worse": 0,
+    "name": "finish guard"
+   }
+  },
+  "security": {
+   "memory_only": {
+    "episodes": 72,
+    "episodes_with_a_claim": 61,
+    "unresolved_rate": 0.16666666666666666,
+    "missed_attack_rate": 0.02127659574468085,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.01639344262295082,
+    "evidence_citation_validity": 0.9781420765027322
+   },
+   "hesp_random_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0.2638888888888889,
+    "missed_attack_rate": 0.25925925925925924,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0.19444444444444445,
+    "evidence_citation_validity": 0.9675925925925926
+   },
+   "hesp_eigc_blind": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   },
+   "hesp_eigc": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   },
+   "hesp_eigc_guard": {
+    "episodes": 72,
+    "episodes_with_a_claim": 72,
+    "unresolved_rate": 0,
+    "missed_attack_rate": 0,
+    "false_escalation_rate": 0,
+    "wrong_cause_rate": 0,
+    "evidence_citation_validity": 1.0
+   }
+  }
+ }
+}

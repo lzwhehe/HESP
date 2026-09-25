@@ -1,0 +1,152 @@
+{
+  "per_variant": {
+    "react_style": {
+      "base": 0.6875,
+      "drift": 0.5,
+      "noise": 0.625
+    },
+    "memory_only": {
+      "base": 0.8125,
+      "drift": 0.6875,
+      "noise": 0.75
+    },
+    "hesp": {
+      "base": 1.0,
+      "drift": 0.4375,
+      "noise": 1.0
+    },
+    "hesp_llm_pred": {
+      "base": 1.0,
+      "drift": 0.25,
+      "noise": 1.0
+    },
+    "hesp_random": {
+      "base": 1.0,
+      "drift": 0.5,
+      "noise": 0.75
+    }
+  },
+  "behaviour": {
+    "react_style": {
+      "episodes": 48,
+      "decisions": 382,
+      "repair_attempts": 13,
+      "blocked_duplicate_proposals_per_episode": 2.0833333333333335,
+      "episodes_with_any_blocked_duplicate": 17,
+      "decision_kinds": {
+        "action": 346,
+        "finish": 36
+      },
+      "statuses": {
+        "VERIFIED_SIMULATION": 29,
+        "UNVERIFIED_CLAIM": 7,
+        "DECISION_BUDGET_EXCEEDED": 11,
+        "PLANNER_ERROR": 1
+      },
+      "llm_seconds_per_episode": 20.423312500000023
+    },
+    "memory_only": {
+      "episodes": 48,
+      "decisions": 311,
+      "repair_attempts": 20,
+      "blocked_duplicate_proposals_per_episode": 0.875,
+      "episodes_with_any_blocked_duplicate": 14,
+      "decision_kinds": {
+        "action": 270,
+        "finish": 41
+      },
+      "statuses": {
+        "DECISION_BUDGET_EXCEEDED": 6,
+        "VERIFIED_SIMULATION": 36,
+        "UNVERIFIED_CLAIM": 5,
+        "TOOL_BUDGET_EXCEEDED": 1
+      },
+      "llm_seconds_per_episode": 20.119354166666675
+    },
+    "hesp": {
+      "episodes": 48,
+      "decisions": 208,
+      "repair_attempts": 0,
+      "blocked_duplicate_proposals_per_episode": 0,
+      "episodes_with_any_blocked_duplicate": 0,
+      "decision_kinds": {
+        "action": 160,
+        "finish": 48
+      },
+      "statuses": {
+        "VERIFIED_SIMULATION": 39,
+        "UNVERIFIED_CLAIM": 9
+      },
+      "llm_seconds_per_episode": 12.773062499999993
+    },
+    "hesp_llm_pred": {
+      "episodes": 48,
+      "decisions": 211,
+      "repair_attempts": 4,
+      "blocked_duplicate_proposals_per_episode": 0,
+      "episodes_with_any_blocked_duplicate": 0,
+      "decision_kinds": {
+        "action": 163,
+        "finish": 48
+      },
+      "statuses": {
+        "UNVERIFIED_CLAIM": 12,
+        "VERIFIED_SIMULATION": 36
+      },
+      "llm_seconds_per_episode": 12.180562499999995
+    },
+    "hesp_random": {
+      "episodes": 48,
+      "decisions": 315,
+      "repair_attempts": 0,
+      "blocked_duplicate_proposals_per_episode": 0,
+      "episodes_with_any_blocked_duplicate": 0,
+      "decision_kinds": {
+        "action": 267,
+        "finish": 48
+      },
+      "statuses": {
+        "VERIFIED_SIMULATION": 36,
+        "UNVERIFIED_CLAIM": 12
+      },
+      "llm_seconds_per_episode": 22.904916666666654
+    }
+  },
+  "tokens": {
+    "react_style": {
+      "mean_total_tokens_per_episode": 19110.31914893617,
+      "total_tokens_per_verified_episode": 30971.896551724138,
+      "mean_input_tokens": 18869.23404255319,
+      "mean_output_tokens": 241.08510638297872,
+      "unknown_usage_episodes": 1
+    },
+    "memory_only": {
+      "mean_total_tokens_per_episode": 17274.041666666668,
+      "total_tokens_per_verified_episode": 23032.055555555555,
+      "mean_input_tokens": 17073.416666666668,
+      "mean_output_tokens": 200.625,
+      "unknown_usage_episodes": 0
+    },
+    "hesp": {
+      "mean_total_tokens_per_episode": 10979.1875,
+      "total_tokens_per_verified_episode": 13512.846153846154,
+      "mean_input_tokens": 10843.979166666666,
+      "mean_output_tokens": 135.20833333333334,
+      "unknown_usage_episodes": 0
+    },
+    "hesp_llm_pred": {
+      "mean_total_tokens_per_episode": 11476.416666666666,
+      "total_tokens_per_verified_episode": 15301.888888888889,
+      "mean_input_tokens": 11330,
+      "mean_output_tokens": 146.41666666666666,
+      "unknown_usage_episodes": 0
+    },
+    "hesp_random": {
+      "mean_total_tokens_per_episode": 17099.916666666668,
+      "total_tokens_per_verified_episode": 22799.88888888889,
+      "mean_input_tokens": 16908.270833333332,
+      "mean_output_tokens": 191.64583333333334,
+      "unknown_usage_episodes": 0
+    }
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "purpose": "v0.8_study",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 2026,
+  "arms": [
+    "memory_only",
+    "hesp_random_blind",
+    "hesp_eigc_blind",
+    "hesp_eigc",
+    "hesp_eigc_guard"
+  ],
+  "modes": {
+    "memory_only": {
+      "runs": 72,
+      "verified_fraction": 0.8333333333333334,
+      "statuses": {
+        "VERIFIED_SIMULATION": 60,
+        "TOOL_BUDGET_EXCEEDED": 11,
+        "UNVERIFIED_CLAIM": 1
+      },
+      "tool_calls": {
+        "mean_known": 7.027777777777778,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 8.63888888888889,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8.055555555555555,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 130.67111645833333,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 12445.138888888889,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 225.95833333333334,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 8.616666666666667
+    },
+    "hesp_random_blind": {
+      "runs": 72,
+      "verified_fraction": 0.7361111111111112,
+      "statuses": {
+        "VERIFIED_SIMULATION": 53,
+        "UNVERIFIED_CLAIM": 19
+      },
+      "tool_calls": {
+        "mean_known": 7.083333333333333,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.86111111111111,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8.083333333333334,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 130.63659541666667,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 12758.875,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 220.51388888888889,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 9.81132075471698
+    },
+    "hesp_eigc_blind": {
+      "runs": 72,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 72
+      },
+      "tool_calls": {
+        "mean_known": 7.944444444444445,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.13888888888889,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8.944444444444445,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 141.5631935,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 14239.972222222223,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 243.05555555555554,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 9.13888888888889
+    },
+    "hesp_eigc": {
+      "runs": 72,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 72
+      },
+      "tool_calls": {
+        "mean_known": 8.166666666666666,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.36111111111111,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 9.166666666666666,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 148.3647851388889,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 15974.5,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 260.59722222222223,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 9.36111111111111
+    },
+    "hesp_eigc_guard": {
+      "runs": 72,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 72
+      },
+      "tool_calls": {
+        "mean_known": 8.166666666666666,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.36111111111111,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 9.166666666666666,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 150.77924743055556,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 15974.5,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 260.69444444444446,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 9.36111111111111
+    }
+  },
+  "paired_verification": {
+    "hesp_eigc_guard_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0.16666666666666666,
+      "cluster_bootstrap_percentile_95": [
+        0.05555555555555555,
+        0.2916666666666667
+      ],
+      "tasks_better": 7,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_blind_minus_hesp_random_blind": {
+      "task_clusters": 24,
+      "difference": 0.2638888888888889,
+      "cluster_bootstrap_percentile_95": [
+        0.1388888888888889,
+        0.4027777777777778
+      ],
+      "tasks_better": 11,
+      "tasks_worse": 0
+    },
+    "hesp_random_blind_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": -0.09722222222222222,
+      "cluster_bootstrap_percentile_95": [
+        -0.2777777777777778,
+        0.05555555555555556
+      ],
+      "tasks_better": 4,
+      "tasks_worse": 8
+    },
+    "hesp_eigc_minus_hesp_eigc_blind": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_minus_hesp_eigc": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    }
+  },
+  "paired_tool_cost": {
+    "hesp_eigc_guard_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0.7222222222222222,
+      "cluster_bootstrap_percentile_95": [
+        0.3194444444444444,
+        1.2638888888888888
+      ]
+    },
+    "hesp_eigc_blind_minus_hesp_random_blind": {
+      "task_clusters": 24,
+      "difference": -0.7222222222222222,
+      "cluster_bootstrap_percentile_95": [
+        -1.375,
+        -0.2361111111111111
+      ]
+    },
+    "hesp_random_blind_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 1.2222222222222223,
+      "cluster_bootstrap_percentile_95": [
+        0.6944444444444444,
+        1.8611111111111112
+      ]
+    },
+    "hesp_eigc_minus_hesp_eigc_blind": {
+      "task_clusters": 24,
+      "difference": 0.2222222222222222,
+      "cluster_bootstrap_percentile_95": [
+        0.06944444444444445,
+        0.4305555555555555
+      ]
+    },
+    "hesp_eigc_guard_minus_hesp_eigc": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    }
+  },
+  "security_metrics": {
+    "memory_only": {
+      "episodes": 72,
+      "episodes_with_a_claim": 61,
+      "unresolved_rate": 0.16666666666666666,
+      "missed_attack_rate": 0.02127659574468085,
+      "false_escalation_rate": 0,
+      "wrong_cause_rate": 0.01639344262295082,
+      "evidence_citation_validity": 0.9781420765027322
+    },
+    "hesp_random_blind": {
+      "episodes": 72,
+      "episodes_with_a_claim": 72,
+      "unresolved_rate": 0.2638888888888889,
+      "missed_attack_rate": 0.25925925925925924,
+      "false_escalation_rate": 0,
+      "wrong_cause_rate": 0.19444444444444445,
+      "evidence_citation_validity": 0.9675925925925926
+    },
+    "hesp_eigc_blind": {
+      "episodes": 72,
+      "episodes_with_a_claim": 72,
+      "unresolved_rate": 0,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": 0,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc": {
+      "episodes": 72,
+      "episodes_with_a_claim": 72,
+      "unresolved_rate": 0,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": 0,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_eigc_guard": {
+      "episodes": 72,
+      "episodes_with_a_claim": 72,
+      "unresolved_rate": 0,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": 0,
+      "wrong_cause_rate": 0,
+      "evidence_citation_validity": 1.0
+    }
+  },
+  "manifest_sha256": "fa3d44221c220a5cf1d714f915fa85392c35ada0c319db2cb0191c1ab3ada5ca"
+}
