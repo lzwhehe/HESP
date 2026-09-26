@@ -1,0 +1,13 @@
+# Measured Elimination
+
+A visual philosophy in which understanding arrives by subtraction. Every composition begins crowded with equal possibilities and ends with a single form left standing. The eye should feel the narrowing before it reads a word: many marks of equal weight, then fewer, then one that has absorbed the space the others gave up. The work is a record of attention spent carefully. It shows what disappeared, in what order, and why.
+
+Space is organized as a strict ledger. A fine grid of columns and rows holds every element, and nothing floats free of it. Columns carry time, rows carry alternatives, and the grid's quiet regularity makes each departure from it meaningful. Generous margins and wide gutters let the structure breathe. The negative space is not emptiness but the room that eliminated possibilities have vacated, and it must be protected with the same painstaking attention as the marks themselves.
+
+Colour is rationed like evidence. A near-white paper ground and a graphite ink carry almost everything. One deep, saturated blue belongs to whatever does the disciplined work, and one warm amber belongs to what fails or is left unchecked. No colour is decorative; each hue is a claim. Tints appear only as quiet fields that group related marks, calibrated so the whole reads correctly in greyscale. The palette should look meticulously balanced, the product of deep expertise rather than a default.
+
+Scale and rhythm follow a single rule: size encodes certainty. Marks grow as confidence concentrates and shrink as alternatives lose support, so a glance reveals where belief has settled. Repetition is the main instrument: identical circles, identical rules, identical intervals, broken only where something changes. That patient repetition should read as master-level execution, every interval measured, every mark placed by hand and checked again.
+
+Typography is clinical and sparse. A refined serif names things once and with authority; a light grotesque labels quietly; a monospaced face carries the numbers, set like measurements in a field notebook. Words never explain what the forms already show. They anchor, annotate, and give coordinates, never paragraphs. Hierarchy comes from weight and placement, not from boxes or ornament.
+
+The finished piece should look like a plate from a meticulously kept scientific atlas: calm, exact, and inexhaustible on a second look. Nothing overlaps, nothing crowds an edge, and every alignment is the result of countless small refinements. It must feel labored over by someone at the absolute top of their field, a quiet proof that a process of careful elimination can be drawn as precisely as it was carried out.

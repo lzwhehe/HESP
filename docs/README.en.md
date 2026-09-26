@@ -2,6 +2,10 @@
 
 ![HESP](assets/hesp-banner.svg)
 
+![HESP project overview](assets/hesp-overview.png)
+
+<sub>The project at a glance: small local models fail at triage on procedure (left); the HESP controller eliminates hypotheses probe by probe, shown on one real episode from the stopping study (circle area is the posterior); the pre-registered studies and what they found (right). Every number is generated from the result files by <code>docs/figures/make_overview_figure.py</code>. Vector: [PDF](assets/hesp-overview.pdf) · [SVG](assets/hesp-overview.svg).</sub>
+
 **Evidence-driven planning, with an auditable experimental record.**
 
 [中文](../README.md) · [Results](../hesp_research/docs/RESULTS.md) · [Protocol](../hesp_research/docs/PROTOCOL.md)
