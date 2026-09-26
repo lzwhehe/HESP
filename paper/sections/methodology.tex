@@ -21,9 +21,9 @@ Every study uses Qwen2.5-7B-Instruct (bf16), Qwen2.5-32B-Instruct-AWQ, and Qwen2
 \subsection{Four studies}
 \Cref{tab:studies} lists the studies. Each one was designed after the previous one had run and addresses the question it left open. We refer to them by the names in the table; the repository labels them by version.
 
-\begin{table}[t]
+\begin{table*}[t]
   \centering\small
-  \begin{adjustbox}{max width=\linewidth}
+  \begin{adjustbox}{max width=\textwidth}
   \begin{tabular}{llllrl}
     \toprule
     Study & Version & Question & Models & Episodes & Primary endpoint(s) \\
@@ -37,7 +37,7 @@ Every study uses Qwen2.5-7B-Instruct (bf16), Qwen2.5-32B-Instruct-AWQ, and Qwen2
   \end{adjustbox}
   \caption{The four pre-registered studies on sec-triage, 7{,}272 episodes in total.}
   \label{tab:studies}
-\end{table}
+\end{table*}
 
 \paragraph{LLM-free reference.} After the stopping study, we ran the frozen controller with the LLM replaced by a script that proposes probes in catalogue order and never finishes. The run uses the stopping study's seeds, tasks, budget, and table, 216 episodes in all. It was not pre-registered and we report it as exploratory.
 

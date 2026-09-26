@@ -1,45 +1,62 @@
-\documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage{usenix-2020-09}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs,makecell,multirow}
-\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{xurl}
 \usepackage{adjustbox}
+\usepackage{placeins}
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage[hidelinks]{hyperref}
-\usepackage{cleveref}
+\usepackage[capitalize,noabbrev]{cleveref}
 
 \newcommand{\hesp}{HESP}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
-\graphicspath{{../docs/assets/}}
+\newcommand{\takeaway}[1]{\par\smallskip\noindent\textit{Takeaway.} #1\par}
+\graphicspath{{figures/}{../docs/assets/}}
 \setlength{\emergencystretch}{3em}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}{1.0ex \@plus .4ex \@minus .2ex}{-0.6em}{\normalfont\normalsize\bfseries}}
+\makeatother
 
-\title{What to Probe versus When to Stop:\\
+\title{\Large\bf What to Probe versus When to Stop:\\
 A Hypothesis-Elimination Controller for Local LLM Alert-Triage Agents}
-\author{\todo{author names and affiliations}}
-\date{Preprint draft, \today}
+\author{{\rm \todo{author names and affiliations}}}
+\date{}
 
 \begin{document}
-\maketitle
+\twocolumn[{%
+  \maketitle
+  \vspace{-1.5em}
+  \begin{center}
+    \includegraphics[width=\textwidth]{fig_overview.pdf}
+    \captionof{figure}{\hesp{} overview. The controller sends the planner a request (1) and receives a decision (2). It selects a read-only probe by expected information gain per cost and runs it (3). The outcome updates the hypothesis ledger (4), and a verdict that meets the evidence rule goes to the independent verifier (5). The bars show one real episode from the stopping study: nine candidate causes are reduced to one after three probes. Every prediction is journaled before its observation.}
+    \label{fig:overview}
+  \end{center}
+  \vspace{1em}
+}]
 
 \input{sections/abstract}
 \input{sections/introduction}
 \input{sections/threatmodel}
 \input{sections/design}
+\input{sections/implementation}
 \input{sections/methodology}
 \input{sections/results}
 \input{sections/realdata}
 \input{sections/discussion}
 \input{sections/related}
+\input{sections/ethics}
 \input{sections/conclusion}
 
+{\footnotesize
 \bibliographystyle{plainnat}
-\bibliography{refs}
+\bibliography{refs}}
 
+\onecolumn
 \appendix
 \input{sections/appendix}
 

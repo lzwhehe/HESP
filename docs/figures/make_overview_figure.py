@@ -104,10 +104,14 @@ def numbers():
     v9 = json.loads((RESULTS / "v09_summary.json").read_text(encoding="utf-8"))
     ref = json.loads((RESULTS / "v09_llm_free_reference.json").read_text(encoding="utf-8"))
     l8 = [json.loads(x) for x in (RESULTS / "v08_llama8b" / "outcomes.jsonl").read_text(encoding="utf-8").splitlines()]
+    q7 = [json.loads(x) for x in (RESULTS / "v09_qwen7b" / "outcomes.jsonl").read_text(encoding="utf-8").splitlines()]
+    q7 = [r for r in q7 if r["arm"] == "memory_only"]
     concl = [k for k in v8 if k != "llama8b"]
     rank = [v8[k]["terms"]["hesp_eigc_blind - hesp_random_blind"]["difference"] for k in concl]
     return {
         "q7_alone": v9["qwen7b"]["verified"]["memory_only"],
+        "q7_claims": sum(r["claimed_hypothesis"] is not None for r in q7), "q7_n": len(q7),
+        "q7_calls": sum(r["tool_calls"] for r in q7) / len(q7),
         "l8_decisions": sum(r["planner_calls"] for r in l8),
         "l8_verdicts": sum(r["claimed_hypothesis"] is not None for r in l8),
         "q7_elicited": v6["7b"]["verified"]["hesp_eigc_guard_llmp"],
@@ -138,7 +142,7 @@ def act_problem(p, n, x, x1, y):
     p.text(x, y + 98, "7B and 8B open-weight models, investigating alone", (x, x1), SANS, 22, color=MUTED)
     rows = [
         (fmt(n["q7_alone"]), "Qwen2.5-7B: share verified",
-         "picks its own probes, repeats them, runs out of budget", "repeat"),
+         f"probes until the budget runs out; a verdict in {n['q7_claims']} of {n['q7_n']} cases", "repeat"),
         (f"{n['l8_verdicts']} / {n['l8_decisions']:,}", "Llama-3.1-8B: verdicts / decisions",
          "always asks for one more probe, even at p > 0.999", "never"),
         (fmt(n["q7_elicited"]), "Qwen2.5-7B with its own tables",
@@ -150,10 +154,13 @@ def act_problem(p, n, x, x1, y):
         p.text(x, ry + 84, unit, (x, x1), SANS, 24, 700, INK)
         p.text(x, ry + 118, note, (x, x1), SANS, 21, color=INK2)
         gx, gy = x, ry + 162
-        if glyph == "repeat":      # the same probe, again and again
-            for i in range(10):
-                p.circle(gx + 10 + i * 30, gy, 9, AMBER if i == 0 else "none", AMBER, 2)
-            p.text(gx + 312, gy + 7, "same probe, ten times", (gx + 305, x1), SANS, 19, style="italic", color=MUTED)
+        if glyph == "repeat":      # about seven distinct probes, then the budget is gone
+            k = round(n["q7_calls"])
+            for i in range(k):
+                p.circle(gx + 10 + i * 30, gy, 9, AMBER, AMBER, 2)
+            p.circle(gx + 10 + k * 30, gy, 9, "none", FAINT, 2)
+            p.text(gx + 30 * k + 36, gy + 7, f"{n['q7_calls']:.1f} probes, budget spent", (gx + 30 * k + 30, x1), SANS, 19,
+                   style="italic", color=MUTED)
         elif glyph == "never":     # probes forever, no verdict
             for i in range(12):
                 p.line(gx + 4 + i * 22, gy - 12, gx + 4 + i * 22, gy + 12, AMBER, 3)

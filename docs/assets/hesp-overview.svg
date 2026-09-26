@@ -12,18 +12,16 @@
 <text x="90.0" y="368.0" font-family="HSans" font-size="22" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="start" data-fit="90.0,710.0">7B and 8B open-weight models, investigating alone</text>
 <text x="90.0" y="504.0" font-family="HMono" font-size="52" font-weight="700" font-style="normal" fill="#B45309" text-anchor="start" data-fit="90.0,710.0">0.083</text>
 <text x="90.0" y="544.0" font-family="HSans" font-size="24" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="90.0,710.0">Qwen2.5-7B: share verified</text>
-<text x="90.0" y="578.0" font-family="HSans" font-size="21" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="90.0,710.0">picks its own probes, repeats them, runs out of budget</text>
+<text x="90.0" y="578.0" font-family="HSans" font-size="21" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="90.0,710.0">probes until the budget runs out; a verdict in 6 of 72 cases</text>
 <circle cx="100.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
-<circle cx="130.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="160.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="190.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="220.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="250.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="280.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="310.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="340.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<circle cx="370.0" cy="622.0" r="9.00" fill="none" stroke="#B45309" stroke-width="2"/>
-<text x="402.0" y="629.0" font-family="HSans" font-size="19" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="395.0,710.0">same probe, ten times</text>
+<circle cx="130.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="160.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="190.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="220.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="250.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="280.0" cy="622.0" r="9.00" fill="#B45309" stroke="#B45309" stroke-width="2"/>
+<circle cx="310.0" cy="622.0" r="9.00" fill="none" stroke="#C9CDD4" stroke-width="2"/>
+<text x="336.0" y="629.0" font-family="HSans" font-size="19" font-weight="400" font-style="italic" fill="#6B7280" text-anchor="start" data-fit="330.0,710.0">7.2 probes, budget spent</text>
 <text x="90.0" y="786.0" font-family="HMono" font-size="52" font-weight="700" font-style="normal" fill="#B45309" text-anchor="start" data-fit="90.0,710.0">0 / 3,389</text>
 <text x="90.0" y="826.0" font-family="HSans" font-size="24" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="90.0,710.0">Llama-3.1-8B: verdicts / decisions</text>
 <text x="90.0" y="860.0" font-family="HSans" font-size="21" font-weight="400" font-style="normal" fill="#374151" text-anchor="start" data-fit="90.0,710.0">always asks for one more probe, even at p &gt; 0.999</text>

@@ -1,5 +1,16 @@
-\section{Problem Setting and Threat Model}
+\section{Background and Threat Model}
 \label{sec:threat}
+
+\subsection{Motivating observations}
+Three observations from our own baselines motivate the design. All come from configurations in which the model drives the investigation, measured in the studies of \cref{sec:results}.
+
+\paragraph{Observation 1: small models probe without converging.} Qwen2.5-7B selecting its own probes from the same catalogue verifies 0.083 to 0.125 of cases. It runs about seven distinct probes per episode, spends 9.4 to 9.5 of its 10 cost units, and issues a verdict in only 6 or 7 of 72 episodes; three quarters of its episodes end with the tool budget exhausted. The same model reaches 0.93 to 1.00 when a controller selects the probes. Even when the controller only supplies the stopping rule, its own choices complete 0.694 of cases against 0.917 with controller selection.
+
+\paragraph{Observation 2: some models never stop.} Llama-3.1-8B requests another probe in every one of its 3{,}389 decisions, including those where the ledger's posterior exceeds 0.999 and the controller reports that no legal probe is left. Selecting probes for it changes nothing, because it never issues a verdict.
+
+\paragraph{Observation 3: models cannot supply the likelihoods.} A controller needs $P(o \mid h, a)$ for every probe, outcome, and hypothesis. Tables elicited from the planner leave completion at 0.069 (7B) and 0.375 (32B and 72B), whereas tables counted from 20 LLM-free development episodes per case reach 1.000. The procedure therefore has to supply both the probing discipline and the knowledge encoded in the tables.
+
+\subsection{Deployment and threat model}
 
 \paragraph{Deployment.} An organization runs the triage agent inside its own network. A local open-weight model serves as the planner. The agent has read-only access to the organization's security telemetry through a fixed catalogue of probes, such as queries over authentication logs, HTTP logs, DNS logs, change tickets, and threat intelligence. Each probe has a cost in analyst time or query load. An episode starts from one alert and ends with a verdict naming a cause and the observations that support it, with an abstention, or with an exhausted budget. Verdicts go to a human analyst. The agent never remediates, and it never sends traffic to the systems under investigation.
 

@@ -3,9 +3,9 @@
 
 Each study's section of the protocol was frozen before any of its episodes ran. Freezing covered the full text, the hash of the controller source, and the hashes of the prediction tables. Changes after freezing were appended as errata.
 
-\begin{table}[h]
+\begin{table*}[!h]
   \centering\small
-  \begin{adjustbox}{max width=\linewidth}
+  \begin{adjustbox}{max width=\textwidth}
   \begin{tabular}{lllrl}
     \toprule
     Study & Version & Source hash & Episodes & Primary endpoints and outcome \\
@@ -17,33 +17,43 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
     \bottomrule
   \end{tabular}
   \end{adjustbox}
-\end{table}
+\end{table*}
 
 \paragraph{Disclosed pre-freeze runs.} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory.
 
 \section{Detailed results}
 \label{app:tables}
 
-\begin{table}[h]
+\begin{table*}[!h]
   \centering\small
-  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_verified}\end{adjustbox}
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v08_verified}\end{adjustbox}
   \caption{Decomposition study: verified completion (72 episodes per cell). Every arm scores and selects with the same frozen counted table. Q = Qwen2.5, L = Llama-3.1.}
   \label{tab:app-v08}
-\end{table}
+\end{table*}
 
-\begin{table}[h]
+\begin{table*}[!h]
   \centering\small
-  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_terms}\end{adjustbox}
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v08_terms}\end{adjustbox}
   \caption{Decomposition study: contrasts plotted in \cref{fig:decomposition}. The Q-7B ranking cell is a primary endpoint (97.5\% interval); all other cells are exploratory 95\% intervals.}
   \label{tab:app-v08terms}
-\end{table}
+\end{table*}
 
-\begin{table}[h]
+\begin{table*}[!h]
   \centering\small
-  \begin{adjustbox}{max width=\linewidth}\input{tables/v09_terms}\end{adjustbox}
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v09_terms}\end{adjustbox}
   \caption{Stopping study: contrasts. The L-8B cells in the first two rows are the primary endpoints (97.5\% intervals); all other cells are exploratory 95\% intervals.}
   \label{tab:app-v09terms}
-\end{table}
+\end{table*}
+
+\FloatBarrier
+\section{Example trace}
+\label{app:trace}
+\begin{figure*}[!h]
+  \centering
+  \includegraphics[width=0.92\textwidth]{hesp-framework.pdf}
+  \caption{One triage case (sec-base-00, Qwen2.5-7B, repeat 0) handled by the model alone (left) and inside \hesp{} (right), drawn from the archived journals of the table-source study.}
+  \label{fig:trace}
+\end{figure*}
 
 \section{Errata}
 \label{app:errata}
