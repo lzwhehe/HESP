@@ -171,7 +171,7 @@
 
 ## 第三个候选：OTRF Security-Datasets（2026-09-26，可行性探查）
 
-**数据。** [OTRF/Security-Datasets](https://github.com/OTRF/Security-Datasets)（MIT）：研究人员在实验室 Windows 域中执行已知 ATT&CK 技术并录下主机日志（Sysmon、Security、PowerShell 等）。说明文件共 113 份，覆盖 52 种技术，**全部为攻击录制，没有专门的正常操作录制**。本次下载了 27 份"主机上远程执行"类录制（远程服务、WMI、计划任务、DCOM、PowerShell 远程；压缩后 19.7 MB，共 24.3 万条事件），存放在 `external/otrf/`，不入库。清单与 SHA256 见 `external/otrf/manifest.json`。
+**数据。** [OTRF/Security-Datasets](https://github.com/OTRF/Security-Datasets)（仓库 LICENSE 文件为 MIT，2021 年，Open Threat Research Forge；README 中仍留有一段指向旧仓库地址的 GPL-3.0 说明，以 LICENSE 文件为准）：研究人员在实验室 Windows 域中执行已知 ATT&CK 技术并录下主机日志（Sysmon、Security、PowerShell 等）。说明文件共 113 份，覆盖 52 种技术，**全部为攻击录制，没有专门的正常操作录制**。本次下载了 27 份"主机上远程执行"类录制（远程服务、WMI、计划任务、DCOM、PowerShell 远程；压缩后 19.7 MB，共 24.3 万条事件），存放在 `external/otrf/`，不入库。清单与 SHA256 见 `external/otrf/manifest.json`。
 
 **方法。** [`otrf_alert_audit.py`](../scripts/external/otrf_alert_audit.py)（不用 LLM、不用 GPU）：把录制中的新建服务（4697/7045）和新建或修改计划任务（4698/4702）当作告警。若告警中的名称以单词形式出现在**该录制自己的**说明文件中，就标为攻击，否则视为实验主机的正常后台活动。然后检验一条只看告警文字的判断规则：任务路径在 `\Microsoft\Windows\` 或 OneDrive 更新任务下、服务程序为 `svchost -k` 或 Defender 组件的，判为正常。
 

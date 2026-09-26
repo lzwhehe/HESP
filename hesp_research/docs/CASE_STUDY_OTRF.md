@@ -1,6 +1,6 @@
 # 真实日志案例：伪装成 Windows 系统任务的远程计划任务
 
-**性质：定性案例说明，不是统计检验。** 这里没有估计任何似然，也不报告成功率。所有观测值均由 [`otrf_case_study.py`](../scripts/external/otrf_case_study.py) 直接从原始日志提取，原始输出见 [`case_study_otrf_raw.md`](case_study_otrf_raw.md)。数据来自 OTRF Security-Datasets 的录制 SDWIN-201219070027（MIT）。该录制的说明文件引用了微软对 Solorigate 攻击的分析；数据集标注为 T1053.005（计划任务），描述为"攻击者用 schtasks 远程创建计划任务"。为什么它不能作为基准，见 [`EXTERNAL_BENCHMARKS.md`](EXTERNAL_BENCHMARKS.md) 末节。
+**性质：定性案例说明，不是统计检验。** 这里没有估计任何似然，也不报告成功率。所有观测值均由 [`otrf_case_study.py`](../scripts/external/otrf_case_study.py) 直接从原始日志提取，原始输出见 [`case_study_otrf_raw.md`](case_study_otrf_raw.md)。数据来自 OTRF Security-Datasets 的录制 SDWIN-201219070027（仓库 LICENSE 文件为 MIT；README 中另有一段过时的 GPL-3.0 说明）。该录制的说明文件引用了微软对 Solorigate 攻击的分析；数据集标注为 T1053.005（计划任务），描述为"攻击者用 schtasks 远程创建计划任务"。为什么它不能作为基准，见 [`EXTERNAL_BENCHMARKS.md`](EXTERNAL_BENCHMARKS.md) 末节。
 
 ## 告警
 

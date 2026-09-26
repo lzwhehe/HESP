@@ -1,5 +1,7 @@
-% Every entry must be checked against the original before submission.
-% Entries marked VERIFY have details (authors, venue, identifiers) that were not confirmed.
+% Checked 2026-09-26 against arXiv, USENIX, NeurIPS, PNAS, the Microsoft blog and the OTRF repository:
+% pentestgpt, cybench, excytin, guide, otrf, solorigate, kadavath2022, golovin2010, nosek2018.
+% Classic entries (react, reflexion, toolformer, lindley1956, chaloner1995, dekleer1987, dasgupta2004)
+% are standard references but were not re-checked page by page.
 
 @inproceedings{react,
   author    = {Shunyu Yao and Jeffrey Zhao and Dian Yu and Nan Du and Izhak Shafran and Karthik Narasimhan and Yuan Cao},
@@ -25,24 +27,23 @@
 @inproceedings{pentestgpt,
   author    = {Gelei Deng and Yi Liu and V{\'i}ctor Mayoral-Vilches and Peng Liu and Yuekang Li and Yuan Xu and Tianwei Zhang and Yang Liu and Martin Pinzger and Stefan Rass},
   title     = {{PentestGPT}: Evaluating and Harnessing Large Language Models for Automated Penetration Testing},
-  booktitle = {USENIX Security Symposium},
+  booktitle = {33rd USENIX Security Symposium (USENIX Security 24)},
   year      = {2024}
 }
 
 @inproceedings{cybench,
-  author    = {Andy K. Zhang and others},
+  author    = {Andy K. Zhang and Neil Perry and Riya Dulepet and Joey Ji and Celeste Menders and Justin W. Lin and Eliot Jones and Gashon Hussein and Samantha Liu and Donovan Jasper and Pura Peetathawatchai and Ari Glenn and Vikram Sivashankar and Daniel Zamoshchin and Leo Glikbarg and Derek Askaryar and Mike Yang and Teddy Zhang and Rishi Alluri and Nathan Tran and Rinnara Sangpisit and Polycarpos Yiorkadjis and Kenny Osele and Gautham Raghupathi and Dan Boneh and Daniel E. Ho and Percy Liang},
   title     = {Cybench: A Framework for Evaluating Cybersecurity Capabilities and Risks of Language Models},
   booktitle = {International Conference on Learning Representations (ICLR)},
-  year      = {2025},
-  note      = {VERIFY author list}
+  year      = {2025}
 }
 
-@misc{excytin,
-  author       = {{Microsoft}},
-  title        = {{ExCyTIn-Bench}: Evaluating {LLM} Agents on Cyber Threat Investigation},
-  howpublished = {arXiv:2507.14201},
-  year         = {2025},
-  note         = {VERIFY title, authors and venue}
+@inproceedings{excytin,
+  author    = {Yiran Wu and Mauricio Velazco and Andrew Zhao and Manuel Ra{\'u}l Mel{\'e}ndez Luj{\'a}n and Srisuma Movva and Yogesh K. Roy and Quang Nguyen and Roberto Rodriguez and Qingyun Wu and Michael Albada and Julia Kiseleva and Anand Mudgerikar},
+  title     = {{ExCyTIn-Bench}: Evaluating {LLM} Agents on Cyber Threat Investigation},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2026},
+  note      = {arXiv:2507.14201}
 }
 
 @misc{guide,
@@ -50,20 +51,21 @@
   title        = {{AI}-Driven Guided Response for Security Operation Centers with {Microsoft Copilot for Security}},
   howpublished = {arXiv:2407.09017},
   year         = {2024},
-  note         = {GUIDE dataset. VERIFY identifier and author list}
+  note         = {Introduces the GUIDE dataset}
 }
 
 @misc{otrf,
   author       = {Roberto Rodriguez and Jose Luis Rodriguez},
   title        = {Security Datasets},
-  howpublished = {\url{https://github.com/OTRF/Security-Datasets}},
-  note         = {Open Threat Research Forge; MIT licence; accessed 2026-09-26}
+  howpublished = {Open Threat Research Forge, \url{https://github.com/OTRF/Security-Datasets}},
+  note         = {LICENSE file: MIT (the README still carries an older GPL-3.0 notice); accessed 2026-09-26}
 }
 
 @misc{solorigate,
-  author       = {{Microsoft 365 Defender Research Team}},
+  author       = {{Microsoft Threat Intelligence}},
   title        = {Analyzing {Solorigate}, the compromised {DLL} file that started a sophisticated cyberattack, and how {Microsoft Defender} helps protect customers},
   howpublished = {Microsoft Security Blog, \url{https://www.microsoft.com/security/blog/2020/12/18/analyzing-solorigate-the-compromised-dll-file-that-started-a-sophisticated-cyberattack-and-how-microsoft-defender-helps-protect/}},
+  month        = dec,
   year         = {2020}
 }
 
@@ -112,7 +114,7 @@
 }
 
 @misc{kadavath2022,
-  author       = {Saurav Kadavath and others},
+  author       = {Saurav Kadavath and Tom Conerly and Amanda Askell and Tom Henighan and Dawn Drain and others},
   title        = {Language Models (Mostly) Know What They Know},
   howpublished = {arXiv:2207.05221},
   year         = {2022}
