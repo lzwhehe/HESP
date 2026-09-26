@@ -1,6 +1,14 @@
 # 后续工作记录（2026-09-23，v0.4）
 
-## 当前状态
+## 当前状态（2026-09-26 更新）
+
+- **v0.5–v0.9**：sec-triage 上的四次预先登记研究，共 7272 个回合（v0.5 1944、v0.6 1728、v0.8 1800、v0.9 1800），结果见 [RESULTS.md](RESULTS.md) §8–§13。v0.9 已完成：控制器停止挽救了 Llama-3.1-8B（P1 确认），但它的收益来自停止而非探针选择（P2 未确认）。
+- **外部数据**：ExCyTIn、GUIDE、OTRF 三个公开数据集均不适配（[EXTERNAL_BENCHMARKS.md](EXTERNAL_BENCHMARKS.md)）；OTRF 的伪装计划任务整理为定性案例（[CASE_STUDY_OTRF.md](CASE_STUDY_OTRF.md)）。v0.7（GUIDE）暂停，测试集未读取。
+- **预印本初稿**在仓库根目录的 `paper/`：正文齐全，表格由 `paper/make_tables.py` 生成。待办：作者信息与仓库链接、LaTeX 编译与排版检查、经典参考文献逐页核对。
+- 租用 GPU 服务器已关机；数据盘保留五个模型的权重（Qwen2.5 7B/32B/72B、Llama-3.1 8B/70B）。
+- 软件测试：145 项。
+
+以下为 v0.4 时的原始记录。
 
 - **v0.3**：通用环境接口；本地 Web 诊断靶场 web-diag；Ollama 本地模型的 Planner 与预测抽取；选择器消融；笔记本上的 7B Pilot（240 个回合）。
 - **v0.4**：通用靶场基类与留出任务族 upload-diag；状态守卫 finish；预算感知 lookahead；vLLM 后端；并发、可续跑的配对执行器；三档模型的主研究（3888 个回合）。
