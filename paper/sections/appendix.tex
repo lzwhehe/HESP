@@ -5,6 +5,7 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
 
 \begin{table}[h]
   \centering\small
+  \begin{adjustbox}{max width=\linewidth}
   \begin{tabular}{llrll}
     \toprule
     Study & Question & Episodes & Source hash & Primary endpoint(s) and outcome \\
@@ -15,6 +16,7 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
     v0.9 & who probes $\times$ who stops & 1{,}800 & \texttt{b7b821b9} & P1 confirmed; P2 not (gain from stopping, not selection) \\
     \bottomrule
   \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \paragraph{Disclosed pre-freeze runs.} Before freezing v0.6, v0.8, and v0.9, we ran pipeline smoke tests of 10 to 16 episodes. For v0.9 we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for P1 but was not used to choose the threshold, which was carried over from v0.4.

@@ -13,7 +13,7 @@ v0.5 used tables derived from the environment's generator, so a skeptical reader
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v06_main}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v06_main}\end{adjustbox}
   \caption{v0.6: verified completion by prediction-table source (72 episodes per cell). The primary endpoint (7B, empirical $-$ Memory-only) was pre-registered; 32B and 72B are exploratory. Intervals: 95\% task-cluster bootstrap.}
   \label{tab:v06}
 \end{table}
@@ -29,14 +29,14 @@ Earlier studies had a confound. In the random-selection control the planner coul
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v08_verified}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_verified}\end{adjustbox}
   \caption{v0.8: verified completion (72 episodes per cell). Every arm scores and selects with the same frozen empirical table. Q = Qwen2.5, L = Llama-3.1.}
   \label{tab:v08}
 \end{table}
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v08_terms}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_terms}\end{adjustbox}
   \caption{v0.8: decomposition of the gain (difference in verified completion, bracketed interval). The Q-7B ranking cell is primary endpoint P2 and uses a 97.5\% interval; all other cells are exploratory 95\% intervals.}
   \label{tab:v08terms}
 \end{table}
@@ -55,14 +55,14 @@ v0.9 moves stopping into the controller and crosses the two factors, who probes 
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v09_main}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v09_main}\end{adjustbox}
   \caption{v0.9: verified completion (mean probe cost in parentheses) by who probes and who stops, 72 episodes per cell. ``LLM or controller'': the planner may still finish first; the controller concludes once the rule is met. A new seed (2027) makes the first and third rows an independent replication of v0.8.}
   \label{tab:v09}
 \end{table}
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v09_terms}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v09_terms}\end{adjustbox}
   \caption{v0.9: contrasts (difference in verified completion, bracketed interval). The two L-8B cells in the first two rows are the pre-registered primary endpoints P1 and P2, with 97.5\% intervals; all other cells are exploratory 95\% intervals.}
   \label{tab:v09terms}
 \end{table}
@@ -85,7 +85,7 @@ v0.9 moves stopping into the controller and crosses the two factors, who probes 
 
 \begin{table}[t]
   \centering\small
-  \input{tables/v06_security}
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v06_security}\end{adjustbox}
   \caption{v0.6: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict; missed-attack, false-escalation, and wrong-cause rates are over those verdicts, and the unresolved rate is over all 72 episodes.}
   \label{tab:security}
 \end{table}
