@@ -1,5 +1,19 @@
 # 更新日志
 
+## 0.9 · 2026-09-26
+
+### 新增
+- 控制器停止：`controller.run(auto_finish=0.8)`，接受规则与 v0.4 的状态守卫相同；规划器仍可抢先结案，提示中不透露该规则。结果新增 `finished_by` 字段；审计新增控制器结案检查。未启用时行为不变（192 个回合改动前后逐条一致）。
+- `NeverFinishPlanner`（模仿从不结案的规划器，用于无 LLM 模拟）、`scripts/run_v09_study.py`、`scripts/server/run_v09_all.sh`、`scripts/v09_summary.py`。测试增至 145 项。
+- OTRF Security-Datasets 可行性探查（`scripts/external/otrf_*.py`）与真实日志案例 [`CASE_STUDY_OTRF.md`](hesp_research/docs/CASE_STUDY_OTRF.md)。
+- 预印本初稿 `paper/`（表格由 `paper/make_tables.py` 从结果 JSON 生成）。
+
+### 实验
+- v0.9：5 个模型 × 5 个 arm × 24 任务 × 3 重复 = **1800 个回合**，预先登记并冻结，源码哈希 `b7b821b9`，全部通过审计，日志归档哈希已核对。
+- **P1 确认**：控制器停止让 Llama-3.1-8B 从 0 升到 0.917（+0.917 [+0.792, +1.000]）。
+- **P2 未确认**：停止补齐后，控制器选探针相对它自己选探针 +0.056 [−0.069, +0.181]；该模型的收益来自停止而非选择。Qwen 7B 两者都缺。EIG/c 排序效应在 5 个模型上复现。见 [RESULTS.md §13](hesp_research/docs/RESULTS.md)。
+- OTRF：46 个告警中只看告警文字的规则判对 44 个，作为第三个外部数据集的负面结果。
+
 ## 0.8 · 2026-09-25
 
 ### 新增
