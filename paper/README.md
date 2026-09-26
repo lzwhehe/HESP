@@ -1,10 +1,10 @@
 # 预印本草稿
 
-- `main.tex` + `sections/*.tex`：正文（英文）。`refs.bib`：参考文献，**提交前必须逐条核对**，标 `VERIFY` 的条目尤其要查。
+- `main.tex` + `sections/*.tex`：正文（英文）。`refs.bib`：参考文献，其中 9 条已对照原始来源核对（见文件开头注释），经典文献尚未逐页核对。
 - `tables/*.tex`：由 `python paper/make_tables.py` 从 `hesp_research/results/*_summary.json` 生成，不要手改。
 - 图：直接引用 `docs/assets/` 下的 PDF。
 
-编译（本机用免安装的 Tectonic 0.17.0，放在 `E:	ools	ectonic\`；首次编译会自动下载宏包）：
+编译（本机用免安装的 Tectonic 0.17.0，放在 `E:/tools/tectonic/`；首次编译会自动下载宏包）：
 
 ```bash
 cd paper && /e/tools/tectonic/tectonic.exe -X compile main.tex --outdir build
