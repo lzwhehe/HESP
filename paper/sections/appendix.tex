@@ -6,30 +6,54 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
 \begin{table}[h]
   \centering\small
   \begin{adjustbox}{max width=\linewidth}
-  \begin{tabular}{llrll}
+  \begin{tabular}{lllrl}
     \toprule
-    Study & Question & Episodes & Source hash & Primary endpoint(s) and outcome \\
+    Study & Version & Source hash & Episodes & Primary endpoints and outcome \\
     \midrule
-    v0.5 & does \hesp{} help? & 1{,}944 & \texttt{5a5fccd2} & 7B, 32B confirmed; 72B interval touches 0 (E-1) \\
-    v0.6 & non-oracle tables & 1{,}728 & \texttt{dcf1e79e} & 7B empirical $-$ Memory-only: confirmed \\
-    v0.8 & ranking vs.\ choice; 2nd family & 1{,}800 & \texttt{8c355d97} & P2 confirmed; P1 not (Llama-8B never concludes) \\
-    v0.9 & who probes $\times$ who stops & 1{,}800 & \texttt{b7b821b9} & P1 confirmed; P2 not (gain from stopping, not selection) \\
+    Initial & v0.5 & \texttt{5a5fccd2} & 1{,}944 & 7B and 32B confirmed; 72B interval touches zero (E-1) \\
+    Table-source & v0.6 & \texttt{dcf1e79e} & 1{,}728 & 7B, counted tables vs.\ Memory-only: confirmed \\
+    Decomposition & v0.8 & \texttt{8c355d97} & 1{,}800 & ranking on Q-7B confirmed; \hesp{} vs.\ Memory-only on L-8B not confirmed \\
+    Stopping & v0.9 & \texttt{b7b821b9} & 1{,}800 & controller stop on L-8B confirmed; selection given stop on L-8B not confirmed \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
 \end{table}
 
-\paragraph{Disclosed pre-freeze runs.} Before freezing v0.6, v0.8, and v0.9, we ran pipeline smoke tests of 10 to 16 episodes. For v0.9 we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for P1 but was not used to choose the threshold, which was carried over from v0.4.
+\paragraph{Disclosed pre-freeze runs.} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory.
+
+\section{Detailed results}
+\label{app:tables}
+
+\begin{table}[h]
+  \centering\small
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_verified}\end{adjustbox}
+  \caption{Decomposition study: verified completion (72 episodes per cell). Every arm scores and selects with the same frozen counted table. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:app-v08}
+\end{table}
+
+\begin{table}[h]
+  \centering\small
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v08_terms}\end{adjustbox}
+  \caption{Decomposition study: contrasts plotted in \cref{fig:decomposition}. The Q-7B ranking cell is a primary endpoint (97.5\% interval); all other cells are exploratory 95\% intervals.}
+  \label{tab:app-v08terms}
+\end{table}
+
+\begin{table}[h]
+  \centering\small
+  \begin{adjustbox}{max width=\linewidth}\input{tables/v09_terms}\end{adjustbox}
+  \caption{Stopping study: contrasts. The L-8B cells in the first two rows are the primary endpoints (97.5\% intervals); all other cells are exploratory 95\% intervals.}
+  \label{tab:app-v09terms}
+\end{table}
 
 \section{Errata}
 \label{app:errata}
 
 \begin{description}
-  \item[E-1] v0.5 reported that all three primary intervals excluded zero; the 72B interval is $[0.000, 0.236]$.
-  \item[E-2] The v0.5 per-episode journals were not archived before the rented GPU was released. Summaries can be recomputed, but the raw events cannot be re-audited by third parties. From v0.6 on, journals are archived and hashed before compute is released.
-  \item[E-3] The v0.5 manifests carried stale metadata from v0.4.
-  \item[E-4] In v0.5 the random-selection control could see the EIG ranking. Fixed by the blind arms of v0.8.
-  \item[E-5] Before v0.6, prediction tables were derived from the environment's generator (near-oracle). Addressed by the empirical tables of v0.6.
+  \item[E-1] The initial study reported that all three primary intervals excluded zero; the 72B interval is $[0.000, 0.236]$.
+  \item[E-2] The initial study's per-episode journals were not archived before the rented GPU was released. Summaries can be recomputed, but the raw events cannot be re-audited by third parties. From the table-source study on, journals are archived and hashed before compute is released.
+  \item[E-3] The initial study's manifests carried stale metadata from an earlier study on another task family.
+  \item[E-4] In the initial study, the random-selection control could see the EIG ranking. The blind variants of the decomposition study remove this.
+  \item[E-5] Before the table-source study, prediction tables were derived from the environment's generator. The counted tables replace them.
   \item[E-6] The ground truth of the descriptive security metrics mishandled drifting episodes and was corrected twice. Every summary script now checks that each verified verdict equals the ground truth used.
-  \item[E-7] In v0.6 the Memory-only ledger used designer tables while \hesp{} used empirical ones. The asymmetry favours the baseline, so v0.6's primary endpoint is, if anything, underestimated. Fixed in v0.8.
+  \item[E-7] In the table-source study, the Memory-only ledger used designer tables while \hesp{} used counted ones. The asymmetry favours the baseline, so that study's primary endpoint is, if anything, underestimated. The decomposition study uses the counted table for every arm.
 \end{description}

@@ -105,6 +105,15 @@ def v09():
     for a, probes, stops in arms:
         L.append(f"{probes} & {stops} & " + " & ".join(
             f"{s[k]['verified'][a]:.3f} {{\\scriptsize({s[k]['tool_cost'][a]:.1f})}}" for k, _ in models) + r" \\")
+    ref_path = RESULTS / "v09_llm_free_reference.json"
+    if ref_path.exists():
+        ref = json.loads(ref_path.read_text(encoding="utf-8"))
+        L.append(r"\midrule")
+        L.append(r"\multicolumn{" + str(2 + len(models)) + r"}{l}{\textit{No LLM (post hoc reference, same seeds, tasks and budget)}} \\")
+        for a, probes in (("fixed_order_autostop", "catalogue order"), ("controller_eigc_autostop", "controller (EIG/cost)"),
+                          ("controller_random_autostop", "controller (random)")):
+            L.append(f"{probes} & controller & " + r"\multicolumn{" + str(len(models)) + r"}{c}{" +
+                     f"{ref['verified'][a]:.3f} {{\\scriptsize({ref['tool_cost'][a]:.1f})}}" + r"} \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("v09_main", L)
 

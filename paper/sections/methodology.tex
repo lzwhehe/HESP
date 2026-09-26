@@ -12,11 +12,34 @@ All configurations use the same model, prompt template, probes, budgets (10 tool
 \begin{itemize}
   \item \textbf{ReAct-style}: the planner sees the raw history only and picks every probe.
   \item \textbf{Memory-only}: the planner also sees the ledger and picks every probe itself.
-  \item \textbf{\hesp{}}: the controller picks the probe (EIG/cost or random), with or without showing its ranking, and with or without the finish guard or the controller-side stop.
+  \item \textbf{\hesp{}}: the controller picks the probe (EIG/cost or random), with or without showing its ranking, and with or without the finish guard or the controller-side stop. In the \emph{blind} variants the planner sees neither the ranking nor the selector.
 \end{itemize}
 
 \subsection{Models and serving}
-Qwen2.5-7B-Instruct (bf16), Qwen2.5-32B-Instruct-AWQ, and Qwen2.5-72B-Instruct-AWQ in every study. From v0.8 on, the Llama 3.1 family is added: 8B-Instruct (bf16) and 70B-Instruct-AWQ-INT4. Models are served by vLLM on a single RTX~6000-class GPU at temperature 0.2, with a distinct seed per call.
+Every study uses Qwen2.5-7B-Instruct (bf16), Qwen2.5-32B-Instruct-AWQ, and Qwen2.5-72B-Instruct-AWQ. The decomposition and stopping studies add the Llama~3.1 family: 8B-Instruct (bf16) and 70B-Instruct-AWQ-INT4. Models are served by vLLM on a single RTX~6000-class GPU at temperature 0.2, with a distinct seed per call.
+
+\subsection{Four studies}
+\Cref{tab:studies} lists the studies. Each one was designed after the previous one had run and addresses the question it left open. We refer to them by the names in the table; the repository labels them by version.
+
+\begin{table}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tabular}{llllrl}
+    \toprule
+    Study & Version & Question & Models & Episodes & Primary endpoint(s) \\
+    \midrule
+    Initial & v0.5 & does the controller help? & 3 Qwen & 1{,}944 & full \hesp{} vs.\ Memory-only, per model \\
+    Table-source & v0.6 & must the tables come from an oracle? & 3 Qwen & 1{,}728 & empirical-table \hesp{} vs.\ Memory-only, 7B \\
+    Decomposition & v0.8 & ranking or loss of choice? second family & 5 & 1{,}800 & ranking vs.\ random (Q-7B); \hesp{} vs.\ Memory-only (L-8B) \\
+    Stopping & v0.9 & what to probe vs.\ when to stop & 5 & 1{,}800 & controller stop; selection given stop (both L-8B) \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+  \caption{The four pre-registered studies on sec-triage, 7{,}272 episodes in total.}
+  \label{tab:studies}
+\end{table}
+
+\paragraph{LLM-free reference.} After the stopping study, we ran the frozen controller with the LLM replaced by a script that proposes probes in catalogue order and never finishes. The run uses the stopping study's seeds, tasks, budget, and table, 216 episodes in all. It was not pre-registered and we report it as exploratory.
 
 \subsection{Pre-registration and statistics}
 Each study's hypotheses, arms, primary endpoints, and analysis were written down and frozen, together with the source hash and the table hashes, before any of its episodes ran. The pipeline smoke tests run before freezing are disclosed and excluded from all analyses. The outcome measure is \emph{verified completion}, the fraction of episodes that end with a verified verdict. Every other ending counts as a failure. We report paired per-task differences with percentile task-cluster bootstrap intervals (2{,}000 resamples, 24 clusters). When a study has two primary endpoints, each gets a Bonferroni-adjusted 97.5\% interval. All secondary comparisons are exploratory and uncorrected. We also report descriptive security metrics. Two causes are benign: the authorized scan and the monitoring false positive. The other six require action. Among episodes that end with a verdict, the \emph{missed-attack} rate is the fraction of cases with an actionable true cause in which the verdict names a benign cause. The \emph{false-escalation} rate is the fraction of cases with a benign true cause in which the verdict names an actionable one. The \emph{wrong-cause} rate is the fraction of verdicts that name the wrong cause. The \emph{unresolved} rate is the fraction of all episodes without a verified verdict. Ground truth is the cause in effect at the moment of the verdict.
