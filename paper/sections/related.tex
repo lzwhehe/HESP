@@ -1,0 +1,12 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{LLM agents for security.} LLM agents have been applied to offensive tasks such as penetration testing~\citep{pentestgpt} and capture-the-flag challenges~\citep{cybench}, and to defensive investigation over SOC logs~\citep{excytin} and guided incident response~\citep{guide}. These works mostly evaluate large hosted models and report end-task success. We study small local models, ask which part of an external control structure produces their success, and pre-register the comparisons.
+
+\paragraph{Tool-using agents.} ReAct~\citep{react} interleaves reasoning and actions. Reflexion~\citep{reflexion} adds verbal self-feedback, and Toolformer~\citep{toolformer} learns when to call tools. In these designs the model itself decides what to do next. \hesp{} instead moves probe selection, and optionally stopping, into an explicit controller, and it uses the model's own choices as a baseline arm.
+
+\paragraph{Sequential diagnosis and experimental design.} Choosing tests by expected information gain goes back to Lindley~\citep{lindley1956} and Bayesian experimental design~\citep{chaloner1995}. It is the basis of classic model-based diagnosis~\citep{dekleer1987} and has near-optimality guarantees for greedy active learning and noisy hypothesis identification~\citep{dasgupta2004,golovin2010}. We use the textbook criterion unchanged. Our question is empirical: how such a criterion interacts with LLM planners of different strengths.
+
+\paragraph{Calibration of LLM probabilities.} Language models can be reasonably calibrated on some self-assessment tasks~\citep{kadavath2022}. Our elicited-table arm shows that this does not carry over to the probe-outcome likelihoods that a diagnosis controller needs.
+
+\paragraph{Pre-registration.} Pre-registration separates confirmatory from exploratory analysis~\citep{nosek2018}. It is rare in ML-security evaluation. We adopt it, with frozen source and table hashes and published errata.

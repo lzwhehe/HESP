@@ -1,0 +1,16 @@
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+\paragraph{What the controller contributes.} The results support a specific reading. Small models do not lack the relevant knowledge. They lack a procedure that turns the knowledge into a sequence of probes and a verdict. Once an external procedure supplies that, the 7B model reaches the same completion as models ten times larger. For larger models, which already probe reasonably, the controller's value shrinks to the information-gain ranking. Taking the choice away from them is harmful unless the ranking replaces it with something better. A deployment should therefore not treat ``let the controller choose'' as free. v0.9 adds a second axis. For one small model the missing piece was only the stopping rule; for the other, it was both the stopping rule and probe selection. Deciding what to probe and deciding when to stop are separable failures, and an evaluation that bundles them cannot tell which one a model has.
+
+\paragraph{What the LLM still does.} In the configurations where the controller both selects probes and may stop, the LLM's remaining roles are to finish early or to abstain. The domain knowledge sits in the predictive tables, and those were estimated from development episodes. Our results therefore do \emph{not} show that the LLM reasons its way to verdicts. They show that the LLM can be embedded in a procedure that produces audited, evidence-cited verdicts, and that without such a procedure small models do not produce them.
+
+\paragraph{Limitations.}
+\begin{itemize}
+  \item \textbf{A hand-built environment.} All confirmatory evidence comes from one task family that we designed. The family is structured to defeat shortcuts, but it is small (24 tasks) and nearly deterministic. Development and evaluation episodes share a generator, so the empirical tables measure data efficiency, not robustness to an unknown world.
+  \item \textbf{A given hypothesis set.} The candidate causes are supplied, and \textit{other} is handled only as a residual. Generating hypotheses remains outside this work.
+  \item \textbf{A strict verifier.} A verdict must cite an observation carrying the cause's own signature, so a correct conclusion reached by elimination does not count. This rule has been in place since v0.4 and applies to every arm. It makes our completion rates conservative.
+  \item \textbf{Scale of models and hardware.} Two model families, five sizes, one temperature, and one serving stack.
+  \item \textbf{No real-data confirmation.} \Cref{sec:realdata} explains why we could not obtain one from public data. The case study is qualitative.
+  \item \textbf{Our own errors.} We misreported one interval (E-1), lost the journals of one study (E-2), found a leak of the ranking into a control arm (E-4) and a table asymmetry that favoured the baseline (E-7), and mis-specified the ground truth of a descriptive metric twice before correcting it (E-6). All are documented in \cref{app:errata}. None of them affects a confirmed primary endpoint.
+\end{itemize}

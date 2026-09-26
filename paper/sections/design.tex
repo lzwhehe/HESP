@@ -1,0 +1,32 @@
+\section{Design}
+\label{sec:design}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{hesp-framework.pdf}
+  \caption{The same triage case (sec-base-00, Qwen2.5-7B, repeat 0) handled by the model alone (left) and inside \hesp{} (right), drawn from the archived v0.6 journals.}
+  \label{fig:framework}
+\end{figure}
+
+\subsection{Setting and interface}
+An episode begins with an alert and a finite set of hypotheses $\mathcal{H}$. $\mathcal{H}$ contains the candidate explanations plus an explicit \textit{other}. The agent may call read-only probes $a \in \mathcal{A}$ that cost $c(a)$ each, within budgets on tool calls, total cost, planner decisions, and wall time. At each step the planner (the LLM) receives a structured request: the task, the probe catalogue with descriptions and costs, the observation history, feedback on blocked proposals, the remaining budgets and, depending on the configuration, the ledger. It returns one JSON decision:
+\texttt{action} (propose a probe), \texttt{finish} (a hypothesis plus the observation IDs it cites), or \texttt{stop} (abstain). Probes never modify the environment, and the agent never sends attack payloads.
+
+\subsection{Hypothesis ledger}
+The ledger holds a posterior $p(h)$ over $\mathcal{H}$. Each probe comes with a predictive table $P(o \mid h, a)$ over its outcome vocabulary. After observing $o$, the ledger applies Bayes' rule. For every hypothesis it records whether the observation raised, lowered, or left unchanged its score (\textit{support}, \textit{against}, \textit{neutral}). A transient failure, such as an HTTP 503, is not evidence: it is logged, and the probe may be retried. If an outcome is impossible under every hypothesis, the table is in conflict and the observation is skipped. The environment exposes a \emph{state version}. When the incident changes under the agent (the \textit{drift} variant), the version advances and current scores are reset to the prior. Earlier evidence is kept for the record but no longer counts as current.
+
+\subsection{Probe selection}
+For every legal probe (untried in the current state, affordable, prerequisites met), the controller computes the expected information gain
+\[
+\mathrm{EIG}(a) = H\big(p\big) - \sum_{o} P(o \mid a)\, H\big(p(\cdot \mid o, a)\big), \qquad P(o \mid a) = \sum_h p(h) P(o \mid h, a),
+\]
+and ranks the probes by $\mathrm{EIG}(a)/c(a)$. In the \hesp{} configurations the controller executes its own choice whatever the planner proposed. Configurations differ in whether the planner is shown the ranking. The \emph{blind} configurations show no ranking and no selector name, so the planner's prompt is identical whichever selector runs. A unit test checks this byte for byte. A \emph{random} selector, which picks uniformly among legal probes, serves as the control.
+
+\subsection{Finishing, verification, and audit}
+\paragraph{State-guarded finish.} A planner's \texttt{finish} is accepted only if at least one cited observation is current-state evidence that supports the claimed hypothesis, and the hypothesis has current score at least $\tau = 0.8$. A rejected finish is returned to the planner as feedback.
+
+\paragraph{Controller-side stop (v0.9).} The controller may also conclude on its own. Before each planner call, and when a budget runs out, it applies the same acceptance rule to the current leader and, if the rule is met, cites up to three supporting current-state observations. The planner may still finish or abstain earlier, and nothing in its prompt reveals the rule.
+
+\paragraph{Independent verifier.} A verdict counts as \emph{verified} only if the hypothesis equals the cause in effect and at least one cited observation, from the current state, carries a signature that cause uniquely produces. A verdict reached purely by elimination, or backed only by a generic ``malicious'' threat-intelligence hit that several attacks share, does not verify. The verifier is not reachable through the planner interface.
+
+\paragraph{Journal and audit.} Every prediction is written to an append-only journal before the probe runs. After each episode, an audit checks event ordering, observation provenance, counters, budgets, citations, and, from v0.9 on, that every controller-made verdict meets its rule. All reported episodes pass the audit.

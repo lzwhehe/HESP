@@ -1,0 +1,91 @@
+\section{Results}
+\label{sec:results}
+
+We report four studies on sec-triage, in the order they were run. Each study's design responds to what the previous one left open.
+
+\subsection{RQ1: Does the controller help, and whom?}
+\label{sec:rq1}
+The first sec-triage study (v0.5; 1{,}944 episodes; designer tables) pre-registered full \hesp{} (EIG/cost selection with the finish guard) against Memory-only, where the planner also sees the ledger but picks its own probes. Verified completion rose by $+0.889$ $[+0.75, +1.00]$ for Qwen2.5-7B and by $+0.250$ $[+0.10, +0.42]$ for 32B. For 72B the difference was $+0.111$ with an interval touching zero, $[0.000, +0.236]$. We initially misreported that all three intervals excluded zero and corrected this in erratum E-1 (\cref{app:errata}). The per-episode journals of this study were not archived (erratum E-2), so from v0.6 on every study archives and hashes its journals before any compute is released.
+
+\subsection{RQ2: Do the prediction tables have to come from an oracle?}
+\label{sec:rq2}
+v0.5 used tables derived from the environment's generator, so a skeptical reader could attribute the gains to oracle knowledge. v0.6 (1{,}728 episodes) replaced them with tables counted from LLM-free development episodes and pre-registered the 7B comparison against Memory-only as its single primary endpoint. \Cref{tab:v06} shows the result.
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v06_main}
+  \caption{v0.6: verified completion by prediction-table source (72 episodes per cell). The primary endpoint (7B, empirical $-$ Memory-only) was pre-registered; 32B and 72B are exploratory. Intervals: 95\% task-cluster bootstrap.}
+  \label{tab:v06}
+\end{table}
+
+\paragraph{The primary endpoint holds.} With empirical tables ($k{=}20$ development episodes per cause and variant), \hesp{} lifts Qwen2.5-7B from 0.125 to 1.000 ($+0.875$ $[+0.74,+0.97]$, 22 tasks better, none worse). Completion equals the designer-table arm on all three models. Data efficiency saturates at $k{=}5$ ($k{=}1$ loses at most one episode per model), which reflects how nearly deterministic the environment is rather than a general property of the method.
+
+\paragraph{The cost of not being an oracle is one table row.} Empirical tables cost 1.2 to 2.4 more probe units per episode than designer tables. An LLM-free check localizes the whole gap. Swapping in the designer row for \textit{other} alone (the one hypothesis that development data can never exhibit) restores both completion and cost exactly, from 0.875 at cost 3.53 to 1.000 at cost 2.54 in the scripted setting.
+\paragraph{Self-elicited tables fail.} When the planner writes its own tables, completion drops to 0.069, 0.375, and 0.375. Under the finish guard, the 32B and 72B models complete none of the cases caused by credential stuffing, SQL injection, DNS command-and-control, the exposed admin panel, or the vulnerable component, and every case of the other three causes. The models know the domain, but they do not produce calibrated likelihoods for it.
+
+\subsection{RQ3: Is it the ranking, or just taking the choice away?}
+\label{sec:rq3}
+Earlier studies had a confound. In the random-selection control the planner could still see the EIG ranking (erratum E-4), and all models came from one family. v0.8 (1{,}800 episodes, five models) added \emph{blind} arms, in which the planner never sees a ranking or a selector name, and the Llama~3.1 family. Its two pre-registered primary endpoints were P1, full \hesp{} against Memory-only on Llama-3.1-8B, and P2, blind EIG/cost against blind random on Qwen2.5-7B.
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v08_verified}
+  \caption{v0.8: verified completion (72 episodes per cell). Every arm scores and selects with the same frozen empirical table. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:v08}
+\end{table}
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v08_terms}
+  \caption{v0.8: decomposition of the gain (difference in verified completion, bracketed interval). The Q-7B ranking cell is primary endpoint P2 and uses a 97.5\% interval; all other cells are exploratory 95\% intervals.}
+  \label{tab:v08terms}
+\end{table}
+
+\paragraph{The ranking itself helps (P2 confirmed).} When the planner's information is identical, EIG/cost selection beats random selection by $+0.306$ $[+0.14,+0.47]$ on Qwen2.5-7B (\cref{tab:v08terms}). The effect is stable on every model that concludes: $+0.35$, $+0.35$, and $+0.26$ on Qwen 32B, Qwen 72B, and Llama 70B, all with intervals excluding zero.
+
+\paragraph{Taking the choice away helps weak models and hurts strong ones.} Replacing the model's own probe choices with random ones raises completion by $+0.556$ for the 7B model, whose own choices are worse than random: it repeats probes and exhausts its budget. The same change lowers completion by $0.222$ and $0.278$ for Qwen 32B and 72B, whose own choices are better than random. So the controller's contribution to a small model consists of two parts, discipline and ranking. For a large model it consists of the ranking alone, which is enough to outweigh the lost choices only when the ranking is informative.
+
+\paragraph{Showing the ranking, and the guard, add little.} Showing the ranking to the planner and adding the finish guard each change completion by at most $+0.06$ once the controller selects by EIG/cost. Most of the effect is in the selection.
+
+\subsection{RQ4: Selecting probes is not concluding}
+\label{sec:rq4}
+P1 was not confirmed, and the way it failed matters. Llama-3.1-8B completes 0 of 360 episodes in every arm. It makes 3{,}389 decisions, all of them requests for another probe and none a verdict, even when the ledger posterior exceeds 0.999 and the controller reports that no legal probe is left. Its outputs are valid JSON throughout, so this is a behavioural failure, not a formatting one. As pre-registered, the small-model claim is restricted to the Qwen2.5 family. \hesp{} as evaluated in v0.5--v0.8 controls \emph{what} to probe, while the planner still decides \emph{when} to stop.
+
+v0.9 moves stopping into the controller and crosses the two factors, who probes and who stops, in a $2{\times}2$ design, with a random-selection control (\cref{tab:v09}). Both primary endpoints are on Llama-3.1-8B. P1 tests whether controller-side stopping rescues it. P2 tests whether, once stopping is supplied, controller probe selection still beats the model's own choices. Before running, we predicted P1 from an LLM-free simulation (about 0.9 if the model keeps never concluding) and noted that it is therefore close to mechanical. P2 is the informative test.
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v09_main}
+  \caption{v0.9: verified completion (mean probe cost in parentheses) by who probes and who stops, 72 episodes per cell. ``LLM or controller'': the planner may still finish first; the controller concludes once the rule is met. A new seed (2027) makes the first and third rows an independent replication of v0.8.}
+  \label{tab:v09}
+\end{table}
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v09_terms}
+  \caption{v0.9: contrasts (difference in verified completion, bracketed interval). The two L-8B cells in the first two rows are the pre-registered primary endpoints P1 and P2, with 97.5\% intervals; all other cells are exploratory 95\% intervals.}
+  \label{tab:v09terms}
+\end{table}
+
+\paragraph{Stopping rescues the model that never concludes (P1 confirmed).} With the controller allowed to stop, Llama-3.1-8B's completion rises from 0 to 0.917 ($+0.917$ $[+0.79,+1.00]$, 22 tasks better, none worse), matching the prediction of the LLM-free simulation.
+
+\paragraph{For that model, stopping is the whole story (P2 not confirmed).} Once the controller supplies the stopping rule, Llama-3.1-8B's own probe choices reach 0.861. Controller selection reaches 0.917, a difference of $+0.056$ $[-0.07,+0.18]$. As pre-registered, we therefore attribute this model's gain to stopping rather than to probe selection. Controller selection does halve its probe cost (2.35 vs.\ 4.78 units), but this comparison is exploratory.
+
+\paragraph{Small models fail differently.} The same contrasts on Qwen2.5-7B tell a different story (\cref{tab:v09terms}). Supplying the stopping rule alone lifts it from 0.083 to 0.694. Once stopping is supplied, controller selection still adds $+0.222$ $[+0.08,+0.39]$. Its v0.8 failures were therefore partly a refusal to conclude and partly poor probing, whereas Llama-3.1-8B's were almost entirely a refusal to conclude. A controller should supply both parts, because it cannot know in advance which one a given model lacks.
+
+\paragraph{The ranking effect replicates on all five models.} Under controller stopping, EIG/cost selection beats random selection by $+0.17$ to $+0.21$ on every model, with all intervals excluding zero. This includes Llama-3.1-8B, on which v0.8 could not measure it.
+
+\paragraph{The cost of a controller stop is the verifier's strictness.} On models that already conclude, allowing the controller to stop lowers completion slightly ($-0.01$ to $-0.08$; the intervals for Qwen 32B and Llama 70B end at zero). The cause can be fully identified. Every failure of the controller-stop arm, six episodes per model, is a \emph{correct} DNS command-and-control verdict. The controller reached it by eliminating the alternatives, and the signature-based verifier does not accept elimination (\cref{sec:design}). The protocol anticipated this failure mode before the run. The only other failures are three drift episodes in which Qwen 72B finished first, with the wrong cause.
+
+\paragraph{When the controller does everything, the model hardly matters.} With the controller both selecting and stopping, four of the five models score exactly 0.917 at the same cost. In that configuration the verdicts are produced by the controller and its tables, and the LLM contributes almost nothing. We return to this in \cref{sec:discussion}.
+
+\subsection{Security-facing behaviour}
+\label{sec:security}
+\Cref{tab:security} breaks the v0.6 verdicts down by error type. With empirical tables, \hesp{} issued a verdict in all 216 episodes and none was wrong. The failure modes of the baselines depend on scale. The 7B baselines mostly fail to conclude, with 88--97\% of episodes unresolved. The larger ReAct-style baselines conclude but are often wrong: they call 26\% (32B) and 37\% (72B) of actionable incidents benign and cite invalid evidence in 22--31\% of citations. Giving the model the ledger (Memory-only) removes most of these errors. The remaining difference between Memory-only and \hesp{} for large models is mainly in unresolved cases and false escalations. These metrics are descriptive and were not pre-registered as endpoints.
+
+\begin{table}[t]
+  \centering\small
+  \input{tables/v06_security}
+  \caption{v0.6: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict; missed-attack, false-escalation, and wrong-cause rates are over those verdicts, and the unresolved rate is over all 72 episodes.}
+  \label{tab:security}
+\end{table}
