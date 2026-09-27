@@ -54,3 +54,26 @@
 | Overview → Design → Implementation | 拆出单独的 Overview 一节 |
 | 评估用 RQ 组织，结论用编号发现框 | RQ1–RQ4，每个 RQ 末尾一个 Finding 框 |
 | Ethics / Open Science | 已有，保留 |
+
+## 四、按 RAID / ACSAC 范本逐节模仿（第二轮）
+
+范本（全文读过，只模仿结构、段落功能和图表位置，不抄句子）：
+
+- **主范本**：Clouseau（ACSAC 2025，Aldaihan、Alotaibi、Maffeis，Imperial College London）。它用 LLM 智能体做攻击调查，也测了开源本地模型，是与本文最接近的已发表论文。作者主页 PDF：doc.ic.ac.uk/~maffeis/papers/acsac25.pdf
+- **副范本**：Mateen（RAID 2024，同一研究组）；REx86（ACSAC 2025，arXiv 2510.20975，本地 LLM）。
+
+模板换成 ACSAC 要求的 `\documentclass[conference,compsoc]{IEEEtran}`，与 Clouseau 的版式一致。正文 11 页（参考文献之前），附录 4 页。
+
+| Clouseau 的结构 | 本文对应的写法 |
+| --- | --- |
+| 摘要一段：重要性 → 现有方法的不足 → "In this paper, we present X" → "We evaluated X on …" → 关键数字 → 私有环境可部署 | 同样的顺序，结尾落在"遥测数据不能出本地" |
+| 1 引言：分析师实际怎么做 → 手工不可持续 → 两大类现有方法，各有缺陷 → "In this paper, we introduce X"，按组件顺序介绍 → 评估一段 → "In summary, the contributions of this paper are:" 加 5 个圆点，开源链接放脚注 | 完全照此：溯源图系统 / LLM 智能体两类；贡献 5 条，都用 We show / We design, implement, and open-source / We conduct / We measure 开头；仓库链接放脚注 |
+| 2 Background：2.1 领域知识，末段一个具体例子；2.2 LLM 基础 | 2.1 Alert Triage（末段是"认证失败激增"告警的例子）；2.2 Local LLM Agents |
+| 3 Motivation：3.1 Challenges ①②③（粗体小标题）→ 3.2 Our Solution ①②③ 一一对应 | 3.1 三个挑战：探测不收敛 / 从不停止 / 结论没有证据；3.2 三个对策：信息增益选择 / 控制器停止 / 证据约束的结论 |
+| 4 Approach：两阶段编号列表（带 § 引用）→ "Scope and Assumptions." 段落（威胁模型写在这里，不单列一节）→ 图 1 总览，图注用 ①–⑧ 逐步讲解 → 每个组件一小节 → 小节里有 "Agent Design." 段和 "Example." 段，同一个例子贯穿所有小节 | 两阶段：建表 / 调查；威胁模型并入 Scope and Assumptions；图 1 = fig_pipeline（❶❷❸ 图注）；4.1 预测表、4.2 假设账本、4.3 探针选择（含 Planner Design.）、4.4 证据规则与停止；每小节末尾都有一段 Example.，数据全部取自 run0087 的归档日志 |
+| 5 Evaluation Setup：开头列 4 个具名问题（"Comparative Performance: How …?"）→ 表 1 场景总览 → 5.1 数据集（5.1.1/5.1.2 加粗的内嵌标题）+ 图 2 → 5.2 实验设计：5.2.1 基线、5.2.2 实现、5.2.3 评估方法 | 4 个具名问题（Reliability / Ranking versus Choice / Probing versus Stopping / Failure Modes）；表 1 四项研究总览；5.1.1 环境、5.1.2 预测表；图 2 = fig_motivating；5.2.1 配置、5.2.2 实现（原 Implementation 一节并入此处）、5.2.3 评估方法 |
+| 6 Evaluation Results：每个问题一小节；先说表或图报告了什么，再用 "Three findings stand out. First, … Second, … Third, …" | 6.1–6.4 同样写法，去掉了上一轮加的 Finding 框（RAID/ACSAC 范本都不用）；6.5 公开数据与案例研究（对应 Clouseau 6.3 换环境后的泛化） |
+| 7 Discussion：加粗的内嵌段落 Limitations. / Potential Applications. / Runtime and Scalability. | Limitations. / Where the Model Is Still Needed. / Design Alternatives. / Potential Applications. / Runtime and Cost. |
+| 8 Related Work：按主题分的内嵌段落，每段末尾一句"X differs from …" | 5 段，其中引用 Clouseau，并指出它自己说过，做叙事重建对只需"接受或升级"判断的分诊来说太重 |
+| 9 Conclusions：一段，"In this work, we introduced X …" | 一段 |
+| Appendix A. Prompts（给出智能体的完整 prompt） | 附录 A：规划器 prompt 原文，由 `make_prompt_appendix.py` 从归档日志生成 |

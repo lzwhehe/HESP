@@ -1,0 +1,58 @@
+\section{Approach}
+\label{sec:approach}
+
+\hesp{} (Hypotheses $\rightarrow$ Evidence $\rightarrow$ State $\rightarrow$ Planning) is a controller that sits between a local LLM planner and a catalogue of read-only probes (\cref{fig:pipeline}). The planner proposes; the controller decides which probe runs, which verdict is accepted, and when the investigation ends. The workflow has two phases:
+\begin{enumerate}
+  \item \emph{Table construction:} before deployment, LLM-free development runs execute every probe on cases with known causes, and \hesp{} counts the outcomes into prediction tables (\S\ref{sec:tables}).
+  \item \emph{Investigation:} for each alert, \hesp{} maintains a hypothesis ledger (\S\ref{sec:ledger}), selects the probes to run (\S\ref{sec:selection}), and applies an evidence rule and a stopping rule to every verdict (\S\ref{sec:finish}). The planner reads the ledger and proposes decisions. Every step is written to a journal before its observation and audited afterwards.
+\end{enumerate}
+
+\paragraph{Scope and Assumptions} \hesp{} runs inside the organization's network, with a local open-weight model as the planner and read-only access to security telemetry through a fixed probe catalogue: authentication and HTTP logs, source reputation, DNS logs, configuration, inventory, change tickets, and threat intelligence. Verdicts go to a human analyst; the agent never remediates and never sends traffic to the systems under investigation. The alert may be caused by an attacker who controls part of the evidence the agent reads, such as request payloads, user agents, or command lines, and who wants the investigation to end with a benign verdict or with none. We trust the controller, its tables, the probe implementations, and the journal, and we do not trust the planner to follow a sound procedure. Three properties then hold whatever the planner outputs: (i) every executed probe is in the read-only catalogue, is affordable, and has not already run in the current state; (ii) every accepted verdict cites at least one current observation that raised the claimed cause's score; and (iii) every prediction is journaled before the observation it predicts. \hesp{} does not guarantee a correct verdict, which depends on the tables and on the hypothesis set containing the true cause. Evidence manipulation, prompt injection through log content, and the generation of new hypotheses fall outside the scope of this paper.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_pipeline.pdf}
+  \caption{Overview of \hesp{}, drawn on the running example of this section (Llama-3.1-8B as planner; the true cause is an exposed admin panel). \protect\stepnum{1} The hypothesis ledger keeps a posterior over the candidate causes, updated by Bayes' rule from frozen probe-outcome tables. \protect\stepnum{2} Before each step the controller ranks the legal probes by expected information gain per cost and runs the best one; the planner's proposal (here \texttt{auth\_log}, three times) is advisory. \protect\stepnum{3} Once the leader's posterior reaches 0.8 and a current observation supports it, the controller concludes and cites that evidence, and an independent verifier checks the verdict. Every step is journaled before its observation and audited afterwards. All values are taken from the archived journal.}
+  \label{fig:pipeline}
+\end{figure*}
+
+\subsection{Prediction Tables}
+\label{sec:tables}
+The ledger and the selector both need, for every probe $a$ and cause $h$, a distribution $P(o \mid h, a)$ over the probe's outcome vocabulary. \hesp{} estimates these tables by counting. An exhaustive script, with no LLM involved, runs every probe $k$ times on each development instance of every cause, records the outcomes, and normalizes the counts with $\varepsilon = 0.01$ smoothing. The tables are written to disk, hashed, and frozen before any evaluation episode runs, and a unit test enforces that the estimator never calls the environment's generating function. A deployment would take its development cases from resolved tickets or replayed incidents (\S\ref{sec:discussion}).
+
+Asking the planner for the likelihoods would remove the need for development data, but small models cannot supply them (\S\ref{sec:rq-help}). Counting, in contrast, works with as few as five episodes per case in our environment.
+
+\paragraph{Example} In the counted table used by our running example ($k{=}20$), the probe \texttt{admin\_exposure} returns \textit{exposed, no auth} with probability 0.995 when the admin panel is exposed and 0.005 under each of the other seven named causes. The probe \texttt{source\_ips} returns \textit{many residential} with probability 0.992 under credential stuffing and 0.002 under each of the other named causes.
+
+\subsection{Hypothesis Ledger}
+\label{sec:ledger}
+An episode starts from one alert and a finite set $\mathcal{H}$ of candidate causes, which includes an explicit \textit{other}. The agent may run read-only probes $a \in \mathcal{A}$, each with cost $c(a)$ and an outcome $o$ from a finite vocabulary. Budgets bound the number of probes, their total cost, the number of planner decisions, and wall time. The episode ends with a verdict $(h, E)$, where $E$ is a set of cited observations, with an abstention, or with an exhausted budget. A verdict is correct if $h$ is the cause in effect and $E$ contains a current observation that this cause alone produces.
+
+The ledger holds a posterior $p(h)$ over $\mathcal{H}$, starting from a uniform prior. After observing outcome $o$ of probe $a$, it applies Bayes' rule with the frozen table and records, for every cause, whether the observation raised, lowered, or left unchanged its score (\textit{support}, \textit{against}, \textit{neutral}). A transient failure, such as an HTTP 503, is logged but is not evidence, and the probe may be retried. An outcome that is impossible under every cause marks a table conflict and is skipped. The environment exposes a \emph{state version}. When the incident changes under the agent, the version advances and the current scores are reset to the prior; earlier evidence stays in the record but no longer counts as current.
+
+\paragraph{Example} The alert of our running example reports a spike in authentication failures and HTTP errors, which leaves nine candidates at 0.111 each. The first probe, \texttt{source\_ips}, returns \textit{normal}, and four causes remain plausible at 0.238 each. The second, \texttt{access\_pattern}, also returns \textit{normal} and leaves three at 0.327: the exposed admin panel, a vulnerable component, and DNS command-and-control. The third, \texttt{admin\_exposure}, returns \textit{exposed, no auth} and moves the exposed admin panel to 0.966.
+
+\subsection{Probe Selection}
+\label{sec:selection}
+For every legal probe, meaning one that is untried in the current state, affordable, and has its prerequisites met, the controller computes the expected information gain
+\begin{align*}
+\mathrm{EIG}(a) &= H(p) - \textstyle\sum_{o} P(o \mid a)\, H\big(p(\cdot \mid o, a)\big),\\
+P(o \mid a) &= \textstyle\sum_h p(h)\, P(o \mid h, a),
+\end{align*}
+where $H$ is Shannon entropy and $p(\cdot \mid o, a)$ is the posterior after observing $o$. It ranks the probes by $\mathrm{EIG}(a)/c(a)$ and executes the top one, whatever the planner proposed.
+
+\paragraph{Planner Design} At each step the planner receives a structured request rendered as text: the task, the candidate causes, the probe catalogue with costs and outcome descriptions, the observations so far, the ledger, feedback on blocked proposals, and the remaining budgets (Appendix~\ref{app:prompt} reproduces one verbatim). It returns one JSON decision: \texttt{action} (propose a probe), \texttt{finish} (a cause plus the IDs of the observations it cites), or \texttt{stop} (abstain). An invalid reply is returned to the model with the error for one retry. The configurations we evaluate differ in whether the planner is shown the controller's ranking. The \emph{blind} configurations state only that the controller picks the probe and show neither the ranking nor the selector, so the prompt is identical whichever selector runs, which a unit test checks. A \emph{random} selector, which picks uniformly among legal probes, serves as the control.
+
+\paragraph{Example} In the running example, Llama-3.1-8B proposed \texttt{auth\_log} at each of its three decisions. The ranking valued that probe at 0.51 bits per cost unit before the first step, against 1.74 for \texttt{source\_ips}, and at 0.04 before the third, when \texttt{admin\_exposure} led with 0.86. The controller ran \texttt{source\_ips}, \texttt{access\_pattern}, and \texttt{admin\_exposure}.
+
+\subsection{Evidence Rule, Stop, and Verification}
+\label{sec:finish}
+\paragraph{State-guarded finish} A planner's \texttt{finish} is accepted only if the claimed cause has current score at least $\tau = 0.8$ and at least one cited observation is current-state evidence that supports it. A rejected finish is returned to the planner as feedback.
+
+\paragraph{Controller-side stop} The controller may also conclude on its own. Before each planner call, and when a budget runs out, it applies the same acceptance rule to the current leader. If the rule is met, it cites up to three supporting current-state observations and ends the episode. The planner may still finish or abstain earlier, and nothing in its prompt reveals the rule.
+
+\paragraph{Independent verifier} A verdict counts as \emph{verified} only if the cause equals the cause in effect and at least one cited current-state observation carries a signature that this cause alone produces. A verdict reached purely by elimination, or backed only by a generic ``malicious'' threat-intelligence hit that several attacks share, does not verify. The planner has no access to the verifier.
+
+\paragraph{Journal and audit} Every planner request and decision, every prediction, observation, and ledger update, and the verification are appended to a journal, and each prediction is written before the probe it predicts runs. After each episode, an audit replays the journal and checks event order, observation provenance, counters, budgets, citations, and that every verdict the controller made met its rule.
+
+\paragraph{Example} Before the fourth planner call of the running example, the exposed admin panel led at 0.966 and the third observation supported it, so the controller concluded and cited all three observations. The verifier confirmed the verdict, because the third observation carries the exposed panel's own signature. The episode used three probes and three cost units and took 5.1\,s. With the same controller selection but without the stop, the same model reached the same observation at step three and never concluded (\cref{fig:motivating}, second row).

@@ -1,8 +1,0 @@
-\section{Implementation}
-\label{sec:impl}
-
-\hesp{} is about 2{,}900 lines of Python that use only the standard library. The controller, ledger, selectors, verifier interface, journal, and audit account for roughly 1{,}800 of them. Planners are pluggable: the same JSON decision protocol serves vLLM and Ollama endpoints, a subprocess adapter, and scripted policies used for LLM-free runs. Each episode gets its own loopback HTTP sandbox (a \texttt{ThreadingHTTPServer} bound to 127.0.0.1), so probes are real HTTP requests with transient failures and state changes, and no episode can observe another.
-
-\paragraph{Journal and audit.} Each episode writes an append-only JSONL journal. The journal records every planner request and decision, every prediction before its probe runs, every observation, every ledger update, and the verification. The audit replays the journal and checks event order, observation provenance, counters against the result record, budgets, citations, and the controller's own verdicts. All 7{,}272 reported episodes pass.
-
-\paragraph{Study runner.} A paired, shuffled, resumable runner executes up to 32 episodes concurrently and refuses to resume if the manifest or the controller source hash has changed. The source hash covers every file of the controller package with line endings normalized, so Windows and Linux checkouts agree. After each model, the runner audits all episodes, archives the journals, and records the archive's SHA-256 before the GPU server is released. The stopping study's 1{,}800 episodes ran in 28 minutes on one RTX~6000-class GPU. A test suite of 145 unit tests covers the ledger, selectors, blind prompts, guard, controller stop, audit, and the empirical estimator's isolation from the environment's generator.
