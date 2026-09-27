@@ -1,0 +1,278 @@
+{
+  "purpose": "v1.0_part_a",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 2028,
+  "arms": [
+    "memory_only",
+    "memory_only_autostop",
+    "hesp_eigc_blind",
+    "hesp_eigc_blind_autostop",
+    "hesp_random_blind_autostop"
+  ],
+  "modes": {
+    "memory_only": {
+      "runs": 152,
+      "verified_fraction": 0.7828947368421053,
+      "statuses": {
+        "VERIFIED_SIMULATION": 119,
+        "TOOL_BUDGET_EXCEEDED": 30,
+        "UNVERIFIED_CLAIM": 2,
+        "STOPPED_UNRESOLVED": 1
+      },
+      "tool_calls": {
+        "mean_known": 6.125,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 7.907894736842105,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 7.1381578947368425,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 101.78805686184211,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 10600.763157894737,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 216.5921052631579,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 7.504201680672269
+    },
+    "memory_only_autostop": {
+      "runs": 152,
+      "verified_fraction": 0.9407894736842105,
+      "statuses": {
+        "VERIFIED_SIMULATION": 143,
+        "UNVERIFIED_CLAIM": 9
+      },
+      "tool_calls": {
+        "mean_known": 2.4934210526315788,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.763157894736842,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.4934210526315788,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 32.382821453947365,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 3258.1710526315787,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 69.59210526315789,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.5804195804195804
+    },
+    "hesp_eigc_blind": {
+      "runs": 152,
+      "verified_fraction": 0.9539473684210527,
+      "statuses": {
+        "VERIFIED_SIMULATION": 145,
+        "UNVERIFIED_CLAIM": 7
+      },
+      "tool_calls": {
+        "mean_known": 7.5131578947368425,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 8.651315789473685,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8.513157894736842,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 116.71012101315789,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 13114.361842105263,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 248.67763157894737,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 8.593103448275862
+    },
+    "hesp_eigc_blind_autostop": {
+      "runs": 152,
+      "verified_fraction": 1,
+      "statuses": {
+        "VERIFIED_SIMULATION": 152
+      },
+      "tool_calls": {
+        "mean_known": 2.1973684210526314,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 2.1973684210526314,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.1973684210526314,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 27.718566361842104,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 2873.3815789473683,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 59.421052631578945,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 2.1973684210526314
+    },
+    "hesp_random_blind_autostop": {
+      "runs": 152,
+      "verified_fraction": 0.8947368421052632,
+      "statuses": {
+        "VERIFIED_SIMULATION": 136,
+        "UNVERIFIED_CLAIM": 16
+      },
+      "tool_calls": {
+        "mean_known": 2.7828947368421053,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 4.269736842105263,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 2.789473684210526,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 35.041987526315786,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 3743.1052631578946,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 73.96052631578948,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 4.154411764705882
+    }
+  },
+  "paired_verification": {
+    "hesp_eigc_blind_autostop_minus_hesp_random_blind_autostop": {
+      "task_clusters": 76,
+      "difference": 0.10526315789473684,
+      "cluster_bootstrap_percentile_95": [
+        0.05921052631578947,
+        0.16447368421052633
+      ],
+      "tasks_better": 14,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_blind_autostop_minus_memory_only": {
+      "task_clusters": 76,
+      "difference": 0.21710526315789475,
+      "cluster_bootstrap_percentile_95": [
+        0.13815789473684212,
+        0.29605263157894735
+      ],
+      "tasks_better": 24,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_blind_autostop_minus_hesp_eigc_blind": {
+      "task_clusters": 76,
+      "difference": 0.046052631578947366,
+      "cluster_bootstrap_percentile_95": [
+        0.006578947368421052,
+        0.09868421052631579
+      ],
+      "tasks_better": 4,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_blind_autostop_minus_memory_only_autostop": {
+      "task_clusters": 76,
+      "difference": 0.05921052631578947,
+      "cluster_bootstrap_percentile_95": [
+        0.013157894736842105,
+        0.11842105263157894
+      ],
+      "tasks_better": 5,
+      "tasks_worse": 0
+    },
+    "memory_only_autostop_minus_memory_only": {
+      "task_clusters": 76,
+      "difference": 0.15789473684210525,
+      "cluster_bootstrap_percentile_95": [
+        0.08552631578947369,
+        0.23026315789473684
+      ],
+      "tasks_better": 19,
+      "tasks_worse": 1
+    }
+  },
+  "paired_tool_cost": {
+    "hesp_eigc_blind_autostop_minus_hesp_random_blind_autostop": {
+      "task_clusters": 76,
+      "difference": -2.0723684210526314,
+      "cluster_bootstrap_percentile_95": [
+        -2.3684210526315788,
+        -1.7894736842105263
+      ]
+    },
+    "hesp_eigc_blind_autostop_minus_memory_only": {
+      "task_clusters": 76,
+      "difference": -5.7105263157894735,
+      "cluster_bootstrap_percentile_95": [
+        -6.157894736842105,
+        -5.256578947368421
+      ]
+    },
+    "hesp_eigc_blind_autostop_minus_hesp_eigc_blind": {
+      "task_clusters": 76,
+      "difference": -6.453947368421052,
+      "cluster_bootstrap_percentile_95": [
+        -6.828947368421052,
+        -6.065789473684211
+      ]
+    },
+    "hesp_eigc_blind_autostop_minus_memory_only_autostop": {
+      "task_clusters": 76,
+      "difference": -0.5657894736842105,
+      "cluster_bootstrap_percentile_95": [
+        -0.9407894736842105,
+        -0.28289473684210525
+      ]
+    },
+    "memory_only_autostop_minus_memory_only": {
+      "task_clusters": 76,
+      "difference": -5.144736842105263,
+      "cluster_bootstrap_percentile_95": [
+        -5.618421052631579,
+        -4.671052631578948
+      ]
+    }
+  },
+  "security_metrics": null,
+  "manifest_sha256": "fbc74fc0b45042de26598d28b30e872b0305dd59d84c50a679eec4c825ec0b64"
+}

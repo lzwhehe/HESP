@@ -1,0 +1,4568 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "f8eb0d166ba2f7ce35ad80e7752be1e840e9a61157080e6243dc3d73d8626085",
+  "seed": 2028,
+  "repeats": 2,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:llama-3.1-8b-instruct",
+      "finish_guard": false
+    },
+    "memory_only_autostop": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:llama-3.1-8b-instruct",
+      "finish_guard": false,
+      "auto_finish": 0.8
+    },
+    "hesp_eigc_blind": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:llama-3.1-8b-instruct",
+      "finish_guard": false,
+      "show_rankings": false
+    },
+    "hesp_eigc_blind_autostop": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:llama-3.1-8b-instruct",
+      "finish_guard": false,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    },
+    "hesp_random_blind_autostop": {
+      "mode": "hesp",
+      "selector": "random",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:llama-3.1-8b-instruct",
+      "finish_guard": false,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sig00-base-0",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig00-base-1",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig00-base-2",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "family": "sigma-triage",
+      "rule": "renamed-megasync-execution-643bdcac",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-base-0",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-base-1",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-base-2",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "family": "sigma-triage",
+      "rule": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-base-0",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-base-1",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-base-2",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "family": "sigma-triage",
+      "rule": "servicedll-hijack-612e47e9",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-base-0",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-base-1",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-base-2",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "family": "sigma-triage",
+      "rule": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-base-0",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-base-1",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-base-2",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "family": "sigma-triage",
+      "rule": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-base-0",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-base-1",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-base-2",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "family": "sigma-triage",
+      "rule": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-base-0",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-base-1",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-base-2",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-base-3",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "base",
+      "cause": "benign_3",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "family": "sigma-triage",
+      "rule": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "variant": "noise",
+      "cause": "benign_3",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-base-0",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-base-1",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-base-2",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "family": "sigma-triage",
+      "rule": "disable-or-stop-services-de25eeb8",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-base-0",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-base-1",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-base-2",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "family": "sigma-triage",
+      "rule": "github-outside-collaborator-detected-eaa9ac35",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-base-0",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-base-1",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-base-2",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "family": "sigma-triage",
+      "rule": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-base-0",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-base-1",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-base-2",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "family": "sigma-triage",
+      "rule": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-base-0",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "base",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-base-1",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "base",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-base-2",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "base",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-base-3",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "base",
+      "cause": "benign_3",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "noise",
+      "cause": "attack",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "noise",
+      "cause": "benign_1",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "noise",
+      "cause": "benign_2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "family": "sigma-triage",
+      "rule": "mimikatz-use-06d71506",
+      "variant": "noise",
+      "cause": "benign_3",
+      "drift_to": null
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-noise-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig01-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig11-base-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig11-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-0",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-1",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig09-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-3",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig02-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig07-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-3",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig08-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-noise-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig04-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig08-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig11-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig04-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig04-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig02-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig05-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig10-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig01-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig07-noise-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-noise-2",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig03-noise-2",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig02-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-noise-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig07-noise-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-0",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig00-noise-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig09-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig11-noise-2",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig09-base-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-0",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig08-noise-0",
+      "repeat": 1,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 0,
+      "arm": "hesp_random_blind_autostop"
+    },
+    {
+      "task_id": "sig10-base-0",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-base-1",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig05-base-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig03-base-1",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig00-base-1",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig10-noise-2",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind"
+    },
+    {
+      "task_id": "sig02-noise-1",
+      "repeat": 1,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig04-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-1",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sig06-base-2",
+      "repeat": 0,
+      "arm": "memory_only_autostop"
+    },
+    {
+      "task_id": "sig00-base-2",
+      "repeat": 1,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig11-noise-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig03-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    },
+    {
+      "task_id": "sig06-base-0",
+      "repeat": 0,
+      "arm": "hesp_eigc_blind_autostop"
+    }
+  ],
+  "purpose": "v1.0_part_a",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "llama-3.1-8b-instruct",
+    "digest": null,
+    "root": "/root/autodl-tmp/hesp/models/Llama-3.1-8B-Instruct",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "temperature": 0.2,
+  "families": [
+    "sigma-triage"
+  ],
+  "primary_family": "sigma-triage",
+  "sigma_commit": "07ec293a51695cb1131a2e05260247872b31e1e1",
+  "specs": [
+    {
+      "file": "00_renamed-megasync-execution-643bdcac.json",
+      "slug": "renamed-megasync-execution-643bdcac",
+      "rule_id": "643bdcac-8b82-49f4-9fd9-25a90b929f3b",
+      "sha256": "71af0b33bece1ba1e2f6a771d474a9dac5d2fb2231441b7e34d956cf7ccd1658"
+    },
+    {
+      "file": "01_azure-kubernetes-sensitive-role-access-818fee0c.json",
+      "slug": "azure-kubernetes-sensitive-role-access-818fee0c",
+      "rule_id": "818fee0c-e0ec-4e45-824e-83e4817b0887",
+      "sha256": "252b08ad0fc3b4de92416e2e81882733e82bd436cccea221d51b93c1d48db3d9"
+    },
+    {
+      "file": "02_servicedll-hijack-612e47e9.json",
+      "slug": "servicedll-hijack-612e47e9",
+      "rule_id": "612e47e9-8a59-43a6-b404-f48683f45bd6",
+      "sha256": "f45008c3087fe2ab9286e21e4ddfc4ba3e94ce9c8311465c1f39bdeaba93b36d"
+    },
+    {
+      "file": "03_ca-policy-removed-by-non-approved-actor-26e7c5e2.json",
+      "slug": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+      "rule_id": "26e7c5e2-6545-481e-b7e6-050143459635",
+      "sha256": "b1570156ee5912e52884e89f0e4198f3c2269af6ad76566885cdd53b723ed56d"
+    },
+    {
+      "file": "04_firewall-rule-deleted-via-netsh-exe-1a5fefe6.json",
+      "slug": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+      "rule_id": "1a5fefe6-734f-452e-a07d-fc1c35bce4b2",
+      "sha256": "3399e0c97aca38ff08f4410c3af1432bd82080f7323d91edcc4e196193524bb2"
+    },
+    {
+      "file": "05_credential-dumping-attempt-via-werfault-e5b33f7d.json",
+      "slug": "credential-dumping-attempt-via-werfault-e5b33f7d",
+      "rule_id": "e5b33f7d-eb93-48b6-9851-09e1e610b6d7",
+      "sha256": "d4ecc31aab0d4cec9b3e3130a7b79bbedc8d602cd9883a9ce9baa8c27be122fe"
+    },
+    {
+      "file": "06_azure-keyvault-secrets-modified-or-deleted-b831353c.json",
+      "slug": "azure-keyvault-secrets-modified-or-deleted-b831353c",
+      "rule_id": "b831353c-1971-477b-abb6-2828edc3bca1",
+      "sha256": "efb027cc7de755c1bf61a3087ce6f5ca280729dca6500d6102ecab6636b1e305"
+    },
+    {
+      "file": "07_disable-or-stop-services-de25eeb8.json",
+      "slug": "disable-or-stop-services-de25eeb8",
+      "rule_id": "de25eeb8-3655-4643-ac3a-b662d3f26b6b",
+      "sha256": "04467a91ce4daba6a9a90f23693944fa0c6174164572f585d13aac59ed294fc3"
+    },
+    {
+      "file": "08_github-outside-collaborator-detected-eaa9ac35.json",
+      "slug": "github-outside-collaborator-detected-eaa9ac35",
+      "rule_id": "eaa9ac35-1730-441f-9587-25767bde99d7",
+      "sha256": "b85263bfaeaf22272107e8de10b42ab0ba756074d03742d387676f1124c764b3"
+    },
+    {
+      "file": "09_windows-defender-real-time-protection-disabled-b28e58e4.json",
+      "slug": "windows-defender-real-time-protection-disabled-b28e58e4",
+      "rule_id": "b28e58e4-2a72-4fae-bdee-0fbe904db642",
+      "sha256": "ffbf392044c85e0281bfbd66f778835c169de82bb456653772bad4d02872a653"
+    },
+    {
+      "file": "10_potential-persistence-via-microsoft-office-start-0e20c89d.json",
+      "slug": "potential-persistence-via-microsoft-office-start-0e20c89d",
+      "rule_id": "0e20c89d-2264-44ae-8238-aeeaba609ece",
+      "sha256": "e9d18b92312d91c67c4bd4acf61909edb586941c1eff397c725e189b8d175dd9"
+    },
+    {
+      "file": "11_mimikatz-use-06d71506.json",
+      "slug": "mimikatz-use-06d71506",
+      "rule_id": "06d71506-7beb-4f22-8888-e2e5e2ca7fd8",
+      "sha256": "022b0e74a76b235d7e269bdc7847a4691a581c995b03f73acc92b104266527d6"
+    }
+  ],
+  "annotator": {
+    "model": "phi-4",
+    "digest": null,
+    "root": "/root/autodl-tmp/hesp/models/phi-4",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "table": {
+    "name": "empirical_20",
+    "sha256": "e57791ef8edb6a7a065e49e052f5308bbdf344fe8bf66b379230f3831bebc00c"
+  },
+  "created_utc": "2026-09-27T16:09:55.160706+00:00"
+}

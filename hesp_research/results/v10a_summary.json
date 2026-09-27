@@ -1,0 +1,613 @@
+{
+  "qwen7b": {
+    "label": "Qwen2.5-7B",
+    "episodes": 760,
+    "source_hashes": [
+      "f8eb0d16"
+    ],
+    "verified": {
+      "memory_only": 0.6776315789473685,
+      "memory_only_autostop": 0.8618421052631579,
+      "hesp_eigc_blind": 0.881578947368421,
+      "hesp_eigc_blind_autostop": 0.9736842105263158,
+      "hesp_random_blind_autostop": 0.8026315789473685
+    },
+    "tool_cost": {
+      "memory_only": 5.230263157894737,
+      "memory_only_autostop": 2.7565789473684212,
+      "hesp_eigc_blind": 2.9802631578947367,
+      "hesp_eigc_blind_autostop": 2.0723684210526314,
+      "hesp_random_blind_autostop": 3.7302631578947367
+    },
+    "missed_attack": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0.08333333333333333,
+      "hesp_eigc_blind_autostop": 0.08333333333333333,
+      "hesp_random_blind_autostop": 0.041666666666666664
+    },
+    "wrong_cause": {
+      "memory_only": 0.046052631578947366,
+      "memory_only_autostop": 0.03289473684210526,
+      "hesp_eigc_blind": 0.02631578947368421,
+      "hesp_eigc_blind_autostop": 0.02631578947368421,
+      "hesp_random_blind_autostop": 0.07236842105263158
+    },
+    "finished_by": {
+      "memory_only": {
+        "planner": 130,
+        "None": 22
+      },
+      "memory_only_autostop": {
+        "controller": 132,
+        "planner": 16,
+        "None": 4
+      },
+      "hesp_eigc_blind": {
+        "planner": 151,
+        "None": 1
+      },
+      "hesp_eigc_blind_autostop": {
+        "controller": 134,
+        "planner": 18
+      },
+      "hesp_random_blind_autostop": {
+        "controller": 121,
+        "planner": 31
+      }
+    },
+    "terms": {
+      "hesp_eigc_blind_autostop - hesp_random_blind_autostop": {
+        "difference": 0.17105263157894737,
+        "ci": [
+          0.09375,
+          0.25
+        ],
+        "level": 0.9833333333333333,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 24,
+        "tasks_worse": 2,
+        "name": "PA1 ranking under controller stop"
+      },
+      "hesp_eigc_blind_autostop - memory_only": {
+        "difference": 0.29605263157894735,
+        "ci": [
+          0.08783783783783784,
+          0.47297297297297297
+        ],
+        "level": 0.9833333333333333,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 32,
+        "tasks_worse": 2,
+        "name": "PA2 full effect"
+      },
+      "hesp_eigc_blind_autostop - hesp_eigc_blind": {
+        "difference": 0.09210526315789473,
+        "ci": [
+          0.02027027027027027,
+          0.17567567567567569
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 8,
+        "tasks_worse": 0,
+        "name": "controller stop (controller probes)"
+      },
+      "hesp_eigc_blind_autostop - memory_only_autostop": {
+        "difference": 0.1118421052631579,
+        "ci": [
+          -0.013513513513513514,
+          0.24375
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 14,
+        "tasks_worse": 2,
+        "name": "who probes, stop supplied"
+      },
+      "memory_only_autostop - memory_only": {
+        "difference": 0.18421052631578946,
+        "ci": [
+          0.07432432432432433,
+          0.3026315789473684
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 22,
+        "tasks_worse": 0,
+        "name": "controller stop (LLM probes)"
+      }
+    }
+  },
+  "llama8b": {
+    "label": "Llama-3.1-8B",
+    "episodes": 760,
+    "source_hashes": [
+      "f8eb0d16"
+    ],
+    "verified": {
+      "memory_only": 0,
+      "memory_only_autostop": 0.9210526315789473,
+      "hesp_eigc_blind": 0.006578947368421052,
+      "hesp_eigc_blind_autostop": 1,
+      "hesp_random_blind_autostop": 0.8947368421052632
+    },
+    "tool_cost": {
+      "memory_only": 9.875,
+      "memory_only_autostop": 2.888157894736842,
+      "hesp_eigc_blind": 9.782894736842104,
+      "hesp_eigc_blind_autostop": 2.1973684210526314,
+      "hesp_random_blind_autostop": 4.269736842105263
+    },
+    "missed_attack": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0
+    },
+    "wrong_cause": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0
+    },
+    "finished_by": {
+      "memory_only": {
+        "None": 152
+      },
+      "memory_only_autostop": {
+        "controller": 152
+      },
+      "hesp_eigc_blind": {
+        "None": 151,
+        "planner": 1
+      },
+      "hesp_eigc_blind_autostop": {
+        "controller": 152
+      },
+      "hesp_random_blind_autostop": {
+        "controller": 151,
+        "None": 1
+      }
+    },
+    "terms": {
+      "hesp_eigc_blind_autostop - hesp_random_blind_autostop": {
+        "difference": 0.10526315789473684,
+        "ci": [
+          0.05128205128205128,
+          0.16025641025641027
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 14,
+        "tasks_worse": 0,
+        "name": "PA1 ranking under controller stop"
+      },
+      "hesp_eigc_blind_autostop - memory_only": {
+        "difference": 1,
+        "ci": [
+          1,
+          1
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 76,
+        "tasks_worse": 0,
+        "name": "PA2 full effect"
+      },
+      "hesp_eigc_blind_autostop - hesp_eigc_blind": {
+        "difference": 0.993421052631579,
+        "ci": [
+          0.9797297297297297,
+          1
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 76,
+        "tasks_worse": 0,
+        "name": "controller stop (controller probes)"
+      },
+      "hesp_eigc_blind_autostop - memory_only_autostop": {
+        "difference": 0.07894736842105263,
+        "ci": [
+          0.013513513513513514,
+          0.16216216216216217
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 8,
+        "tasks_worse": 0,
+        "name": "who probes, stop supplied"
+      },
+      "memory_only_autostop - memory_only": {
+        "difference": 0.9210526315789473,
+        "ci": [
+          0.8378378378378378,
+          0.9864864864864865
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 72,
+        "tasks_worse": 0,
+        "name": "controller stop (LLM probes)"
+      }
+    }
+  },
+  "qwen32b": {
+    "label": "Qwen2.5-32B-AWQ",
+    "episodes": 760,
+    "source_hashes": [
+      "f8eb0d16"
+    ],
+    "verified": {
+      "memory_only": 0.9539473684210527,
+      "memory_only_autostop": 0.9342105263157895,
+      "hesp_eigc_blind": 0.9473684210526315,
+      "hesp_eigc_blind_autostop": 1,
+      "hesp_random_blind_autostop": 0.8355263157894737
+    },
+    "tool_cost": {
+      "memory_only": 5.3618421052631575,
+      "memory_only_autostop": 2.736842105263158,
+      "hesp_eigc_blind": 5.243421052631579,
+      "hesp_eigc_blind_autostop": 2.1973684210526314,
+      "hesp_random_blind_autostop": 4.065789473684211
+    },
+    "missed_attack": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0
+    },
+    "wrong_cause": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0.03289473684210526
+    },
+    "finished_by": {
+      "memory_only": {
+        "planner": 151,
+        "None": 1
+      },
+      "memory_only_autostop": {
+        "controller": 152
+      },
+      "hesp_eigc_blind": {
+        "planner": 152
+      },
+      "hesp_eigc_blind_autostop": {
+        "controller": 152
+      },
+      "hesp_random_blind_autostop": {
+        "controller": 132,
+        "planner": 20
+      }
+    },
+    "terms": {
+      "hesp_eigc_blind_autostop - hesp_random_blind_autostop": {
+        "difference": 0.16447368421052633,
+        "ci": [
+          0.09615384615384616,
+          0.23717948717948717
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 22,
+        "tasks_worse": 0,
+        "name": "PA1 ranking under controller stop"
+      },
+      "hesp_eigc_blind_autostop - memory_only": {
+        "difference": 0.046052631578947366,
+        "ci": [
+          0.006756756756756757,
+          0.10416666666666667
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 5,
+        "tasks_worse": 0,
+        "name": "PA2 full effect"
+      },
+      "hesp_eigc_blind_autostop - hesp_eigc_blind": {
+        "difference": 0.05263157894736842,
+        "ci": [
+          0,
+          0.13513513513513514
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 4,
+        "tasks_worse": 0,
+        "name": "controller stop (controller probes)"
+      },
+      "hesp_eigc_blind_autostop - memory_only_autostop": {
+        "difference": 0.06578947368421052,
+        "ci": [
+          0.006578947368421052,
+          0.14189189189189189
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 6,
+        "tasks_worse": 0,
+        "name": "who probes, stop supplied"
+      },
+      "memory_only_autostop - memory_only": {
+        "difference": -0.019736842105263157,
+        "ci": [
+          -0.06756756756756757,
+          0.01282051282051282
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 2,
+        "tasks_worse": 4,
+        "name": "controller stop (LLM probes)"
+      }
+    }
+  },
+  "qwen72b": {
+    "label": "Qwen2.5-72B-AWQ",
+    "episodes": 760,
+    "source_hashes": [
+      "f8eb0d16"
+    ],
+    "verified": {
+      "memory_only": 0.8947368421052632,
+      "memory_only_autostop": 0.9144736842105263,
+      "hesp_eigc_blind": 0.9736842105263158,
+      "hesp_eigc_blind_autostop": 1,
+      "hesp_random_blind_autostop": 0.7697368421052632
+    },
+    "tool_cost": {
+      "memory_only": 4.5131578947368425,
+      "memory_only_autostop": 2.4934210526315788,
+      "hesp_eigc_blind": 3.0197368421052633,
+      "hesp_eigc_blind_autostop": 2.1710526315789473,
+      "hesp_random_blind_autostop": 3.5460526315789473
+    },
+    "missed_attack": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0
+    },
+    "wrong_cause": {
+      "memory_only": 0.03289473684210526,
+      "memory_only_autostop": 0.02631578947368421,
+      "hesp_eigc_blind": 0.013157894736842105,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0.07894736842105263
+    },
+    "finished_by": {
+      "memory_only": {
+        "planner": 150,
+        "None": 2
+      },
+      "memory_only_autostop": {
+        "controller": 141,
+        "planner": 11
+      },
+      "hesp_eigc_blind": {
+        "planner": 152
+      },
+      "hesp_eigc_blind_autostop": {
+        "controller": 148,
+        "planner": 4
+      },
+      "hesp_random_blind_autostop": {
+        "planner": 48,
+        "controller": 104
+      }
+    },
+    "terms": {
+      "hesp_eigc_blind_autostop - hesp_random_blind_autostop": {
+        "difference": 0.23026315789473684,
+        "ci": [
+          0.14102564102564102,
+          0.32432432432432434
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 29,
+        "tasks_worse": 0,
+        "name": "PA1 ranking under controller stop"
+      },
+      "hesp_eigc_blind_autostop - memory_only": {
+        "difference": 0.10526315789473684,
+        "ci": [
+          0.013888888888888888,
+          0.23648648648648649
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 10,
+        "tasks_worse": 0,
+        "name": "PA2 full effect"
+      },
+      "hesp_eigc_blind_autostop - hesp_eigc_blind": {
+        "difference": 0.02631578947368421,
+        "ci": [
+          0,
+          0.08108108108108109
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 2,
+        "tasks_worse": 0,
+        "name": "controller stop (controller probes)"
+      },
+      "hesp_eigc_blind_autostop - memory_only_autostop": {
+        "difference": 0.08552631578947369,
+        "ci": [
+          0,
+          0.21710526315789475
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 7,
+        "tasks_worse": 0,
+        "name": "who probes, stop supplied"
+      },
+      "memory_only_autostop - memory_only": {
+        "difference": 0.019736842105263157,
+        "ci": [
+          0,
+          0.039473684210526314
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 3,
+        "tasks_worse": 0,
+        "name": "controller stop (LLM probes)"
+      }
+    }
+  },
+  "llama70b": {
+    "label": "Llama-3.1-70B-AWQ",
+    "episodes": 760,
+    "source_hashes": [
+      "f8eb0d16"
+    ],
+    "verified": {
+      "memory_only": 0.7828947368421053,
+      "memory_only_autostop": 0.9407894736842105,
+      "hesp_eigc_blind": 0.9539473684210527,
+      "hesp_eigc_blind_autostop": 1,
+      "hesp_random_blind_autostop": 0.8947368421052632
+    },
+    "tool_cost": {
+      "memory_only": 7.907894736842105,
+      "memory_only_autostop": 2.763157894736842,
+      "hesp_eigc_blind": 8.651315789473685,
+      "hesp_eigc_blind_autostop": 2.1973684210526314,
+      "hesp_random_blind_autostop": 4.269736842105263
+    },
+    "missed_attack": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0
+    },
+    "wrong_cause": {
+      "memory_only": 0,
+      "memory_only_autostop": 0,
+      "hesp_eigc_blind": 0,
+      "hesp_eigc_blind_autostop": 0,
+      "hesp_random_blind_autostop": 0.006578947368421052
+    },
+    "finished_by": {
+      "memory_only": {
+        "planner": 121,
+        "None": 31
+      },
+      "memory_only_autostop": {
+        "controller": 152
+      },
+      "hesp_eigc_blind": {
+        "planner": 152
+      },
+      "hesp_eigc_blind_autostop": {
+        "controller": 152
+      },
+      "hesp_random_blind_autostop": {
+        "controller": 151,
+        "planner": 1
+      }
+    },
+    "terms": {
+      "hesp_eigc_blind_autostop - hesp_random_blind_autostop": {
+        "difference": 0.10526315789473684,
+        "ci": [
+          0.05128205128205128,
+          0.16025641025641027
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 14,
+        "tasks_worse": 0,
+        "name": "PA1 ranking under controller stop"
+      },
+      "hesp_eigc_blind_autostop - memory_only": {
+        "difference": 0.21710526315789475,
+        "ci": [
+          0.1346153846153846,
+          0.3055555555555556
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 24,
+        "tasks_worse": 0,
+        "name": "PA2 full effect"
+      },
+      "hesp_eigc_blind_autostop - hesp_eigc_blind": {
+        "difference": 0.046052631578947366,
+        "ci": [
+          0,
+          0.11805555555555555
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 4,
+        "tasks_worse": 0,
+        "name": "controller stop (controller probes)"
+      },
+      "hesp_eigc_blind_autostop - memory_only_autostop": {
+        "difference": 0.05921052631578947,
+        "ci": [
+          0,
+          0.1388888888888889
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 5,
+        "tasks_worse": 0,
+        "name": "who probes, stop supplied"
+      },
+      "memory_only_autostop - memory_only": {
+        "difference": 0.15789473684210525,
+        "ci": [
+          0.09868421052631579,
+          0.2236842105263158
+        ],
+        "level": 0.95,
+        "rules": 12,
+        "tasks": 76,
+        "tasks_better": 19,
+        "tasks_worse": 1,
+        "name": "controller stop (LLM probes)"
+      }
+    }
+  }
+}
