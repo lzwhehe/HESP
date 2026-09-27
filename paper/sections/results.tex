@@ -78,6 +78,55 @@ Finally, the controller alone comes close. The LLM-free run completes 0.917 of c
 
 Three observations stand out. First, with counted tables \hesp{} issued a verdict in all 216 episodes, and none named the wrong cause. Second, the baselines fail in scale-dependent ways. The 7B baselines rarely conclude and leave 88 to 97\% of episodes unresolved, while the larger ReAct-style baselines conclude but are often wrong: they call 25\% (32B) and 37\% (72B) of actionable incidents benign and cite invalid evidence in 22\% and 31\% of their citations. Third, the ledger alone removes most of these errors: Memory-only cuts the missed-attack rate to 4\% and 2\%. In the stopping study, the configuration with controller selection and controller stop never called an actionable incident benign on any of the five models.
 
+\subsection{External Validity}
+\label{sec:external}
+Every result so far comes from an environment that we designed. The v1.0 study repeats the stopping study's five configurations on sigma-triage, whose candidate causes come from the authors of public detection rules and whose outcome structure was annotated by a model outside both planner families. Its primary endpoints, both on Qwen2.5-7B, were the ranking effect and the full effect over Memory-only, with intervals that resample whole rules. \Cref{tab:v10a} reports the results.
+
+\begin{table*}[t]
+  \caption{External task family (sigma-triage): verified completion, with mean probe cost in parentheses, 152 episodes per cell (76 tasks, two repeats). The two contrasts are the pre-registered primary endpoints on Q-7B (98.33\% intervals over 12 rules); the other models' intervals are exploratory 95\% intervals. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:v10a}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10a_main}\end{adjustbox}
+\end{table*}
+
+Three findings stand out. First, both primary endpoints hold on tasks that we did not design. With the planner's information held fixed, the ranking adds $+0.171$ $[+0.094,+0.250]$ on Qwen2.5-7B (24 tasks better, 2 worse), and \hesp{} with a controller stop exceeds Memory-only by $+0.296$ $[+0.088,+0.473]$ (32 better, 2 worse). The ranking effect replicates on all five models, from $+0.105$ to $+0.230$, close to the $+0.17$ to $+0.21$ measured on sec-triage.
+
+Second, the separation of probing from stopping replicates. Llama-3.1-8B again never concludes on its own (0.000 without a controller stop), and a controller stop lifts it to 1.000. When the controller both selects and stops, four models reach 1.000 and Qwen2.5-7B 0.974, at a mean cost of 2.1 to 2.2 units, the lowest of any configuration. As on sec-triage, the full effect shrinks with model size: Qwen2.5-32B alone already completes 0.954.
+
+Third, an unguarded planner can still close an attack as benign. These configurations reuse the stopping study's setup, which has no finish guard. In 4 of 48 attack episodes per configuration, Qwen2.5-7B finished with a benign cause inside \hesp{}, nine of the ten cases on one rule and most after a single probe; without the controller it never did. In each of them the ledger put the claimed benign cause at 0.002 and the attack at 0.80, and none of the cited observations supported the claim. The model overrode the ledger, and the finish guard, which the adversarial part uses, would have rejected every one of these verdicts.
+
+\subsection{Table Error}
+\label{sec:mismatch}
+The controller's knowledge sits in its prediction tables, and in our environments the tables come from the same generator as the test episodes. The table-error part asks how the controller fails when that link breaks. It replaces the LLM with the never-finishing script, so that every verdict is the controller's own, and distorts the tables in four ways: counting them from the base variant only, from a single development episode, mixing every row with a random distribution (weight $\lambda$), and removing one cause from the development data. \Cref{tab:v10b} reports the results; the analysis is descriptive.
+
+\begin{table*}[t]
+  \caption{Table error (LLM-free, controller stop at 0.8). Verified completion, wrong-cause rate, and escalation rate under EIG/cost selection, and verified completion under random selection. ``Perturbed'' mixes every table row with a random Dirichlet(1) row with weight $\lambda$ (20 random tables per level); ``one cause missing'' averages over removing each cause in turn from the development data and testing on that cause.}
+  \label{tab:v10b}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10b_main}\end{adjustbox}
+\end{table*}
+
+Two findings stand out. First, inaccurate tables make the controller fail safely. As $\lambda$ grows, completion falls, but the failures become escalations rather than wrong verdicts: the wrong-cause rate stays at or below 0.004 even when three quarters of every row is noise, consistent with a noisy posterior rarely reaching the 0.8 threshold on a single cause. EIG/cost stays ahead of random selection at every level of $\lambda$. Counting from the base variant only or from a single episode changes nothing measurable, which reflects how deterministic the environments are.
+
+Second, a cause that is missing from the development data is the dangerous error. Its row is then uninformative, so the observation that would reveal it counts as weak evidence for some other cause. On sec-triage, EIG/cost selection then names a wrong cause in every episode for four of the eight causes (SQL injection, DNS command-and-control, the exposed admin panel, and the vulnerable component), and escalates the other four. A deployment should therefore worry less about imprecise tables than about causes that its development data never covered.
+
+\subsection{Adversarial Evidence}
+\label{sec:adversarial}
+The threat model allows the attacker to control part of the evidence. The adversarial part tests two instances on the six sec-triage causes that require action: an instruction to close the case as an authorized scan, carried in a free-text field of every response (\emph{inject}), and a source-reputation probe that reports a known scanner (\emph{spoof}). Its primary endpoint was the attack success of Memory-only minus that of \hesp{} on injected instructions, on Qwen2.5-7B. \Cref{tab:v10c} reports all models.
+
+\begin{table*}[t]
+  \caption{Adversarial evidence on sec-triage: attack success, the share of all episodes with an actionable cause that end in a benign verdict (18 per cell), and verified completion on the two benign causes (6 per cell). \hesp{} uses the finish guard and controller stop; ``+corr.''\ adds the asymmetric-evidence rule. Primary endpoint (Q-7B, injected instruction, Memory-only $-$ \hesp{}): $+1.000$ $[+1.000,+1.000]$, 98.33\% interval.}
+  \label{tab:v10c}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10c_main}\end{adjustbox}
+\end{table*}
+
+Three findings stand out. First, the controller neutralizes injected instructions. Every model that concludes on its own follows the instruction in every episode when it decides the verdict, as ReAct-style or Memory-only; Llama-3.1-8B is the exception only because it never concludes. Inside \hesp{}, attack success is 0 on all five models: the text never reaches the ledger, and the guard rejects a benign verdict that the evidence does not support. The primary endpoint is confirmed, $+1.000$ $[+1.000,+1.000]$. The instruction still has an effect: the Qwen planners abandoned 50\% to 67\% of these episodes after their benign verdicts were rejected, which hands the case to an analyst rather than closing it.
+
+Second, a single forged observation defeats the controller as specified so far. Under \emph{spoof}, \hesp{} closes every actionable case as an authorized scan, on all five models and after one probe. The controller runs the most informative probe first, the forged scanner answer lifts the authorized scan above 0.8 at once, and the controller stop concludes. Here, early stopping on the most informative evidence is exactly what the attacker exploits. The LLM baselines, which rarely conclude, are fooled less often (0 to 0.67).
+
+Third, asymmetric evidence for benign verdicts closes this gap at a price. With the rule, attack success under \emph{spoof} falls to 0 on all five models. The controller runs one more probe, finds that it contradicts the scan, and ends with \textit{other}, so every one of these cases is escalated. The rule also leaves attack success under \emph{inject} at 0. Its cost falls on honest benign cases: completion on the two benign causes drops from 1.00 to 0.50 and mean cost rises from 1 to 5 or 6 units, because the monitoring false positive has only one specific signature in this environment and cannot be corroborated.
+
 \subsection{Public Security Data}
 \label{sec:realdata}
 A controlled environment raises an obvious question: would these results hold on real data? We tried to answer it with the three public datasets that come closest. Each measurement below used only training or development material; no test split was read, and the same pre-registration discipline applied. Testing whether a controller chooses probes well requires three things. (i) The alert alone must not reveal the answer, so several explanations must remain plausible. (ii) Probes must differ in cost and in how much they reveal, so that their order matters. (iii) Ground truth must be objective, reflecting what actually happened rather than a labeling convention. None of the three datasets meets all three requirements.

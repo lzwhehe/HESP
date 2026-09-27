@@ -134,8 +134,86 @@ def v09():
     write("v09_terms", L)
 
 
+V10_MODELS = [("qwen7b", "Q-7B"), ("llama8b", "L-8B"), ("qwen32b", "Q-32B"), ("qwen72b", "Q-72B"), ("llama70b", "L-70B")]
+
+
+def v10a():
+    """Part A: verified completion on the external sigma-triage family, and the two primary contrasts."""
+    s = json.loads((RESULTS / "v10a_summary.json").read_text(encoding="utf-8"))
+    arms = [("memory_only", "LLM", "LLM"), ("memory_only_autostop", "LLM", "LLM or controller"),
+            ("hesp_eigc_blind", "controller (EIG/cost)", "LLM"),
+            ("hesp_eigc_blind_autostop", "controller (EIG/cost)", "LLM or controller"),
+            ("hesp_random_blind_autostop", "controller (random)", "LLM or controller")]
+    models = [(k, m) for k, m in V10_MODELS if k in s]
+    L = [r"\begin{tabular}{ll" + "r" * len(models) + "}", r"\toprule",
+         "Who probes & Who stops & " + " & ".join(m for _, m in models) + r" \\", r"\midrule"]
+    for a, probes, stops in arms:
+        L.append(f"{probes} & {stops} & " + " & ".join(
+            f"{s[k]['verified'][a]:.3f} {{\scriptsize({s[k]['tool_cost'][a]:.1f})}}" for k, _ in models) + r" \\")
+    L.append(r"\midrule")
+    for t, label in (("hesp_eigc_blind_autostop - hesp_random_blind_autostop", r"$\Delta$ ranking (PA1 on Q-7B)"),
+                     ("hesp_eigc_blind_autostop - memory_only", r"$\Delta$ full (PA2 on Q-7B)")):
+        cells = []
+        for k, _ in models:
+            d = s[k]["terms"][t]
+            cells.append(r"\makecell{" + f"{d['difference']:+.3f}" + r"\ \scriptsize" +
+                         f"[{d['ci'][0]:+.2f}, {d['ci'][1]:+.2f}]" + "}")
+        L.append(r"\multicolumn{2}{l}{" + label + "} & " + " & ".join(cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v10a_main", L)
+
+
+def v10b():
+    """Part B: controller behaviour under table mismatch (LLM-free), for each family present."""
+    fams = [(f, lab) for f, lab in (("sec", "sec-triage"), ("sigma", "sigma-triage"))
+            if (RESULTS / f"v10b_{f}" / "summary.json").exists()]
+    data = {f: json.loads((RESULTS / f"v10b_{f}" / "summary.json").read_text(encoding="utf-8"))["results"] for f, _ in fams}
+    conds = [("M0_matched", "matched tables"), ("M1_base_only", "base variant only"),
+             ("M4_k1_base_only", r"$k{=}1$, base only"), ("M2_lambda0.25", r"perturbed, $\lambda{=}0.25$"),
+             ("M2_lambda0.5", r"perturbed, $\lambda{=}0.5$"), ("M2_lambda0.75", r"perturbed, $\lambda{=}0.75$"),
+             ("M3_missing[mean]", "one cause missing (mean)")]
+    cols = "l" + "rrrr" * len(fams)
+    L = [r"\begin{tabular}{" + cols + "}", r"\toprule",
+         " & " + " & ".join(r"\multicolumn{4}{c}{" + lab + "}" for _, lab in fams) + r" \\",
+         " ".join(r"\cmidrule(lr){" + f"{2 + 4 * i}-{5 + 4 * i}" + "}" for i in range(len(fams))),
+         "Tables & " + " & ".join(["EIG verif. & EIG wrong & EIG esc. & random verif."] * len(fams)) + r" \\", r"\midrule"]
+    for c, label in conds:
+        cells = []
+        for f, _ in fams:
+            e, r = data[f][c]["eig_cost"], data[f][c]["random"]
+            cells += [f"{e['verified']:.3f}", f"{e['wrong']:.3f}", f"{e['escalated']:.3f}", f"{r['verified']:.3f}"]
+        L.append(f"{label} & " + " & ".join(cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v10b_main", L)
+
+
+def v10c():
+    """Part C: attack success under injected instructions and spoofed evidence, per model and arm."""
+    s = json.loads((RESULTS / "v10c_summary.json").read_text(encoding="utf-8"))
+    arms = [("react_style", "ReAct"), ("memory_only", "Mem."), ("hesp_guard_autostop", r"\hesp{}"),
+            ("hesp_guard_autostop_corroborate", r"\hesp{}+corr.")]
+    models = [(k, m) for k, m in V10_MODELS if k in s]
+    L = [r"\begin{tabular}{l" + "rrrr" * 2 + "rr}", r"\toprule",
+         r" & \multicolumn{4}{c}{Injected instruction: attack success} & \multicolumn{4}{c}{Spoofed evidence: attack success}"
+         r" & \multicolumn{2}{c}{Benign cases: verified} \\",
+         r"\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-11}",
+         "Model & " + " & ".join(a for _, a in arms) + " & " + " & ".join(a for _, a in arms) +
+         r" & \hesp{} & \hesp{}+corr. \\", r"\midrule"]
+    for k, m in models:
+        t = s[k]["table"]
+        cells = [f"{t['inject'][a]['attack_success']:.2f}" for a, _ in arms]
+        cells += [f"{t['spoof'][a]['attack_success']:.2f}" for a, _ in arms]
+        cells += [f"{t['base'][a]['verified']:.2f}" for a in ("hesp_guard_autostop", "hesp_guard_autostop_corroborate")]
+        L.append(f"{m} & " + " & ".join(cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v10c_main", L)
+
+
 if __name__ == "__main__":
     v06()
     v08()
     v09()
+    v10a()
+    v10b()
+    v10c()
     print("tables written to", OUT)
