@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1512 588" width="1512" height="588"><defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.05" stdDeviation="2.10" flood-color="#000000" flood-opacity="0.08"/></filter></defs><rect width="1512" height="588" fill="#FFFFFF"/><rect x="3.0" y="216.0" width="141.0" height="90.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="3.0" y="231.0" width="3.6" height="42.0" rx="1.8" fill="#6B7280"/>
+<text x="21.0" y="252.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="15.0,135.0">Alert</text>
+<text x="21.0" y="285.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="15.0,135.0">one incident</text>
+<line x1="144.0" y1="261.0" x2="165.0" y2="261.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="144.0" cy="261.0" r="2.7" fill="#6B7280"/>
+<polygon points="165.0,261.0 157.8,257.0 157.8,265.0" fill="#6B7280"/>
+<rect x="165.0" y="168.0" width="264.0" height="186.0" rx="15.0" fill="#F5F0E8"/>
+<rect x="177.0" y="183.0" width="240.0" height="156.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="177.0" y="198.0" width="3.6" height="42.0" rx="1.8" fill="#D97706"/>
+<text x="195.0" y="219.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="189.0,408.0">Planner</text>
+<text x="195.0" y="252.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="189.0,408.0">local LLM (7B–72B)</text>
+<text x="195.0" y="277.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="189.0,408.0">returns action,</text>
+<text x="195.0" y="303.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="189.0,408.0">finish, or stop</text>
+<rect x="516.0" y="12.0" width="657.0" height="456.0" rx="18.0" fill="#E8EDF2"/>
+<rect x="534.0" y="28.5" width="10.2" height="10.2" rx="2.4" fill="#2563EB"/>
+<text x="552.0" y="39.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="546.0,786.0">HESP controller</text>
+<text x="1155.0" y="39.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="end" data-fit="780.0,1164.0">owns state, probe choice, acceptance</text>
+<rect x="534.0" y="60.0" width="306.0" height="390.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="534.0" y="75.0" width="3.6" height="42.0" rx="1.8" fill="#2563EB"/>
+<text x="552.0" y="96.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="546.0,831.0">Hypothesis ledger</text>
+<text x="552.0" y="129.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="546.0,831.0">posterior p(h) over</text>
+<text x="552.0" y="154.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="546.0,831.0">8 causes + other</text>
+<line x1="553.5" y1="348.0" x2="610.5" y2="348.0" stroke="#D1D5DB" stroke-width="1.20"/>
+<rect x="555.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="561.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="567.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="573.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="579.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="585.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="591.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="597.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<rect x="603.8" y="332.7" width="4.5" height="15.3" rx="0.0" fill="#9CA3AF"/>
+<text x="582.0" y="373.2" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="546.0,618.0">prior</text>
+<line x1="621.3" y1="348.0" x2="678.3" y2="348.0" stroke="#D1D5DB" stroke-width="1.20"/>
+<rect x="623.5" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="629.5" y="315.2" width="4.5" height="32.8" rx="0.0" fill="#6B7280"/>
+<rect x="635.5" y="315.2" width="4.5" height="32.8" rx="0.0" fill="#2563EB"/>
+<rect x="641.5" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="647.5" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="653.5" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="659.5" y="315.2" width="4.5" height="32.8" rx="0.0" fill="#6B7280"/>
+<rect x="665.5" y="315.2" width="4.5" height="32.8" rx="0.0" fill="#6B7280"/>
+<rect x="671.5" y="341.4" width="4.5" height="6.6" rx="0.0" fill="#6B7280"/>
+<text x="649.8" y="373.2" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="613.8,685.8">IPs</text>
+<line x1="689.1" y1="348.0" x2="746.1" y2="348.0" stroke="#D1D5DB" stroke-width="1.20"/>
+<rect x="691.3" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="697.3" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="703.3" y="302.9" width="4.5" height="45.1" rx="0.0" fill="#2563EB"/>
+<rect x="709.3" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="715.3" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="721.3" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="727.3" y="302.9" width="4.5" height="45.1" rx="0.0" fill="#6B7280"/>
+<rect x="733.3" y="302.9" width="4.5" height="45.1" rx="0.0" fill="#6B7280"/>
+<rect x="739.3" y="345.7" width="4.5" height="2.3" rx="0.0" fill="#6B7280"/>
+<text x="717.6" y="373.2" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="681.6,753.6">HTTP</text>
+<line x1="756.9" y1="348.0" x2="813.9" y2="348.0" stroke="#D1D5DB" stroke-width="1.20"/>
+<rect x="759.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="765.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="771.2" y="214.7" width="4.5" height="133.3" rx="0.0" fill="#2563EB"/>
+<rect x="777.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="783.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="789.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#D1D5DB"/>
+<rect x="795.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#6B7280"/>
+<rect x="801.2" y="346.2" width="4.5" height="1.8" rx="0.0" fill="#6B7280"/>
+<rect x="807.2" y="344.6" width="4.5" height="3.4" rx="0.0" fill="#6B7280"/>
+<text x="785.4" y="373.2" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="749.4,821.4">admin</text>
+<text x="767.4" y="208.7" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#2563EB" text-anchor="end" data-fit="683.4,779.4">p = 0.97</text>
+<text x="687.0" y="415.5" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" font-style="italic" fill="#1F2937" text-anchor="middle" data-fit="540.0,834.0">one real episode:</text>
+<text x="687.0" y="440.7" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" font-style="italic" fill="#1F2937" text-anchor="middle" data-fit="540.0,834.0">9 causes → 1 in 3 probes</text>
+<rect x="858.0" y="60.0" width="297.0" height="150.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="858.0" y="75.0" width="3.6" height="42.0" rx="1.8" fill="#2563EB"/>
+<text x="876.0" y="96.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">Probe selection</text>
+<text x="876.0" y="129.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">rank legal probes by</text>
+<text x="876.0" y="154.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">EIG(a)/c(a);</text>
+<text x="876.0" y="180.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">run the best</text>
+<rect x="858.0" y="246.0" width="297.0" height="204.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="858.0" y="261.0" width="3.6" height="42.0" rx="1.8" fill="#2563EB"/>
+<text x="876.0" y="282.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">Acceptance and stop</text>
+<text x="876.0" y="315.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">verdict needs p ≥ 0.8</text>
+<text x="876.0" y="340.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">and current support;</text>
+<text x="876.0" y="366.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">the controller may</text>
+<text x="876.0" y="392.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="870.0,1146.0">also stop by itself</text>
+<line x1="516.0" y1="234.0" x2="429.0" y2="234.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="516.0" cy="234.0" r="2.7" fill="#6B7280"/>
+<polygon points="429.0,234.0 436.2,230.0 436.2,238.0" fill="#6B7280"/>
+<circle cx="472.5" cy="234.0" r="12.9" fill="#2563EB"/>
+<text x="472.5" y="241.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+<text x="472.5" y="214.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="424.5,520.5">request</text>
+<line x1="429.0" y1="291.0" x2="516.0" y2="291.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="429.0" cy="291.0" r="2.7" fill="#6B7280"/>
+<polygon points="516.0,291.0 508.8,287.0 508.8,295.0" fill="#6B7280"/>
+<circle cx="472.5" cy="291.0" r="12.9" fill="#D97706"/>
+<text x="472.5" y="298.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+<text x="472.5" y="324.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="424.5,520.5">decision</text>
+<rect x="1242.0" y="60.0" width="270.0" height="180.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="1242.0" y="75.0" width="3.6" height="42.0" rx="1.8" fill="#6B7280"/>
+<text x="1260.0" y="96.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="1254.0,1503.0">Read-only probes</text>
+<text x="1260.0" y="129.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1254.0,1503.0">auth, HTTP, sources,</text>
+<text x="1260.0" y="153.9" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1254.0,1503.0">DNS, egress, config,</text>
+<text x="1260.0" y="178.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1254.0,1503.0">inventory, tickets,</text>
+<text x="1260.0" y="203.7" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1254.0,1503.0">threat intel</text>
+<rect x="1236.0" y="270.0" width="276.0" height="180.0" rx="15.0" fill="#E8F2EE"/>
+<rect x="1248.0" y="285.0" width="258.0" height="150.0" rx="12.0" fill="#FFFFFF" filter="url(#shadow)"/>
+<rect x="1248.0" y="300.0" width="3.6" height="42.0" rx="1.8" fill="#059669"/>
+<text x="1266.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="24.6" font-weight="700" fill="#1F2937" text-anchor="start" data-fit="1260.0,1497.0">Verifier</text>
+<text x="1266.0" y="354.0" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1260.0,1497.0">correct cause and a</text>
+<text x="1266.0" y="379.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1260.0,1497.0">cited signature</text>
+<text x="1266.0" y="405.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="start" data-fit="1260.0,1497.0">unique to it</text>
+<line x1="1155.0" y1="126.0" x2="1242.0" y2="126.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="1155.0" cy="126.0" r="2.7" fill="#6B7280"/>
+<polygon points="1242.0,126.0 1234.8,122.0 1234.8,130.0" fill="#6B7280"/>
+<circle cx="1198.5" cy="126.0" r="12.9" fill="#2563EB"/>
+<text x="1198.5" y="133.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+<text x="1198.5" y="106.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="1150.5,1246.5">run</text>
+<line x1="1242.0" y1="228.0" x2="840.0" y2="228.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="1242.0" cy="228.0" r="2.7" fill="#6B7280"/>
+<polygon points="840.0,228.0 847.2,224.0 847.2,232.0" fill="#6B7280"/>
+<circle cx="1207.5" cy="228.0" r="12.9" fill="#6B7280"/>
+<text x="1207.5" y="235.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+<text x="1207.5" y="261.6" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="1159.5,1255.5">outcome</text>
+<line x1="1155.0" y1="354.0" x2="1248.0" y2="354.0" stroke="#6B7280" stroke-width="1.65"/>
+<circle cx="1155.0" cy="354.0" r="2.7" fill="#6B7280"/>
+<polygon points="1248.0,354.0 1240.8,350.0 1240.8,358.0" fill="#6B7280"/>
+<circle cx="1201.5" cy="354.0" r="12.9" fill="#059669"/>
+<text x="1201.5" y="361.4" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="700" fill="#FFFFFF" text-anchor="middle">5</text>
+<text x="1201.5" y="334.8" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#6B7280" text-anchor="middle" data-fit="1153.5,1249.5">verdict</text>
+<line x1="844.5" y1="468.0" x2="844.5" y2="514.5" stroke="#6B7280" stroke-width="1.65" stroke-dasharray="6.0,4.8"/>
+<circle cx="844.5" cy="468.0" r="2.7" fill="#6B7280"/>
+<polygon points="844.5,514.5 840.5,507.3 848.5,507.3" fill="#6B7280"/>
+<rect x="1.5" y="516.0" width="1509.0" height="66.0" rx="12.0" fill="#FFFFFF" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="6.0,6.0"/>
+<text x="756.0" y="556.5" font-family="Helvetica, Arial, sans-serif" font-size="21.0" font-weight="400" fill="#1F2937" text-anchor="middle" data-fit="12.0,1500.0">Journal and audit: every prediction is written before the observation it predicts; every episode is replayed</text></svg>
