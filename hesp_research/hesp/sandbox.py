@@ -93,6 +93,7 @@ class LoopbackSandbox:
     TABLE_LAG = 0.15
     NOISE_EXEMPT = frozenset()
     SIGNATURES = {}
+    BENIGN = frozenset()   # causes whose verdict closes the case without action
     STATE_FIELDS = {}
     max_citations = 3
 

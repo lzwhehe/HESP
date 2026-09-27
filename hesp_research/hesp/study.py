@@ -97,7 +97,9 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
                         "prediction_source": getattr(s.get("predictor"), "source", "designer_table"),
                         "planner": s["planner"](0).name, "finish_guard": bool(s.get("finish_guard")),
                         **({"show_rankings": False} if s.get("show_rankings") is False else {}),
-                        **({"auto_finish": s["auto_finish"]} if s.get("auto_finish") is not None else {})}
+                        **({"auto_finish": s["auto_finish"]} if s.get("auto_finish") is not None else {}),
+                        **({"corroborate_benign": s["corroborate_benign"]}
+                           if s.get("corroborate_benign") is not None else {})}
                  for name, s in arms.items()}
     manifest = {
         "schema": "hesp.suite.v1", "source_sha256": source_hash(), "seed": seed, "repeats": repeats,
@@ -145,7 +147,8 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
                          predictor=spec.get("predictor"), selector=Selector(spec.get("selector", "eig_cost"), s),
                          arm=cell["arm"], metadata={"task_id": cell["task_id"], "repeat": cell["repeat"]},
                          finish_guard=bool(spec.get("finish_guard")),
-                         show_rankings=spec.get("show_rankings", True), auto_finish=spec.get("auto_finish"))
+                         show_rankings=spec.get("show_rankings", True), auto_finish=spec.get("auto_finish"),
+                         corroborate_benign=spec.get("corroborate_benign"))
         finally:
             env.close()
         row = {**task_map[cell["task_id"]], **cell, **result, "run_directory": folder}
