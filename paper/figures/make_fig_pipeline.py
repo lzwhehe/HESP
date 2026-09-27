@@ -119,7 +119,7 @@ RANKING
 \node[anchor=west, lab, align=left, font=\scriptsize] at (7.48,2.25) {OBS1\\OBS2\\OBS3};
 \draw[flow=red!75!black] (9.3,3.35) -- (9.3,3.15);
 \draw[flow=hesp, rounded corners=4pt] (7.4,2.35) -- (5.72,2.35) -- (5.72,2.74);
-\node[lab, text=hesp, anchor=south] at (6.35,2.38) {Bayes update};
+\node[lab, text=hesp, anchor=north] at (6.5,2.3) {Bayes update};
 \draw[flow=hesp, rounded corners=6pt] (12.35,5.2) -- (12.6,5.2);
 \node[font=\small\bfseries, text=hesp] at (9.95,3.6) {$\circlearrowleft$ \scriptsize 3 probes};
 

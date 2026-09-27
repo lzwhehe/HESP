@@ -1,0 +1,17 @@
+\section{Background and Motivation}
+\label{sec:background}
+
+\subsection{Alert triage as sequential diagnosis}
+A security operations center receives far more alerts than analysts can investigate, and most turn out to be benign~\citep{nodoze}. Triage decides, for each alert, what actually happened. An anomalous burst of failed logins may be credential stuffing, an authorized scan, or a misbehaving health check. An analyst narrows these competing explanations by running queries: an authentication log, an HTTP request pattern, source-address reputation, a change ticket. Queries differ in cost and in how much they discriminate between explanations. The investigation ends with a verdict and the evidence that supports it. Provenance-based systems automate parts of this process for host telemetry~\citep{nodoze,kairos}; LLM agents promise to automate it more broadly, by choosing queries and interpreting results~\citep{excytin,guide}.
+
+\subsection{A motivating example}
+\Cref{fig:motivating} shows one alert from our environment, whose true cause is an administration panel exposed without authentication, handled four ways by the same local model. When Llama-3.1-8B both chooses the probes and decides when to stop (first row), it reaches the decisive observation at its sixth step, finds the panel exposed, and then keeps probing until its budget is spent. It never states a verdict. When the controller picks the probes but the model still decides when to stop (second row), the decisive observation arrives at step three, and the model again never concludes. Only when the controller may end the investigation does a verdict appear. With the model's own probe choices this costs six units (third row); with information-gain selection it costs three (fourth row). The model did not lack the information in any of the four cases; it lacked a procedure.
+
+\subsection{Motivating observations}
+Three observations from our baselines generalize the example. All come from configurations in which the model drives the investigation, measured in the studies of \cref{sec:results}.
+
+\paragraph{Observation 1: small models probe without converging.} Qwen2.5-7B selecting its own probes verifies 0.083 to 0.125 of cases. It runs about seven distinct probes per episode, spends 9.4 to 9.5 of its 10 cost units, and issues a verdict in only 6 or 7 of 72 episodes; three quarters of its episodes end with the tool budget exhausted. The same model reaches 0.93 to 1.00 when a controller selects the probes. Even when the controller supplies only the stopping rule, its own choices complete 0.694 of cases against 0.917 with controller selection.
+
+\paragraph{Observation 2: some models never stop.} Llama-3.1-8B requests another probe in every one of its 3{,}389 decisions, including those where the ledger's posterior exceeds 0.999 and the controller reports that no legal probe is left. Selecting probes for it changes nothing, because it never issues a verdict.
+
+\paragraph{Observation 3: models cannot supply the likelihoods.} A controller needs $P(o \mid h, a)$ for every probe, outcome, and hypothesis. Tables elicited from the planner leave completion at 0.069 (7B) and 0.375 (32B and 72B), whereas tables counted from 20 LLM-free development episodes per case reach 1.000. The procedure therefore has to supply both the probing discipline and the knowledge encoded in the tables.

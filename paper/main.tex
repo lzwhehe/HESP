@@ -9,13 +9,18 @@
 \usepackage{xurl}
 \usepackage{adjustbox}
 \usepackage{placeins}
+\usepackage{tikz}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalize,noabbrev]{cleveref}
 
 \newcommand{\hesp}{HESP}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
-\newcommand{\takeaway}[1]{\par\smallskip\noindent\textit{Takeaway.} #1\par}
+\newcounter{finding}
+\newcommand{\finding}[1]{\par\smallskip\refstepcounter{finding}\noindent
+  \fcolorbox{black!45}{black!4}{\parbox{\dimexpr\columnwidth-2\fboxsep-2\fboxrule\relax}{\small
+  \textbf{Finding \thefinding.} #1}}\par\smallskip}
+\DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
 \graphicspath{{figures/}{../docs/assets/}}
 \setlength{\emergencystretch}{3em}
 \makeatletter
@@ -32,16 +37,18 @@ A Hypothesis-Elimination Controller for Local LLM Alert-Triage Agents}
   \maketitle
   \vspace{-1.5em}
   \begin{center}
-    \includegraphics[width=\textwidth]{fig_overview.pdf}
-    \captionof{figure}{\hesp{} overview. The controller sends the planner a request (1) and receives a decision (2). It selects a read-only probe by expected information gain per cost and runs it (3). The outcome updates the hypothesis ledger (4), and a verdict that meets the evidence rule goes to the independent verifier (5). The bars show one real episode from the stopping study: nine candidate causes are reduced to one after three probes. Every prediction is journaled before its observation.}
-    \label{fig:overview}
+    \includegraphics[width=\textwidth]{fig_motivating.pdf}
+    \captionof{figure}{One alert, one local model, four ways to split the investigation. The alert's true cause is an exposed admin panel; the planner is Llama-3.1-8B in every row, with the same seed. Each chip is a probe that ran (dashed: a duplicate proposal the controller blocked); red marks the observation that confirms the cause. When the model decides when to stop, it reaches the decisive evidence and keeps probing until the budget is gone. A controller-side stop concludes, and information-gain probe selection gets there in three probes. All four rows are verbatim from the archived journals.}
+    \label{fig:motivating}
   \end{center}
   \vspace{1em}
 }]
 
 \input{sections/abstract}
 \input{sections/introduction}
+\input{sections/background}
 \input{sections/threatmodel}
+\input{sections/overview}
 \input{sections/design}
 \input{sections/implementation}
 \input{sections/methodology}

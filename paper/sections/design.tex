@@ -1,9 +1,9 @@
-\section{Design}
+\section{Design Details}
 \label{sec:design}
 
-\subsection{Setting and interface}
-An episode begins with an alert and a finite set of hypotheses $\mathcal{H}$ that contains the candidate explanations plus an explicit \textit{other}. The agent may call read-only probes $a \in \mathcal{A}$ that cost $c(a)$ each, within budgets on tool calls, total cost, planner decisions, and wall time. At each step the planner receives a structured request: the task, the probe catalogue with descriptions and costs, the observation history, feedback on blocked proposals, the remaining budgets and, depending on the configuration, the ledger. It returns one JSON decision:
-\texttt{action} (propose a probe), \texttt{finish} (a hypothesis plus the observation IDs it cites), or \texttt{stop} (abstain). \Cref{fig:overview} shows how the controller mediates each decision.
+\subsection{Planner interface}
+At each step the planner receives a structured request: the task, the probe catalogue with descriptions and costs, the observation history, feedback on blocked proposals, the remaining budgets and, depending on the configuration, the ledger. It returns one JSON decision:
+\texttt{action} (propose a probe), \texttt{finish} (a hypothesis plus the observation IDs it cites), or \texttt{stop} (abstain). \Cref{fig:pipeline} shows how the controller mediates each decision.
 
 \subsection{Hypothesis ledger}
 The ledger holds a posterior $p(h)$ over $\mathcal{H}$. Each probe comes with a predictive table $P(o \mid h, a)$ over its outcome vocabulary. After observing $o$, the ledger applies Bayes' rule and records, for every hypothesis, whether the observation raised, lowered, or left unchanged its score (\textit{support}, \textit{against}, \textit{neutral}). A transient failure, such as an HTTP 503, is logged but is not evidence, and the probe may be retried. An outcome that is impossible under every hypothesis marks a table conflict and is skipped. The environment exposes a \emph{state version}. When the incident changes under the agent (the \textit{drift} variant), the version advances and current scores are reset to the prior. Earlier evidence stays in the record but no longer counts as current.
