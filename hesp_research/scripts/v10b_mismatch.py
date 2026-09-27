@@ -18,6 +18,7 @@ Outcomes per episode: verified, wrong (a verdict naming a named cause other than
 effect), escalated (a verdict of ``other``, or no verdict), probe cost.
 
     python scripts/v10b_mismatch.py --family sec --out results/v10b_sec
+    python scripts/v10b_mismatch.py --family sigma --out results/v10b_sigma
 """
 import argparse
 from collections import defaultdict
@@ -31,7 +32,7 @@ import tempfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from hesp.controller import Budget, run
 from hesp.planner import NeverFinishPlanner
-from hesp.predictors import EmpiricalEstimator, FrozenPredictor
+from hesp.predictors import EmpiricalEstimator
 from hesp.selectors import Selector
 from hesp.study import cell_seed
 
@@ -42,39 +43,64 @@ PERTURB_SEEDS = 20
 SELECTORS = {"eig_cost": ("hesp", "eig_cost"), "random": ("hesp", "random"), "catalogue": ("memory_only", "eig_cost")}
 
 
-def family(name):
+class TargetPredictor:
+    """Tables keyed by the probe's target: one entry per unit (sec-triage has one; sigma-triage has
+    one per rule, whose probes carry a rule-specific target)."""
+
+    def __init__(self, tables_by_target, source):
+        self.tables, self.source = tables_by_target, source
+
+    def likelihoods(self, action, hypotheses):
+        return self.tables[action.target][action.id]
+
+
+def family(name, specs_dir=None):
+    """(units, tasks, env_factory, unit_of_task). A unit is an environment class with its own tables."""
     if name == "sec":
         from hesp.secapp import SecTriageEnvironment, make_sec_env, sec_suite
-        return SecTriageEnvironment, sec_suite(("base", "noise", "drift")), make_sec_env
+        return [SecTriageEnvironment], sec_suite(("base", "noise", "drift")), make_sec_env,             (lambda task: SecTriageEnvironment.TARGET)
+    if name == "sigma":
+        from hesp.sigmaapp import SigmaEnvironments, sigma_suite
+        from v10a_tables import load_specs
+        specs, _ = load_specs(specs_dir)
+        envs = SigmaEnvironments(specs)
+        units = [envs.classes[s["slug"]] for s in specs]
+        return units, sigma_suite(specs), envs, (lambda task: envs.classes[task["rule"]].TARGET)
     raise SystemExit(f"unknown family {name}")
 
 
-def count_tables(env_cls, variants, k, omit=None, eps=0.01):
-    """Counted tables from LLM-free development runs; never calls the generative model."""
-    est = EmpiricalEstimator(eps=eps)
-    for i in range(1, k + 1):
-        for ci, cause in enumerate(env_cls.CAUSES):
-            if cause == omit:
-                continue
-            for vi, variant in enumerate(variants):
-                seed = DEV_SEED_BASE + (ci * 10 + vi) * 1000 + i
-                with env_cls(cause, variant, seed=seed, oracle=False) as env:
-                    for action in env.catalog():
-                        obs = env.execute(action)
-                        if obs.valid:
-                            est.observe(action.id, cause, obs.outcome)
-    return est.tables(env_cls.build_catalog(oracle=False), env_cls.hypotheses_())
+def count_tables(units, variants, k, omit=None, eps=0.01):
+    """Counted tables per unit from LLM-free development runs; never calls the generative model.
+    ``omit`` = (target, cause): that cause is left out of that unit's development data."""
+    out = {}
+    for ui, env_cls in enumerate(units):
+        est = EmpiricalEstimator(eps=eps)
+        for i in range(1, k + 1):
+            for ci, cause in enumerate(env_cls.CAUSES):
+                if omit == (env_cls.TARGET, cause):
+                    continue
+                for vi, variant in enumerate(variants):
+                    seed = DEV_SEED_BASE + ((ui * 10 + ci) * 10 + vi) * 1000 + i
+                    with env_cls(cause, variant, seed=seed, oracle=False) as env:
+                        for action in env.catalog():
+                            obs = env.execute(action)
+                            if obs.valid:
+                                est.observe(action.id, cause, obs.outcome)
+        out[env_cls.TARGET] = est.tables(env_cls.build_catalog(oracle=False), env_cls.hypotheses_())
+    return out
 
 
-def perturb(tables, lam, seed):
+def perturb(tables_by_target, lam, seed):
     rng = random.Random(seed)
     out = {}
-    for a, rows in tables.items():
-        out[a] = {}
-        for h, row in rows.items():
-            draws = {o: rng.gammavariate(1.0, 1.0) for o in row}
-            z = sum(draws.values())
-            out[a][h] = {o: (1 - lam) * p + lam * draws[o] / z for o, p in row.items()}
+    for target, tables in tables_by_target.items():
+        out[target] = {}
+        for a, rows in tables.items():
+            out[target][a] = {}
+            for h, row in rows.items():
+                draws = {o: rng.gammavariate(1.0, 1.0) for o in row}
+                z = sum(draws.values())
+                out[target][a][h] = {o: (1 - lam) * p + lam * draws[o] / z for o, p in row.items()}
     return out
 
 
@@ -91,7 +117,7 @@ def episode(job):
     with tempfile.TemporaryDirectory() as tmp:
         with ENV_FACTORY(task, s) as env:
             r = run(env, NeverFinishPlanner(), mode, Path(tmp) / "r", budget,
-                    predictor=FrozenPredictor(TABLES[tname], tname), selector=Selector(sel, s),
+                    predictor=TargetPredictor(TABLES[tname], tname), selector=Selector(sel, s),
                     show_rankings=False, auto_finish=0.8)
             truth = env._app.cause
     claim = r["claimed_hypothesis"]
@@ -110,12 +136,17 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--family", default="sec")
     ap.add_argument("--out", required=True)
-    ap.add_argument("--matched-tables", default=str(Path(__file__).resolve().parents[1] / "results/v06_tables/empirical_20.json"))
+    ap.add_argument("--matched-tables", default=None, help="default: v06 empirical_20 (sec) or v10a tables (sigma)")
+    ap.add_argument("--specs", default=str(Path(__file__).resolve().parents[1] / "results/v10a/specs"))
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--quick", action="store_true", help="smoke test: one lambda, two seeds, one repeat")
     ap.add_argument("--workers", type=int, default=1, help="processes (Linux fork)")
     args = ap.parse_args()
-    env_cls, tasks, env_factory = family(args.family)
+    units, tasks, env_factory, unit_of = family(args.family, args.specs)
+    if args.matched_tables is None:
+        root = Path(__file__).resolve().parents[1] / "results"
+        args.matched_tables = str(root / ("v06_tables/empirical_20.json" if args.family == "sec"
+                                          else "v10a/tables/empirical_20.json"))
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=False)
     repeats = 1 if args.quick else args.repeats
@@ -124,10 +155,14 @@ def main():
     global ENV_FACTORY
     ENV_FACTORY = env_factory
     matched = json.loads(Path(args.matched_tables).read_text(encoding="utf-8"))["tables"]
+    if args.family == "sec":
+        matched = {units[0].TARGET: matched}
+    else:
+        matched = {u.TARGET: matched[u.TARGET.rsplit("/", 1)[1]] for u in units}
     TABLES["M0_matched"] = matched
-    TABLES["M1_base_only"] = count_tables(env_cls, ("base",), 20)
+    TABLES["M1_base_only"] = count_tables(units, ("base",), 20)
     for k in (1, 5):
-        TABLES[f"M4_k{k}_base_only"] = count_tables(env_cls, ("base",), k)
+        TABLES[f"M4_k{k}_base_only"] = count_tables(units, ("base",), k)
     jobs = [(c, sel, t, r, c) for c in ("M0_matched", "M1_base_only", "M4_k1_base_only", "M4_k5_base_only")
             for sel in SELECTORS for t in tasks for r in range(repeats)]
     for lam in lambdas:
@@ -136,11 +171,15 @@ def main():
             TABLES[name] = perturb(matched, lam, 5000 + ps)
             # one repeat per perturbation seed: the seeds, not the repeats, carry the variation
             jobs += [(f"M2_lambda{lam}", sel, t, 0, name) for sel in SELECTORS for t in tasks]
-    for cause in env_cls.CAUSES:
-        name = f"M3_missing[{cause}]"
-        TABLES[name] = count_tables(env_cls, ("base", "noise"), 20, omit=cause)
-        jobs += [(name, sel, t, r, name) for sel in SELECTORS for t in tasks
-                 if t["cause"] == cause and t["variant"] != "drift" for r in range(repeats)]
+    m3_names = []
+    for env_cls in units:
+        for cause in env_cls.CAUSES:
+            name = f"M3_missing[{cause}]" if len(units) == 1 else f"M3_missing[{env_cls.TARGET.rsplit('/', 1)[1]}:{cause}]"
+            m3_names.append(name)
+            TABLES[name] = count_tables(units, ("base", "noise"), 20, omit=(env_cls.TARGET, cause))
+            jobs += [(name, sel, t, r, name) for sel in SELECTORS for t in tasks
+                     if unit_of(t) == env_cls.TARGET and t["cause"] == cause and t["variant"] != "drift"
+                     for r in range(repeats)]
     print(f"{len(jobs)} episodes on {args.workers} workers", flush=True)
     if args.workers > 1:
         import multiprocessing as mp
@@ -156,10 +195,10 @@ def main():
     results = defaultdict(dict)
     for (cname, sel), rows in sorted(grouped.items()):
         results[cname][sel] = summarize(rows)
-    m3 = [results[f"M3_missing[{c}]"] for c in env_cls.CAUSES]
+    m3 = [results[n] for n in m3_names]
     results["M3_missing[mean]"] = {sel: {k: sum(m[sel][k] for m in m3) / len(m3)
                                          for k in ("verified", "wrong", "escalated", "cost")} for sel in SELECTORS}
-    record = {"schema": "hesp.v10b.v1", "family": args.family, "eval_seed": EVAL_SEED, "dev_seed_base": DEV_SEED_BASE,
+    record = {"schema": "hesp.v10b.v1", "family": args.family, "matched_tables": args.matched_tables, "eval_seed": EVAL_SEED, "dev_seed_base": DEV_SEED_BASE,
               "repeats": repeats, "lambdas": list(lambdas), "perturb_seeds": pseeds, "quick": args.quick,
               "results": results}
     (out / "summary.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
