@@ -1,0 +1,282 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "5a5fccd24bc7de622f0dfe22fb8463b1868be92142c2729ee0b2c6b0ab62dff8",
+  "seed": 2026,
+  "repeats": 1,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "react_style": {
+      "mode": "react_style",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    },
+    "hesp_eigc_guard": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": true
+    },
+    "hesp_random": {
+      "mode": "hesp",
+      "selector": "random",
+      "prediction_source": "designer_table",
+      "planner": "ollama:qwen2.5:7b-instruct",
+      "finish_guard": false
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sec-base-00",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-01",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-02",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-03",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "authorized_scan",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-04",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "false_positive_monitor",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-05",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-06",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-07",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "dns_c2",
+      "drift_to": null
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sec-base-02",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-01",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-02",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-06",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-07",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-05",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-06",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-07",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-01",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-05",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-06",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-07",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-00",
+      "repeat": 0,
+      "arm": "hesp_random"
+    },
+    {
+      "task_id": "sec-base-05",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "react_style"
+    },
+    {
+      "task_id": "sec-base-02",
+      "repeat": 0,
+      "arm": "hesp_eigc_guard"
+    },
+    {
+      "task_id": "sec-base-01",
+      "repeat": 0,
+      "arm": "hesp_random"
+    }
+  ],
+  "purpose": "v0.4_main_study",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "temperature": 0.2,
+  "families": [
+    "sec-triage"
+  ],
+  "primary_family": "upload-diag",
+  "elicitation_file": "v05_sec_local_elicitation.json",
+  "elicitation_sha256": "23f1125263f0b1a21ff3bbdb61076631feabcf97ae5f9af1c51e27796bfbb0e3",
+  "created_utc": "2026-09-24T01:13:54.475669+00:00"
+}

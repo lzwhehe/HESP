@@ -1,0 +1,653 @@
+{
+  "version": "0.3.0",
+  "mode": "hesp",
+  "arm": "hesp_llm_pred",
+  "planner": "ollama:qwen2.5:7b-instruct",
+  "selector": "eig_cost",
+  "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+  "environment": {
+    "objective": "Diagnose why user alice cannot save document #42 in a local test application",
+    "initial_observation": "POST /documents/42/save returned an error page: 'Save failed'",
+    "environment": "local_web_sandbox",
+    "allowed_targets": [
+      "sandbox://docs-app"
+    ],
+    "answer_options": {
+      "session_expired": "The user's session token has expired; the server no longer authenticates the request.",
+      "role_readonly": "The user is authenticated but currently holds a read-only (viewer) role.",
+      "owner_policy": "An ownership/ACL policy forbids this user from writing a document owned by someone else.",
+      "document_archived": "The document is archived and therefore immutable.",
+      "workflow_locked": "The document is locked by an approval workflow held by another user.",
+      "quota_exceeded": "The user's storage quota is exhausted, so new revisions are refused.",
+      "edit_conflict": "The user's local copy is based on a stale revision; saving would overwrite a concurrent edit.",
+      "feature_disabled": "Document editing is switched off by a feature flag for this workspace.",
+      "other": "Some cause not listed here."
+    },
+    "finish_rule": "Cite 1-3 observation IDs from the current state version whose response directly shows the cause."
+  },
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "source_sha256": "3364da44d901c28ac4d611626be3f2f6001e70f7bbdbbd59a23d11728a18483d",
+  "python": "3.10.6",
+  "priors": {
+    "session_expired": 0.1111111111111111,
+    "role_readonly": 0.1111111111111111,
+    "owner_policy": 0.1111111111111111,
+    "document_archived": 0.1111111111111111,
+    "workflow_locked": 0.1111111111111111,
+    "quota_exceeded": 0.1111111111111111,
+    "edit_conflict": 0.1111111111111111,
+    "feature_disabled": 0.1111111111111111,
+    "other": 0.1111111111111111
+  },
+  "predictive_catalog": [
+    {
+      "id": "whoami",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /whoami",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "editor": 0.6963333333333334,
+          "viewer": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "role_readonly": {
+          "editor": 0.10233333333333333,
+          "viewer": 0.8943333333333333,
+          "unauthorized": 0.0033333333333333335
+        },
+        "owner_policy": {
+          "editor": 0.3993333333333334,
+          "viewer": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "document_archived": {
+          "editor": 0.3993333333333334,
+          "viewer": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "workflow_locked": {
+          "editor": 0.5973333333333334,
+          "viewer": 0.3003333333333334,
+          "unauthorized": 0.10233333333333335
+        },
+        "quota_exceeded": {
+          "editor": 0.3993333333333334,
+          "viewer": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "edit_conflict": {
+          "editor": 0.6963333333333334,
+          "viewer": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "feature_disabled": {
+          "editor": 0.6963333333333334,
+          "viewer": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "other": {
+          "editor": 0.49833333333333335,
+          "viewer": 0.30033333333333334,
+          "unauthorized": 0.20133333333333334
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Show the authenticated user and current role.",
+      "outcome_notes": {
+        "editor": "200, role=editor",
+        "viewer": "200, role=viewer",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "doc_meta",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /documents/42",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "own_active": 0.5964999999999999,
+          "owner_other": 0.2005,
+          "archived": 0.1015,
+          "unauthorized": 0.1015
+        },
+        "role_readonly": {
+          "own_active": 0.20050000000000004,
+          "owner_other": 0.4975000000000001,
+          "archived": 0.20050000000000004,
+          "unauthorized": 0.10150000000000002
+        },
+        "owner_policy": {
+          "own_active": 0.10150000000000002,
+          "owner_other": 0.6955,
+          "archived": 0.10150000000000002,
+          "unauthorized": 0.10150000000000002
+        },
+        "document_archived": {
+          "own_active": 0.1015,
+          "owner_other": 0.2005,
+          "archived": 0.5964999999999999,
+          "unauthorized": 0.1015
+        },
+        "workflow_locked": {
+          "own_active": 0.10150000000000002,
+          "owner_other": 0.6955,
+          "archived": 0.10150000000000002,
+          "unauthorized": 0.10150000000000002
+        },
+        "quota_exceeded": {
+          "own_active": 0.7945,
+          "owner_other": 0.1015,
+          "archived": 0.052000000000000005,
+          "unauthorized": 0.052000000000000005
+        },
+        "edit_conflict": {
+          "own_active": 0.4975,
+          "owner_other": 0.2995,
+          "archived": 0.1015,
+          "unauthorized": 0.1015
+        },
+        "feature_disabled": {
+          "own_active": 0.2995,
+          "owner_other": 0.2005,
+          "archived": 0.1015,
+          "unauthorized": 0.3985
+        },
+        "other": {
+          "own_active": 0.3985000000000001,
+          "owner_other": 0.29950000000000004,
+          "archived": 0.20050000000000004,
+          "unauthorized": 0.10150000000000002
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read document #42 metadata (owner, status).",
+      "outcome_notes": {
+        "own_active": "200, owned by the user, status active",
+        "owner_other": "200, owned by another user",
+        "archived": "200, status archived",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "workflow",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /workflow/42",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "open": 0.3993333333333334,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "role_readonly": {
+          "open": 0.3993333333333334,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "owner_policy": {
+          "open": 0.10233333333333333,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.5973333333333333
+        },
+        "document_archived": {
+          "open": 0.10233333333333333,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.5973333333333333
+        },
+        "workflow_locked": {
+          "open": 0.10233333333333333,
+          "locked": 0.7953333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "quota_exceeded": {
+          "open": 0.10233333333333333,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.5973333333333333
+        },
+        "edit_conflict": {
+          "open": 0.30033333333333334,
+          "locked": 0.49833333333333335,
+          "unauthorized": 0.20133333333333334
+        },
+        "feature_disabled": {
+          "open": 0.6963333333333334,
+          "locked": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "other": {
+          "open": 0.3993333333333334,
+          "locked": 0.30033333333333334,
+          "unauthorized": 0.30033333333333334
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read the approval-workflow state of document #42.",
+      "outcome_notes": {
+        "open": "200, no lock",
+        "locked": "200, lock held by another user",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "quota",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /quota",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "ok": 0.10233333333333333,
+          "exceeded": 0.5973333333333333,
+          "unauthorized": 0.30033333333333334
+        },
+        "role_readonly": {
+          "ok": 0.20133333333333334,
+          "exceeded": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "owner_policy": {
+          "ok": 0.10233333333333333,
+          "exceeded": 0.30033333333333334,
+          "unauthorized": 0.5973333333333333
+        },
+        "document_archived": {
+          "ok": 0.052833333333333336,
+          "exceeded": 0.8448333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "workflow_locked": {
+          "ok": 0.10233333333333333,
+          "exceeded": 0.5973333333333333,
+          "unauthorized": 0.30033333333333334
+        },
+        "quota_exceeded": {
+          "ok": 0.10233333333333333,
+          "exceeded": 0.7953333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "edit_conflict": {
+          "ok": 0.20133333333333334,
+          "exceeded": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "feature_disabled": {
+          "ok": 0.10233333333333333,
+          "exceeded": 0.5973333333333333,
+          "unauthorized": 0.30033333333333334
+        },
+        "other": {
+          "ok": 0.3993333333333334,
+          "exceeded": 0.3993333333333334,
+          "unauthorized": 0.20133333333333334
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read the user's storage quota.",
+      "outcome_notes": {
+        "ok": "200, usage below limit",
+        "exceeded": "200, usage at limit",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "features",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /features",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.6963333333333332,
+          "unauthorized": 0.20133333333333334
+        },
+        "role_readonly": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.7953333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "owner_policy": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.5973333333333333,
+          "unauthorized": 0.30033333333333334
+        },
+        "document_archived": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.6963333333333332,
+          "unauthorized": 0.20133333333333334
+        },
+        "workflow_locked": {
+          "editing_on": 0.6963333333333334,
+          "editing_off": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "quota_exceeded": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.6963333333333332,
+          "unauthorized": 0.20133333333333334
+        },
+        "edit_conflict": {
+          "editing_on": 0.6963333333333334,
+          "editing_off": 0.20133333333333336,
+          "unauthorized": 0.10233333333333335
+        },
+        "feature_disabled": {
+          "editing_on": 0.10233333333333333,
+          "editing_off": 0.7953333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "other": {
+          "editing_on": 0.5973333333333334,
+          "editing_off": 0.3003333333333334,
+          "unauthorized": 0.10233333333333335
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read workspace feature flags.",
+      "outcome_notes": {
+        "editing_on": "200, doc_editing=true",
+        "editing_off": "200, doc_editing=false",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "versions",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /documents/42/versions",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "role_readonly": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "owner_policy": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.30033333333333334,
+          "unauthorized": 0.49833333333333335
+        },
+        "document_archived": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "workflow_locked": {
+          "consistent": 0.30033333333333334,
+          "concurrent_edit": 0.3993333333333334,
+          "unauthorized": 0.30033333333333334
+        },
+        "quota_exceeded": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "edit_conflict": {
+          "consistent": 0.20133333333333336,
+          "concurrent_edit": 0.6963333333333334,
+          "unauthorized": 0.10233333333333335
+        },
+        "feature_disabled": {
+          "consistent": 0.20133333333333334,
+          "concurrent_edit": 0.49833333333333335,
+          "unauthorized": 0.30033333333333334
+        },
+        "other": {
+          "consistent": 0.3993333333333334,
+          "concurrent_edit": 0.3993333333333334,
+          "unauthorized": 0.20133333333333334
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Compare the user's base revision with the head.",
+      "outcome_notes": {
+        "consistent": "200, base equals head",
+        "concurrent_edit": "200, head is ahead of base",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "save_dry_run",
+      "target": "sandbox://docs-app",
+      "purpose": "POST /documents/42/save?dry_run=1",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "forbidden": 0.10233333333333333,
+          "conflict": 0.20133333333333334,
+          "unauthorized": 0.6963333333333332
+        },
+        "role_readonly": {
+          "forbidden": 0.7953333333333333,
+          "conflict": 0.10233333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "owner_policy": {
+          "forbidden": 0.8943333333333333,
+          "conflict": 0.052833333333333336,
+          "unauthorized": 0.052833333333333336
+        },
+        "document_archived": {
+          "forbidden": 0.7953333333333333,
+          "conflict": 0.20133333333333334,
+          "unauthorized": 0.0033333333333333335
+        },
+        "workflow_locked": {
+          "forbidden": 0.10233333333333333,
+          "conflict": 0.6963333333333332,
+          "unauthorized": 0.20133333333333334
+        },
+        "quota_exceeded": {
+          "forbidden": 0.10233333333333333,
+          "conflict": 0.7953333333333333,
+          "unauthorized": 0.10233333333333333
+        },
+        "edit_conflict": {
+          "forbidden": 0.10233333333333333,
+          "conflict": 0.6963333333333332,
+          "unauthorized": 0.20133333333333334
+        },
+        "feature_disabled": {
+          "forbidden": 0.8943333333333333,
+          "conflict": 0.052833333333333336,
+          "unauthorized": 0.052833333333333336
+        },
+        "other": {
+          "forbidden": 0.10233333333333333,
+          "conflict": 0.5973333333333333,
+          "unauthorized": 0.30033333333333334
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Replay the failing save in dry-run mode (no write).",
+      "outcome_notes": {
+        "forbidden": "403 generic 'operation not permitted'",
+        "conflict": "409",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "audit",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /audit?doc=42",
+      "cost": 3,
+      "likelihoods": {
+        "session_expired": {
+          "deny:role_readonly": 0.048253968253968264,
+          "deny:owner_policy": 0.048253968253968264,
+          "deny:document_archived": 0.048253968253968264,
+          "deny:workflow_locked": 0.048253968253968264,
+          "deny:quota_exceeded": 0.048253968253968264,
+          "deny:edit_conflict": 0.048253968253968264,
+          "deny:feature_disabled": 0.048253968253968264,
+          "no_entry": 0.09539682539682541,
+          "unauthorized": 0.5668253968253969
+        },
+        "role_readonly": {
+          "deny:role_readonly": 0.8912210012210012,
+          "deny:owner_policy": 0.05056166056166057,
+          "deny:document_archived": 0.030781440781440784,
+          "deny:workflow_locked": 0.011001221001221003,
+          "deny:quota_exceeded": 0.006056166056166057,
+          "deny:edit_conflict": 0.004078144078144079,
+          "deny:feature_disabled": 0.0021001221001221,
+          "no_entry": 0.0021001221001221,
+          "unauthorized": 0.0021001221001221
+        },
+        "owner_policy": {
+          "deny:role_readonly": 0.049640522875816995,
+          "deny:owner_policy": 0.874640522875817,
+          "deny:document_archived": 0.020522875816993465,
+          "deny:workflow_locked": 0.010816993464052288,
+          "deny:quota_exceeded": 0.010816993464052288,
+          "deny:edit_conflict": 0.010816993464052288,
+          "deny:feature_disabled": 0.010816993464052288,
+          "no_entry": 0.010816993464052288,
+          "unauthorized": 0.0011111111111111111
+        },
+        "document_archived": {
+          "deny:role_readonly": 0.0457057057057057,
+          "deny:owner_policy": 0.0457057057057057,
+          "deny:document_archived": 0.8038138138138137,
+          "deny:workflow_locked": 0.018948948948948947,
+          "deny:quota_exceeded": 0.01003003003003003,
+          "deny:edit_conflict": 0.01003003003003003,
+          "deny:feature_disabled": 0.01003003003003003,
+          "no_entry": 0.0457057057057057,
+          "unauthorized": 0.01003003003003003
+        },
+        "workflow_locked": {
+          "deny:role_readonly": 0.044154589371980676,
+          "deny:owner_policy": 0.044154589371980676,
+          "deny:document_archived": 0.044154589371980676,
+          "deny:workflow_locked": 0.6898067632850241,
+          "deny:quota_exceeded": 0.044154589371980676,
+          "deny:edit_conflict": 0.044154589371980676,
+          "deny:feature_disabled": 0.044154589371980676,
+          "no_entry": 0.044154589371980676,
+          "unauthorized": 0.0011111111111111111
+        },
+        "quota_exceeded": {
+          "deny:role_readonly": 0.0011111111111111111,
+          "deny:owner_policy": 0.0011111111111111111,
+          "deny:document_archived": 0.0011111111111111111,
+          "deny:workflow_locked": 0.0011111111111111111,
+          "deny:quota_exceeded": 0.991111111111111,
+          "deny:edit_conflict": 0.0011111111111111111,
+          "deny:feature_disabled": 0.0011111111111111111,
+          "no_entry": 0.0011111111111111111,
+          "unauthorized": 0.0011111111111111111
+        },
+        "edit_conflict": {
+          "deny:role_readonly": 0.04825396825396825,
+          "deny:owner_policy": 0.04825396825396825,
+          "deny:document_archived": 0.04825396825396825,
+          "deny:workflow_locked": 0.04825396825396825,
+          "deny:quota_exceeded": 0.04825396825396825,
+          "deny:edit_conflict": 0.5668253968253968,
+          "deny:feature_disabled": 0.04825396825396825,
+          "no_entry": 0.09539682539682538,
+          "unauthorized": 0.04825396825396825
+        },
+        "feature_disabled": {
+          "deny:role_readonly": 0.0011111111111111111,
+          "deny:owner_policy": 0.0011111111111111111,
+          "deny:document_archived": 0.0011111111111111111,
+          "deny:workflow_locked": 0.0011111111111111111,
+          "deny:quota_exceeded": 0.0011111111111111111,
+          "deny:edit_conflict": 0.0011111111111111111,
+          "deny:feature_disabled": 0.991111111111111,
+          "no_entry": 0.0011111111111111111,
+          "unauthorized": 0.0011111111111111111
+        },
+        "other": {
+          "deny:role_readonly": 0.050611111111111114,
+          "deny:owner_policy": 0.050611111111111114,
+          "deny:document_archived": 0.050611111111111114,
+          "deny:workflow_locked": 0.050611111111111114,
+          "deny:quota_exceeded": 0.050611111111111114,
+          "deny:edit_conflict": 0.050611111111111114,
+          "deny:feature_disabled": 0.050611111111111114,
+          "no_entry": 0.10011111111111111,
+          "unauthorized": 0.545611111111111
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read the security audit log for document #42 (slow).",
+      "outcome_notes": {
+        "deny:role_readonly": "200, last denial reason ROLE_READONLY",
+        "deny:owner_policy": "200, last denial reason ACL_OWNER_MISMATCH",
+        "deny:document_archived": "200, last denial reason DOC_ARCHIVED",
+        "deny:workflow_locked": "200, last denial reason WF_LOCK_HELD",
+        "deny:quota_exceeded": "200, last denial reason QUOTA_LIMIT",
+        "deny:edit_conflict": "200, last denial reason BASE_REV_STALE",
+        "deny:feature_disabled": "200, last denial reason FEATURE_OFF",
+        "no_entry": "200, no entry yet (log may lag)",
+        "unauthorized": "401"
+      }
+    },
+    {
+      "id": "help",
+      "target": "sandbox://docs-app",
+      "purpose": "GET /help",
+      "cost": 1,
+      "likelihoods": {
+        "session_expired": {
+          "generic": 1.0
+        },
+        "role_readonly": {
+          "generic": 1.0
+        },
+        "owner_policy": {
+          "generic": 1.0
+        },
+        "document_archived": {
+          "generic": 1.0
+        },
+        "workflow_locked": {
+          "generic": 1.0
+        },
+        "quota_exceeded": {
+          "generic": 1.0
+        },
+        "edit_conflict": {
+          "generic": 1.0
+        },
+        "feature_disabled": {
+          "generic": 1.0
+        },
+        "other": {
+          "generic": 1.0
+        }
+      },
+      "prediction_source": "llm_elicited:qwen2.5:7b-instruct",
+      "prerequisites": {},
+      "description": "Read the generic help page.",
+      "outcome_notes": {
+        "generic": "200, generic advice"
+      }
+    }
+  ],
+  "metadata": {
+    "task_id": "web-drift-07",
+    "repeat": 0
+  },
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}

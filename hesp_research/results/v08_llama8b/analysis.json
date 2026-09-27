@@ -1,0 +1,319 @@
+{
+  "purpose": "v0.8_study",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 2026,
+  "arms": [
+    "memory_only",
+    "hesp_random_blind",
+    "hesp_eigc_blind",
+    "hesp_eigc",
+    "hesp_eigc_guard"
+  ],
+  "modes": {
+    "memory_only": {
+      "runs": 72,
+      "verified_fraction": 0,
+      "statuses": {
+        "TOOL_BUDGET_EXCEEDED": 72
+      },
+      "tool_calls": {
+        "mean_known": 7.805555555555555,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.680555555555555,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 10.125,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 14.236714541666666,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 16085.930555555555,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 339.19444444444446,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_random_blind": {
+      "runs": 72,
+      "verified_fraction": 0,
+      "statuses": {
+        "TOOL_BUDGET_EXCEEDED": 70,
+        "NO_LEGAL_ACTION": 2
+      },
+      "tool_calls": {
+        "mean_known": 7.194444444444445,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 9.972222222222221,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 8.194444444444445,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 13.039683763888888,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 12969.222222222223,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 302.8888888888889,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_eigc_blind": {
+      "runs": 72,
+      "verified_fraction": 0,
+      "statuses": {
+        "TOOL_BUDGET_EXCEEDED": 72
+      },
+      "tool_calls": {
+        "mean_known": 8.583333333333334,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 9.583333333333334,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 15.297955541666667,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 15428.597222222223,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 360.6388888888889,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_eigc": {
+      "runs": 72,
+      "verified_fraction": 0,
+      "statuses": {
+        "TOOL_BUDGET_EXCEEDED": 72
+      },
+      "tool_calls": {
+        "mean_known": 8.583333333333334,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 9.583333333333334,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 15.062737111111112,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 16775.76388888889,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 370.84722222222223,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_eigc_guard": {
+      "runs": 72,
+      "verified_fraction": 0,
+      "statuses": {
+        "TOOL_BUDGET_EXCEEDED": 72
+      },
+      "tool_calls": {
+        "mean_known": 8.583333333333334,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 10,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 9.583333333333334,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 16.454826861111112,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 16775.76388888889,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 371.44444444444446,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    }
+  },
+  "paired_verification": {
+    "hesp_eigc_guard_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_blind_minus_hesp_random_blind": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_random_blind_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_minus_hesp_eigc_blind": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "hesp_eigc_guard_minus_hesp_eigc": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    }
+  },
+  "paired_tool_cost": {
+    "hesp_eigc_guard_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0.3194444444444444,
+      "cluster_bootstrap_percentile_95": [
+        0.20833333333333331,
+        0.4583333333333333
+      ]
+    },
+    "hesp_eigc_blind_minus_hesp_random_blind": {
+      "task_clusters": 24,
+      "difference": 0.027777777777777776,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0.06944444444444445
+      ]
+    },
+    "hesp_random_blind_minus_memory_only": {
+      "task_clusters": 24,
+      "difference": 0.29166666666666663,
+      "cluster_bootstrap_percentile_95": [
+        0.18055555555555555,
+        0.4305555555555555
+      ]
+    },
+    "hesp_eigc_minus_hesp_eigc_blind": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    },
+    "hesp_eigc_guard_minus_hesp_eigc": {
+      "task_clusters": 24,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    }
+  },
+  "security_metrics": {
+    "memory_only": {
+      "episodes": 72,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "hesp_random_blind": {
+      "episodes": 72,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "hesp_eigc_blind": {
+      "episodes": 72,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "hesp_eigc": {
+      "episodes": 72,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    },
+    "hesp_eigc_guard": {
+      "episodes": 72,
+      "episodes_with_a_claim": 0,
+      "unresolved_rate": 1,
+      "missed_attack_rate": null,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": null,
+      "evidence_citation_validity": null
+    }
+  },
+  "manifest_sha256": "2022000a01cf1277e782376a43c6692dbbd2885c50066177c581f6d09e53335d"
+}

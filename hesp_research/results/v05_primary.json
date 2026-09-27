@@ -1,0 +1,170 @@
+{
+  "7b": {
+    "episodes": 648,
+    "arms": {
+      "react_style": 0.027777777777777776,
+      "memory_only": 0.1111111111111111,
+      "memory_guard": 0.1111111111111111,
+      "hesp_eigc": 0.9583333333333334,
+      "hesp_eigc_guard": 1,
+      "hesp_la": 0.8888888888888888,
+      "hesp_la_guard": 0.8888888888888888,
+      "hesp_random": 0.6666666666666666,
+      "hesp_llmp": 0.4166666666666667
+    },
+    "paired_verification": {
+      "hesp_eigc_guard_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": 0.8888888888888888,
+        "cluster_bootstrap_percentile_95": [
+          0.75,
+          1
+        ],
+        "tasks_better": 22,
+        "tasks_worse": 0
+      },
+      "hesp_eigc_minus_hesp_random": {
+        "task_clusters": 24,
+        "difference": 0.29166666666666663,
+        "cluster_bootstrap_percentile_95": [
+          0.15277777777777776,
+          0.4444444444444444
+        ],
+        "tasks_better": 13,
+        "tasks_worse": 1
+      },
+      "hesp_random_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": 0.5555555555555556,
+        "cluster_bootstrap_percentile_95": [
+          0.3611111111111111,
+          0.7361111111111112
+        ],
+        "tasks_better": 19,
+        "tasks_worse": 3
+      },
+      "memory_only_minus_react_style": {
+        "task_clusters": 24,
+        "difference": 0.08333333333333333,
+        "cluster_bootstrap_percentile_95": [
+          0,
+          0.20833333333333334
+        ],
+        "tasks_better": 2,
+        "tasks_worse": 0
+      }
+    }
+  },
+  "32b": {
+    "episodes": 648,
+    "arms": {
+      "react_style": 0.5972222222222222,
+      "memory_only": 0.75,
+      "memory_guard": 0.7916666666666666,
+      "hesp_eigc": 1,
+      "hesp_eigc_guard": 1,
+      "hesp_la": 0.9722222222222222,
+      "hesp_la_guard": 0.9722222222222222,
+      "hesp_random": 0.7361111111111112,
+      "hesp_llmp": 1
+    },
+    "paired_verification": {
+      "hesp_eigc_guard_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": 0.25,
+        "cluster_bootstrap_percentile_95": [
+          0.09722222222222222,
+          0.4166666666666667
+        ],
+        "tasks_better": 8,
+        "tasks_worse": 0
+      },
+      "hesp_eigc_minus_hesp_random": {
+        "task_clusters": 24,
+        "difference": 0.2638888888888889,
+        "cluster_bootstrap_percentile_95": [
+          0.1388888888888889,
+          0.4027777777777778
+        ],
+        "tasks_better": 11,
+        "tasks_worse": 0
+      },
+      "hesp_random_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": -0.013888888888888883,
+        "cluster_bootstrap_percentile_95": [
+          -0.2222222222222222,
+          0.19444444444444445
+        ],
+        "tasks_better": 6,
+        "tasks_worse": 9
+      },
+      "memory_only_minus_react_style": {
+        "task_clusters": 24,
+        "difference": 0.1527777777777778,
+        "cluster_bootstrap_percentile_95": [
+          0.027777777777777776,
+          0.3055555555555556
+        ],
+        "tasks_better": 4,
+        "tasks_worse": 0
+      }
+    }
+  },
+  "72b": {
+    "episodes": 648,
+    "arms": {
+      "react_style": 0.5972222222222222,
+      "memory_only": 0.8888888888888888,
+      "memory_guard": 0.8888888888888888,
+      "hesp_eigc": 1,
+      "hesp_eigc_guard": 1,
+      "hesp_la": 0.9583333333333334,
+      "hesp_la_guard": 0.9583333333333334,
+      "hesp_random": 0.7361111111111112,
+      "hesp_llmp": 0.9861111111111112
+    },
+    "paired_verification": {
+      "hesp_eigc_guard_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": 0.1111111111111111,
+        "cluster_bootstrap_percentile_95": [
+          0,
+          0.2361111111111111
+        ],
+        "tasks_better": 3,
+        "tasks_worse": 0
+      },
+      "hesp_eigc_minus_hesp_random": {
+        "task_clusters": 24,
+        "difference": 0.2638888888888889,
+        "cluster_bootstrap_percentile_95": [
+          0.1388888888888889,
+          0.4027777777777778
+        ],
+        "tasks_better": 11,
+        "tasks_worse": 0
+      },
+      "hesp_random_minus_memory_only": {
+        "task_clusters": 24,
+        "difference": -0.15277777777777776,
+        "cluster_bootstrap_percentile_95": [
+          -0.3333333333333333,
+          0.0
+        ],
+        "tasks_better": 3,
+        "tasks_worse": 9
+      },
+      "memory_only_minus_react_style": {
+        "task_clusters": 24,
+        "difference": 0.2916666666666667,
+        "cluster_bootstrap_percentile_95": [
+          0.09722222222222221,
+          0.5
+        ],
+        "tasks_better": 10,
+        "tasks_worse": 1
+      }
+    }
+  }
+}

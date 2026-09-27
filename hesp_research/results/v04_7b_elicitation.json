@@ -1,0 +1,3887 @@
+{
+  "schema": "hesp.elicitation.v2",
+  "model": {
+    "model": "qwen2.5-7b-instruct",
+    "digest": null,
+    "root": "/root/autodl-tmp/hesp/models/Qwen2.5-7B-Instruct",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "source": "llm_elicited:qwen2.5-7b-instruct",
+  "eps_floor": 0.01,
+  "families": {
+    "web-diag": {
+      "tables": {
+        "whoami": {
+          "session_expired": {
+            "editor": 0.0033333333333333335,
+            "viewer": 0.0033333333333333335,
+            "unauthorized": 0.9933333333333333
+          },
+          "role_readonly": {
+            "editor": 0.10233333333333333,
+            "viewer": 0.8943333333333333,
+            "unauthorized": 0.0033333333333333335
+          },
+          "owner_policy": {
+            "editor": 0.30033333333333334,
+            "viewer": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "document_archived": {
+            "editor": 0.49833333333333335,
+            "viewer": 0.30033333333333334,
+            "unauthorized": 0.20133333333333334
+          },
+          "workflow_locked": {
+            "editor": 0.49833333333333335,
+            "viewer": 0.30033333333333334,
+            "unauthorized": 0.20133333333333334
+          },
+          "quota_exceeded": {
+            "editor": 0.30033333333333334,
+            "viewer": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "edit_conflict": {
+            "editor": 0.49833333333333335,
+            "viewer": 0.30033333333333334,
+            "unauthorized": 0.20133333333333334
+          },
+          "feature_disabled": {
+            "editor": 0.49833333333333335,
+            "viewer": 0.30033333333333334,
+            "unauthorized": 0.20133333333333334
+          },
+          "other": {
+            "editor": 0.30033333333333334,
+            "viewer": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          }
+        },
+        "doc_meta": {
+          "session_expired": {
+            "own_active": 0.2995,
+            "owner_other": 0.2005,
+            "archived": 0.1015,
+            "unauthorized": 0.3985
+          },
+          "role_readonly": {
+            "own_active": 0.1015,
+            "owner_other": 0.2995,
+            "archived": 0.2005,
+            "unauthorized": 0.3985
+          },
+          "owner_policy": {
+            "own_active": 0.1015,
+            "owner_other": 0.6954999999999999,
+            "archived": 0.151,
+            "unauthorized": 0.052000000000000005
+          },
+          "document_archived": {
+            "own_active": 0.0025,
+            "owner_other": 0.0025,
+            "archived": 0.9924999999999999,
+            "unauthorized": 0.0025
+          },
+          "workflow_locked": {
+            "own_active": 0.0025,
+            "owner_other": 0.7945,
+            "archived": 0.0025,
+            "unauthorized": 0.2005
+          },
+          "quota_exceeded": {
+            "own_active": 0.4975,
+            "owner_other": 0.2995,
+            "archived": 0.1015,
+            "unauthorized": 0.1015
+          },
+          "edit_conflict": {
+            "own_active": 0.2995,
+            "owner_other": 0.4975,
+            "archived": 0.1015,
+            "unauthorized": 0.1015
+          },
+          "feature_disabled": {
+            "own_active": 0.2995,
+            "owner_other": 0.2005,
+            "archived": 0.1015,
+            "unauthorized": 0.3985
+          },
+          "other": {
+            "own_active": 0.2995,
+            "owner_other": 0.2005,
+            "archived": 0.1015,
+            "unauthorized": 0.3985
+          }
+        },
+        "workflow": {
+          "session_expired": {
+            "open": 0.30033333333333334,
+            "locked": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "role_readonly": {
+            "open": 0.30033333333333334,
+            "locked": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "owner_policy": {
+            "open": 0.30033333333333334,
+            "locked": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "document_archived": {
+            "open": 0.10233333333333333,
+            "locked": 0.30033333333333334,
+            "unauthorized": 0.5973333333333333
+          },
+          "workflow_locked": {
+            "open": 0.10233333333333333,
+            "locked": 0.7953333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "quota_exceeded": {
+            "open": 0.30033333333333334,
+            "locked": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "edit_conflict": {
+            "open": 0.30033333333333334,
+            "locked": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "feature_disabled": {
+            "open": 0.30033333333333334,
+            "locked": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "other": {
+            "open": 0.30033333333333334,
+            "locked": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          }
+        },
+        "quota": {
+          "session_expired": {
+            "ok": 0.10233333333333333,
+            "exceeded": 0.30033333333333334,
+            "unauthorized": 0.5973333333333333
+          },
+          "role_readonly": {
+            "ok": 0.30033333333333334,
+            "exceeded": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "owner_policy": {
+            "ok": 0.10233333333333333,
+            "exceeded": 0.30033333333333334,
+            "unauthorized": 0.5973333333333333
+          },
+          "document_archived": {
+            "ok": 0.052833333333333336,
+            "exceeded": 0.8943333333333333,
+            "unauthorized": 0.052833333333333336
+          },
+          "workflow_locked": {
+            "ok": 0.10233333333333333,
+            "exceeded": 0.5973333333333333,
+            "unauthorized": 0.30033333333333334
+          },
+          "quota_exceeded": {
+            "ok": 0.10233333333333333,
+            "exceeded": 0.8448333333333333,
+            "unauthorized": 0.052833333333333336
+          },
+          "edit_conflict": {
+            "ok": 0.30033333333333334,
+            "exceeded": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "feature_disabled": {
+            "ok": 0.10233333333333333,
+            "exceeded": 0.5973333333333333,
+            "unauthorized": 0.30033333333333334
+          },
+          "other": {
+            "ok": 0.30033333333333334,
+            "exceeded": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          }
+        },
+        "features": {
+          "session_expired": {
+            "editing_on": 0.10233333333333333,
+            "editing_off": 0.6963333333333332,
+            "unauthorized": 0.20133333333333334
+          },
+          "role_readonly": {
+            "editing_on": 0.10233333333333333,
+            "editing_off": 0.8943333333333333,
+            "unauthorized": 0.0033333333333333335
+          },
+          "owner_policy": {
+            "editing_on": 0.10233333333333333,
+            "editing_off": 0.5973333333333333,
+            "unauthorized": 0.30033333333333334
+          },
+          "document_archived": {
+            "editing_on": 0.0033333333333333335,
+            "editing_off": 0.9933333333333333,
+            "unauthorized": 0.0033333333333333335
+          },
+          "workflow_locked": {
+            "editing_on": 0.7953333333333333,
+            "editing_off": 0.10233333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "quota_exceeded": {
+            "editing_on": 0.10233333333333333,
+            "editing_off": 0.7953333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "edit_conflict": {
+            "editing_on": 0.6963333333333332,
+            "editing_off": 0.20133333333333334,
+            "unauthorized": 0.10233333333333333
+          },
+          "feature_disabled": {
+            "editing_on": 0.10233333333333333,
+            "editing_off": 0.7953333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "other": {
+            "editing_on": 0.30033333333333334,
+            "editing_off": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          }
+        },
+        "versions": {
+          "session_expired": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          },
+          "role_readonly": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "owner_policy": {
+            "consistent": 0.20133333333333334,
+            "concurrent_edit": 0.30033333333333334,
+            "unauthorized": 0.49833333333333335
+          },
+          "document_archived": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "workflow_locked": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "quota_exceeded": {
+            "consistent": 0.25083333333333335,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.25083333333333335
+          },
+          "edit_conflict": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "feature_disabled": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.49833333333333335,
+            "unauthorized": 0.20133333333333334
+          },
+          "other": {
+            "consistent": 0.30033333333333334,
+            "concurrent_edit": 0.3993333333333334,
+            "unauthorized": 0.30033333333333334
+          }
+        },
+        "save_dry_run": {
+          "session_expired": {
+            "forbidden": 0.10233333333333333,
+            "conflict": 0.10233333333333333,
+            "unauthorized": 0.7953333333333333
+          },
+          "role_readonly": {
+            "forbidden": 0.7953333333333333,
+            "conflict": 0.10233333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "owner_policy": {
+            "forbidden": 0.7953333333333333,
+            "conflict": 0.10233333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "document_archived": {
+            "forbidden": 0.7953333333333333,
+            "conflict": 0.10233333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "workflow_locked": {
+            "forbidden": 0.5973333333333333,
+            "conflict": 0.30033333333333334,
+            "unauthorized": 0.10233333333333333
+          },
+          "quota_exceeded": {
+            "forbidden": 0.49833333333333335,
+            "conflict": 0.3993333333333334,
+            "unauthorized": 0.10233333333333333
+          },
+          "edit_conflict": {
+            "forbidden": 0.10233333333333333,
+            "conflict": 0.6963333333333332,
+            "unauthorized": 0.20133333333333334
+          },
+          "feature_disabled": {
+            "forbidden": 0.7953333333333333,
+            "conflict": 0.10233333333333333,
+            "unauthorized": 0.10233333333333333
+          },
+          "other": {
+            "forbidden": 0.20133333333333334,
+            "conflict": 0.49833333333333335,
+            "unauthorized": 0.30033333333333334
+          }
+        },
+        "audit": {
+          "session_expired": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.10011111111111111,
+            "unauthorized": 0.8921111111111111
+          },
+          "role_readonly": {
+            "deny:role_readonly": 0.8903326679973386,
+            "deny:owner_policy": 0.05051230871590153,
+            "deny:document_archived": 0.030751829673985362,
+            "deny:workflow_locked": 0.010991350632069194,
+            "deny:quota_exceeded": 0.006051230871590153,
+            "deny:edit_conflict": 0.004075182967398536,
+            "deny:feature_disabled": 0.0030871590153027277,
+            "no_entry": 0.002099135063206919,
+            "unauthorized": 0.002099135063206919
+          },
+          "owner_policy": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.991111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "document_archived": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.991111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "workflow_locked": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.991111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "quota_exceeded": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.991111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "edit_conflict": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.991111111111111,
+            "deny:feature_disabled": 0.0011111111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "feature_disabled": {
+            "deny:role_readonly": 0.0011111111111111111,
+            "deny:owner_policy": 0.0011111111111111111,
+            "deny:document_archived": 0.0011111111111111111,
+            "deny:workflow_locked": 0.0011111111111111111,
+            "deny:quota_exceeded": 0.0011111111111111111,
+            "deny:edit_conflict": 0.0011111111111111111,
+            "deny:feature_disabled": 0.991111111111111,
+            "no_entry": 0.0011111111111111111,
+            "unauthorized": 0.0011111111111111111
+          },
+          "other": {
+            "deny:role_readonly": 0.04825396825396825,
+            "deny:owner_policy": 0.04825396825396825,
+            "deny:document_archived": 0.04825396825396825,
+            "deny:workflow_locked": 0.04825396825396825,
+            "deny:quota_exceeded": 0.04825396825396825,
+            "deny:edit_conflict": 0.04825396825396825,
+            "deny:feature_disabled": 0.04825396825396825,
+            "no_entry": 0.09539682539682538,
+            "unauthorized": 0.5668253968253968
+          }
+        },
+        "help": {
+          "session_expired": {
+            "generic": 1.0
+          },
+          "role_readonly": {
+            "generic": 1.0
+          },
+          "owner_policy": {
+            "generic": 1.0
+          },
+          "document_archived": {
+            "generic": 1.0
+          },
+          "workflow_locked": {
+            "generic": 1.0
+          },
+          "quota_exceeded": {
+            "generic": 1.0
+          },
+          "edit_conflict": {
+            "generic": 1.0
+          },
+          "feature_disabled": {
+            "generic": 1.0
+          },
+          "other": {
+            "generic": 1.0
+          }
+        }
+      },
+      "calibration_vs_true_model": {
+        "base": {
+          "llm": {
+            "cells": 81,
+            "expected_log_loss_bits": 1.4979364969130435,
+            "kl_bits": 1.4574060135164388,
+            "expected_brier": 0.5485447709952931,
+            "argmax_agreement": 0.5185185185185185
+          },
+          "designer_table": {
+            "cells": 81,
+            "expected_log_loss_bits": 0.05085930262988152,
+            "kl_bits": 0.010328819233276963,
+            "expected_brier": 0.0161085987654321,
+            "argmax_agreement": 1.0
+          }
+        },
+        "noise": {
+          "llm": {
+            "cells": 81,
+            "expected_log_loss_bits": 1.664686632926308,
+            "kl_bits": 1.5885256910174828,
+            "expected_brier": 0.582264442762869,
+            "argmax_agreement": 0.5185185185185185
+          },
+          "designer_table": {
+            "cells": 81,
+            "expected_log_loss_bits": 0.09395941946472075,
+            "kl_bits": 0.017798477555895455,
+            "expected_brier": 0.04006415432098765,
+            "argmax_agreement": 1.0
+          }
+        },
+        "drift": {
+          "llm": {
+            "cells": 81,
+            "expected_log_loss_bits": 1.4979364969130435,
+            "kl_bits": 1.4574060135164388,
+            "expected_brier": 0.5485447709952931,
+            "argmax_agreement": 0.5185185185185185
+          },
+          "designer_table": {
+            "cells": 81,
+            "expected_log_loss_bits": 0.05085930262988152,
+            "kl_bits": 0.010328819233276963,
+            "expected_brier": 0.0161085987654321,
+            "argmax_agreement": 1.0
+          }
+        }
+      }
+    },
+    "upload-diag": {
+      "tables": {
+        "limits": {
+          "file_too_large": {
+            "ok": 0.0033333333333333335,
+            "size_exceeded": 0.9933333333333333,
+            "type_not_allowed": 0.0033333333333333335
+          },
+          "type_blocked": {
+            "ok": 0.052833333333333336,
+            "size_exceeded": 0.15183333333333332,
+            "type_not_allowed": 0.7953333333333333
+          },
+          "folder_readonly": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.5973333333333333,
+            "type_not_allowed": 0.30033333333333334
+          },
+          "storage_full": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.7953333333333333,
+            "type_not_allowed": 0.10233333333333333
+          },
+          "name_locked": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.30033333333333334,
+            "type_not_allowed": 0.5973333333333333
+          },
+          "scanner_down": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.30033333333333334,
+            "type_not_allowed": 0.5973333333333333
+          },
+          "token_revoked": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.5973333333333333,
+            "type_not_allowed": 0.30033333333333334
+          },
+          "region_mismatch": {
+            "ok": 0.10233333333333333,
+            "size_exceeded": 0.5973333333333333,
+            "type_not_allowed": 0.30033333333333334
+          },
+          "other": {
+            "ok": 0.30033333333333334,
+            "size_exceeded": 0.3993333333333334,
+            "type_not_allowed": 0.30033333333333334
+          }
+        },
+        "folder_acl": {
+          "file_too_large": {
+            "write": 0.5,
+            "read_only": 0.5
+          },
+          "type_blocked": {
+            "write": 0.5,
+            "read_only": 0.5
+          },
+          "folder_readonly": {
+            "write": 0.302,
+            "read_only": 0.698
+          },
+          "storage_full": {
+            "write": 0.698,
+            "read_only": 0.302
+          },
+          "name_locked": {
+            "write": 0.698,
+            "read_only": 0.302
+          },
+          "scanner_down": {
+            "write": 0.698,
+            "read_only": 0.302
+          },
+          "token_revoked": {
+            "write": 0.302,
+            "read_only": 0.698
+          },
+          "region_mismatch": {
+            "write": 0.698,
+            "read_only": 0.302
+          },
+          "other": {
+            "write": 0.5,
+            "read_only": 0.5
+          }
+        },
+        "storage": {
+          "file_too_large": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "type_blocked": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "folder_readonly": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "storage_full": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "name_locked": {
+            "ok": 0.698,
+            "full": 0.302
+          },
+          "scanner_down": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "token_revoked": {
+            "ok": 0.896,
+            "full": 0.10400000000000001
+          },
+          "region_mismatch": {
+            "ok": 0.698,
+            "full": 0.302
+          },
+          "other": {
+            "ok": 0.698,
+            "full": 0.302
+          }
+        },
+        "listing": {
+          "file_too_large": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "type_blocked": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "folder_readonly": {
+            "absent": 0.698,
+            "locked_by_other": 0.302
+          },
+          "storage_full": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "name_locked": {
+            "absent": 0.302,
+            "locked_by_other": 0.698
+          },
+          "scanner_down": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "token_revoked": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "region_mismatch": {
+            "absent": 0.896,
+            "locked_by_other": 0.10400000000000001
+          },
+          "other": {
+            "absent": 0.698,
+            "locked_by_other": 0.302
+          }
+        },
+        "health": {
+          "file_too_large": {
+            "all_up": 0.10400000000000001,
+            "scanner_down": 0.896
+          },
+          "type_blocked": {
+            "all_up": 0.302,
+            "scanner_down": 0.698
+          },
+          "folder_readonly": {
+            "all_up": 0.5,
+            "scanner_down": 0.5
+          },
+          "storage_full": {
+            "all_up": 0.5391726618705037,
+            "scanner_down": 0.4608273381294964
+          },
+          "name_locked": {
+            "all_up": 0.302,
+            "scanner_down": 0.698
+          },
+          "scanner_down": {
+            "all_up": 0.10400000000000001,
+            "scanner_down": 0.896
+          },
+          "token_revoked": {
+            "all_up": 0.302,
+            "scanner_down": 0.698
+          },
+          "region_mismatch": {
+            "all_up": 0.302,
+            "scanner_down": 0.698
+          },
+          "other": {
+            "all_up": 0.302,
+            "scanner_down": 0.698
+          }
+        },
+        "token": {
+          "file_too_large": {
+            "valid": 0.302,
+            "revoked": 0.698
+          },
+          "type_blocked": {
+            "valid": 0.302,
+            "revoked": 0.698
+          },
+          "folder_readonly": {
+            "valid": 0.401,
+            "revoked": 0.599
+          },
+          "storage_full": {
+            "valid": 0.302,
+            "revoked": 0.698
+          },
+          "name_locked": {
+            "valid": 0.401,
+            "revoked": 0.599
+          },
+          "scanner_down": {
+            "valid": 0.9455,
+            "revoked": 0.0545
+          },
+          "token_revoked": {
+            "valid": 0.302,
+            "revoked": 0.698
+          },
+          "region_mismatch": {
+            "valid": 0.401,
+            "revoked": 0.599
+          },
+          "other": {
+            "valid": 0.5,
+            "revoked": 0.5
+          }
+        },
+        "folder_meta": {
+          "file_too_large": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "type_blocked": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "folder_readonly": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "storage_full": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "name_locked": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "scanner_down": {
+            "same_region": 0.9455,
+            "cross_region": 0.0545
+          },
+          "token_revoked": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          },
+          "region_mismatch": {
+            "same_region": 0.698,
+            "cross_region": 0.302
+          },
+          "other": {
+            "same_region": 0.896,
+            "cross_region": 0.10400000000000001
+          }
+        },
+        "dry_run": {
+          "file_too_large": {
+            "too_large": 0.8924285714285715,
+            "unsupported_type": 0.050928571428571434,
+            "conflict": 0.02122857142857143,
+            "insufficient_storage": 0.01132857142857143,
+            "dependency_failed": 0.006378571428571429,
+            "forbidden": 0.006378571428571429,
+            "server_error": 0.01132857142857143
+          },
+          "type_blocked": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.9914285714285714,
+            "conflict": 0.0014285714285714286,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.0014285714285714286,
+            "server_error": 0.0014285714285714286
+          },
+          "folder_readonly": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.0014285714285714286,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.9914285714285714,
+            "server_error": 0.0014285714285714286
+          },
+          "storage_full": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.0014285714285714286,
+            "insufficient_storage": 0.9914285714285714,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.0014285714285714286,
+            "server_error": 0.0014285714285714286
+          },
+          "name_locked": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.8924285714285715,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.10042857142857144,
+            "server_error": 0.0014285714285714286
+          },
+          "scanner_down": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.0014285714285714286,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.9914285714285714,
+            "forbidden": 0.0014285714285714286,
+            "server_error": 0.0014285714285714286
+          },
+          "token_revoked": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.0014285714285714286,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.9914285714285714,
+            "server_error": 0.0014285714285714286
+          },
+          "region_mismatch": {
+            "too_large": 0.0014285714285714286,
+            "unsupported_type": 0.0014285714285714286,
+            "conflict": 0.8924285714285715,
+            "insufficient_storage": 0.0014285714285714286,
+            "dependency_failed": 0.0014285714285714286,
+            "forbidden": 0.10042857142857144,
+            "server_error": 0.0014285714285714286
+          },
+          "other": {
+            "too_large": 0.23436974789915968,
+            "unsupported_type": 0.11789915966386556,
+            "conflict": 0.0596638655462185,
+            "insufficient_storage": 0.0596638655462185,
+            "dependency_failed": 0.0596638655462185,
+            "forbidden": 0.1761344537815126,
+            "server_error": 0.29260504201680676
+          }
+        },
+        "trace": {
+          "file_too_large": {
+            "code:file_too_large": 0.8894461061260661,
+            "code:type_blocked": 0.050463055278608615,
+            "code:folder_readonly": 0.03072227761160961,
+            "code:storage_full": 0.01098149994461061,
+            "code:name_locked": 0.006046305527860861,
+            "code:scanner_down": 0.006046305527860861,
+            "code:token_revoked": 0.002098149994461061,
+            "code:region_mismatch": 0.002098149994461061,
+            "not_indexed": 0.002098149994461061
+          },
+          "type_blocked": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.991111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "folder_readonly": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.991111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "storage_full": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.991111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "name_locked": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.991111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "scanner_down": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.991111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "token_revoked": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.991111111111111,
+            "code:region_mismatch": 0.0011111111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "region_mismatch": {
+            "code:file_too_large": 0.0011111111111111111,
+            "code:type_blocked": 0.0011111111111111111,
+            "code:folder_readonly": 0.0011111111111111111,
+            "code:storage_full": 0.0011111111111111111,
+            "code:name_locked": 0.0011111111111111111,
+            "code:scanner_down": 0.0011111111111111111,
+            "code:token_revoked": 0.0011111111111111111,
+            "code:region_mismatch": 0.991111111111111,
+            "not_indexed": 0.0011111111111111111
+          },
+          "other": {
+            "code:file_too_large": 0.1111111111111111,
+            "code:type_blocked": 0.1111111111111111,
+            "code:folder_readonly": 0.1111111111111111,
+            "code:storage_full": 0.1111111111111111,
+            "code:name_locked": 0.1111111111111111,
+            "code:scanner_down": 0.1111111111111111,
+            "code:token_revoked": 0.1111111111111111,
+            "code:region_mismatch": 0.1111111111111111,
+            "not_indexed": 0.1111111111111111
+          }
+        },
+        "faq": {
+          "file_too_large": {
+            "generic": 1.0
+          },
+          "type_blocked": {
+            "generic": 1.0
+          },
+          "folder_readonly": {
+            "generic": 1.0
+          },
+          "storage_full": {
+            "generic": 1.0
+          },
+          "name_locked": {
+            "generic": 1.0
+          },
+          "scanner_down": {
+            "generic": 1.0
+          },
+          "token_revoked": {
+            "generic": 1.0
+          },
+          "region_mismatch": {
+            "generic": 1.0
+          },
+          "other": {
+            "generic": 1.0
+          }
+        }
+      },
+      "calibration_vs_true_model": {
+        "base": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.9055103203698659,
+            "kl_bits": 0.8638218231619299,
+            "expected_brier": 0.3765234783742816,
+            "argmax_agreement": 0.7333333333333333
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.05081577583002528,
+            "kl_bits": 0.009127278622089167,
+            "expected_brier": 0.016558526984126985,
+            "argmax_agreement": 1.0
+          }
+        },
+        "noise": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 1.0773635311751493,
+            "kl_bits": 0.9990265623546432,
+            "expected_brier": 0.4112672470681998,
+            "argmax_agreement": 0.7333333333333333
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.09514732457443134,
+            "kl_bits": 0.01681035575392533,
+            "expected_brier": 0.041198526984126974,
+            "argmax_agreement": 1.0
+          }
+        },
+        "drift": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.9055103203698659,
+            "kl_bits": 0.8638218231619299,
+            "expected_brier": 0.3765234783742816,
+            "argmax_agreement": 0.7333333333333333
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.05081577583002528,
+            "kl_bits": 0.009127278622089167,
+            "expected_brier": 0.016558526984126985,
+            "argmax_agreement": 1.0
+          }
+        }
+      }
+    }
+  },
+  "seconds": 72.7,
+  "usage": {
+    "input_tokens": 31833,
+    "output_tokens": 5677,
+    "cached_input_tokens": 0
+  },
+  "calls": 171,
+  "records": [
+    {
+      "action_id": "whoami",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"editor\": 0,\n  \"viewer\": 0,\n  \"unauthorized\": 1\n}",
+      "row": {
+        "editor": 0.0033333333333333335,
+        "viewer": 0.0033333333333333335,
+        "unauthorized": 0.9933333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 169,
+        "output_tokens": 25,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "role_readonly",
+      "raw": "{\"editor\": 0.1, \"viewer\": 0.9, \"unauthorized\": 0.0}",
+      "row": {
+        "editor": 0.10233333333333333,
+        "viewer": 0.8943333333333333,
+        "unauthorized": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 168,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "owner_policy",
+      "raw": "{\"editor\": 0.3, \"viewer\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "editor": 0.30033333333333334,
+        "viewer": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "document_archived",
+      "raw": "{\"editor\": 0.5, \"viewer\": 0.3, \"unauthorized\": 0.2}",
+      "row": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 161,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"editor\": 0.5,\n  \"viewer\": 0.3,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 31,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"editor\": 0.3, \"viewer\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "editor": 0.30033333333333334,
+        "viewer": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"editor\": 0.5, \"viewer\": 0.3, \"unauthorized\": 0.2}",
+      "row": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"editor\": 0.5,\n  \"viewer\": 0.3,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "editor": 0.49833333333333335,
+        "viewer": 0.30033333333333334,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 31,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "whoami",
+      "hypothesis": "other",
+      "raw": "{\"editor\": 0.3, \"viewer\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "editor": 0.30033333333333334,
+        "viewer": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 157,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "session_expired",
+      "raw": "{\"own_active\": 0.3, \"owner_other\": 0.2, \"archived\": 0.1, \"unauthorized\": 0.4}",
+      "row": {
+        "own_active": 0.2995,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 192,
+        "output_tokens": 37,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "role_readonly",
+      "raw": "{\"own_active\": 0.1, \"owner_other\": 0.3, \"archived\": 0.2, \"unauthorized\": 0.4}",
+      "row": {
+        "own_active": 0.1015,
+        "owner_other": 0.2995,
+        "archived": 0.2005,
+        "unauthorized": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 191,
+        "output_tokens": 37,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "owner_policy",
+      "raw": "{\"own_active\": 0.1, \"owner_other\": 0.7, \"archived\": 0.15, \"unauthorized\": 0.05}",
+      "row": {
+        "own_active": 0.1015,
+        "owner_other": 0.6954999999999999,
+        "archived": 0.151,
+        "unauthorized": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 193,
+        "output_tokens": 39,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"own_active\": 0,\n  \"owner_other\": 0,\n  \"archived\": 1,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "own_active": 0.0025,
+        "owner_other": 0.0025,
+        "archived": 0.9924999999999999,
+        "unauthorized": 0.0025
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 184,
+        "output_tokens": 35,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"own_active\": 0,\n  \"owner_other\": 0.8,\n  \"archived\": 0,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "own_active": 0.0025,
+        "owner_other": 0.7945,
+        "archived": 0.0025,
+        "unauthorized": 0.2005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 188,
+        "output_tokens": 39,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"own_active\": 0.5, \"owner_other\": 0.3, \"archived\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "own_active": 0.4975,
+        "owner_other": 0.2995,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 190,
+        "output_tokens": 37,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"own_active\": 0.3, \"owner_other\": 0.5, \"archived\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "own_active": 0.2995,
+        "owner_other": 0.4975,
+        "archived": 0.1015,
+        "unauthorized": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 195,
+        "output_tokens": 37,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"own_active\": 0.3,\n  \"owner_other\": 0.2,\n  \"archived\": 0.1,\n  \"unauthorized\": 0.4\n}",
+      "row": {
+        "own_active": 0.2995,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 188,
+        "output_tokens": 43,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "doc_meta",
+      "hypothesis": "other",
+      "raw": "{\"own_active\": 0.3, \"owner_other\": 0.2, \"archived\": 0.1, \"unauthorized\": 0.4}",
+      "row": {
+        "own_active": 0.2995,
+        "owner_other": 0.2005,
+        "archived": 0.1015,
+        "unauthorized": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 180,
+        "output_tokens": 37,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "session_expired",
+      "raw": "{\"open\": 0.3, \"locked\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 176,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "role_readonly",
+      "raw": "{\"open\": 0.3, \"locked\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 175,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "owner_policy",
+      "raw": "{\"open\": 0.3, \"locked\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 177,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "document_archived",
+      "raw": "{\"open\": 0.1, \"locked\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 168,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"open\": 0.1, \"locked\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "open": 0.10233333333333333,
+        "locked": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"open\": 0.3, \"locked\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"open\": 0.3, \"locked\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 179,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"open\": 0.3, \"locked\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "workflow",
+      "hypothesis": "other",
+      "raw": "{\"open\": 0.3, \"locked\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "open": 0.30033333333333334,
+        "locked": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 164,
+        "output_tokens": 26,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "session_expired",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "role_readonly",
+      "raw": "{\"ok\": 0.3, \"exceeded\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "ok": 0.30033333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 166,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "owner_policy",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.3, \"unauthorized\": 0.6}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.30033333333333334,
+        "unauthorized": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 168,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "document_archived",
+      "raw": "{\"ok\": 0.05, \"exceeded\": 0.9, \"unauthorized\": 0.05}",
+      "row": {
+        "ok": 0.052833333333333336,
+        "exceeded": 0.8943333333333333,
+        "unauthorized": 0.052833333333333336
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 159,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 163,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.85, \"unauthorized\": 0.05}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.8448333333333333,
+        "unauthorized": 0.052833333333333336
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"ok\": 0.3, \"exceeded\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "ok": 0.30033333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"ok\": 0.1, \"exceeded\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "exceeded": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 163,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "quota",
+      "hypothesis": "other",
+      "raw": "{\"ok\": 0.3, \"exceeded\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "ok": 0.30033333333333334,
+        "exceeded": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 155,
+        "output_tokens": 27,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "session_expired",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.7, \"unauthorized\": 0.2}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 169,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "role_readonly",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.9, \"unauthorized\": 0.0}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.8943333333333333,
+        "unauthorized": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 168,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "owner_policy",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.6, \"unauthorized\": 0.3}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.5973333333333333,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "document_archived",
+      "raw": "{\"editing_on\": 0.0, \"editing_off\": 1.0, \"unauthorized\": 0.0}",
+      "row": {
+        "editing_on": 0.0033333333333333335,
+        "editing_off": 0.9933333333333333,
+        "unauthorized": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 161,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"editing_on\": 0.8, \"editing_off\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.7953333333333333,
+        "editing_off": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"editing_on\": 0.1, \"editing_off\": 0.8, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"editing_on\": 0.7, \"editing_off\": 0.2, \"unauthorized\": 0.1}",
+      "row": {
+        "editing_on": 0.6963333333333332,
+        "editing_off": 0.20133333333333334,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"editing_on\": 0.1,\n  \"editing_off\": 0.8,\n  \"unauthorized\": 0.1\n}",
+      "row": {
+        "editing_on": 0.10233333333333333,
+        "editing_off": 0.7953333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 33,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "features",
+      "hypothesis": "other",
+      "raw": "{\"editing_on\": 0.3, \"editing_off\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "editing_on": 0.30033333333333334,
+        "editing_off": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 157,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "session_expired",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 178,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "role_readonly",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 177,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "owner_policy",
+      "raw": "{\"consistent\": 0.2, \"concurrent_edit\": 0.3, \"unauthorized\": 0.5}",
+      "row": {
+        "consistent": 0.20133333333333334,
+        "concurrent_edit": 0.30033333333333334,
+        "unauthorized": 0.49833333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 179,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"consistent\": 0.3,\n  \"concurrent_edit\": 0.5,\n  \"unauthorized\": 0.2\n}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 33,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"consistent\": 0.25, \"concurrent_edit\": 0.5, \"unauthorized\": 0.25}",
+      "row": {
+        "consistent": 0.25083333333333335,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.25083333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 176,
+        "output_tokens": 30,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 181,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.5, \"unauthorized\": 0.2}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.49833333333333335,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "versions",
+      "hypothesis": "other",
+      "raw": "{\"consistent\": 0.3, \"concurrent_edit\": 0.4, \"unauthorized\": 0.3}",
+      "row": {
+        "consistent": 0.30033333333333334,
+        "concurrent_edit": 0.3993333333333334,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 166,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "session_expired",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.1, \"unauthorized\": 0.8}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.7953333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 178,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "role_readonly",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 177,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "owner_policy",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 179,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "document_archived",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"forbidden\": 0.6, \"conflict\": 0.3, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.5973333333333333,
+        "conflict": 0.30033333333333334,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"forbidden\": 0.5, \"conflict\": 0.4, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.49833333333333335,
+        "conflict": 0.3993333333333334,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 176,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"forbidden\": 0.1, \"conflict\": 0.7, \"unauthorized\": 0.2}",
+      "row": {
+        "forbidden": 0.10233333333333333,
+        "conflict": 0.6963333333333332,
+        "unauthorized": 0.20133333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 181,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"forbidden\": 0.8, \"conflict\": 0.1, \"unauthorized\": 0.1}",
+      "row": {
+        "forbidden": 0.7953333333333333,
+        "conflict": 0.10233333333333333,
+        "unauthorized": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "save_dry_run",
+      "hypothesis": "other",
+      "raw": "{\"forbidden\": 0.2, \"conflict\": 0.5, \"unauthorized\": 0.3}",
+      "row": {
+        "forbidden": 0.20133333333333334,
+        "conflict": 0.49833333333333335,
+        "unauthorized": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 166,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "session_expired",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0.1,\n  \"unauthorized\": 0.9\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.10011111111111111,
+        "unauthorized": 0.8921111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 302,
+        "output_tokens": 97,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "role_readonly",
+      "raw": "{\n  \"deny:role_readonly\": 0.9,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.03,\n  \"deny:workflow_locked\": 0.01,\n  \"deny:quota_exceeded\": 0.005,\n  \"deny:edit_conflict\": 0.003,\n  \"deny:feature_disabled\": 0.002,\n  \"no_entry\": 0.001,\n  \"unauthorized\": 0.001\n}",
+      "row": {
+        "deny:role_readonly": 0.8903326679973386,
+        "deny:owner_policy": 0.05051230871590153,
+        "deny:document_archived": 0.030751829673985362,
+        "deny:workflow_locked": 0.010991350632069194,
+        "deny:quota_exceeded": 0.006051230871590153,
+        "deny:edit_conflict": 0.004075182967398536,
+        "deny:feature_disabled": 0.0030871590153027277,
+        "no_entry": 0.002099135063206919,
+        "unauthorized": 0.002099135063206919
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 301,
+        "output_tokens": 124,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "owner_policy",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 1,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.991111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 303,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "document_archived",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 1,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.991111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 294,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "workflow_locked",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 1,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.991111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 298,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 1,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.991111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 300,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "edit_conflict",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 1,\n  \"deny:feature_disabled\": 0,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.991111111111111,
+        "deny:feature_disabled": 0.0011111111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 305,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "feature_disabled",
+      "raw": "{\n  \"deny:role_readonly\": 0,\n  \"deny:owner_policy\": 0,\n  \"deny:document_archived\": 0,\n  \"deny:workflow_locked\": 0,\n  \"deny:quota_exceeded\": 0,\n  \"deny:edit_conflict\": 0,\n  \"deny:feature_disabled\": 1,\n  \"no_entry\": 0,\n  \"unauthorized\": 0\n}",
+      "row": {
+        "deny:role_readonly": 0.0011111111111111111,
+        "deny:owner_policy": 0.0011111111111111111,
+        "deny:document_archived": 0.0011111111111111111,
+        "deny:workflow_locked": 0.0011111111111111111,
+        "deny:quota_exceeded": 0.0011111111111111111,
+        "deny:edit_conflict": 0.0011111111111111111,
+        "deny:feature_disabled": 0.991111111111111,
+        "no_entry": 0.0011111111111111111,
+        "unauthorized": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 298,
+        "output_tokens": 93,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "audit",
+      "hypothesis": "other",
+      "raw": "{\n  \"deny:role_readonly\": 0.05,\n  \"deny:owner_policy\": 0.05,\n  \"deny:document_archived\": 0.05,\n  \"deny:workflow_locked\": 0.05,\n  \"deny:quota_exceeded\": 0.05,\n  \"deny:edit_conflict\": 0.05,\n  \"deny:feature_disabled\": 0.05,\n  \"no_entry\": 0.1,\n  \"unauthorized\": 0.6\n}",
+      "row": {
+        "deny:role_readonly": 0.04825396825396825,
+        "deny:owner_policy": 0.04825396825396825,
+        "deny:document_archived": 0.04825396825396825,
+        "deny:workflow_locked": 0.04825396825396825,
+        "deny:quota_exceeded": 0.04825396825396825,
+        "deny:edit_conflict": 0.04825396825396825,
+        "deny:feature_disabled": 0.04825396825396825,
+        "no_entry": 0.09539682539682538,
+        "unauthorized": 0.5668253968253968
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 290,
+        "output_tokens": 118,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "session_expired",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 145,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "role_readonly",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 144,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "owner_policy",
+      "raw": "{\"generic\": 0.85}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 146,
+        "output_tokens": 10,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "document_archived",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 137,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "workflow_locked",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 141,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "quota_exceeded",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 143,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "edit_conflict",
+      "raw": "{\"generic\": 0.8}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 148,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "feature_disabled",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 141,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "help",
+      "hypothesis": "other",
+      "raw": "{\"generic\": 0.85}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 133,
+        "output_tokens": 10,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "file_too_large",
+      "raw": "{\n  \"ok\": 0,\n  \"size_exceeded\": 1,\n  \"type_not_allowed\": 0\n}",
+      "row": {
+        "ok": 0.0033333333333333335,
+        "size_exceeded": 0.9933333333333333,
+        "type_not_allowed": 0.0033333333333333335
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 195,
+        "output_tokens": 28,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "type_blocked",
+      "raw": "{\"ok\": 0.05, \"size_exceeded\": 0.15, \"type_not_allowed\": 0.8}",
+      "row": {
+        "ok": 0.052833333333333336,
+        "size_exceeded": 0.15183333333333332,
+        "type_not_allowed": 0.7953333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 196,
+        "output_tokens": 31,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.6, \"type_not_allowed\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.5973333333333333,
+        "type_not_allowed": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 192,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "storage_full",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.8, \"type_not_allowed\": 0.1}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.7953333333333333,
+        "type_not_allowed": 0.10233333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 189,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "name_locked",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.3, \"type_not_allowed\": 0.6}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.30033333333333334,
+        "type_not_allowed": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 198,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "scanner_down",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.3, \"type_not_allowed\": 0.6}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.30033333333333334,
+        "type_not_allowed": 0.5973333333333333
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 197,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "token_revoked",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.6, \"type_not_allowed\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.5973333333333333,
+        "type_not_allowed": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 198,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"ok\": 0.1, \"size_exceeded\": 0.6, \"type_not_allowed\": 0.3}",
+      "row": {
+        "ok": 0.10233333333333333,
+        "size_exceeded": 0.5973333333333333,
+        "type_not_allowed": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 196,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "limits",
+      "hypothesis": "other",
+      "raw": "{\"ok\": 0.3, \"size_exceeded\": 0.4, \"type_not_allowed\": 0.3}",
+      "row": {
+        "ok": 0.30033333333333334,
+        "size_exceeded": 0.3993333333333334,
+        "type_not_allowed": 0.30033333333333334
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 185,
+        "output_tokens": 29,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "file_too_large",
+      "raw": "{\"write\": 0.5, \"read_only\": 0.5}",
+      "row": {
+        "write": 0.5,
+        "read_only": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "type_blocked",
+      "raw": "{\"write\": 0.5, \"read_only\": 0.5}",
+      "row": {
+        "write": 0.5,
+        "read_only": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"write\": 0.3, \"read_only\": 0.7}",
+      "row": {
+        "write": 0.302,
+        "read_only": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "storage_full",
+      "raw": "{\"write\": 0.7, \"read_only\": 0.3}",
+      "row": {
+        "write": 0.698,
+        "read_only": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "name_locked",
+      "raw": "{\"write\": 0.7, \"read_only\": 0.3}",
+      "row": {
+        "write": 0.698,
+        "read_only": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 176,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "scanner_down",
+      "raw": "{\"write\": 0.7, \"read_only\": 0.3}",
+      "row": {
+        "write": 0.698,
+        "read_only": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 175,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "token_revoked",
+      "raw": "{\"write\": 0.3, \"read_only\": 0.7}",
+      "row": {
+        "write": 0.302,
+        "read_only": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 176,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"write\": 0.7, \"read_only\": 0.3}",
+      "row": {
+        "write": 0.698,
+        "read_only": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_acl",
+      "hypothesis": "other",
+      "raw": "{\"write\": 0.5, \"read_only\": 0.5}",
+      "row": {
+        "write": 0.5,
+        "read_only": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 163,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "file_too_large",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "type_blocked",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 171,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "storage_full",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 164,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "name_locked",
+      "raw": "{\"ok\": 0.7, \"full\": 0.3}",
+      "row": {
+        "ok": 0.698,
+        "full": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "scanner_down",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "token_revoked",
+      "raw": "{\"ok\": 0.9, \"full\": 0.1}",
+      "row": {
+        "ok": 0.896,
+        "full": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"ok\": 0.7, \"full\": 0.3}",
+      "row": {
+        "ok": 0.698,
+        "full": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 171,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "storage",
+      "hypothesis": "other",
+      "raw": "{\"ok\": 0.7, \"full\": 0.3}",
+      "row": {
+        "ok": 0.698,
+        "full": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 160,
+        "output_tokens": 17,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "file_too_large",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 183,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "type_blocked",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 184,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"absent\": 0.7, \"locked_by_other\": 0.3}",
+      "row": {
+        "absent": 0.698,
+        "locked_by_other": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 180,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "storage_full",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 177,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "name_locked",
+      "raw": "{\"absent\": 0.3, \"locked_by_other\": 0.7}",
+      "row": {
+        "absent": 0.302,
+        "locked_by_other": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 186,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "scanner_down",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 185,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "token_revoked",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 186,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"absent\": 0.9, \"locked_by_other\": 0.1}",
+      "row": {
+        "absent": 0.896,
+        "locked_by_other": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 184,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "listing",
+      "hypothesis": "other",
+      "raw": "{\"absent\": 0.7, \"locked_by_other\": 0.3}",
+      "row": {
+        "absent": 0.698,
+        "locked_by_other": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "file_too_large",
+      "raw": "{\"all_up\": 0.1, \"scanner_down\": 0.9}",
+      "row": {
+        "all_up": 0.10400000000000001,
+        "scanner_down": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 170,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "type_blocked",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.7}",
+      "row": {
+        "all_up": 0.302,
+        "scanner_down": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 171,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"all_up\": 0.5, \"scanner_down\": 0.5}",
+      "row": {
+        "all_up": 0.5,
+        "scanner_down": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "storage_full",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.25599999999999994}",
+      "row": {
+        "all_up": 0.5391726618705037,
+        "scanner_down": 0.4608273381294964
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 164,
+        "output_tokens": 35,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "name_locked",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.7}",
+      "row": {
+        "all_up": 0.302,
+        "scanner_down": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "scanner_down",
+      "raw": "{\"all_up\": 0.1, \"scanner_down\": 0.9}",
+      "row": {
+        "all_up": 0.10400000000000001,
+        "scanner_down": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "token_revoked",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.7}",
+      "row": {
+        "all_up": 0.302,
+        "scanner_down": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.7}",
+      "row": {
+        "all_up": 0.302,
+        "scanner_down": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 171,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "health",
+      "hypothesis": "other",
+      "raw": "{\"all_up\": 0.3, \"scanner_down\": 0.7}",
+      "row": {
+        "all_up": 0.302,
+        "scanner_down": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 160,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "file_too_large",
+      "raw": "{\"valid\": 0.3, \"revoked\": 0.7}",
+      "row": {
+        "valid": 0.302,
+        "revoked": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 166,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "type_blocked",
+      "raw": "{\"valid\": 0.3, \"revoked\": 0.7}",
+      "row": {
+        "valid": 0.302,
+        "revoked": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"valid\": 0.4, \"revoked\": 0.6}",
+      "row": {
+        "valid": 0.401,
+        "revoked": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 163,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "storage_full",
+      "raw": "{\"valid\": 0.3, \"revoked\": 0.7}",
+      "row": {
+        "valid": 0.302,
+        "revoked": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 160,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "name_locked",
+      "raw": "{\"valid\": 0.4, \"revoked\": 0.6}",
+      "row": {
+        "valid": 0.401,
+        "revoked": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 169,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "scanner_down",
+      "raw": "{\"valid\": 0.95, \"revoked\": 0.05}",
+      "row": {
+        "valid": 0.9455,
+        "revoked": 0.0545
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 168,
+        "output_tokens": 20,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "token_revoked",
+      "raw": "{\"valid\": 0.3, \"revoked\": 0.7}",
+      "row": {
+        "valid": 0.302,
+        "revoked": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 169,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"valid\": 0.4, \"revoked\": 0.6}",
+      "row": {
+        "valid": 0.401,
+        "revoked": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "token",
+      "hypothesis": "other",
+      "raw": "{\"valid\": 0.5, \"revoked\": 0.5}",
+      "row": {
+        "valid": 0.5,
+        "revoked": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 156,
+        "output_tokens": 18,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "file_too_large",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "type_blocked",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 169,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "storage_full",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 166,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "name_locked",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 175,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "scanner_down",
+      "raw": "{\"same_region\": 0.95, \"cross_region\": 0.05}",
+      "row": {
+        "same_region": 0.9455,
+        "cross_region": 0.0545
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 21,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "token_revoked",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 175,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"same_region\": 0.7, \"cross_region\": 0.3}",
+      "row": {
+        "same_region": 0.698,
+        "cross_region": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 173,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "folder_meta",
+      "hypothesis": "other",
+      "raw": "{\"same_region\": 0.9, \"cross_region\": 0.1}",
+      "row": {
+        "same_region": 0.896,
+        "cross_region": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 162,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "file_too_large",
+      "raw": "{\n  \"too_large\": 0.9,\n  \"unsupported_type\": 0.05,\n  \"conflict\": 0.02,\n  \"insufficient_storage\": 0.01,\n  \"dependency_failed\": 0.005,\n  \"forbidden\": 0.005,\n  \"server_error\": 0.01\n}",
+      "row": {
+        "too_large": 0.8924285714285715,
+        "unsupported_type": 0.050928571428571434,
+        "conflict": 0.02122857142857143,
+        "insufficient_storage": 0.01132857142857143,
+        "dependency_failed": 0.006378571428571429,
+        "forbidden": 0.006378571428571429,
+        "server_error": 0.01132857142857143
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 212,
+        "output_tokens": 82,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "type_blocked",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 1,\n  \"conflict\": 0,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 0,\n  \"forbidden\": 0,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.9914285714285714,
+        "conflict": 0.0014285714285714286,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.0014285714285714286,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 213,
+        "output_tokens": 60,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "folder_readonly",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 0,\n  \"forbidden\": 1,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.0014285714285714286,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.9914285714285714,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 209,
+        "output_tokens": 60,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "storage_full",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0,\n  \"insufficient_storage\": 1,\n  \"dependency_failed\": 0,\n  \"forbidden\": 0,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.0014285714285714286,
+        "insufficient_storage": 0.9914285714285714,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.0014285714285714286,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 206,
+        "output_tokens": 60,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "name_locked",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0.9,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 0,\n  \"forbidden\": 0.1,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.8924285714285715,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.10042857142857144,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 215,
+        "output_tokens": 64,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "scanner_down",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 1,\n  \"forbidden\": 0,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.0014285714285714286,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.9914285714285714,
+        "forbidden": 0.0014285714285714286,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 214,
+        "output_tokens": 60,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "token_revoked",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 0,\n  \"forbidden\": 1,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.0014285714285714286,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.9914285714285714,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 215,
+        "output_tokens": 60,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "region_mismatch",
+      "raw": "{\n  \"too_large\": 0,\n  \"unsupported_type\": 0,\n  \"conflict\": 0.9,\n  \"insufficient_storage\": 0,\n  \"dependency_failed\": 0,\n  \"forbidden\": 0.1,\n  \"server_error\": 0\n}",
+      "row": {
+        "too_large": 0.0014285714285714286,
+        "unsupported_type": 0.0014285714285714286,
+        "conflict": 0.8924285714285715,
+        "insufficient_storage": 0.0014285714285714286,
+        "dependency_failed": 0.0014285714285714286,
+        "forbidden": 0.10042857142857144,
+        "server_error": 0.0014285714285714286
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 213,
+        "output_tokens": 64,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "dry_run",
+      "hypothesis": "other",
+      "raw": "{\n  \"too_large\": 0.2,\n  \"unsupported_type\": 0.1,\n  \"conflict\": 0.05,\n  \"insufficient_storage\": 0.05,\n  \"dependency_failed\": 0.05,\n  \"forbidden\": 0.15,\n  \"server_error\": 0.25\n}",
+      "row": {
+        "too_large": 0.23436974789915968,
+        "unsupported_type": 0.11789915966386556,
+        "conflict": 0.0596638655462185,
+        "insufficient_storage": 0.0596638655462185,
+        "dependency_failed": 0.0596638655462185,
+        "forbidden": 0.1761344537815126,
+        "server_error": 0.29260504201680676
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 202,
+        "output_tokens": 79,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "file_too_large",
+      "raw": "{\n  \"code:file_too_large\": 0.9,\n  \"code:type_blocked\": 0.05,\n  \"code:folder_readonly\": 0.03,\n  \"code:storage_full\": 0.01,\n  \"code:name_locked\": 0.005,\n  \"code:scanner_down\": 0.005,\n  \"code:token_revoked\": 0.001,\n  \"code:region_mismatch\": 0.001,\n  \"not_indexed\": 0.001\n}",
+      "row": {
+        "code:file_too_large": 0.8894461061260661,
+        "code:type_blocked": 0.050463055278608615,
+        "code:folder_readonly": 0.03072227761160961,
+        "code:storage_full": 0.01098149994461061,
+        "code:name_locked": 0.006046305527860861,
+        "code:scanner_down": 0.006046305527860861,
+        "code:token_revoked": 0.002098149994461061,
+        "code:region_mismatch": 0.002098149994461061,
+        "not_indexed": 0.002098149994461061
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 303,
+        "output_tokens": 126,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "type_blocked",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 1,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.991111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 304,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "folder_readonly",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 1,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.991111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 300,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "storage_full",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 1,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.991111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 297,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "name_locked",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 1,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.991111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 306,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "scanner_down",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 1,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.991111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 305,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "token_revoked",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 1,\n  \"code:region_mismatch\": 0,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.991111111111111,
+        "code:region_mismatch": 0.0011111111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 306,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "region_mismatch",
+      "raw": "{\n  \"code:file_too_large\": 0,\n  \"code:type_blocked\": 0,\n  \"code:folder_readonly\": 0,\n  \"code:storage_full\": 0,\n  \"code:name_locked\": 0,\n  \"code:scanner_down\": 0,\n  \"code:token_revoked\": 0,\n  \"code:region_mismatch\": 1,\n  \"not_indexed\": 0\n}",
+      "row": {
+        "code:file_too_large": 0.0011111111111111111,
+        "code:type_blocked": 0.0011111111111111111,
+        "code:folder_readonly": 0.0011111111111111111,
+        "code:storage_full": 0.0011111111111111111,
+        "code:name_locked": 0.0011111111111111111,
+        "code:scanner_down": 0.0011111111111111111,
+        "code:token_revoked": 0.0011111111111111111,
+        "code:region_mismatch": 0.991111111111111,
+        "not_indexed": 0.0011111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 304,
+        "output_tokens": 95,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "trace",
+      "hypothesis": "other",
+      "raw": "{\n  \"code:file_too_large\": 0.05,\n  \"code:type_blocked\": 0.05,\n  \"code:folder_readonly\": 0.05,\n  \"code:storage_full\": 0.05,\n  \"code:name_locked\": 0.05,\n  \"code:scanner_down\": 0.05,\n  \"code:token_revoked\": 0.05,\n  \"code:region_mismatch\": 0.05,\n  \"not_indexed\": 0.05\n}",
+      "row": {
+        "code:file_too_large": 0.1111111111111111,
+        "code:type_blocked": 0.1111111111111111,
+        "code:folder_readonly": 0.1111111111111111,
+        "code:storage_full": 0.1111111111111111,
+        "code:name_locked": 0.1111111111111111,
+        "code:scanner_down": 0.1111111111111111,
+        "code:token_revoked": 0.1111111111111111,
+        "code:region_mismatch": 0.1111111111111111,
+        "not_indexed": 0.1111111111111111
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 293,
+        "output_tokens": 122,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "file_too_large",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 154,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "type_blocked",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 155,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "folder_readonly",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 151,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "storage_full",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 148,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "name_locked",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 157,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "scanner_down",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 156,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "token_revoked",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 157,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "region_mismatch",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 155,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "faq",
+      "hypothesis": "other",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 144,
+        "output_tokens": 9,
+        "cached_input_tokens": 0
+      }
+    }
+  ],
+  "uniform_fallback_rows": 0
+}

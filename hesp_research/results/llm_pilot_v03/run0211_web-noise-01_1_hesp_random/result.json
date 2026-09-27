@@ -1,0 +1,33 @@
+{
+  "mode": "hesp",
+  "arm": "hesp_random",
+  "planner": "ollama:qwen2.5:7b-instruct",
+  "selector": "random",
+  "prediction_source": "designer_table",
+  "environment": "local_web_sandbox",
+  "status": "VERIFIED_SIMULATION",
+  "verified_simulation": true,
+  "tool_calls": 8,
+  "tool_cost_units": 10,
+  "planner_calls": 9,
+  "blocked_duplicate_proposals": 0,
+  "replan_signals": 0,
+  "reported_input_tokens": 23550,
+  "reported_output_tokens": 257,
+  "usage_unknown_calls": 0,
+  "wall_seconds": 11.797,
+  "final_scores": {
+    "session_expired": 3.0711611484943266e-15,
+    "role_readonly": 0.9718299593453016,
+    "owner_policy": 0.0032611743602191327,
+    "document_archived": 0.0032611743602191327,
+    "workflow_locked": 1.0943538121540714e-05,
+    "quota_exceeded": 1.0943538121540712e-05,
+    "edit_conflict": 1.0943538121540712e-05,
+    "feature_disabled": 1.094353812154071e-05,
+    "other": 0.021603917781771006
+  },
+  "source_sha256": "3364da44d901c28ac4d611626be3f2f6001e70f7bbdbbd59a23d11728a18483d",
+  "research_claim_allowed": false,
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}

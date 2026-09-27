@@ -1,4 +1,17 @@
-# HESP 研究原型 v0.2
+# HESP 研究原型 v0.4
+
+v0.4：通用本地靶场（`hesp/sandbox.py`）与留出任务族 upload-diag、状态守卫 finish、预算感知 lookahead 选择器、vLLM 后端、并发可续跑的配对执行器，以及三档本地模型的主研究。结果见 [docs/RESULTS.md](docs/RESULTS.md)。
+
+```bash
+python -m hesp --env web --case owner_policy --variant drift --output runs/web_demo
+python scripts/run_web_ablation.py --output runs/ablation --repeats 1
+python scripts/v04_summary.py      # 汇总已有的 v0.4 结果
+```
+
+下文保留 v0.2 的说明。
+
+---
+
 
 v0.2 新增：按种子随机排序的三组配对执行、冻结 manifest、逐次持久化结果、按任务聚类的配对分析、日志一致性审计和 GitHub CI。已修复脚本策略引用旧状态证据的问题。真实模型和真实 Web 实验仍未执行。
 

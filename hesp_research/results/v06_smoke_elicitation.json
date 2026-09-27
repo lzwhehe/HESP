@@ -1,0 +1,1919 @@
+{
+  "schema": "hesp.elicitation.v2",
+  "model": {
+    "model": "qwen2.5:7b-instruct",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "family": "qwen2",
+    "parameter_size": "7.6B",
+    "quantization": "Q4_K_M",
+    "server": {
+      "version": "0.34.3"
+    }
+  },
+  "source": "llm_elicited:qwen2.5:7b-instruct",
+  "eps_floor": 0.01,
+  "families": {
+    "sec-triage": {
+      "tables": {
+        "auth_log": {
+          "credential_stuffing": {
+            "distributed_failures": 0.797,
+            "none": 0.203
+          },
+          "sqli_probe": {
+            "distributed_failures": 0.797,
+            "none": 0.203
+          },
+          "misconfig_exposed_admin": {
+            "distributed_failures": 0.698,
+            "none": 0.302
+          },
+          "authorized_scan": {
+            "distributed_failures": 0.203,
+            "none": 0.797
+          },
+          "false_positive_monitor": {
+            "distributed_failures": 0.10400000000000001,
+            "none": 0.896
+          },
+          "insider_exfil": {
+            "distributed_failures": 0.10400000000000001,
+            "none": 0.896
+          },
+          "vuln_component": {
+            "distributed_failures": 0.698,
+            "none": 0.302
+          },
+          "dns_c2": {
+            "distributed_failures": 0.698,
+            "none": 0.302
+          },
+          "other": {
+            "distributed_failures": 0.5,
+            "none": 0.5
+          }
+        },
+        "access_pattern": {
+          "credential_stuffing": {
+            "sqli_payloads": 0.052000000000000005,
+            "path_scanning": 0.1015,
+            "large_response": 0.052000000000000005,
+            "normal": 0.7945
+          },
+          "sqli_probe": {
+            "sqli_payloads": 0.7945,
+            "path_scanning": 0.1015,
+            "large_response": 0.052000000000000005,
+            "normal": 0.052000000000000005
+          },
+          "misconfig_exposed_admin": {
+            "sqli_payloads": 0.1015,
+            "path_scanning": 0.2005,
+            "large_response": 0.052000000000000005,
+            "normal": 0.6459999999999999
+          },
+          "authorized_scan": {
+            "sqli_payloads": 0.052000000000000005,
+            "path_scanning": 0.1015,
+            "large_response": 0.052000000000000005,
+            "normal": 0.7945
+          },
+          "false_positive_monitor": {
+            "sqli_payloads": 0.052000000000000005,
+            "path_scanning": 0.052000000000000005,
+            "large_response": 0.052000000000000005,
+            "normal": 0.844
+          },
+          "insider_exfil": {
+            "sqli_payloads": 0.052000000000000005,
+            "path_scanning": 0.052000000000000005,
+            "large_response": 0.7945,
+            "normal": 0.1015
+          },
+          "vuln_component": {
+            "sqli_payloads": 0.2995,
+            "path_scanning": 0.2005,
+            "large_response": 0.1015,
+            "normal": 0.3985
+          },
+          "dns_c2": {
+            "sqli_payloads": 0.052000000000000005,
+            "path_scanning": 0.1015,
+            "large_response": 0.052000000000000005,
+            "normal": 0.7945
+          },
+          "other": {
+            "sqli_payloads": 0.1015,
+            "path_scanning": 0.1015,
+            "large_response": 0.1015,
+            "normal": 0.6954999999999999
+          }
+        },
+        "source_ips": {
+          "credential_stuffing": {
+            "many_residential": 0.398,
+            "known_scanner_asn": 0.2,
+            "monitoring_range": 0.101,
+            "internal_host": 0.101,
+            "normal": 0.2
+          },
+          "sqli_probe": {
+            "many_residential": 0.3980000000000001,
+            "known_scanner_asn": 0.29900000000000004,
+            "monitoring_range": 0.10100000000000002,
+            "internal_host": 0.10100000000000002,
+            "normal": 0.10100000000000002
+          },
+          "misconfig_exposed_admin": {
+            "many_residential": 0.398,
+            "known_scanner_asn": 0.2,
+            "monitoring_range": 0.101,
+            "internal_host": 0.101,
+            "normal": 0.2
+          },
+          "authorized_scan": {
+            "many_residential": 0.101,
+            "known_scanner_asn": 0.051500000000000004,
+            "monitoring_range": 0.051500000000000004,
+            "internal_host": 0.1505,
+            "normal": 0.6455
+          },
+          "false_positive_monitor": {
+            "many_residential": 0.101,
+            "known_scanner_asn": 0.051500000000000004,
+            "monitoring_range": 0.695,
+            "internal_host": 0.101,
+            "normal": 0.051500000000000004
+          },
+          "insider_exfil": {
+            "many_residential": 0.101,
+            "known_scanner_asn": 0.051500000000000004,
+            "monitoring_range": 0.051500000000000004,
+            "internal_host": 0.2,
+            "normal": 0.596
+          },
+          "vuln_component": {
+            "many_residential": 0.398,
+            "known_scanner_asn": 0.2,
+            "monitoring_range": 0.101,
+            "internal_host": 0.101,
+            "normal": 0.2
+          },
+          "dns_c2": {
+            "many_residential": 0.398,
+            "known_scanner_asn": 0.2,
+            "monitoring_range": 0.101,
+            "internal_host": 0.101,
+            "normal": 0.2
+          },
+          "other": {
+            "many_residential": 0.2377142857142857,
+            "known_scanner_asn": 0.2377142857142857,
+            "monitoring_range": 0.2377142857142857,
+            "internal_host": 0.14342857142857143,
+            "normal": 0.14342857142857143
+          }
+        },
+        "admin_exposure": {
+          "credential_stuffing": {
+            "protected": 0.797,
+            "exposed_no_auth": 0.203
+          },
+          "sqli_probe": {
+            "protected": 0.698,
+            "exposed_no_auth": 0.302
+          },
+          "misconfig_exposed_admin": {
+            "protected": 0.401,
+            "exposed_no_auth": 0.599
+          },
+          "authorized_scan": {
+            "protected": 0.797,
+            "exposed_no_auth": 0.203
+          },
+          "false_positive_monitor": {
+            "protected": 0.698,
+            "exposed_no_auth": 0.302
+          },
+          "insider_exfil": {
+            "protected": 0.698,
+            "exposed_no_auth": 0.302
+          },
+          "vuln_component": {
+            "protected": 0.698,
+            "exposed_no_auth": 0.302
+          },
+          "dns_c2": {
+            "protected": 0.698,
+            "exposed_no_auth": 0.302
+          },
+          "other": {
+            "protected": 0.401,
+            "exposed_no_auth": 0.599
+          }
+        },
+        "user_activity": {
+          "credential_stuffing": {
+            "normal": 0.10400000000000001,
+            "one_user_spike": 0.896
+          },
+          "sqli_probe": {
+            "normal": 0.0545,
+            "one_user_spike": 0.9455
+          },
+          "misconfig_exposed_admin": {
+            "normal": 0.203,
+            "one_user_spike": 0.797
+          },
+          "authorized_scan": {
+            "normal": 0.698,
+            "one_user_spike": 0.302
+          },
+          "false_positive_monitor": {
+            "normal": 0.698,
+            "one_user_spike": 0.302
+          },
+          "insider_exfil": {
+            "normal": 0.10400000000000001,
+            "one_user_spike": 0.896
+          },
+          "vuln_component": {
+            "normal": 0.203,
+            "one_user_spike": 0.797
+          },
+          "dns_c2": {
+            "normal": 0.10400000000000001,
+            "one_user_spike": 0.896
+          },
+          "other": {
+            "normal": 0.401,
+            "one_user_spike": 0.599
+          }
+        },
+        "dns_logs": {
+          "credential_stuffing": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "sqli_probe": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "misconfig_exposed_admin": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "authorized_scan": {
+            "normal": 0.797,
+            "high_entropy": 0.203
+          },
+          "false_positive_monitor": {
+            "normal": 0.698,
+            "high_entropy": 0.302
+          },
+          "insider_exfil": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "vuln_component": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "dns_c2": {
+            "normal": 0.10400000000000001,
+            "high_entropy": 0.896
+          },
+          "other": {
+            "normal": 0.401,
+            "high_entropy": 0.599
+          }
+        },
+        "component_versions": {
+          "credential_stuffing": {
+            "up_to_date": 0.698,
+            "known_cve": 0.302
+          },
+          "sqli_probe": {
+            "up_to_date": 0.10400000000000001,
+            "known_cve": 0.896
+          },
+          "misconfig_exposed_admin": {
+            "up_to_date": 0.302,
+            "known_cve": 0.698
+          },
+          "authorized_scan": {
+            "up_to_date": 0.797,
+            "known_cve": 0.203
+          },
+          "false_positive_monitor": {
+            "up_to_date": 0.896,
+            "known_cve": 0.10400000000000001
+          },
+          "insider_exfil": {
+            "up_to_date": 0.698,
+            "known_cve": 0.302
+          },
+          "vuln_component": {
+            "up_to_date": 0.203,
+            "known_cve": 0.797
+          },
+          "dns_c2": {
+            "up_to_date": 0.797,
+            "known_cve": 0.203
+          },
+          "other": {
+            "up_to_date": 0.698,
+            "known_cve": 0.302
+          }
+        },
+        "change_ticket": {
+          "credential_stuffing": {
+            "authorized_window": 0.698,
+            "none": 0.302
+          },
+          "sqli_probe": {
+            "authorized_window": 0.698,
+            "none": 0.302
+          },
+          "misconfig_exposed_admin": {
+            "authorized_window": 0.698,
+            "none": 0.302
+          },
+          "authorized_scan": {
+            "authorized_window": 0.797,
+            "none": 0.203
+          },
+          "false_positive_monitor": {
+            "authorized_window": 0.797,
+            "none": 0.203
+          },
+          "insider_exfil": {
+            "authorized_window": 0.698,
+            "none": 0.302
+          },
+          "vuln_component": {
+            "authorized_window": 0.599,
+            "none": 0.401
+          },
+          "dns_c2": {
+            "authorized_window": 0.698,
+            "none": 0.302
+          },
+          "other": {
+            "authorized_window": 0.5,
+            "none": 0.5
+          }
+        },
+        "threat_intel": {
+          "credential_stuffing": {
+            "malicious_campaign": 0.7945,
+            "benign_scanner": 0.1015,
+            "clean": 0.052000000000000005,
+            "inconclusive": 0.052000000000000005
+          },
+          "sqli_probe": {
+            "malicious_campaign": 0.7945,
+            "benign_scanner": 0.1015,
+            "clean": 0.052000000000000005,
+            "inconclusive": 0.052000000000000005
+          },
+          "misconfig_exposed_admin": {
+            "malicious_campaign": 0.1015,
+            "benign_scanner": 0.2005,
+            "clean": 0.4975,
+            "inconclusive": 0.2005
+          },
+          "authorized_scan": {
+            "malicious_campaign": 0.052000000000000005,
+            "benign_scanner": 0.844,
+            "clean": 0.052000000000000005,
+            "inconclusive": 0.052000000000000005
+          },
+          "false_positive_monitor": {
+            "malicious_campaign": 0.052000000000000005,
+            "benign_scanner": 0.1015,
+            "clean": 0.7945,
+            "inconclusive": 0.052000000000000005
+          },
+          "insider_exfil": {
+            "malicious_campaign": 0.3985,
+            "benign_scanner": 0.1015,
+            "clean": 0.2995,
+            "inconclusive": 0.2005
+          },
+          "vuln_component": {
+            "malicious_campaign": 0.2995,
+            "benign_scanner": 0.2005,
+            "clean": 0.3985,
+            "inconclusive": 0.1015
+          },
+          "dns_c2": {
+            "malicious_campaign": 0.6954999999999999,
+            "benign_scanner": 0.1015,
+            "clean": 0.151,
+            "inconclusive": 0.052000000000000005
+          },
+          "other": {
+            "malicious_campaign": 0.1015,
+            "benign_scanner": 0.2005,
+            "clean": 0.4975,
+            "inconclusive": 0.2005
+          }
+        },
+        "runbook": {
+          "credential_stuffing": {
+            "generic": 1.0
+          },
+          "sqli_probe": {
+            "generic": 1.0
+          },
+          "misconfig_exposed_admin": {
+            "generic": 1.0
+          },
+          "authorized_scan": {
+            "generic": 1.0
+          },
+          "false_positive_monitor": {
+            "generic": 1.0
+          },
+          "insider_exfil": {
+            "generic": 1.0
+          },
+          "vuln_component": {
+            "generic": 1.0
+          },
+          "dns_c2": {
+            "generic": 1.0
+          },
+          "other": {
+            "generic": 1.0
+          }
+        }
+      },
+      "calibration_vs_true_model": {
+        "base": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 1.2202005076891458,
+            "kl_bits": 1.1993562590851778,
+            "expected_brier": 0.5374790234693874,
+            "argmax_agreement": 0.5888888888888889
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.029096317415246528,
+            "kl_bits": 0.008252068811278483,
+            "expected_brier": 0.008305200000000002,
+            "argmax_agreement": 1.0
+          }
+        },
+        "noise": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 1.2549317384433283,
+            "kl_bits": 1.2157632540330754,
+            "expected_brier": 0.5504590234693874,
+            "argmax_agreement": 0.5888888888888889
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.05116471252086525,
+            "kl_bits": 0.011996228110612246,
+            "expected_brier": 0.0206252,
+            "argmax_agreement": 1.0
+          }
+        },
+        "drift": {
+          "llm": {
+            "cells": 90,
+            "expected_log_loss_bits": 1.2202005076891458,
+            "kl_bits": 1.1993562590851778,
+            "expected_brier": 0.5374790234693874,
+            "argmax_agreement": 0.5888888888888889
+          },
+          "designer_table": {
+            "cells": 90,
+            "expected_log_loss_bits": 0.029096317415246528,
+            "kl_bits": 0.008252068811278483,
+            "expected_brier": 0.008305200000000002,
+            "argmax_agreement": 1.0
+          }
+        }
+      }
+    }
+  },
+  "seconds": 61.9,
+  "usage": {
+    "input_tokens": 29275,
+    "output_tokens": 2647,
+    "cached_input_tokens": 10717
+  },
+  "calls": 90,
+  "records": [
+    {
+      "action_id": "auth_log",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\"distributed_failures\": 0.8, \"none\": 0.2}",
+      "row": {
+        "distributed_failures": 0.797,
+        "none": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 206,
+        "output_tokens": 19,
+        "cached_input_tokens": 0
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"distributed_failures\": 0.8,\n  \"none\": 0.2\n}",
+      "row": {
+        "distributed_failures": 0.797,
+        "none": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 301,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"distributed_failures\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "distributed_failures": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 304,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "authorized_scan",
+      "raw": "{\"distributed_failures\": 0.2, \"none\": 0.8}",
+      "row": {
+        "distributed_failures": 0.203,
+        "none": 0.797
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 299,
+        "output_tokens": 19,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\n  \"distributed_failures\": 0.1,\n  \"none\": 0.9\n}",
+      "row": {
+        "distributed_failures": 0.10400000000000001,
+        "none": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 302,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"distributed_failures\": 0.1,\n  \"none\": 0.9\n}",
+      "row": {
+        "distributed_failures": 0.10400000000000001,
+        "none": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 305,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"distributed_failures\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "distributed_failures": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 304,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"distributed_failures\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "distributed_failures": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 307,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "auth_log",
+      "hypothesis": "other",
+      "raw": "{\n  \"distributed_failures\": 0.5,\n  \"none\": 0.5\n}",
+      "row": {
+        "distributed_failures": 0.5,
+        "none": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 290,
+        "output_tokens": 23,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"sqli_payloads\": 0.05,\n  \"path_scanning\": 0.1,\n  \"large_response\": 0.05,\n  \"normal\": 0.8\n}",
+      "row": {
+        "sqli_payloads": 0.052000000000000005,
+        "path_scanning": 0.1015,
+        "large_response": 0.052000000000000005,
+        "normal": 0.7945
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 360,
+        "output_tokens": 47,
+        "cached_input_tokens": 133
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"sqli_payloads\": 0.8,\n  \"path_scanning\": 0.1,\n  \"large_response\": 0.05,\n  \"normal\": 0.05\n}",
+      "row": {
+        "sqli_payloads": 0.7945,
+        "path_scanning": 0.1015,
+        "large_response": 0.052000000000000005,
+        "normal": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 350,
+        "output_tokens": 47,
+        "cached_input_tokens": 128
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"sqli_payloads\": 0.1,\n  \"path_scanning\": 0.2,\n  \"large_response\": 0.05,\n  \"normal\": 0.65\n}",
+      "row": {
+        "sqli_payloads": 0.1015,
+        "path_scanning": 0.2005,
+        "large_response": 0.052000000000000005,
+        "normal": 0.6459999999999999
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 356,
+        "output_tokens": 47,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "authorized_scan",
+      "raw": "{\n  \"sqli_payloads\": 0.05,\n  \"path_scanning\": 0.1,\n  \"large_response\": 0.05,\n  \"normal\": 0.8\n}",
+      "row": {
+        "sqli_payloads": 0.052000000000000005,
+        "path_scanning": 0.1015,
+        "large_response": 0.052000000000000005,
+        "normal": 0.7945
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 346,
+        "output_tokens": 47,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"sqli_payloads\": 0.05, \"path_scanning\": 0.05, \"large_response\": 0.05, \"normal\": 0.85}",
+      "row": {
+        "sqli_payloads": 0.052000000000000005,
+        "path_scanning": 0.052000000000000005,
+        "large_response": 0.052000000000000005,
+        "normal": 0.844
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 352,
+        "output_tokens": 43,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "insider_exfil",
+      "raw": "{\"sqli_payloads\": 0.05, \"path_scanning\": 0.05, \"large_response\": 0.8, \"normal\": 0.1}",
+      "row": {
+        "sqli_payloads": 0.052000000000000005,
+        "path_scanning": 0.052000000000000005,
+        "large_response": 0.7945,
+        "normal": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 358,
+        "output_tokens": 41,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"sqli_payloads\": 0.3,\n  \"path_scanning\": 0.2,\n  \"large_response\": 0.1,\n  \"normal\": 0.4\n}",
+      "row": {
+        "sqli_payloads": 0.2995,
+        "path_scanning": 0.2005,
+        "large_response": 0.1015,
+        "normal": 0.3985
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 356,
+        "output_tokens": 45,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "dns_c2",
+      "raw": "{\"sqli_payloads\": 0.05, \"path_scanning\": 0.1, \"large_response\": 0.05, \"normal\": 0.8}",
+      "row": {
+        "sqli_payloads": 0.052000000000000005,
+        "path_scanning": 0.1015,
+        "large_response": 0.052000000000000005,
+        "normal": 0.7945
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 362,
+        "output_tokens": 41,
+        "cached_input_tokens": 134
+      }
+    },
+    {
+      "action_id": "access_pattern",
+      "hypothesis": "other",
+      "raw": "{\"sqli_payloads\": 0.1, \"path_scanning\": 0.1, \"large_response\": 0.1, \"normal\": 0.7}",
+      "row": {
+        "sqli_payloads": 0.1015,
+        "path_scanning": 0.1015,
+        "large_response": 0.1015,
+        "normal": 0.6954999999999999
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 328,
+        "output_tokens": 39,
+        "cached_input_tokens": 117
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"many_residential\": 0.4,\n  \"known_scanner_asn\": 0.2,\n  \"monitoring_range\": 0.1,\n  \"internal_host\": 0.1,\n  \"normal\": 0.2\n}",
+      "row": {
+        "many_residential": 0.398,
+        "known_scanner_asn": 0.2,
+        "monitoring_range": 0.101,
+        "internal_host": 0.101,
+        "normal": 0.2
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 381,
+        "output_tokens": 57,
+        "cached_input_tokens": 133
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"many_residential\": 0.4,\n  \"known_scanner_asn\": 0.3,\n  \"monitoring_range\": 0.1,\n  \"internal_host\": 0.1,\n  \"normal\": 0.1\n}",
+      "row": {
+        "many_residential": 0.3980000000000001,
+        "known_scanner_asn": 0.29900000000000004,
+        "monitoring_range": 0.10100000000000002,
+        "internal_host": 0.10100000000000002,
+        "normal": 0.10100000000000002
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 371,
+        "output_tokens": 57,
+        "cached_input_tokens": 128
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"many_residential\": 0.4,\n  \"known_scanner_asn\": 0.2,\n  \"monitoring_range\": 0.1,\n  \"internal_host\": 0.1,\n  \"normal\": 0.2\n}",
+      "row": {
+        "many_residential": 0.398,
+        "known_scanner_asn": 0.2,
+        "monitoring_range": 0.101,
+        "internal_host": 0.101,
+        "normal": 0.2
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 377,
+        "output_tokens": 57,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "authorized_scan",
+      "raw": "{\n  \"many_residential\": 0.1,\n  \"known_scanner_asn\": 0.05,\n  \"monitoring_range\": 0.05,\n  \"internal_host\": 0.15,\n  \"normal\": 0.65\n}",
+      "row": {
+        "many_residential": 0.101,
+        "known_scanner_asn": 0.051500000000000004,
+        "monitoring_range": 0.051500000000000004,
+        "internal_host": 0.1505,
+        "normal": 0.6455
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 367,
+        "output_tokens": 61,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\n  \"many_residential\": 0.1,\n  \"known_scanner_asn\": 0.05,\n  \"monitoring_range\": 0.7,\n  \"internal_host\": 0.1,\n  \"normal\": 0.05\n}",
+      "row": {
+        "many_residential": 0.101,
+        "known_scanner_asn": 0.051500000000000004,
+        "monitoring_range": 0.695,
+        "internal_host": 0.101,
+        "normal": 0.051500000000000004
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 373,
+        "output_tokens": 59,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"many_residential\": 0.1,\n  \"known_scanner_asn\": 0.05,\n  \"monitoring_range\": 0.05,\n  \"internal_host\": 0.2,\n  \"normal\": 0.6\n}",
+      "row": {
+        "many_residential": 0.101,
+        "known_scanner_asn": 0.051500000000000004,
+        "monitoring_range": 0.051500000000000004,
+        "internal_host": 0.2,
+        "normal": 0.596
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 379,
+        "output_tokens": 59,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"many_residential\": 0.4,\n  \"known_scanner_asn\": 0.2,\n  \"monitoring_range\": 0.1,\n  \"internal_host\": 0.1,\n  \"normal\": 0.2\n}",
+      "row": {
+        "many_residential": 0.398,
+        "known_scanner_asn": 0.2,
+        "monitoring_range": 0.101,
+        "internal_host": 0.101,
+        "normal": 0.2
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 377,
+        "output_tokens": 57,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"many_residential\": 0.4,\n  \"known_scanner_asn\": 0.2,\n  \"monitoring_range\": 0.1,\n  \"internal_host\": 0.1,\n  \"normal\": 0.2\n}",
+      "row": {
+        "many_residential": 0.398,
+        "known_scanner_asn": 0.2,
+        "monitoring_range": 0.101,
+        "internal_host": 0.101,
+        "normal": 0.2
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 383,
+        "output_tokens": 57,
+        "cached_input_tokens": 134
+      }
+    },
+    {
+      "action_id": "source_ips",
+      "hypothesis": "other",
+      "raw": "{\n  \"many_residential\": 0.25,\n  \"known_scanner_asn\": 0.25,\n  \"monitoring_range\": 0.25,\n  \"internal_host\": 0.15,\n  \"normal\": 0.15\n}",
+      "row": {
+        "many_residential": 0.2377142857142857,
+        "known_scanner_asn": 0.2377142857142857,
+        "monitoring_range": 0.2377142857142857,
+        "internal_host": 0.14342857142857143,
+        "normal": 0.14342857142857143
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 349,
+        "output_tokens": 62,
+        "cached_input_tokens": 117
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"protected\": 0.8,\n  \"exposed_no_auth\": 0.2\n}",
+      "row": {
+        "protected": 0.797,
+        "exposed_no_auth": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 327,
+        "output_tokens": 24,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"protected\": 0.7,\n  \"exposed_no_auth\": 0.3\n}",
+      "row": {
+        "protected": 0.698,
+        "exposed_no_auth": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 291,
+        "output_tokens": 24,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\"protected\": 0.4, \"exposed_no_auth\": 0.6}",
+      "row": {
+        "protected": 0.401,
+        "exposed_no_auth": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 294,
+        "output_tokens": 20,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "authorized_scan",
+      "raw": "{\"protected\": 0.8, \"exposed_no_auth\": 0.2}",
+      "row": {
+        "protected": 0.797,
+        "exposed_no_auth": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 289,
+        "output_tokens": 20,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"protected\": 0.7, \"exposed_no_auth\": 0.3}",
+      "row": {
+        "protected": 0.698,
+        "exposed_no_auth": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 292,
+        "output_tokens": 20,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"protected\": 0.7,\n  \"exposed_no_auth\": 0.3\n}",
+      "row": {
+        "protected": 0.698,
+        "exposed_no_auth": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 295,
+        "output_tokens": 24,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"protected\": 0.7,\n  \"exposed_no_auth\": 0.3\n}",
+      "row": {
+        "protected": 0.698,
+        "exposed_no_auth": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 294,
+        "output_tokens": 24,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"protected\": 0.7,\n  \"exposed_no_auth\": 0.3\n}",
+      "row": {
+        "protected": 0.698,
+        "exposed_no_auth": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 297,
+        "output_tokens": 24,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "admin_exposure",
+      "hypothesis": "other",
+      "raw": "{\n  \"protected\": 0.4,\n  \"exposed_no_auth\": 0.6\n}",
+      "row": {
+        "protected": 0.401,
+        "exposed_no_auth": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 280,
+        "output_tokens": 24,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"normal\": 0.1,\n  \"one_user_spike\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "one_user_spike": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 345,
+        "output_tokens": 24,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"normal\": 0.05,\n  \"one_user_spike\": 0.95\n}",
+      "row": {
+        "normal": 0.0545,
+        "one_user_spike": 0.9455
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 337,
+        "output_tokens": 26,
+        "cached_input_tokens": 128
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"normal\": 0.2,\n  \"one_user_spike\": 0.8\n}",
+      "row": {
+        "normal": 0.203,
+        "one_user_spike": 0.797
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 343,
+        "output_tokens": 24,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "authorized_scan",
+      "raw": "{\n  \"normal\": 0.7,\n  \"one_user_spike\": 0.3\n}",
+      "row": {
+        "normal": 0.698,
+        "one_user_spike": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 331,
+        "output_tokens": 24,
+        "cached_input_tokens": 124
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"normal\": 0.7, \"one_user_spike\": 0.3}",
+      "row": {
+        "normal": 0.698,
+        "one_user_spike": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 337,
+        "output_tokens": 20,
+        "cached_input_tokens": 127
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "insider_exfil",
+      "raw": "{\"normal\": 0.1, \"one_user_spike\": 0.9}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "one_user_spike": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 343,
+        "output_tokens": 20,
+        "cached_input_tokens": 130
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"normal\": 0.2,\n  \"one_user_spike\": 0.8\n}",
+      "row": {
+        "normal": 0.203,
+        "one_user_spike": 0.797
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 343,
+        "output_tokens": 24,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"normal\": 0.1,\n  \"one_user_spike\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "one_user_spike": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 349,
+        "output_tokens": 24,
+        "cached_input_tokens": 134
+      }
+    },
+    {
+      "action_id": "user_activity",
+      "hypothesis": "other",
+      "raw": "{\n  \"normal\": 0.4,\n  \"one_user_spike\": 0.6\n}",
+      "row": {
+        "normal": 0.401,
+        "one_user_spike": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 313,
+        "output_tokens": 24,
+        "cached_input_tokens": 115
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 340,
+        "output_tokens": 22,
+        "cached_input_tokens": 133
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 328,
+        "output_tokens": 22,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 334,
+        "output_tokens": 22,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "authorized_scan",
+      "raw": "{\n  \"normal\": 0.8,\n  \"high_entropy\": 0.2\n}",
+      "row": {
+        "normal": 0.797,
+        "high_entropy": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 326,
+        "output_tokens": 22,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\n  \"normal\": 0.7,\n  \"high_entropy\": 0.3\n}",
+      "row": {
+        "normal": 0.698,
+        "high_entropy": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 332,
+        "output_tokens": 22,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 338,
+        "output_tokens": 22,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 334,
+        "output_tokens": 22,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"normal\": 0.1,\n  \"high_entropy\": 0.9\n}",
+      "row": {
+        "normal": 0.10400000000000001,
+        "high_entropy": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 340,
+        "output_tokens": 22,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "dns_logs",
+      "hypothesis": "other",
+      "raw": "{\n  \"normal\": 0.4,\n  \"high_entropy\": 0.6\n}",
+      "row": {
+        "normal": 0.401,
+        "high_entropy": 0.599
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 308,
+        "output_tokens": 22,
+        "cached_input_tokens": 117
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"up_to_date\": 0.7,\n  \"known_cve\": 0.3\n}",
+      "row": {
+        "up_to_date": 0.698,
+        "known_cve": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 327,
+        "output_tokens": 25,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "sqli_probe",
+      "raw": "{\"up_to_date\": 0.1, \"known_cve\": 0.9}",
+      "row": {
+        "up_to_date": 0.10400000000000001,
+        "known_cve": 0.896
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 317,
+        "output_tokens": 21,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\"up_to_date\": 0.3, \"known_cve\": 0.7}",
+      "row": {
+        "up_to_date": 0.302,
+        "known_cve": 0.698
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 323,
+        "output_tokens": 21,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "authorized_scan",
+      "raw": "{\"up_to_date\": 0.8, \"known_cve\": 0.2}",
+      "row": {
+        "up_to_date": 0.797,
+        "known_cve": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 313,
+        "output_tokens": 21,
+        "cached_input_tokens": 124
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"up_to_date\": 0.9, \"known_cve\": 0.1}",
+      "row": {
+        "up_to_date": 0.896,
+        "known_cve": 0.10400000000000001
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 319,
+        "output_tokens": 21,
+        "cached_input_tokens": 127
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"up_to_date\": 0.7,\n  \"known_cve\": 0.3\n}",
+      "row": {
+        "up_to_date": 0.698,
+        "known_cve": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 325,
+        "output_tokens": 25,
+        "cached_input_tokens": 130
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "vuln_component",
+      "raw": "{\"up_to_date\": 0.2, \"known_cve\": 0.8}",
+      "row": {
+        "up_to_date": 0.203,
+        "known_cve": 0.797
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 323,
+        "output_tokens": 21,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "dns_c2",
+      "raw": "{\"up_to_date\": 0.8, \"known_cve\": 0.2}",
+      "row": {
+        "up_to_date": 0.797,
+        "known_cve": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 329,
+        "output_tokens": 21,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "component_versions",
+      "hypothesis": "other",
+      "raw": "{\n  \"up_to_date\": 0.7,\n  \"known_cve\": 0.3\n}",
+      "row": {
+        "up_to_date": 0.698,
+        "known_cve": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 295,
+        "output_tokens": 25,
+        "cached_input_tokens": 115
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"authorized_window\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "authorized_window": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 335,
+        "output_tokens": 22,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"authorized_window\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "authorized_window": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 325,
+        "output_tokens": 22,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"authorized_window\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "authorized_window": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 331,
+        "output_tokens": 22,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "authorized_scan",
+      "raw": "{\"authorized_window\": 0.8, \"none\": 0.2}",
+      "row": {
+        "authorized_window": 0.797,
+        "none": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 321,
+        "output_tokens": 18,
+        "cached_input_tokens": 124
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"authorized_window\": 0.8, \"none\": 0.2}",
+      "row": {
+        "authorized_window": 0.797,
+        "none": 0.203
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 327,
+        "output_tokens": 18,
+        "cached_input_tokens": 127
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"authorized_window\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "authorized_window": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 333,
+        "output_tokens": 22,
+        "cached_input_tokens": 130
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"authorized_window\": 0.6,\n  \"none\": 0.4\n}",
+      "row": {
+        "authorized_window": 0.599,
+        "none": 0.401
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 331,
+        "output_tokens": 22,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"authorized_window\": 0.7,\n  \"none\": 0.3\n}",
+      "row": {
+        "authorized_window": 0.698,
+        "none": 0.302
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 337,
+        "output_tokens": 22,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "change_ticket",
+      "hypothesis": "other",
+      "raw": "{\n  \"authorized_window\": 0.5,\n  \"none\": 0.5\n}",
+      "row": {
+        "authorized_window": 0.5,
+        "none": 0.5
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 303,
+        "output_tokens": 22,
+        "cached_input_tokens": 115
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"malicious_campaign\": 0.8,\n  \"benign_scanner\": 0.1,\n  \"clean\": 0.05,\n  \"inconclusive\": 0.05\n}",
+      "row": {
+        "malicious_campaign": 0.7945,
+        "benign_scanner": 0.1015,
+        "clean": 0.052000000000000005,
+        "inconclusive": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 357,
+        "output_tokens": 48,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"malicious_campaign\": 0.8,\n  \"benign_scanner\": 0.1,\n  \"clean\": 0.05,\n  \"inconclusive\": 0.05\n}",
+      "row": {
+        "malicious_campaign": 0.7945,
+        "benign_scanner": 0.1015,
+        "clean": 0.052000000000000005,
+        "inconclusive": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 347,
+        "output_tokens": 48,
+        "cached_input_tokens": 126
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"malicious_campaign\": 0.1,\n  \"benign_scanner\": 0.2,\n  \"clean\": 0.5,\n  \"inconclusive\": 0.2\n}",
+      "row": {
+        "malicious_campaign": 0.1015,
+        "benign_scanner": 0.2005,
+        "clean": 0.4975,
+        "inconclusive": 0.2005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 353,
+        "output_tokens": 46,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "authorized_scan",
+      "raw": "{\n  \"malicious_campaign\": 0.05,\n  \"benign_scanner\": 0.85,\n  \"clean\": 0.05,\n  \"inconclusive\": 0.05\n}",
+      "row": {
+        "malicious_campaign": 0.052000000000000005,
+        "benign_scanner": 0.844,
+        "clean": 0.052000000000000005,
+        "inconclusive": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 343,
+        "output_tokens": 50,
+        "cached_input_tokens": 124
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\n  \"malicious_campaign\": 0.05,\n  \"benign_scanner\": 0.1,\n  \"clean\": 0.8,\n  \"inconclusive\": 0.05\n}",
+      "row": {
+        "malicious_campaign": 0.052000000000000005,
+        "benign_scanner": 0.1015,
+        "clean": 0.7945,
+        "inconclusive": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 349,
+        "output_tokens": 48,
+        "cached_input_tokens": 127
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "insider_exfil",
+      "raw": "{\n  \"malicious_campaign\": 0.4,\n  \"benign_scanner\": 0.1,\n  \"clean\": 0.3,\n  \"inconclusive\": 0.2\n}",
+      "row": {
+        "malicious_campaign": 0.3985,
+        "benign_scanner": 0.1015,
+        "clean": 0.2995,
+        "inconclusive": 0.2005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 355,
+        "output_tokens": 46,
+        "cached_input_tokens": 130
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "vuln_component",
+      "raw": "{\n  \"malicious_campaign\": 0.3,\n  \"benign_scanner\": 0.2,\n  \"clean\": 0.4,\n  \"inconclusive\": 0.1\n}",
+      "row": {
+        "malicious_campaign": 0.2995,
+        "benign_scanner": 0.2005,
+        "clean": 0.3985,
+        "inconclusive": 0.1015
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 353,
+        "output_tokens": 46,
+        "cached_input_tokens": 129
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"malicious_campaign\": 0.7,\n  \"benign_scanner\": 0.1,\n  \"clean\": 0.15,\n  \"inconclusive\": 0.05\n}",
+      "row": {
+        "malicious_campaign": 0.6954999999999999,
+        "benign_scanner": 0.1015,
+        "clean": 0.151,
+        "inconclusive": 0.052000000000000005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 359,
+        "output_tokens": 48,
+        "cached_input_tokens": 132
+      }
+    },
+    {
+      "action_id": "threat_intel",
+      "hypothesis": "other",
+      "raw": "{\n  \"malicious_campaign\": 0.1,\n  \"benign_scanner\": 0.2,\n  \"clean\": 0.5,\n  \"inconclusive\": 0.2\n}",
+      "row": {
+        "malicious_campaign": 0.1015,
+        "benign_scanner": 0.2005,
+        "clean": 0.4975,
+        "inconclusive": 0.2005
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 325,
+        "output_tokens": 46,
+        "cached_input_tokens": 115
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "credential_stuffing",
+      "raw": "{\n  \"generic\": 1.0\n}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 309,
+        "output_tokens": 12,
+        "cached_input_tokens": 131
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "sqli_probe",
+      "raw": "{\n  \"generic\": 1.0\n}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 273,
+        "output_tokens": 12,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "misconfig_exposed_admin",
+      "raw": "{\n  \"generic\": 1.0\n}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 276,
+        "output_tokens": 12,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "authorized_scan",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 271,
+        "output_tokens": 9,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "false_positive_monitor",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 274,
+        "output_tokens": 9,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "insider_exfil",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 277,
+        "output_tokens": 9,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "vuln_component",
+      "raw": "{\"generic\": 1.0}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 276,
+        "output_tokens": 9,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "dns_c2",
+      "raw": "{\n  \"generic\": 1.0\n}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 279,
+        "output_tokens": 12,
+        "cached_input_tokens": 100
+      }
+    },
+    {
+      "action_id": "runbook",
+      "hypothesis": "other",
+      "raw": "{\n  \"generic\": 1.0\n}",
+      "row": {
+        "generic": 1.0
+      },
+      "uniform_fallback": false,
+      "usage": {
+        "input_tokens": 262,
+        "output_tokens": 12,
+        "cached_input_tokens": 100
+      }
+    }
+  ],
+  "uniform_fallback_rows": 0
+}

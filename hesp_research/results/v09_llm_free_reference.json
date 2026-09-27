@@ -1,0 +1,16 @@
+{
+ "note": "post hoc, exploratory; LLM replaced by NeverFinishPlanner; seed 2027, same tasks and budget as v0.9",
+ "source_sha256": "b7b821b9",
+ "episodes": 216,
+ "verified": {
+  "fixed_order_autostop": 0.8472222222222222,
+  "controller_eigc_autostop": 0.9166666666666666,
+  "controller_random_autostop": 0.75
+ },
+ "tool_cost": {
+  "fixed_order_autostop": 4.847222222222222,
+  "controller_eigc_autostop": 2.3472222222222223,
+  "controller_random_autostop": 6.430555555555555
+ },
+ "comparisons": null
+}

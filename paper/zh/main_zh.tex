@@ -1,0 +1,70 @@
+\documentclass[conference,compsoc]{IEEEtran}
+% 中文审阅版：与 ../main.tex 逐节对应，数字、引用、标签完全相同。以英文版为准。
+% 编译：cd paper/zh && tectonic -X compile main_zh.tex --outdir build
+% 字体：fonts/ 下放 simsun.ttc、simhei.ttf、simkai.ttf（从 C:/Windows/Fonts 复制，不入库）。
+\usepackage{xeCJK}
+\setCJKmainfont{simsun.ttc}[Path=./fonts/, FontIndex=0, BoldFont=simhei.ttf, ItalicFont=simkai.ttf]
+\setCJKsansfont{simhei.ttf}[Path=./fonts/]
+\setCJKmonofont{simhei.ttf}[Path=./fonts/]
+\xeCJKsetup{CJKecglue={\hskip 0.2em plus 0.1em}}
+\linespread{1.08}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,makecell,multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xurl}
+\usepackage{adjustbox}
+\usepackage{placeins}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\newcommand{\hesp}{HESP}
+\newcommand{\todo}[1]{\textcolor{red}{[待补：#1]}}
+\DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
+\graphicspath{{../figures/}{../../docs/assets/}}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\paragraph}[1]{\par\vspace{0.6ex}\noindent\textbf{#1。}\hspace{0.2em}\ignorespaces}
+
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\appendixname}{附录}
+\crefname{figure}{图}{图}\Crefname{figure}{图}{图}
+\crefname{table}{表}{表}\Crefname{table}{表}{表}
+\crefname{section}{§}{§}\Crefname{section}{§}{§}
+
+\begin{document}
+
+\title{\hesp{}：在本地 LLM 告警分诊智能体中\\把“探什么”与“何时停”分开}
+
+\author{\IEEEauthorblockN{Zhuowen Liu}
+\IEEEauthorblockA{北陆先端科学技术大学院大学（JAIST）网络安全实验室\\
+日本石川县能美市\\
+\texttt{ryutakubunwork@gmail.com}}}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/motivation}
+\input{sections/approach}
+\input{sections/setup}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/related}
+\input{sections/conclusion}
+\input{sections/ethics}
+
+{\footnotesize
+\bibliographystyle{IEEEtranN}
+\bibliography{../refs}}
+
+\appendices
+\input{sections/appendix}
+
+\end{document}

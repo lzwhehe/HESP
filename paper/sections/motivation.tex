@@ -1,0 +1,20 @@
+\section{Motivation}
+\label{sec:motivation}
+
+\subsection{Challenges}
+When a small local model drives the investigation, three challenges arise. We measured each on the baseline configurations of our studies (\S\ref{sec:setup}), in which the model chooses its own probes.
+
+\stepnum{1} \textbf{Probing without converging.} Qwen2.5-7B selecting its own probes verifies only 0.083 to 0.125 of cases. It runs about seven distinct probes per episode, spends 9.4 to 9.5 of its 10 cost units, and issues a verdict in only 6 or 7 of 72 episodes; three quarters of its episodes end with the tool budget exhausted. Replacing its choices with uniformly random ones raises completion by $+0.556$ (\S\ref{sec:rq-rank}), so its own choices are worse than chance.
+
+\stepnum{2} \textbf{Never deciding to stop.} Llama-3.1-8B requests another probe in every one of its 3{,}389 decisions, including those in which the ledger's posterior exceeds 0.999 and the prompt states that no legal probe is left. Its outputs are valid JSON throughout; it simply never finishes. Better probing cannot help a model that never states a verdict.
+
+\stepnum{3} \textbf{Verdicts without support.} Larger models conclude, but not always on evidence. Without a ledger, Qwen2.5-32B and 72B call 25\% and 37\% of actionable incidents benign and cite invalid evidence in 22\% and 31\% of their citations (\S\ref{sec:security}). In triage, a verdict that dismisses a real attack is the costliest error, because the incident is closed without a response.
+
+\subsection{Our Solution}
+We now describe how \hesp{} addresses these challenges.
+
+\stepnum{1} \textbf{Information-gain selection outside the model.} \hesp{} ranks every legal probe by the expected reduction in uncertainty over the candidate causes per unit cost, and executes the best one whatever the model proposed. The likelihoods behind the ranking are counted from LLM-free development runs. They are not elicited from the model, which cannot supply them: elicited tables leave completion at 0.069 to 0.375 (\S\ref{sec:rq-help}).
+
+\stepnum{2} \textbf{A controller-side stop.} Before each planner call, \hesp{} applies an explicit acceptance rule. Once the leading cause has posterior at least 0.8 and a current observation supports it, the controller concludes on its own and cites that evidence. The model may still finish earlier, so a strong model keeps the option of waiting for confirmation.
+
+\stepnum{3} \textbf{Evidence-bound verdicts.} \hesp{} accepts a verdict only if it cites a current observation that raised the claimed cause's score. An independent verifier, which the planner cannot reach, checks each verdict against a signature that the cause alone produces, and a write-ahead journal lets an audit replay every step.

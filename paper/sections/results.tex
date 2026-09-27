@@ -1,0 +1,93 @@
+\section{Evaluation Results}
+\label{sec:results}
+
+\subsection{Reliability}
+\label{sec:rq-help}
+The initial study (1{,}944 episodes, designer tables) compared full \hesp{} (EIG/cost selection with the finish guard) against Memory-only, in which the planner sees the same ledger but picks its own probes. Verified completion rose by $+0.889$ $[+0.75,+1.00]$ for Qwen2.5-7B and by $+0.250$ $[+0.10,+0.42]$ for 32B. For 72B the gain was $+0.111$, with an interval that touches zero ($[0.000,+0.236]$). The gain shrank with model size, as expected. The study left one question open, because its tables came from the environment's generator: did the gain require oracle knowledge? The table-source study replaced the designer tables with counted ones, with the 7B comparison against Memory-only as its single primary endpoint. \Cref{tab:v06} reports verified completion for every table source.
+
+\begin{table*}[t]
+  \caption{Table-source study: verified completion by the source of the prediction tables (72 episodes per cell). The 7B comparison against Memory-only is the pre-registered primary endpoint; 32B and 72B are exploratory. Intervals are 95\% task-cluster bootstrap.}
+  \label{tab:v06}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_main}\end{adjustbox}
+\end{table*}
+
+Three findings stand out. First, counted tables match the oracle. With tables counted from $k{=}20$ development episodes per cause and variant, \hesp{} lifts Qwen2.5-7B from 0.125 to 1.000 ($+0.875$ $[+0.74,+0.97]$; 22 tasks better, none worse), and completion equals that of the designer tables on all three models. It saturates at $k{=}5$, and $k{=}1$ loses at most one episode per model. This saturation reflects how nearly deterministic the environment is rather than a general data-efficiency property.
+
+Second, the price of not being an oracle is confined to one row. Counted tables cost 1.2 to 2.4 more probe units per episode than designer tables. An LLM-free check locates the entire gap in the row for \textit{other}, the one cause that development data never exhibits. Substituting the designer's row for \textit{other} alone restores completion and cost exactly, from 0.875 at 3.53 units to 1.000 at 2.54 in the scripted setting.
+
+Third, the models cannot write the tables themselves. With tables elicited from the planner, completion drops to 0.069, 0.375, and 0.375 for the 7B, 32B, and 72B models. Under the finish guard, the 32B and 72B models complete no case caused by credential stuffing, SQL injection, DNS command-and-control, the exposed admin panel, or the vulnerable component, and every case of the other three causes. The controller therefore has to supply both the procedure and the knowledge encoded in the tables.
+
+\subsection{Ranking versus Choice}
+\label{sec:rq-rank}
+A controller that picks probes changes two things at once: it removes the model's own choice, and it replaces that choice with a ranking. The decomposition study separates the two with blind configurations, in which the planner receives the same prompt whatever the selector, and adds the Llama~3.1 family. Its primary endpoints were the ranking effect on Qwen2.5-7B (blind EIG/cost against blind random) and full \hesp{} against Memory-only on Llama-3.1-8B. \Cref{fig:decomposition} shows both components of the gain for every model; Appendix~\ref{app:tables} lists all values.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig-decomposition.pdf}
+  \caption{Decomposition study: where the gain over Memory-only comes from, per model (difference in verified completion, 72 paired episodes, task-cluster bootstrap intervals). \emph{Taking the choice away} compares random controller selection with the model's own choices. \emph{Ranking} compares EIG/cost selection with random selection while the planner's prompt is identical. The hollow marker (Qwen 7B, ranking) is a primary endpoint with a 97.5\% interval; the others are exploratory 95\% intervals. Amber marks intervals entirely below zero. Llama-3.1-8B never concludes, so every contrast on it is zero.}
+  \label{fig:decomposition}
+\end{figure*}
+
+Three findings stand out. First, the ranking itself helps. With identical planner information, EIG/cost selection beats random selection by $+0.306$ $[+0.14,+0.47]$ on Qwen2.5-7B, confirming the first primary endpoint. The effect is similar on every model that concludes: $+0.35$, $+0.35$, and $+0.26$ on Qwen 32B, Qwen 72B, and Llama 70B, all with intervals excluding zero.
+
+Second, taking the choice away helps weak models and hurts strong ones. Replacing the model's own probe choices with random ones raises completion by $+0.556$ for the 7B model, whose own choices are worse than random, and lowers it by $0.222$ and $0.278$ for Qwen 32B and 72B, whose choices beat random. For a small model the controller therefore contributes discipline and ranking; for a large model it contributes the ranking alone, which outweighs the lost choices only because the ranking is informative. Showing the ranking to the planner and adding the finish guard each change completion by at most $+0.06$.
+
+Third, selecting probes does not make a model conclude. The second primary endpoint failed. Llama-3.1-8B completes none of its 360 episodes in any configuration: it makes 3{,}389 decisions, all requests for another probe, with valid JSON throughout. The controller decided what to probe, but the planner still decided when to stop.
+
+\subsection{Probing versus Stopping}
+\label{sec:rq-stop}
+The stopping study crosses who selects probes with who may stop, adds a random-selection control, and puts both primary endpoints on Llama-3.1-8B: whether a controller stop rescues it, and whether controller selection still helps once the stop is supplied. Before the run, an LLM-free simulation predicted about 0.9 for the first endpoint if the model kept never concluding, so we treated it as nearly mechanical and the second as the informative test. \Cref{fig:probe-stop} and \cref{tab:v09} report the results.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig-probe-stop.pdf}
+  \caption{Stopping study: verified completion by who selects probes and who may stop (72 episodes per point). The dashed line is the post hoc LLM-free controller (EIG/cost selection and controller stop, same seeds and tasks).}
+  \label{fig:probe-stop}
+\end{figure*}
+
+\begin{table*}[t]
+  \caption{Stopping study: verified completion, with mean probe cost in parentheses, 72 episodes per cell. ``LLM or controller'': the planner may still finish first. A new seed (2027) makes the first and third rows an independent replication of the decomposition study. The bottom rows replace the LLM with a script that never finishes.}
+  \label{tab:v09}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v09_main}\end{adjustbox}
+\end{table*}
+
+First, a controller stop rescues the model that never concludes. With the controller allowed to stop, Llama-3.1-8B rises from 0 to 0.917 ($+0.917$ $[+0.79,+1.00]$; 22 tasks better, none worse), as predicted.
+
+Second, for that model the stop accounts for the gain. Once the stop is supplied, Llama-3.1-8B's own probe choices reach 0.861 and controller selection 0.917, a difference of $+0.056$ $[-0.07,+0.18]$. The interval admits a moderate benefit, so we conclude only that selection adds no detectable completion for this model. Selection does halve probe cost (2.35 against 4.78 units). The model's own choices perform like the fixed catalogue order, which reaches 0.847 at 4.85 units in the LLM-free run.
+
+Third, small models fail differently. A controller stop alone lifts Qwen2.5-7B from 0.083 to 0.694, and controller selection then adds $+0.222$ $[+0.08,+0.39]$ (Appendix~\ref{app:tables}). Its failures in the decomposition study were therefore partly a refusal to conclude and partly poor probing, whereas Llama-3.1-8B's were almost entirely a refusal to conclude. A controller cannot know in advance which part a given model lacks, so it has to supply both.
+
+Fourth, the ranking effect replicates on all five models. Under a controller stop, EIG/cost beats random selection by $+0.17$ to $+0.21$ on every model, including Llama-3.1-8B, all with intervals excluding zero.
+
+Fifth, the controller concludes by elimination, whereas strong models wait for confirmation. On models that already conclude, allowing the controller to stop lowers completion by 0.01 to 0.08. Every failure of the controller-stop configuration, six episodes per model, is a correct DNS command-and-control verdict that the controller reached by eliminating the alternatives. The verifier requires a confirming signature and rejects it, as the protocol anticipated before the run. When Qwen 32B and Llama 70B decide when to stop, they keep probing until the DNS evidence appears and complete every case. The only other failures are three drift episodes in which Qwen 72B finished first with the wrong cause.
+
+Finally, the controller alone comes close. The LLM-free run completes 0.917 of cases at 2.35 units, the lowest cost of any configuration. When the controller both selects and stops, four of the five models also score exactly 0.917 at the same cost, so the model contributes almost nothing there. The configurations that beat it are those in which a strong model decides when the evidence suffices.
+
+\subsection{Failure Modes}
+\label{sec:security}
+\Cref{tab:security} breaks the table-source study's verdicts down by error type. These metrics are descriptive and were not pre-registered as endpoints.
+
+\begin{table*}[t]
+  \caption{Table-source study: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict. Missed-attack, false-escalation, and wrong-cause rates are over those verdicts; the unresolved rate is over all 72 episodes.}
+  \label{tab:security}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
+\end{table*}
+
+Three observations stand out. First, with counted tables \hesp{} issued a verdict in all 216 episodes, and none named the wrong cause. Second, the baselines fail in scale-dependent ways. The 7B baselines rarely conclude and leave 88 to 97\% of episodes unresolved, while the larger ReAct-style baselines conclude but are often wrong: they call 25\% (32B) and 37\% (72B) of actionable incidents benign and cite invalid evidence in 22\% and 31\% of their citations. Third, the ledger alone removes most of these errors: Memory-only cuts the missed-attack rate to 4\% and 2\%. In the stopping study, the configuration with controller selection and controller stop never called an actionable incident benign on any of the five models.
+
+\subsection{Public Security Data}
+\label{sec:realdata}
+A controlled environment raises an obvious question: would these results hold on real data? We tried to answer it with the three public datasets that come closest. Each measurement below used only training or development material; no test split was read, and the same pre-registration discipline applied. Testing whether a controller chooses probes well requires three things. (i) The alert alone must not reveal the answer, so several explanations must remain plausible. (ii) Probes must differ in cost and in how much they reveal, so that their order matters. (iii) Ground truth must be objective, reflecting what actually happened rather than a labeling convention. None of the three datasets meets all three requirements.
+
+\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn poses questions over a simulated Azure tenant's logs, and its answers can be recovered mechanically from the published investigation graphs (98.5\% of 1{,}017 questions). On the 418 training questions, 54.8\% name the target alert in the question text, and most others paraphrase it, so the task is to locate the named alert and read an entity. The standard indicator-pivot probe finds the true answer no more often than distractors (0.571 against 0.570 in the alert table), and only 19.4\% of questions have any table that singles out the answer. The questions test navigation and retrieval, not investigation.
+
+\paragraph{GUIDE~\citep{guide}} GUIDE contains 707{,}108 real, anonymized incidents from 5{,}340 organizations, graded as true positive, benign positive, or false positive. Over ten incident-level probes on its alert metadata, organization identity alone carries 1.03 of the grade's 1.50 bits of entropy, and several large organizations assign one grade to every incident. Within an organization, looking up how it previously graded the same detector reaches 0.911 accuracy, and across organizations the probes do not beat the majority class. On cold-start incidents, evidence integration (AUROC 0.755) equals history lookup (0.759; difference $-0.004$ $[-0.028,+0.027]$). The label reflects organizational policy, so we paused the planned GUIDE study; its test split remains unread.
+
+\paragraph{OTRF Security-Datasets~\citep{otrf}} OTRF contains lab recordings of Windows host telemetry captured while ATT\&CK techniques were executed, with no benign-activity recordings. We audited 27 recordings from the remote-execution family (243{,}000 events), treated every service installation and scheduled-task creation or update as an alert, and labeled it from the recording's metadata. Of the 46 distinct alerts, 8 are attacks and 38 are background operating-system events. A one-glance rule on the alert text, which asks whether the task or service belongs to a Windows component, is correct on 44 of 46, because six of the eight attacks are named by their tooling.
+
+\paragraph{Case study} The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
+
+\paragraph{The common gap} The three datasets fail in different ways, but the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. Their benign counterparts are operating-system housekeeping rather than administrators legitimately using the same tools, and their attack emulations leave artifacts that a careful adversary would not. Paired, objectively labeled data of this kind is a prerequisite for evaluating triage agents on real telemetry.

@@ -1,0 +1,68 @@
+\documentclass[border=2pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{pifont}
+\usepackage{tikz}
+\definecolor{hesp}{HTML}{4C72B0}
+\definecolor{llm}{HTML}{DD8452}
+\definecolor{ver}{HTML}{55A868}
+\begin{document}
+\begin{tikzpicture}[font=\scriptsize,
+  chip/.style={draw=black!45, fill=hesp!8, rounded corners=2pt, minimum height=0.42cm, minimum width=0.88cm,
+               inner sep=0.5pt, font=\scriptsize}]
+\node[anchor=west, font=\scriptsize, text=black!55] at (0.0,2.62) {who decides};
+\node[anchor=east, font=\scriptsize, text=black!55] at (4.25,2.62) {step};
+\node[font=\scriptsize, text=black!55] at (4.79,2.62) {1};
+\node[font=\scriptsize, text=black!55] at (5.77,2.62) {2};
+\node[font=\scriptsize, text=black!55] at (6.75,2.62) {3};
+\node[font=\scriptsize, text=black!55] at (7.73,2.62) {4};
+\node[font=\scriptsize, text=black!55] at (8.71,2.62) {5};
+\node[font=\scriptsize, text=black!55] at (9.69,2.62) {6};
+\node[font=\scriptsize, text=black!55] at (10.67,2.62) {7};
+\node[font=\scriptsize, text=black!55] at (11.65,2.62) {8};
+\node[font=\scriptsize, text=black!55] at (12.63,2.62) {9};
+\node[anchor=west, draw=llm, fill=llm!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (0.00,2.10) {probes: \textbf{LLM}};
+\node[anchor=west, draw=llm, fill=llm!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (2.05,2.10) {stop: \textbf{LLM}};
+\node[chip] at (4.79,2.10) {auth};
+\node[chip] at (5.77,2.10) {HTTP};
+\node[chip] at (6.75,2.10) {IPs};
+\node[chip, draw=black!35, dashed, text=black!40] at (7.73,2.10) {auth};
+\draw[black!45] (7.43,1.97) -- (8.03,2.23);
+\node[chip] at (8.71,2.10) {egress};
+\node[chip, draw=red!75!black, fill=red!8, text=red!75!black, font=\scriptsize\bfseries] at (9.69,2.10) {admin};
+\node[chip] at (10.67,2.10) {ticket};
+\node[chip] at (11.65,2.10) {DNS};
+\node[chip] at (12.63,2.10) {inv.};
+\node[anchor=west, font=\scriptsize\bfseries, text=red!75!black] at (13.27,2.10) {\ding{55} no verdict \ (budget 10/10 spent)};
+\node[anchor=west, draw=hesp, fill=hesp!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (0.00,1.45) {probes: \textbf{HESP}};
+\node[anchor=west, draw=llm, fill=llm!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (2.05,1.45) {stop: \textbf{LLM}};
+\node[chip] at (4.79,1.45) {IPs};
+\node[chip] at (5.77,1.45) {HTTP};
+\node[chip, draw=red!75!black, fill=red!8, text=red!75!black, font=\scriptsize\bfseries] at (6.75,1.45) {admin};
+\node[chip] at (7.73,1.45) {inv.};
+\node[chip] at (8.71,1.45) {auth};
+\node[chip] at (9.69,1.45) {DNS};
+\node[chip] at (10.67,1.45) {ticket};
+\node[chip] at (11.65,1.45) {egress};
+\node[anchor=west, font=\scriptsize\bfseries, text=red!75!black] at (12.29,1.45) {\ding{55} no verdict \ (budget 10/10 spent)};
+\node[anchor=west, draw=llm, fill=llm!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (0.00,0.65) {probes: \textbf{LLM}};
+\node[anchor=west, draw=hesp, fill=hesp!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (2.05,0.65) {stop: \textbf{HESP}};
+\node[chip] at (4.79,0.65) {auth};
+\node[chip] at (5.77,0.65) {HTTP};
+\node[chip] at (6.75,0.65) {IPs};
+\node[chip, draw=black!35, dashed, text=black!40] at (7.73,0.65) {auth};
+\draw[black!45] (7.43,0.52) -- (8.03,0.78);
+\node[chip] at (8.71,0.65) {egress};
+\node[chip, draw=red!75!black, fill=red!8, text=red!75!black, font=\scriptsize\bfseries] at (9.69,0.65) {admin};
+\node[anchor=west, font=\scriptsize\bfseries, text=ver] at (10.33,0.65) {\ding{51} verdict: exposed admin panel \ (cost 6)};
+\node[anchor=west, draw=hesp, fill=hesp!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (0.00,0.00) {probes: \textbf{HESP}};
+\node[anchor=west, draw=hesp, fill=hesp!12, rounded corners=2pt, inner sep=1.6pt, font=\scriptsize] at (2.05,0.00) {stop: \textbf{HESP}};
+\node[chip] at (4.79,0.00) {IPs};
+\node[chip] at (5.77,0.00) {HTTP};
+\node[chip, draw=red!75!black, fill=red!8, text=red!75!black, font=\scriptsize\bfseries] at (6.75,0.00) {admin};
+\node[anchor=west, font=\scriptsize\bfseries, text=ver] at (7.39,0.00) {\ding{51} verdict: exposed admin panel \ (cost 3)};
+\draw[black!25, dashed] (0.0,1.05) -- (17.6,1.05);
+\node[anchor=east, font=\scriptsize\itshape, text=black!55] at (17.6,1.2) {the model never concludes on its own};
+\node[anchor=east, font=\scriptsize\itshape, text=black!55] at (17.6,-0.4) {a controller-side stop concludes; EIG/cost gets there in 3 probes};
+\end{tikzpicture}
+\end{document}

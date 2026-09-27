@@ -1,0 +1,169 @@
+{
+  "sec-triage": {
+    "purpose": "synthetic_software_validation_only",
+    "research_claim_allowed": false,
+    "warning": "Fixture repetitions are deterministic; intervals are pipeline checks, not efficacy evidence.",
+    "bootstrap_samples": 2000,
+    "bootstrap_seed": 2026,
+    "arms": [
+      "react_style",
+      "memory_only",
+      "hesp_eigc_guard",
+      "hesp_random"
+    ],
+    "modes": {
+      "react_style": {
+        "runs": 8,
+        "verified_fraction": 0,
+        "statuses": {
+          "DECISION_BUDGET_EXCEEDED": 6,
+          "TOOL_BUDGET_EXCEEDED": 2
+        },
+        "tool_calls": {
+          "mean_known": 5.875,
+          "unknown_runs": 0
+        },
+        "tool_cost_units": {
+          "mean_known": 7.625,
+          "unknown_runs": 0
+        },
+        "planner_calls": {
+          "mean_known": 11.875,
+          "unknown_runs": 0
+        },
+        "wall_seconds": {
+          "mean_known": 60.765625,
+          "unknown_runs": 0
+        },
+        "reported_input_tokens": {
+          "mean_known": 28929.375,
+          "unknown_runs": 0
+        },
+        "reported_output_tokens": {
+          "mean_known": 327.875,
+          "unknown_runs": 0
+        },
+        "tool_cost_when_verified": null
+      },
+      "memory_only": {
+        "runs": 8,
+        "verified_fraction": 0,
+        "statuses": {
+          "DECISION_BUDGET_EXCEEDED": 8
+        },
+        "tool_calls": {
+          "mean_known": 5.625,
+          "unknown_runs": 0
+        },
+        "tool_cost_units": {
+          "mean_known": 7.375,
+          "unknown_runs": 0
+        },
+        "planner_calls": {
+          "mean_known": 12,
+          "unknown_runs": 0
+        },
+        "wall_seconds": {
+          "mean_known": 62.576125,
+          "unknown_runs": 0
+        },
+        "reported_input_tokens": {
+          "mean_known": 32198.5,
+          "unknown_runs": 0
+        },
+        "reported_output_tokens": {
+          "mean_known": 327.625,
+          "unknown_runs": 0
+        },
+        "tool_cost_when_verified": null
+      },
+      "hesp_eigc_guard": {
+        "runs": 8,
+        "verified_fraction": 1,
+        "statuses": {
+          "VERIFIED_SIMULATION": 8
+        },
+        "tool_calls": {
+          "mean_known": 3.75,
+          "unknown_runs": 0
+        },
+        "tool_cost_units": {
+          "mean_known": 4.5,
+          "unknown_runs": 0
+        },
+        "planner_calls": {
+          "mean_known": 4.75,
+          "unknown_runs": 0
+        },
+        "wall_seconds": {
+          "mean_known": 22.156375,
+          "unknown_runs": 0
+        },
+        "reported_input_tokens": {
+          "mean_known": 12956,
+          "unknown_runs": 0
+        },
+        "reported_output_tokens": {
+          "mean_known": 149,
+          "unknown_runs": 0
+        },
+        "tool_cost_when_verified": 4.5
+      },
+      "hesp_random": {
+        "runs": 8,
+        "verified_fraction": 0.625,
+        "statuses": {
+          "VERIFIED_SIMULATION": 5,
+          "UNVERIFIED_CLAIM": 3
+        },
+        "tool_calls": {
+          "mean_known": 6.25,
+          "unknown_runs": 0
+        },
+        "tool_cost_units": {
+          "mean_known": 8.875,
+          "unknown_runs": 0
+        },
+        "planner_calls": {
+          "mean_known": 7.25,
+          "unknown_runs": 0
+        },
+        "wall_seconds": {
+          "mean_known": 35.158125,
+          "unknown_runs": 0
+        },
+        "reported_input_tokens": {
+          "mean_known": 20616.875,
+          "unknown_runs": 0
+        },
+        "reported_output_tokens": {
+          "mean_known": 211.875,
+          "unknown_runs": 0
+        },
+        "tool_cost_when_verified": 9
+      }
+    },
+    "paired_verification": {
+      "memory_only_minus_react_style": {
+        "task_clusters": 8,
+        "difference": 0,
+        "cluster_bootstrap_percentile_95": [
+          0,
+          0
+        ],
+        "tasks_better": 0,
+        "tasks_worse": 0
+      }
+    },
+    "paired_tool_cost": {
+      "memory_only_minus_react_style": {
+        "task_clusters": 8,
+        "difference": -0.25,
+        "cluster_bootstrap_percentile_95": [
+          -1.875,
+          1.25
+        ]
+      }
+    }
+  }
+}
