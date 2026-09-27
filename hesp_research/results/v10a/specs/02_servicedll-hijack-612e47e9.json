@@ -1,0 +1,57 @@
+{
+  "rule_id": "612e47e9-8a59-43a6-b404-f48683f45bd6",
+  "slug": "servicedll-hijack-612e47e9",
+  "path": "rules/windows/registry/registry_set/registry_set_servicedll_hijack.yml",
+  "title": "ServiceDll Hijack",
+  "description": "Detects changes to the \"ServiceDLL\" value related to a service in the registry. This is often used as a method of persistence.",
+  "technique": [
+    "T1543.003"
+  ],
+  "logsource": {
+    "category": "registry_set",
+    "product": "windows"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: ServiceDll Hijack (MITRE ATT&CK T1543.003).",
+    "benign_1": "Benign: Administrative scripts",
+    "benign_2": "Benign: Installation of a service"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

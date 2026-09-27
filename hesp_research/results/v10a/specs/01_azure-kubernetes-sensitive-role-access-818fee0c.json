@@ -1,0 +1,59 @@
+{
+  "rule_id": "818fee0c-e0ec-4e45-824e-83e4817b0887",
+  "slug": "azure-kubernetes-sensitive-role-access-818fee0c",
+  "path": "rules/cloud/azure/activity_logs/azure_kubernetes_role_access.yml",
+  "title": "Azure Kubernetes Sensitive Role Access",
+  "description": "Identifies when ClusterRoles/Roles are being modified or deleted.",
+  "technique": [
+    "T1485",
+    "T1489",
+    "T1496"
+  ],
+  "logsource": {
+    "product": "azure",
+    "service": "activitylogs"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Azure Kubernetes Sensitive Role Access (MITRE ATT&CK T1485, T1489, T1496).",
+    "benign_1": "Benign: ClusterRoles/Roles being modified and deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+    "benign_2": "Benign: ClusterRoles/Roles modification from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "unattributed",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "managed_admin_host",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "standard_user",
+      "logon_origin": "local_console",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "rare_first_seen",
+      "parent_process": "office_or_browser",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

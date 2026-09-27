@@ -1,0 +1,58 @@
+{
+  "rule_id": "26e7c5e2-6545-481e-b7e6-050143459635",
+  "slug": "ca-policy-removed-by-non-approved-actor-26e7c5e2",
+  "path": "rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_removedby_bad_actor.yml",
+  "title": "CA Policy Removed by Non Approved Actor",
+  "description": "Monitor and alert on conditional access changes where non approved actor removed CA Policy.",
+  "technique": [
+    "T1548",
+    "T1556"
+  ],
+  "logsource": {
+    "product": "azure",
+    "service": "auditlogs"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: CA Policy Removed by Non Approved Actor (MITRE ATT&CK T1548, T1556).",
+    "benign_1": "Benign: Misconfigured role permissions",
+    "benign_2": "Benign: Verify whether the user identity, user agent, and/or hostname should be making changes in your environment."
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "managed_admin_host",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "standard_user",
+      "logon_origin": "local_console",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "rare_first_seen",
+      "parent_process": "office_or_browser",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "inconclusive"
+    }
+  }
+}

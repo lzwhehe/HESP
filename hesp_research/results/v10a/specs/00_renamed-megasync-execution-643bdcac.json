@@ -1,0 +1,57 @@
+{
+  "rule_id": "643bdcac-8b82-49f4-9fd9-25a90b929f3b",
+  "slug": "renamed-megasync-execution-643bdcac",
+  "path": "rules/windows/process_creation/proc_creation_win_renamed_megasync.yml",
+  "title": "Renamed MegaSync Execution",
+  "description": "Detects the execution of a renamed MegaSync.exe as seen used by ransomware families like Nefilim, Sodinokibi, Pysa, and Conti.",
+  "technique": [
+    "T1218"
+  ],
+  "logsource": {
+    "product": "windows",
+    "category": "process_creation"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Renamed MegaSync Execution (MITRE ATT&CK T1218).",
+    "benign_1": "Benign: Software that illegally integrates MegaSync in a renamed form",
+    "benign_2": "Benign: Administrators that have renamed MegaSync"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "credential_access",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

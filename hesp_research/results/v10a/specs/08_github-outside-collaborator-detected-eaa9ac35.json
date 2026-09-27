@@ -1,0 +1,60 @@
+{
+  "rule_id": "eaa9ac35-1730-441f-9587-25767bde99d7",
+  "slug": "github-outside-collaborator-detected-eaa9ac35",
+  "path": "rules/application/github/audit/github_outside_collaborator_detected.yml",
+  "title": "Github Outside Collaborator Detected",
+  "description": "Detects when an organization member or an outside collaborator is added to or removed from a project board or has their permission level changed or when an owner removes an outside collaborator from an organization or when two-factor authentication is required in an organization and an outside collaborator does not use 2FA or disables 2FA.",
+  "technique": [
+    "T1098.001",
+    "T1098.003",
+    "T1213.003"
+  ],
+  "logsource": {
+    "product": "github",
+    "service": "audit",
+    "definition": "Requirements: The audit log streaming feature must be enabled to be able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Github Outside Collaborator Detected (MITRE ATT&CK T1098.001, T1098.003, T1213.003).",
+    "benign_1": "Benign: Validate the actor if permitted to access the repo.",
+    "benign_2": "Benign: Validate the Multifactor Authentication changes."
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "standard_user",
+      "logon_origin": "managed_admin_host",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "office_or_browser",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

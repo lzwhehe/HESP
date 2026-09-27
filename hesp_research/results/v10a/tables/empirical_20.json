@@ -1,0 +1,2878 @@
+{
+  "schema": "hesp.v10a.tables.v1",
+  "source": "empirical_20",
+  "k_per_cause_variant": 20,
+  "dev_variants": [
+    "base",
+    "noise"
+  ],
+  "dev_seed_base": 800000,
+  "eps": 0.01,
+  "specs_index_sha256": "848f8e7d8b594138d1f73a7f06276536e02975ac60f009b4b80ab777bc62594d",
+  "rules": {
+    "renamed-megasync-execution-643bdcac": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "azure-kubernetes-sensitive-role-access-818fee0c": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "servicedll-hijack-612e47e9": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "ca-policy-removed-by-non-approved-actor-26e7c5e2": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "firewall-rule-deleted-via-netsh-exe-1a5fefe6": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "credential-dumping-attempt-via-werfault-e5b33f7d": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "azure-keyvault-secrets-modified-or-deleted-b831353c": {
+      "dev_episodes": 160,
+      "cell_coverage": 0.8
+    },
+    "disable-or-stop-services-de25eeb8": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "github-outside-collaborator-detected-eaa9ac35": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "windows-defender-real-time-protection-disabled-b28e58e4": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "potential-persistence-via-microsoft-office-start-0e20c89d": {
+      "dev_episodes": 120,
+      "cell_coverage": 0.75
+    },
+    "mimikatz-use-06d71506": {
+      "dev_episodes": 160,
+      "cell_coverage": 0.8
+    }
+  },
+  "tables": {
+    "renamed-megasync-execution-643bdcac": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.992,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.7849122807017545,
+          "clean": 0.003333333333333334,
+          "inconclusive": 0.21175438596491228
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "azure-kubernetes-sensitive-role-access-818fee0c": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.9925
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.9925,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.9925,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8917948717948718,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.10487179487179486
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "servicedll-hijack-612e47e9": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8664102564102564,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.13025641025641024
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "ca-policy-removed-by-non-approved-actor-26e7c5e2": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.9925,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.9925,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8595495495495495,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.1371171171171171
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.9933333333333333
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "firewall-rule-deleted-via-netsh-exe-1a5fefe6": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8801904761904762,
+          "clean": 0.003333333333333334,
+          "inconclusive": 0.11647619047619048
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "credential-dumping-attempt-via-werfault-e5b33f7d": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.992,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8156410256410256,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.18102564102564103
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.9933333333333333
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "azure-keyvault-secrets-modified-or-deleted-b831353c": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.9925
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_3": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.9925,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_3": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_3": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_3": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_3": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_3": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.9925,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_3": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_3": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_3": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.9059803921568628,
+          "clean": 0.003333333333333334,
+          "inconclusive": 0.09068627450980393
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_3": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "disable-or-stop-services-de25eeb8": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8595495495495495,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.1371171171171171
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "github-outside-collaborator-detected-eaa9ac35": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.9925,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.9925,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.992,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.9171794871794872,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.07948717948717948
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "windows-defender-real-time-protection-disabled-b28e58e4": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.992,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8156410256410256,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.18102564102564103
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "potential-persistence-via-microsoft-office-start-0e20c89d": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_1": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "benign_2": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "benign_2": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.992
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.8370175438596491,
+          "clean": 0.003333333333333334,
+          "inconclusive": 0.15964912280701757
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    },
+    "mimikatz-use-06d71506": {
+      "actor_account": {
+        "attack": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.9925
+        },
+        "benign_1": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.9925,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_2": {
+          "system_or_service": 0.9925,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.0025000000000000005,
+          "unattributed": 0.0025000000000000005
+        },
+        "benign_3": {
+          "system_or_service": 0.0025000000000000005,
+          "admin_user": 0.0025000000000000005,
+          "standard_user": 0.9925,
+          "unattributed": 0.0025000000000000005
+        },
+        "other": {
+          "system_or_service": 0.25,
+          "admin_user": 0.25,
+          "standard_user": 0.25,
+          "unattributed": 0.25
+        }
+      },
+      "logon_origin": {
+        "attack": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.9925,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_1": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "benign_2": {
+          "local_console": 0.0025000000000000005,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.9925
+        },
+        "benign_3": {
+          "local_console": 0.9925,
+          "managed_admin_host": 0.0025000000000000005,
+          "unusual_host": 0.0025000000000000005,
+          "no_logon": 0.0025000000000000005
+        },
+        "other": {
+          "local_console": 0.25,
+          "managed_admin_host": 0.25,
+          "unusual_host": 0.25,
+          "no_logon": 0.25
+        }
+      },
+      "change_record": {
+        "attack": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "benign_1": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_2": {
+          "approved_change": 0.995,
+          "none": 0.005
+        },
+        "benign_3": {
+          "approved_change": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "approved_change": 0.5,
+          "none": 0.5
+        }
+      },
+      "software_approval": {
+        "attack": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "benign_1": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_2": {
+          "approved": 0.995,
+          "not_approved": 0.005
+        },
+        "benign_3": {
+          "approved": 0.005,
+          "not_approved": 0.995
+        },
+        "other": {
+          "approved": 0.5,
+          "not_approved": 0.5
+        }
+      },
+      "binary_reputation": {
+        "attack": {
+          "signed_known_vendor": 0.005,
+          "unsigned_or_renamed": 0.995
+        },
+        "benign_1": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_2": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "benign_3": {
+          "signed_known_vendor": 0.995,
+          "unsigned_or_renamed": 0.005
+        },
+        "other": {
+          "signed_known_vendor": 0.5,
+          "unsigned_or_renamed": 0.5
+        }
+      },
+      "prevalence": {
+        "attack": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "benign_1": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_2": {
+          "fleet_wide_routine": 0.995,
+          "rare_first_seen": 0.005
+        },
+        "benign_3": {
+          "fleet_wide_routine": 0.005,
+          "rare_first_seen": 0.995
+        },
+        "other": {
+          "fleet_wide_routine": 0.5,
+          "rare_first_seen": 0.5
+        }
+      },
+      "parent_process": {
+        "attack": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.9925,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_1": {
+          "management_agent": 0.9925,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.0025000000000000005
+        },
+        "benign_2": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.0025000000000000005,
+          "system_service": 0.9925
+        },
+        "benign_3": {
+          "management_agent": 0.0025000000000000005,
+          "interactive_shell": 0.0025000000000000005,
+          "office_or_browser": 0.9925,
+          "system_service": 0.0025000000000000005
+        },
+        "other": {
+          "management_agent": 0.25,
+          "interactive_shell": 0.25,
+          "office_or_browser": 0.25,
+          "system_service": 0.25
+        }
+      },
+      "time_context": {
+        "attack": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.9933333333333333
+        },
+        "benign_1": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_2": {
+          "maintenance_window": 0.9933333333333333,
+          "business_hours": 0.0033333333333333335,
+          "off_hours": 0.0033333333333333335
+        },
+        "benign_3": {
+          "maintenance_window": 0.0033333333333333335,
+          "business_hours": 0.9933333333333333,
+          "off_hours": 0.0033333333333333335
+        },
+        "other": {
+          "maintenance_window": 0.33333333333333337,
+          "business_hours": 0.33333333333333337,
+          "off_hours": 0.33333333333333337
+        }
+      },
+      "follow_on": {
+        "attack": {
+          "none": 0.002,
+          "credential_access": 0.992,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_1": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_2": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "benign_3": {
+          "none": 0.992,
+          "credential_access": 0.002,
+          "lateral_movement": 0.002,
+          "data_staging": 0.002,
+          "persistence": 0.002
+        },
+        "other": {
+          "none": 0.2,
+          "credential_access": 0.2,
+          "lateral_movement": 0.2,
+          "data_staging": 0.2,
+          "persistence": 0.2
+        }
+      },
+      "threat_intel": {
+        "attack": {
+          "malicious": 0.7183333333333333,
+          "clean": 0.0033333333333333335,
+          "inconclusive": 0.2783333333333334
+        },
+        "benign_1": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_2": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "benign_3": {
+          "malicious": 0.0033333333333333335,
+          "clean": 0.9933333333333333,
+          "inconclusive": 0.0033333333333333335
+        },
+        "other": {
+          "malicious": 0.33333333333333337,
+          "clean": 0.33333333333333337,
+          "inconclusive": 0.33333333333333337
+        }
+      }
+    }
+  }
+}

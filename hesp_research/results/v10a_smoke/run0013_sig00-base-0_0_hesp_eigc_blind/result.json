@@ -1,0 +1,37 @@
+{
+  "mode": "hesp",
+  "arm": "hesp_eigc_blind",
+  "planner": "ollama:qwen2.5-7b-instruct",
+  "selector": "eig_cost",
+  "prediction_source": "empirical_20",
+  "environment": "local_web_sandbox",
+  "status": "VERIFIED_SIMULATION",
+  "verified_simulation": true,
+  "tool_calls": 5,
+  "tool_cost_units": 5,
+  "planner_calls": 6,
+  "blocked_duplicate_proposals": 0,
+  "replan_signals": 0,
+  "finish_rejections": 0,
+  "reported_input_tokens": 10866,
+  "reported_output_tokens": 272,
+  "usage_unknown_calls": 0,
+  "wall_seconds": 4.564816,
+  "claimed_hypothesis": "attack",
+  "claimed_evidence_ids": [
+    "o0001",
+    "o0002",
+    "o0003"
+  ],
+  "claim_citation_validity": 1.0,
+  "finished_by": "planner",
+  "final_scores": {
+    "attack": 0.997312220044603,
+    "benign_1": 2.687758721028045e-13,
+    "benign_2": 2.1234100223737852e-08,
+    "other": 0.0026877587210280426
+  },
+  "source_sha256": "f8eb0d166ba2f7ce35ad80e7752be1e840e9a61157080e6243dc3d73d8626085",
+  "research_claim_allowed": false,
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}

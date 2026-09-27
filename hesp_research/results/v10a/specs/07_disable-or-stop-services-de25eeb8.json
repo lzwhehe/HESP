@@ -1,0 +1,58 @@
+{
+  "rule_id": "de25eeb8-3655-4643-ac3a-b662d3f26b6b",
+  "slug": "disable-or-stop-services-de25eeb8",
+  "path": "rules/linux/process_creation/proc_creation_lnx_services_stop_and_disable.yml",
+  "title": "Disable Or Stop Services",
+  "description": "Detects the usage of utilities such as 'systemctl', 'service'...etc to stop or disable tools and services on Linux systems. Attackers may stop or disable security tools and services to evade detection, maintain persistence, or disrupt system operations.",
+  "technique": [
+    "T1489",
+    "T1685"
+  ],
+  "logsource": {
+    "category": "process_creation",
+    "product": "linux"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Disable Or Stop Services (MITRE ATT&CK T1489, T1685).",
+    "benign_1": "Benign: Legitimate administration activities",
+    "benign_2": "Benign: Some false positives are to be expected. Apply additional filters as needed before pushing to production."
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

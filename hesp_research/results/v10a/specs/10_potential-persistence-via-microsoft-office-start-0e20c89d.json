@@ -1,0 +1,57 @@
+{
+  "rule_id": "0e20c89d-2264-44ae-8238-aeeaba609ece",
+  "slug": "potential-persistence-via-microsoft-office-start-0e20c89d",
+  "path": "rules/windows/file/file_event/file_event_win_office_startup_persistence.yml",
+  "title": "Potential Persistence Via Microsoft Office Startup Folder",
+  "description": "Detects creation of Microsoft Office files inside of one of the default startup folders in order to achieve persistence.",
+  "technique": [
+    "T1137"
+  ],
+  "logsource": {
+    "category": "file_event",
+    "product": "windows"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Potential Persistence Via Microsoft Office Startup Folder (MITRE ATT&CK T1137).",
+    "benign_1": "Benign: Loading a user environment from a backup or a domain controller",
+    "benign_2": "Benign: Synchronization of templates"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "local_console",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "persistence",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "rule_id": "06d71506-7beb-4f22-8888-e2e5e2ca7fd8",
+  "slug": "mimikatz-use-06d71506",
+  "path": "rules/windows/builtin/win_alert_mimikatz_keywords.yml",
+  "title": "Mimikatz Use",
+  "description": "This method detects mimikatz keywords in different Eventlogs (some of them only appear in older Mimikatz version that are however still used by different threat groups)",
+  "technique": [
+    "T1003.001",
+    "T1003.002",
+    "T1003.004",
+    "T1003.006"
+  ],
+  "logsource": {
+    "product": "windows"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Mimikatz Use (MITRE ATT&CK T1003.001, T1003.002, T1003.004, T1003.006).",
+    "benign_1": "Benign: Naughty administrators",
+    "benign_2": "Benign: AV Signature updates",
+    "benign_3": "Benign: Files with Mimikatz in their filename"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "unattributed",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "credential_access",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_3": {
+      "actor_account": "standard_user",
+      "logon_origin": "local_console",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "rare_first_seen",
+      "parent_process": "office_or_browser",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

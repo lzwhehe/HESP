@@ -1,0 +1,57 @@
+{
+  "rule_id": "1a5fefe6-734f-452e-a07d-fc1c35bce4b2",
+  "slug": "firewall-rule-deleted-via-netsh-exe-1a5fefe6",
+  "path": "rules/windows/process_creation/proc_creation_win_netsh_fw_delete_rule.yml",
+  "title": "Firewall Rule Deleted Via Netsh.EXE",
+  "description": "Detects the removal of a port or application rule in the Windows Firewall configuration using netsh",
+  "technique": [
+    "T1686.003"
+  ],
+  "logsource": {
+    "category": "process_creation",
+    "product": "windows"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Firewall Rule Deleted Via Netsh.EXE (MITRE ATT&CK T1686.003).",
+    "benign_1": "Benign: Legitimate administration activity",
+    "benign_2": "Benign: Software installations and removal"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "standard_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "lateral_movement",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "business_hours",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

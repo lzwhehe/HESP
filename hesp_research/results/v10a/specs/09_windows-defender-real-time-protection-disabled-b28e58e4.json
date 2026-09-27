@@ -1,0 +1,57 @@
+{
+  "rule_id": "b28e58e4-2a72-4fae-bdee-0fbe904db642",
+  "slug": "windows-defender-real-time-protection-disabled-b28e58e4",
+  "path": "rules/windows/builtin/windefend/win_defender_real_time_protection_disabled.yml",
+  "title": "Windows Defender Real-time Protection Disabled",
+  "description": "Detects disabling of Windows Defender Real-time Protection. As this event doesn't contain a lot of information on who initiated this action you might want to reduce it to a \"medium\" level if this occurs too many times in your environment",
+  "technique": [
+    "T1685"
+  ],
+  "logsource": {
+    "product": "windows",
+    "service": "windefend"
+  },
+  "causes": {
+    "attack": "The malicious activity the rule is written to detect: Windows Defender Real-time Protection Disabled (MITRE ATT&CK T1685).",
+    "benign_1": "Benign: Administrator actions (should be investigated)",
+    "benign_2": "Benign: Seen being triggered occasionally during Windows 8 Defender Updates"
+  },
+  "outcomes": {
+    "attack": {
+      "actor_account": "admin_user",
+      "logon_origin": "unusual_host",
+      "change_record": "none",
+      "software_approval": "not_approved",
+      "binary_reputation": "unsigned_or_renamed",
+      "prevalence": "rare_first_seen",
+      "parent_process": "interactive_shell",
+      "time_context": "off_hours",
+      "follow_on": "credential_access",
+      "threat_intel": "malicious"
+    },
+    "benign_1": {
+      "actor_account": "admin_user",
+      "logon_origin": "local_console",
+      "change_record": "approved_change",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "management_agent",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    },
+    "benign_2": {
+      "actor_account": "system_or_service",
+      "logon_origin": "no_logon",
+      "change_record": "none",
+      "software_approval": "approved",
+      "binary_reputation": "signed_known_vendor",
+      "prevalence": "fleet_wide_routine",
+      "parent_process": "system_service",
+      "time_context": "maintenance_window",
+      "follow_on": "none",
+      "threat_intel": "clean"
+    }
+  }
+}

@@ -434,3 +434,12 @@ vLLM，单卡 RTX 6000D，温度 0.2，每次调用不同种子；sec-triage 24 
 
 - **v1.0-E1（措辞更正）**：冻结记录中“不使用镜像权重”一句不准确。RTX PRO 6000D 上的两个 Llama-3.1 模型自 v0.8 起就是从不需要令牌的镜像下载的（`fetch_v08_models.sh`，使用受 Llama 3.1 社区许可证约束），本次使用的正是这同一批文件。“与 v0.5–v0.9 完全相同的权重文件”这一点成立，镜像来源应如实写明。
 - **v1.0-E2（A 部分标注改在 RTX PRO 6000D 上运行）**：H100 vGPU（20 GB）在加载 phi-4 时显存不足（vLLM 0.11 的在线 FP8 量化会先按原精度分配权重），两次启动都失败，没有产生任何标注结果。标注因此改在 RTX PRO 6000D 上进行：同一模型 `microsoft/phi-4`，原精度 bf16，vLLM 0.30.0，温度 0，同一 JSON Schema 约束与同一提示模板。规则池文件在两台服务器上的 SHA256 均为 `b117eeba`。
+
+### A 部分材料冻结（2026-09-28，任何 A 部分正式回合之前）
+
+**状态：A 部分已冻结。** 源码哈希仍为 `f8eb0d16`（与 B、C 相同，`hesp/` 未再修改）。
+
+- **标注**：`microsoft/phi-4`（bf16，vLLM 0.30.0，RTX PRO 6000D，温度 0，JSON Schema 约束）。按规则池顺序检查了 13 条规则，接受 12 条。第 9 条（位置 8，"Office Application Initiated Network Connection To Non-Local IP"）未通过可识别性检查：两个原因的结果向量完全相同，三个良性原因都没有唯一结果。按预先规定，由池中下一条（"Mimikatz Use"）替补。全部提示与原始回复保存在 `results/v10a/annotation_log.json`。规格索引 `results/v10a/specs/index.json` 的 SHA256 为 `848f8e7d`（全值 `848f8e7d8b594138d1f73a7f06276536e02975ac60f009b4b80ab777bc62594d`）。
+- **预测表**：每条规则 k=20，开发种子从 800000 起，base 与 noise 变体。`results/v10a/tables/empirical_20.json` 的 SHA256 为 `e57791ef`（全值 `e57791ef8edb6a7a065e49e052f5308bbdf344fe8bf66b379230f3831bebc00c`）。
+- **任务规模**：12 条规则共 38 个具名原因（10 条规则各 3 个，2 条规则各 4 个），× 2 个变体 = 76 个任务，× 2 次重复 × 5 个 arm = 每个模型 760 个回合，5 个模型共 3800 个回合。
+- **管线冒烟测试（披露）**：Qwen2.5-7B，`--task-stride 19 --repeats 1`，即 4 个任务 × 5 个 arm = 20 个回合，20/20 审计通过，结果在 `results/v10a_smoke/`。不进入任何分析，也没有据此修改协议。冒烟测试中 Qwen2.5-7B 在各 arm 下都完成了全部 4 个任务，提示本家族可能比 sec-triage 容易，PA2 可能出现天花板效应；这一点写在运行前，结果无论如何都照实报告。
