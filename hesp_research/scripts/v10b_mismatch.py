@@ -78,19 +78,27 @@ def perturb(tables, lam, seed):
     return out
 
 
-def episode(task, repeat, env_factory, tables, source, selector_name, tmp):
+TABLES = {}        # name -> tables; filled before the worker pool forks
+ENV_FACTORY = None
+
+
+def episode(job):
+    """One LLM-free episode; ``job`` = (condition, selector, task, repeat, table_name)."""
+    cname, selector_name, task, repeat, tname = job
     mode, sel = SELECTORS[selector_name]
     s = cell_seed(EVAL_SEED, task["task_id"], repeat)
     budget = Budget(max_tool_calls=10, max_decisions=12, max_tool_cost=10, max_seconds=900.0)
-    with env_factory(task, s) as env:
-        r = run(env, NeverFinishPlanner(), mode, Path(tmp) / f"{task['task_id']}_{repeat}_{selector_name}_{source}",
-                budget, predictor=FrozenPredictor(tables, source), selector=Selector(sel, s),
-                show_rankings=False, auto_finish=0.8)
-        truth = env._app.cause
+    with tempfile.TemporaryDirectory() as tmp:
+        with ENV_FACTORY(task, s) as env:
+            r = run(env, NeverFinishPlanner(), mode, Path(tmp) / "r", budget,
+                    predictor=FrozenPredictor(TABLES[tname], tname), selector=Selector(sel, s),
+                    show_rankings=False, auto_finish=0.8)
+            truth = env._app.cause
     claim = r["claimed_hypothesis"]
-    return {"verified": r["verified_simulation"], "cost": r["tool_cost_units"],
-            "wrong": claim is not None and claim != "other" and claim != truth,
-            "escalated": claim is None or claim == "other"}
+    return cname, selector_name, task["variant"], {
+        "verified": r["verified_simulation"], "cost": r["tool_cost_units"],
+        "wrong": claim is not None and claim != "other" and claim != truth,
+        "escalated": claim is None or claim == "other"}
 
 
 def summarize(rows):
@@ -105,6 +113,7 @@ def main():
     ap.add_argument("--matched-tables", default=str(Path(__file__).resolve().parents[1] / "results/v06_tables/empirical_20.json"))
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--quick", action="store_true", help="smoke test: one lambda, two seeds, one repeat")
+    ap.add_argument("--workers", type=int, default=1, help="processes (Linux fork)")
     args = ap.parse_args()
     env_cls, tasks, env_factory = family(args.family)
     out = Path(args.out)
@@ -112,43 +121,44 @@ def main():
     repeats = 1 if args.quick else args.repeats
     lambdas = LAMBDAS[:1] if args.quick else LAMBDAS
     pseeds = 2 if args.quick else PERTURB_SEEDS
+    global ENV_FACTORY
+    ENV_FACTORY = env_factory
     matched = json.loads(Path(args.matched_tables).read_text(encoding="utf-8"))["tables"]
-    conditions = {"M0_matched": (matched, tasks),
-                  "M1_base_only": (count_tables(env_cls, ("base",), 20), tasks)}
+    TABLES["M0_matched"] = matched
+    TABLES["M1_base_only"] = count_tables(env_cls, ("base",), 20)
     for k in (1, 5):
-        conditions[f"M4_k{k}_base_only"] = (count_tables(env_cls, ("base",), k), tasks)
+        TABLES[f"M4_k{k}_base_only"] = count_tables(env_cls, ("base",), k)
+    jobs = [(c, sel, t, r, c) for c in ("M0_matched", "M1_base_only", "M4_k1_base_only", "M4_k5_base_only")
+            for sel in SELECTORS for t in tasks for r in range(repeats)]
+    for lam in lambdas:
+        for ps in range(pseeds):
+            name = f"M2_lambda{lam}_{ps}"
+            TABLES[name] = perturb(matched, lam, 5000 + ps)
+            # one repeat per perturbation seed: the seeds, not the repeats, carry the variation
+            jobs += [(f"M2_lambda{lam}", sel, t, 0, name) for sel in SELECTORS for t in tasks]
+    for cause in env_cls.CAUSES:
+        name = f"M3_missing[{cause}]"
+        TABLES[name] = count_tables(env_cls, ("base", "noise"), 20, omit=cause)
+        jobs += [(name, sel, t, r, name) for sel in SELECTORS for t in tasks
+                 if t["cause"] == cause and t["variant"] != "drift" for r in range(repeats)]
+    print(f"{len(jobs)} episodes on {args.workers} workers", flush=True)
+    if args.workers > 1:
+        import multiprocessing as mp
+        with mp.get_context("fork").Pool(args.workers) as pool:
+            outcomes = pool.map(episode, jobs, chunksize=8)
+    else:
+        outcomes = [episode(j) for j in jobs]
+    grouped = defaultdict(list)
+    for cname, sel, variant, row in outcomes:
+        grouped[cname, sel].append(row)
+        if cname == "M1_base_only":
+            grouped[f"M1_base_only[{variant}]", sel].append(row)
     results = defaultdict(dict)
-    with tempfile.TemporaryDirectory() as tmp:
-        for cname, (tables, ctasks) in conditions.items():
-            for sel in SELECTORS:
-                rows = [episode(t, r, env_factory, tables, cname, sel, tmp) for t in ctasks for r in range(repeats)]
-                results[cname][sel] = summarize(rows)
-                if cname == "M1_base_only":
-                    for v in ("base", "noise", "drift"):
-                        vr = [row for row, (t, r) in zip(rows, [(t, r) for t in ctasks for r in range(repeats)])
-                              if t["variant"] == v]
-                        results[f"M1_base_only[{v}]"][sel] = summarize(vr)
-            print(cname, {s: round(results[cname][s]["verified"], 3) for s in SELECTORS}, flush=True)
-        for lam in lambdas:
-            cname = f"M2_lambda{lam}"
-            for sel in SELECTORS:
-                rows = []
-                for ps in range(pseeds):
-                    tables = perturb(matched, lam, 5000 + ps)
-                    rows += [episode(t, r, env_factory, tables, f"{cname}_{ps}", sel, tmp) for t in tasks for r in range(repeats)]
-                results[cname][sel] = summarize(rows)
-            print(cname, {s: round(results[cname][s]["verified"], 3) for s in SELECTORS}, flush=True)
-        for cause in env_cls.CAUSES:
-            cname = f"M3_missing[{cause}]"
-            tables = count_tables(env_cls, ("base", "noise"), 20, omit=cause)
-            ctasks = [t for t in tasks if t["cause"] == cause and t["variant"] != "drift"]
-            for sel in SELECTORS:
-                rows = [episode(t, r, env_factory, tables, cname, sel, tmp) for t in ctasks for r in range(repeats)]
-                results[cname][sel] = summarize(rows)
-        m3 = [results[f"M3_missing[{c}]"] for c in env_cls.CAUSES]
-        results["M3_missing[mean]"] = {s: {k: sum(m[s][k] for m in m3) / len(m3)
-                                           for k in ("verified", "wrong", "escalated", "cost")} for s in SELECTORS}
-        print("M3 mean", {s: round(results["M3_missing[mean]"][s]["verified"], 3) for s in SELECTORS}, flush=True)
+    for (cname, sel), rows in sorted(grouped.items()):
+        results[cname][sel] = summarize(rows)
+    m3 = [results[f"M3_missing[{c}]"] for c in env_cls.CAUSES]
+    results["M3_missing[mean]"] = {sel: {k: sum(m[sel][k] for m in m3) / len(m3)
+                                         for k in ("verified", "wrong", "escalated", "cost")} for sel in SELECTORS}
     record = {"schema": "hesp.v10b.v1", "family": args.family, "eval_seed": EVAL_SEED, "dev_seed_base": DEV_SEED_BASE,
               "repeats": repeats, "lambdas": list(lambdas), "perturb_seeds": pseeds, "quick": args.quick,
               "results": results}

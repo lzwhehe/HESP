@@ -170,7 +170,7 @@ class LoopbackSandbox:
         self._app = _App(type(self), cause, variant, seed)
         self._server = ThreadingHTTPServer(("127.0.0.1", 0), _handler(self._app))
         self._server.daemon_threads = True
-        self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
+        self._thread = threading.Thread(target=self._server.serve_forever, kwargs={"poll_interval": 0.05}, daemon=True)
         self._thread.start()
         self._base = f"http://127.0.0.1:{self._server.server_address[1]}"
         self._opener = urllib.request.build_opener(_NoRedirect)
