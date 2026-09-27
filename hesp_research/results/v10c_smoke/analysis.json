@@ -1,0 +1,262 @@
+{
+  "purpose": "v1.0_part_c",
+  "research_claim_allowed": false,
+  "warning": "Paired local-sandbox study. Intervals are over task clusters of a small, hand-built suite; they do not generalize to real websites or Web CTF.",
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 2028,
+  "arms": [
+    "react_style",
+    "memory_only",
+    "hesp_guard_autostop",
+    "hesp_guard_autostop_corroborate"
+  ],
+  "modes": {
+    "react_style": {
+      "runs": 2,
+      "verified_fraction": 0,
+      "statuses": {
+        "UNVERIFIED_CLAIM": 1,
+        "TOOL_BUDGET_EXCEEDED": 1
+      },
+      "tool_calls": {
+        "mean_known": 4,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 5.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 6.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 3.6763654999999997,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 8959,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 198.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "memory_only": {
+      "runs": 2,
+      "verified_fraction": 0,
+      "statuses": {
+        "UNVERIFIED_CLAIM": 1,
+        "TOOL_BUDGET_EXCEEDED": 1
+      },
+      "tool_calls": {
+        "mean_known": 4,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 5.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 5.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 3.338375,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 8699,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 174.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": null
+    },
+    "hesp_guard_autostop": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "UNVERIFIED_CLAIM": 1,
+        "VERIFIED_SIMULATION": 1
+      },
+      "tool_calls": {
+        "mean_known": 1,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 1,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 0.9473385000000001,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 1347,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 30.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1
+    },
+    "hesp_guard_autostop_corroborate": {
+      "runs": 2,
+      "verified_fraction": 0.5,
+      "statuses": {
+        "VERIFIED_SIMULATION": 1,
+        "UNVERIFIED_CLAIM": 1
+      },
+      "tool_calls": {
+        "mean_known": 1.5,
+        "unknown_runs": 0
+      },
+      "tool_cost_units": {
+        "mean_known": 1.5,
+        "unknown_runs": 0
+      },
+      "planner_calls": {
+        "mean_known": 1.5,
+        "unknown_runs": 0
+      },
+      "wall_seconds": {
+        "mean_known": 1.2246044999999999,
+        "unknown_runs": 0
+      },
+      "reported_input_tokens": {
+        "mean_known": 2055,
+        "unknown_runs": 0
+      },
+      "reported_output_tokens": {
+        "mean_known": 45,
+        "unknown_runs": 0
+      },
+      "tool_cost_when_verified": 1
+    }
+  },
+  "paired_verification": {
+    "memory_only_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": -0.5,
+      "cluster_bootstrap_percentile_95": [
+        -1,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 1
+    },
+    "react_style_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": -0.5,
+      "cluster_bootstrap_percentile_95": [
+        -1,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 1
+    },
+    "hesp_guard_autostop_corroborate_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "memory_only_minus_react_style": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ],
+      "tasks_better": 0,
+      "tasks_worse": 0
+    }
+  },
+  "paired_tool_cost": {
+    "memory_only_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": 4.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        9
+      ]
+    },
+    "react_style_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": 4.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        9
+      ]
+    },
+    "hesp_guard_autostop_corroborate_minus_hesp_guard_autostop": {
+      "task_clusters": 2,
+      "difference": 0.5,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        1
+      ]
+    },
+    "memory_only_minus_react_style": {
+      "task_clusters": 2,
+      "difference": 0,
+      "cluster_bootstrap_percentile_95": [
+        0,
+        0
+      ]
+    }
+  },
+  "security_metrics": {
+    "react_style": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 1,
+      "missed_attack_rate": 1,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 1,
+      "evidence_citation_validity": 0.0
+    },
+    "memory_only": {
+      "episodes": 2,
+      "episodes_with_a_claim": 1,
+      "unresolved_rate": 1,
+      "missed_attack_rate": 1,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 1,
+      "evidence_citation_validity": 0.0
+    },
+    "hesp_guard_autostop": {
+      "episodes": 2,
+      "episodes_with_a_claim": 2,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0.5,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0.5,
+      "evidence_citation_validity": 1.0
+    },
+    "hesp_guard_autostop_corroborate": {
+      "episodes": 2,
+      "episodes_with_a_claim": 2,
+      "unresolved_rate": 0.5,
+      "missed_attack_rate": 0,
+      "false_escalation_rate": null,
+      "wrong_cause_rate": 0.5,
+      "evidence_citation_validity": 1.0
+    }
+  },
+  "manifest_sha256": "a6d20e52d107ed0270457278d2668b8fc7bc06cc4cd16dee881fb10dc54df7fc"
+}

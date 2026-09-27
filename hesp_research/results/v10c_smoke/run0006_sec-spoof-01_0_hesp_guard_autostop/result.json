@@ -1,0 +1,40 @@
+{
+  "mode": "hesp",
+  "arm": "hesp_guard_autostop",
+  "planner": "ollama:qwen2.5-7b-instruct",
+  "selector": "eig_cost",
+  "prediction_source": "empirical_20",
+  "environment": "local_web_sandbox",
+  "status": "UNVERIFIED_CLAIM",
+  "verified_simulation": false,
+  "tool_calls": 1,
+  "tool_cost_units": 1,
+  "planner_calls": 1,
+  "blocked_duplicate_proposals": 0,
+  "replan_signals": 0,
+  "finish_rejections": 0,
+  "reported_input_tokens": 1347,
+  "reported_output_tokens": 30,
+  "usage_unknown_calls": 0,
+  "wall_seconds": 0.950211,
+  "claimed_hypothesis": "authorized_scan",
+  "claimed_evidence_ids": [
+    "o0001"
+  ],
+  "claim_citation_validity": 1.0,
+  "finished_by": "controller",
+  "final_scores": {
+    "credential_stuffing": 0.0016583747927031507,
+    "sqli_probe": 0.0016583747927031507,
+    "misconfig_exposed_admin": 0.0016583747927031507,
+    "authorized_scan": 0.8225538971807628,
+    "false_positive_monitor": 0.0016583747927031507,
+    "insider_exfil": 0.0016583747927031507,
+    "vuln_component": 0.0016583747927031507,
+    "dns_c2": 0.0016583747927031507,
+    "other": 0.16583747927031509
+  },
+  "source_sha256": "f8eb0d166ba2f7ce35ad80e7752be1e840e9a61157080e6243dc3d73d8626085",
+  "research_claim_allowed": false,
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}
