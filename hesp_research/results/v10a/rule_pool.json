@@ -1,0 +1,3136 @@
+{
+  "schema": "hesp.v10a.rule_pool.v1",
+  "sigma_commit": "07ec293a51695cb1131a2e05260247872b31e1e1",
+  "seed": 2028,
+  "eligible": 159,
+  "parse_errors": 0,
+  "sample_size": 12,
+  "license": "Detection Rule License (DRL) 1.1, https://github.com/SigmaHQ/Detection-Rule-License",
+  "order": [
+    {
+      "rule_id": "643bdcac-8b82-49f4-9fd9-25a90b929f3b",
+      "path": "rules/windows/process_creation/proc_creation_win_renamed_megasync.yml",
+      "title": "Renamed MegaSync Execution",
+      "description": "Detects the execution of a renamed MegaSync.exe as seen used by ransomware families like Nefilim, Sodinokibi, Pysa, and Conti.",
+      "techniques": [
+        "T1218"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "process_creation"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Software that illegally integrates MegaSync in a renamed form",
+        "Administrators that have renamed MegaSync"
+      ]
+    },
+    {
+      "rule_id": "818fee0c-e0ec-4e45-824e-83e4817b0887",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_role_access.yml",
+      "title": "Azure Kubernetes Sensitive Role Access",
+      "description": "Identifies when ClusterRoles/Roles are being modified or deleted.",
+      "techniques": [
+        "T1485",
+        "T1489",
+        "T1496"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "ClusterRoles/Roles being modified and deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "ClusterRoles/Roles modification from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "612e47e9-8a59-43a6-b404-f48683f45bd6",
+      "path": "rules/windows/registry/registry_set/registry_set_servicedll_hijack.yml",
+      "title": "ServiceDll Hijack",
+      "description": "Detects changes to the \"ServiceDLL\" value related to a service in the registry. This is often used as a method of persistence.",
+      "techniques": [
+        "T1543.003"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Administrative scripts",
+        "Installation of a service"
+      ]
+    },
+    {
+      "rule_id": "26e7c5e2-6545-481e-b7e6-050143459635",
+      "path": "rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_removedby_bad_actor.yml",
+      "title": "CA Policy Removed by Non Approved Actor",
+      "description": "Monitor and alert on conditional access changes where non approved actor removed CA Policy.",
+      "techniques": [
+        "T1548",
+        "T1556"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "auditlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Misconfigured role permissions",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment."
+      ]
+    },
+    {
+      "rule_id": "1a5fefe6-734f-452e-a07d-fc1c35bce4b2",
+      "path": "rules/windows/process_creation/proc_creation_win_netsh_fw_delete_rule.yml",
+      "title": "Firewall Rule Deleted Via Netsh.EXE",
+      "description": "Detects the removal of a port or application rule in the Windows Firewall configuration using netsh",
+      "techniques": [
+        "T1686.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administration activity",
+        "Software installations and removal"
+      ]
+    },
+    {
+      "rule_id": "e5b33f7d-eb93-48b6-9851-09e1e610b6d7",
+      "path": "rules/windows/process_access/proc_access_win_lsass_werfault.yml",
+      "title": "Credential Dumping Attempt Via WerFault",
+      "description": "Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz, Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll or dbgcore.dll for win10, server2016 and up.",
+      "techniques": [
+        "T1003.001"
+      ],
+      "logsource": {
+        "category": "process_access",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Actual failures in lsass.exe that trigger a crash dump (unlikely)",
+        "Unknown cases in which WerFault accesses lsass.exe"
+      ]
+    },
+    {
+      "rule_id": "b831353c-1971-477b-abb6-2828edc3bca1",
+      "path": "rules/cloud/azure/activity_logs/azure_keyvault_secrets_modified_or_deleted.yml",
+      "title": "Azure Keyvault Secrets Modified or Deleted",
+      "description": "Identifies when secrets are modified or deleted in Azure.",
+      "techniques": [
+        "T1552",
+        "T1552.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Secrets being modified or deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Secrets modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "de25eeb8-3655-4643-ac3a-b662d3f26b6b",
+      "path": "rules/linux/process_creation/proc_creation_lnx_services_stop_and_disable.yml",
+      "title": "Disable Or Stop Services",
+      "description": "Detects the usage of utilities such as 'systemctl', 'service'...etc to stop or disable tools and services on Linux systems. Attackers may stop or disable security tools and services to evade detection, maintain persistence, or disrupt system operations.",
+      "techniques": [
+        "T1489",
+        "T1685"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "linux"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administration activities",
+        "Some false positives are to be expected. Apply additional filters as needed before pushing to production."
+      ]
+    },
+    {
+      "rule_id": "75e33ce3-ae32-4dcc-9aa8-a2a3029d6f84",
+      "path": "rules/windows/network_connection/net_connection_win_office_outbound_non_local_ip.yml",
+      "title": "Office Application Initiated Network Connection To Non-Local IP",
+      "description": "Detects an office application (Word, Excel, PowerPoint) that initiate a network connection to a non-private IP addresses. This rule aims to detect traffic similar to one seen exploited in CVE-2021-42292. This rule will require an initial baseline and tuning that is specific to your organization.",
+      "techniques": [
+        "T1203"
+      ],
+      "logsource": {
+        "category": "network_connection",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "You may have to tune certain domains out that Excel may call out to, such as microsoft or other business use case domains.",
+        "Office documents commonly have templates that refer to external addresses, like \"sharepoint.ourcompany.com\" may have to be tuned.",
+        "It is highly recommended to baseline your activity and tune out common business use cases."
+      ]
+    },
+    {
+      "rule_id": "eaa9ac35-1730-441f-9587-25767bde99d7",
+      "path": "rules/application/github/audit/github_outside_collaborator_detected.yml",
+      "title": "Github Outside Collaborator Detected",
+      "description": "Detects when an organization member or an outside collaborator is added to or removed from a project board or has their permission level changed or when an owner removes an outside collaborator from an organization or when two-factor authentication is required in an organization and an outside collaborator does not use 2FA or disables 2FA.",
+      "techniques": [
+        "T1098.001",
+        "T1098.003",
+        "T1213.003"
+      ],
+      "logsource": {
+        "product": "github",
+        "service": "audit",
+        "definition": "Requirements: The audit log streaming feature must be enabled to be able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Validate the actor if permitted to access the repo.",
+        "Validate the Multifactor Authentication changes."
+      ]
+    },
+    {
+      "rule_id": "b28e58e4-2a72-4fae-bdee-0fbe904db642",
+      "path": "rules/windows/builtin/windefend/win_defender_real_time_protection_disabled.yml",
+      "title": "Windows Defender Real-time Protection Disabled",
+      "description": "Detects disabling of Windows Defender Real-time Protection. As this event doesn't contain a lot of information on who initiated this action you might want to reduce it to a \"medium\" level if this occurs too many times in your environment",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "windefend"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Administrator actions (should be investigated)",
+        "Seen being triggered occasionally during Windows 8 Defender Updates"
+      ]
+    },
+    {
+      "rule_id": "0e20c89d-2264-44ae-8238-aeeaba609ece",
+      "path": "rules/windows/file/file_event/file_event_win_office_startup_persistence.yml",
+      "title": "Potential Persistence Via Microsoft Office Startup Folder",
+      "description": "Detects creation of Microsoft Office files inside of one of the default startup folders in order to achieve persistence.",
+      "techniques": [
+        "T1137"
+      ],
+      "logsource": {
+        "category": "file_event",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Loading a user environment from a backup or a domain controller",
+        "Synchronization of templates"
+      ]
+    },
+    {
+      "rule_id": "06d71506-7beb-4f22-8888-e2e5e2ca7fd8",
+      "path": "rules/windows/builtin/win_alert_mimikatz_keywords.yml",
+      "title": "Mimikatz Use",
+      "description": "This method detects mimikatz keywords in different Eventlogs (some of them only appear in older Mimikatz version that are however still used by different threat groups)",
+      "techniques": [
+        "T1003.001",
+        "T1003.002",
+        "T1003.004",
+        "T1003.006"
+      ],
+      "logsource": {
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Naughty administrators",
+        "AV Signature updates",
+        "Files with Mimikatz in their filename"
+      ]
+    },
+    {
+      "rule_id": "ede05abc-2c9e-4624-9944-9ff17fdc0bf5",
+      "path": "rules/network/zeek/zeek_dns_susp_zbit_flag.yml",
+      "title": "Suspicious DNS Z Flag Bit Set",
+      "description": "The DNS Z flag is bit within the DNS protocol header that is, per the IETF design, meant to be used reserved (unused). Although recently it has been used in DNSSec, the value being set to anything other than 0 should be rare. Otherwise if it is set to non 0 and DNSSec is being used, then excluding the legitimate domains is low effort and high reward. Determine if multiple of these files were accessed in a short period of time to further enhance the possibility of seeing if this was a one off or the possibility of larger sensitive file gathering. This Sigma query is designed to accompany the Corelight Threat Hunting Guide, which can be found here: https://www3.corelight.com/corelights-introductory-guide-to-threat-hunting-with-zeek-bro-logs'",
+      "techniques": [
+        "T1095",
+        "T1571"
+      ],
+      "logsource": {
+        "product": "zeek",
+        "service": "dns"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Internal or legitimate external domains using DNSSec. Verify if these are legitimate DNSSec domains and then exclude them.",
+        "If you work in a Public Sector then it may be good to exclude things like endswith \".edu\", \".gov\" and or \".mil\""
+      ]
+    },
+    {
+      "rule_id": "8de1cbe8-d6f5-496d-8237-5f44a721c7a0",
+      "path": "rules/windows/process_creation/proc_creation_win_whoami_parent_anomaly.yml",
+      "title": "Whoami.EXE Execution Anomaly",
+      "description": "Detects the execution of whoami.exe with suspicious parent processes.",
+      "techniques": [
+        "T1033"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Admin activity",
+        "Scripts and administrative tools used in the monitored environment",
+        "Monitoring activity"
+      ]
+    },
+    {
+      "rule_id": "39a80702-d7ca-4a83-b776-525b1f86a36d",
+      "path": "rules/windows/builtin/security/win_security_sdelete_potential_secure_deletion.yml",
+      "title": "Potential Secure Deletion with SDelete",
+      "description": "Detects files that have extensions commonly seen while SDelete is used to wipe files.",
+      "techniques": [
+        "T1027.005",
+        "T1070.004",
+        "T1485",
+        "T1553.002"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "security"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate usage of SDelete",
+        "Files that are interacted with that have these extensions legitimately"
+      ]
+    },
+    {
+      "rule_id": "a58353df-af43-4753-bad0-cd83ef35eef5",
+      "path": "rules/windows/process_creation/proc_creation_win_ntdsutil_susp_usage.yml",
+      "title": "Suspicious Usage Of Active Directory Diagnostic Tool (ntdsutil.exe)",
+      "description": "Detects execution of ntdsutil.exe to perform different actions such as restoring snapshots...etc.",
+      "techniques": [
+        "T1003.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate usage to restore snapshots",
+        "Legitimate admin activity"
+      ]
+    },
+    {
+      "rule_id": "d6c2ce7e-afb5-4337-9ca4-4b5254ed0565",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_winsock2.yml",
+      "title": "WinSock2 Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "18f2065c-d36c-464a-a748-bcf909acb2e3",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_wow6432node_classes.yml",
+      "title": "Wow6432Node Classes Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "5513deaf-f49a-46c2-a6c8-3f111b5cb453",
+      "path": "rules/web/webserver_generic/web_sql_injection_in_access_logs.yml",
+      "title": "SQL Injection Strings In URI",
+      "description": "Detects potential SQL injection attempts via GET requests in access logs.",
+      "techniques": [
+        "T1190"
+      ],
+      "logsource": {
+        "category": "webserver"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Java scripts and CSS Files",
+        "User searches in search boxes of the respective website",
+        "Internal vulnerability scanners can cause some serious FPs when used, if you experience a lot of FPs due to this think of adding more filters such as \"User Agent\" strings and more response codes"
+      ]
+    },
+    {
+      "rule_id": "a61a3c56-4ce2-4351-a079-88ae4cbd2b58",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_admission_controller.yml",
+      "title": "Azure Kubernetes Admission Controller",
+      "description": "Identifies when an admission controller is executed in Azure Kubernetes. A Kubernetes Admission controller intercepts, and possibly modifies, requests to the Kubernetes API server. The behavior of this admission controller is determined by an admission webhook (MutatingAdmissionWebhook or ValidatingAdmissionWebhook) that the user deploys in the cluster. An adversary can use such webhooks as the MutatingAdmissionWebhook for obtaining persistence in the cluster. For example, attackers can intercept and modify the pod creation operations in the cluster and add their malicious container to every created pod. An adversary can use the webhook ValidatingAdmissionWebhook, which could be used to obtain access credentials. An adversary could use the webhook to intercept the requests to the API server, record secrets, and other sensitive information.",
+      "techniques": [
+        "T1078",
+        "T1552",
+        "T1552.007"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Azure Kubernetes Admissions Controller may be done by a system administrator.",
+        "If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "512cf937-ea9b-4332-939c-4c2c94baadcd",
+      "path": "rules/cloud/azure/activity_logs/azure_firewall_modified_or_deleted.yml",
+      "title": "Azure Firewall Modified or Deleted",
+      "description": "Identifies when a firewall is created, modified, or deleted.",
+      "techniques": [
+        "T1686.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Firewall being modified or deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Firewall modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "16c86189-b556-4ee8-b4c7-7e350a195a4f",
+      "path": "rules/application/velocity/velocity_ssti_injection.yml",
+      "title": "Potential Server Side Template Injection In Velocity",
+      "description": "Detects exceptions in velocity template renderer, this most likely happens due to dynamic rendering of user input and may lead to RCE.",
+      "techniques": [
+        "T1190"
+      ],
+      "logsource": {
+        "category": "application",
+        "product": "velocity",
+        "definition": "Requirements: application error logs must be collected (with LOG_LEVEL=ERROR and above)"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Application bugs",
+        "Missing .vm files"
+      ]
+    },
+    {
+      "rule_id": "b1377339-fda6-477a-b455-ac0923f9ec2c",
+      "path": "rules/windows/process_creation/proc_creation_win_remote_access_tools_anydesk_piped_password_via_cli.yml",
+      "title": "Remote Access Tool - AnyDesk Piped Password Via CLI",
+      "description": "Detects piping the password to an anydesk instance via CMD and the '--set-password' flag.",
+      "techniques": [
+        "T1219.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate piping of the password to anydesk",
+        "Some FP could occur with similar tools that uses the same command line '--set-password'"
+      ]
+    },
+    {
+      "rule_id": "baecf8fb-edbf-429f-9ade-31fc3f22b970",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_office.yml",
+      "title": "Office Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry. Adversaries may modify these keys to execute malicious code when Office files are opened. There are various legitimate add-ins that also use these keys and this filter list might not be exhaustive. Thus, it is recommended to review and tune filters for your environment to reduce false positives before deploying to production.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software or add-in installations and administrative configurations",
+        "Automatic registry modifications during legitimate software installations"
+      ]
+    },
+    {
+      "rule_id": "3fcc9b35-39e4-44c0-a2ad-9e82b6902b31",
+      "path": "rules/linux/process_creation/proc_creation_lnx_clear_syslog.yml",
+      "title": "Syslog Clearing or Removal Via System Utilities",
+      "description": "Detects specific commands commonly used to remove or empty the syslog. Which is a technique often used by attacker as a method to hide their tracks",
+      "techniques": [
+        "T1685.006"
+      ],
+      "logsource": {
+        "product": "linux",
+        "category": "process_creation"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Log rotation.",
+        "Maintenance."
+      ]
+    },
+    {
+      "rule_id": "c0d3734d-330f-4a03-aae2-65dacc6a8222",
+      "path": "rules/linux/auditd/syscall/lnx_auditd_web_rce.yml",
+      "title": "Webshell Remote Command Execution",
+      "description": "Detects possible command execution by web application/web shell",
+      "techniques": [
+        "T1505.003"
+      ],
+      "logsource": {
+        "product": "linux",
+        "service": "auditd",
+        "definition": "Required auditd configuration:\n-a always,exit -F arch=b32 -S execve -F euid=33 -k detect_execve_www\n-a always,exit -F arch=b64 -S execve -F euid=33 -k detect_execve_www\n-a always,exit -F arch=b32 -S execveat -F euid=33 -k detect_execve_www\n-a always,exit -F arch=b64 -S execveat -F euid=33 -k detect_execve_www\nChange the number \"33\" to the ID of your WebServer user. Default: www-data:x:33:33\n"
+      },
+      "level": "critical",
+      "status": "test",
+      "falsepositives": [
+        "Admin activity",
+        "Crazy web applications"
+      ]
+    },
+    {
+      "rule_id": "cc36992a-4671-4f21-a91d-6c2b72a2edf5",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_eventlog_clear.yml",
+      "title": "Suspicious Eventlog Clearing or Configuration Change Activity",
+      "description": "Detects the clearing or configuration tampering of EventLog using utilities such as \"wevtutil\", \"powershell\" and \"wmic\". This technique were seen used by threat actors and ransomware strains in order to evade defenses.",
+      "techniques": [
+        "T1685.001",
+        "T1685.005"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Admin activity",
+        "Scripts and administrative tools used in the monitored environment",
+        "Maintenance activity"
+      ]
+    },
+    {
+      "rule_id": "a39d7fa7-3fbd-4dc2-97e1-d87f546b1bbc",
+      "path": "rules/linux/auditd/syscall/lnx_auditd_susp_exe_folders.yml",
+      "title": "Program Executions in Suspicious Folders",
+      "description": "Detects program executions in suspicious non-program folders related to malware or hacking activity",
+      "techniques": [
+        "T1584",
+        "T1587"
+      ],
+      "logsource": {
+        "product": "linux",
+        "service": "auditd"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Admin activity (especially in /tmp folders)",
+        "Crazy web applications"
+      ]
+    },
+    {
+      "rule_id": "e09aed7a-09e0-4c9a-90dd-f0d52507347e",
+      "path": "rules/web/proxy_generic/proxy_downloadcradle_webdav.yml",
+      "title": "Windows WebDAV User Agent",
+      "description": "Detects WebDav DownloadCradle",
+      "techniques": [
+        "T1071.001"
+      ],
+      "logsource": {
+        "category": "proxy"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrative scripts that download files from the Internet",
+        "Administrative scripts that retrieve certain website contents",
+        "Legitimate WebDAV administration"
+      ]
+    },
+    {
+      "rule_id": "322ed9ec-fcab-4f67-9a34-e7c6aef43614",
+      "path": "rules/windows/process_creation/proc_creation_win_netsh_port_forwarding.yml",
+      "title": "New Port Forwarding Rule Added Via Netsh.EXE",
+      "description": "Detects the execution of netsh commands that configure a new port forwarding (PortProxy) rule",
+      "techniques": [
+        "T1090"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administration activity",
+        "WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)"
+      ]
+    },
+    {
+      "rule_id": "0ba1da6d-b6ce-4366-828c-18826c9de23e",
+      "path": "rules/windows/process_creation/proc_creation_win_renamed_binary_highly_relevant.yml",
+      "title": "Potential Defense Evasion Via Rename Of Highly Relevant Binaries",
+      "description": "Detects the execution of a renamed binary often used by attackers or malware leveraging new Sysmon OriginalFileName datapoint.",
+      "techniques": [
+        "T1036.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Custom applications use renamed binaries adding slight change to binary name. Typically this is easy to spot and add to whitelist",
+        "PsExec installed via Windows Store doesn't contain original filename field (False negative)"
+      ]
+    },
+    {
+      "rule_id": "0eb46774-f1ab-4a74-8238-1155855f2263",
+      "path": "rules/windows/registry/registry_set/registry_set_windows_defender_tamper.yml",
+      "title": "Disable Windows Defender Functionalities Via Registry Keys",
+      "description": "Detects when attackers or tools disable Windows Defender functionalities via the Windows registry",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "registry_set"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrator actions via the Windows Defender interface",
+        "Third party Antivirus"
+      ]
+    },
+    {
+      "rule_id": "c947b146-0abc-4c87-9c64-b17e9d7274a2",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_shadow_copies_deletion.yml",
+      "title": "Shadow Copies Deletion Using Operating Systems Utilities",
+      "description": "Shadow Copies deletion using operating systems utilities",
+      "techniques": [
+        "T1070",
+        "T1490"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Legitimate Administrator deletes Shadow Copies using operating systems utilities for legitimate reason",
+        "LANDesk LDClient Ivanti-PSModule (PS EncodedCommand)"
+      ]
+    },
+    {
+      "rule_id": "ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31",
+      "path": "rules/windows/process_creation/proc_creation_win_pua_ngrok.yml",
+      "title": "PUA - Ngrok Execution",
+      "description": "Detects the use of Ngrok, a utility used for port forwarding and tunneling, often used by threat actors to make local protected services publicly available. Involved domains are bin.equinox.io for download and *.ngrok.io for connections.",
+      "techniques": [
+        "T1572"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Another tool that uses the command line switches of Ngrok",
+        "Ngrok http 3978 (https://learn.microsoft.com/en-us/azure/bot-service/bot-service-debug-channel-ngrok?view=azure-bot-service-4.0)"
+      ]
+    },
+    {
+      "rule_id": "046218bd-e0d8-4113-a3c3-895a12b2b298",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_session_manager.yml",
+      "title": "Session Manager Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1546.009",
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "534f2ef7-e8a2-4433-816d-c91bccde289b",
+      "path": "rules/windows/process_creation/proc_creation_win_explorer_nouaccheck.yml",
+      "title": "Explorer NOUACCHECK Flag",
+      "description": "Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag that allows to run all sub processes of that newly started explorer.exe without any UAC checks",
+      "techniques": [
+        "T1548.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Domain Controller User Logon",
+        "Unknown how many legitimate software products use that method"
+      ]
+    },
+    {
+      "rule_id": "cbf93e5d-ca6c-4722-8bea-e9119007c248",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentversion_nt.yml",
+      "title": "CurrentVersion NT Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "64e8e417-c19a-475a-8d19-98ea705394cc",
+      "path": "rules/windows/powershell/powershell_module/posh_pm_alternate_powershell_hosts.yml",
+      "title": "Alternate PowerShell Hosts - PowerShell Module",
+      "description": "Detects alternate PowerShell hosts potentially bypassing detections looking for powershell.exe",
+      "techniques": [
+        "T1059.001"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "ps_module",
+        "definition": "0ad03ef1-f21b-4a79-8ce8-e6900c54b65b"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Programs using PowerShell directly without invocation of a dedicated interpreter",
+        "MSP Detection Searcher",
+        "Citrix ConfigSync.ps1"
+      ]
+    },
+    {
+      "rule_id": "270185ff-5f50-4d6d-a27f-24c3b8c9fef8",
+      "path": "rules/windows/file/file_delete/file_delete_win_delete_tomcat_logs.yml",
+      "title": "Tomcat WebServer Logs Deleted",
+      "description": "Detects the deletion of tomcat WebServer logs which may indicate an attempt to destroy forensic evidence",
+      "techniques": [
+        "T1070"
+      ],
+      "logsource": {
+        "category": "file_delete",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "During uninstallation of the tomcat server",
+        "During log rotation"
+      ]
+    },
+    {
+      "rule_id": "12d027c3-b48c-4d9d-8bb6-a732200034b2",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_service_account_modified_or_deleted.yml",
+      "title": "Azure Kubernetes Service Account Modified or Deleted",
+      "description": "Identifies when a service account is modified or deleted.",
+      "techniques": [
+        "T1485",
+        "T1489",
+        "T1496",
+        "T1531"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Service account being modified or deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Service account modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "22d80745-6f2c-46da-826b-77adaededd74",
+      "path": "rules/windows/powershell/powershell_script/posh_ps_susp_service_dacl_modification_set_service.yml",
+      "title": "Suspicious Service DACL Modification Via Set-Service Cmdlet - PS",
+      "description": "Detects usage of the \"Set-Service\" powershell cmdlet to configure a new SecurityDescriptor that allows a service to be hidden from other utilities such as \"sc.exe\", \"Get-Service\"...etc. (Works only in powershell 7)",
+      "techniques": [
+        "T1574.011"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "ps_script",
+        "definition": "Requirements: Script Block Logging must be enabled"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Rare intended use of hidden services",
+        "Rare FP could occur due to the non linearity of the ScriptBlockText log"
+      ]
+    },
+    {
+      "rule_id": "16124c2d-e40b-4fcc-8f2c-5ab7870a2223",
+      "path": "rules/cloud/aws/cloudtrail/aws_ec2_disable_encryption.yml",
+      "title": "AWS EC2 Disable EBS Encryption",
+      "description": "Identifies disabling of default Amazon Elastic Block Store (EBS) encryption in the current region. Disabling default encryption does not change the encryption status of your existing volumes.",
+      "techniques": [
+        "T1486",
+        "T1565"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "stable",
+      "falsepositives": [
+        "System Administrator Activities",
+        "DEV, UAT, SAT environment. You should apply this rule with PROD account only."
+      ]
+    },
+    {
+      "rule_id": "aae1243f-d8af-40d8-ab20-33fc6d0c55bc",
+      "path": "rules/windows/process_creation/proc_creation_win_sysinternals_psloglist.yml",
+      "title": "Suspicious Use of PsLogList",
+      "description": "Detects usage of the PsLogList utility to dump event log in order to extract admin accounts and perform account discovery or delete events logs",
+      "techniques": [
+        "T1087",
+        "T1087.001",
+        "T1087.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Another tool that uses the command line switches of PsLogList",
+        "Legitimate use of PsLogList by an administrator"
+      ]
+    },
+    {
+      "rule_id": "39b64854-5497-4b57-a448-40977b8c9679",
+      "path": "rules/windows/driver_load/driver_load_win_mal_drivers_names.yml",
+      "title": "Malicious Driver Load By Name",
+      "description": "Detects loading of known malicious drivers via the file name of the drivers.",
+      "techniques": [
+        "T1068",
+        "T1543.003"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "driver_load"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "False positives may occur if one of the vulnerable driver names mentioned above didn't change its name between versions. So always make sure that the driver being loaded is the legitimate one and the non vulnerable version.",
+        "If you experience a lot of FP you could comment the driver name or its exact known legitimate location (when possible)"
+      ]
+    },
+    {
+      "rule_id": "f88e112a-21aa-44bd-9b01-6ee2a2bbbed1",
+      "path": "rules/windows/builtin/security/account_management/win_security_susp_failed_logon_source.yml",
+      "title": "Failed Logon From Public IP",
+      "description": "Detects a failed logon attempt from a public IP. A login from a public IP can indicate a misconfigured firewall or network boundary.",
+      "techniques": [
+        "T1078",
+        "T1133",
+        "T1190"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "security"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate logon attempts over the internet",
+        "IPv4-to-IPv6 mapped IPs"
+      ]
+    },
+    {
+      "rule_id": "91c945bc-2ad1-4799-a591-4d00198a1215",
+      "path": "rules/windows/builtin/security/win_security_susp_raccess_sensitive_fext.yml",
+      "title": "Suspicious Access to Sensitive File Extensions",
+      "description": "Detects known sensitive file extensions accessed on a network share",
+      "techniques": [
+        "T1039"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "security"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Help Desk operator doing backup or re-imaging end user machine or backup software",
+        "Users working with these data types or exchanging message files"
+      ]
+    },
+    {
+      "rule_id": "a80f662f-022f-4429-9b8c-b1a41aaa6688",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_internet_explorer.yml",
+      "title": "Internet Explorer Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "3a6586ad-127a-4d3b-a677-1e6eacdf8fde",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_shell_spawn_susp_program.yml",
+      "title": "Windows Shell/Scripting Processes Spawning Suspicious Programs",
+      "description": "Detects suspicious child processes of a Windows shell and scripting processes such as wscript, rundll32, powershell, mshta...etc.",
+      "techniques": [
+        "T1059.001",
+        "T1059.005",
+        "T1218"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrative scripts",
+        "Microsoft SCCM"
+      ]
+    },
+    {
+      "rule_id": "1ac14d38-3dfc-4635-92c7-e3fd1c5f5bfc",
+      "path": "rules/windows/process_creation/proc_creation_win_winrar_exfil_dmp_files.yml",
+      "title": "Winrar Compressing Dump Files",
+      "description": "Detects execution of WinRAR in order to compress a file with a \".dmp\"/\".dump\" extension, which could be a step in a process of dump file exfiltration.",
+      "techniques": [
+        "T1560.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate use of WinRAR with a command line in which \".dmp\" or \".dump\" appears accidentally",
+        "Legitimate use of WinRAR to compress WER \".dmp\" files for troubleshooting"
+      ]
+    },
+    {
+      "rule_id": "d5866ddf-ce8f-4aea-b28e-d96485a20d3d",
+      "path": "rules/windows/file/file_event/file_event_win_creation_system_file.yml",
+      "title": "Files With System Process Name In Unsuspected Locations",
+      "description": "Detects the creation of an executable with a system process name in folders other than the system ones (System32, SysWOW64, etc.). It is highly recommended to perform an initial baseline before using this rule in production.",
+      "techniques": [
+        "T1036.005"
+      ],
+      "logsource": {
+        "category": "file_event",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "System processes copied outside their default folders for testing purposes",
+        "Third party software naming their software with the same names as the processes mentioned here"
+      ]
+    },
+    {
+      "rule_id": "dcaa3f04-70c3-427a-80b4-b870d73c94c4",
+      "path": "rules/windows/process_creation/proc_creation_win_csc_susp_dynamic_compilation.yml",
+      "title": "Dynamic .NET Compilation Via Csc.EXE",
+      "description": "Detects execution of \"csc.exe\" to compile .NET code. Attackers often leverage this to compile code on the fly and use it in other stages.",
+      "techniques": [
+        "T1027.004"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software from program files - https://twitter.com/gN3mes1s/status/1206874118282448897",
+        "Legitimate Microsoft software - https://twitter.com/gabriele_pippi/status/1206907900268072962"
+      ]
+    },
+    {
+      "rule_id": "e7a2fd40-3ae1-4a85-bf80-15cf624fb1b1",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_system_scripts.yml",
+      "title": "System Scripts Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "08d6ac24-c927-4469-b3b7-2e422d6e3c43",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_network_policy_change.yml",
+      "title": "Azure Kubernetes Network Policy Change",
+      "description": "Identifies when a Azure Kubernetes network policy is modified or deleted.",
+      "techniques": [
+        "T1485",
+        "T1489",
+        "T1496"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Network Policy being modified and deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Network Policy being modified and deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "cd951fdc-4b2f-47f5-ba99-a33bf61e3770",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_always_install_elevated_windows_installer.yml",
+      "title": "Always Install Elevated Windows Installer",
+      "description": "Detects Windows Installer service (msiexec.exe) trying to install MSI packages with SYSTEM privilege",
+      "techniques": [
+        "T1548.002"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "process_creation"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "System administrator usage",
+        "Anti virus products",
+        "WindowsApps located in \"C:\\Program Files\\WindowsApps\\\""
+      ]
+    },
+    {
+      "rule_id": "8834e2f7-6b4b-4f09-8906-d2276470ee23",
+      "path": "rules/windows/process_creation/proc_creation_win_sysinternals_psexec_paexec_escalate_system.yml",
+      "title": "PsExec/PAExec Escalation to LOCAL SYSTEM",
+      "description": "Detects suspicious commandline flags used by PsExec and PAExec to escalate a command line to LOCAL_SYSTEM rights",
+      "techniques": [
+        "T1587.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Admins that use PsExec or PAExec to escalate to the SYSTEM account for maintenance purposes (rare)",
+        "Users that debug Microsoft Intune issues using the commands mentioned in the official documentation; see https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension"
+      ]
+    },
+    {
+      "rule_id": "a0a278fe-2c0e-4de2-ac3c-c68b08a9ba98",
+      "path": "rules/windows/builtin/windefend/win_defender_asr_lsass_access.yml",
+      "title": "LSASS Access Detected via Attack Surface Reduction",
+      "description": "Detects Access to LSASS Process",
+      "techniques": [
+        "T1003.001"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "windefend",
+        "definition": "Requirements:Enabled Block credential stealing from the Windows local security authority subsystem (lsass.exe) from Attack Surface Reduction (GUID: 9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2)"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Google Chrome GoogleUpdate.exe",
+        "Some Taskmgr.exe related activity"
+      ]
+    },
+    {
+      "rule_id": "af6925b0-8826-47f1-9324-337507a0babd",
+      "path": "rules/cloud/azure/activity_logs/azure_dns_zone_modified_or_deleted.yml",
+      "title": "Azure DNS Zone Modified or Deleted",
+      "description": "Identifies when DNS zone is modified or deleted.",
+      "techniques": [
+        "T1565.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "DNS zone modified and deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "DNS zone modification from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "46530378-f9db-4af9-a9e5-889c177d3881",
+      "path": "rules/cloud/azure/activity_logs/azure_device_or_configuration_modified_or_deleted.yml",
+      "title": "Azure Device or Configuration Modified or Deleted",
+      "description": "Identifies when a device or device configuration in azure is modified or deleted.",
+      "techniques": [
+        "T1485",
+        "T1565.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Device or device configuration being modified or deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Device or device configuration modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "7794fa3c-edea-4cff-bec7-267dd4770fd7",
+      "path": "rules/macos/process_creation/proc_creation_macos_clipboard_access_via_osascript.yml",
+      "title": "Clipboard Access Via OSAScript",
+      "description": "Detects access to clipboard content via osascript, which may be used for data collection but also occurs in legitimate clipboard utilities and automation scripts",
+      "techniques": [
+        "T1059.002",
+        "T1115"
+      ],
+      "logsource": {
+        "product": "macos",
+        "category": "process_creation"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate clipboard utilities and automation scripts that read or write clipboard content",
+        "Developer tools and IDEs that use osascript for clipboard integration"
+      ]
+    },
+    {
+      "rule_id": "cd1f961e-0b96-436b-b7c6-38da4583ec00",
+      "path": "rules/windows/process_creation/proc_creation_win_logman_disable_eventlog.yml",
+      "title": "Suspicious Windows Trace ETW Session Tamper Via Logman.EXE",
+      "description": "Detects the execution of \"logman\" utility in order to disable or delete Windows trace sessions",
+      "techniques": [
+        "T1685",
+        "T1685.005"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate deactivation by administrative staff",
+        "Installer tools that disable services, e.g. before log collection agent installation"
+      ]
+    },
+    {
+      "rule_id": "b6188d2f-b3c4-4d2c-a17d-9706e0851af0",
+      "path": "rules/windows/image_load/image_load_side_load_goopdate.yml",
+      "title": "Potential Goopdate.DLL Sideloading",
+      "description": "Detects potential DLL sideloading of \"goopdate.dll\", a DLL used by googleupdate.exe",
+      "techniques": [
+        "T1574.001"
+      ],
+      "logsource": {
+        "category": "image_load",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "False positives are expected from Google Chrome installations running from user locations (AppData) and other custom locations. Apply additional filters accordingly.",
+        "Other third party chromium browsers located in AppData"
+      ]
+    },
+    {
+      "rule_id": "ec570e53-4c76-45a9-804d-dc3f355ff7a7",
+      "path": "rules/windows/process_creation/proc_creation_win_7zip_exfil_dmp_files.yml",
+      "title": "7Zip Compressing Dump Files",
+      "description": "Detects execution of 7z in order to compress a file with a \".dmp\"/\".dump\" extension, which could be a step in a process of dump file exfiltration.",
+      "techniques": [
+        "T1560.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate use of 7z with a command line in which \".dmp\" or \".dump\" appears accidentally",
+        "Legitimate use of 7z to compress WER \".dmp\" files for troubleshooting"
+      ]
+    },
+    {
+      "rule_id": "6c0a7755-6d31-44fa-80e1-133e57752680",
+      "path": "rules/windows/builtin/system/service_control_manager/win_system_defender_disabled.yml",
+      "title": "Windows Defender Threat Detection Service Disabled",
+      "description": "Detects when the \"Windows Defender Threat Protection\" service is disabled.",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "system"
+      },
+      "level": "medium",
+      "status": "stable",
+      "falsepositives": [
+        "Administrator actions",
+        "Auto updates of Windows Defender causes restarts"
+      ]
+    },
+    {
+      "rule_id": "904e8e61-8edf-4350-b59c-b905fc8e810c",
+      "path": "rules/windows/powershell/powershell_script/posh_ps_get_process_security_software_discovery.yml",
+      "title": "Security Software Discovery Via Powershell Script",
+      "description": "Detects calls to \"get-process\" where the output is piped to a \"where-object\" filter to search for security solution processes. Adversaries may attempt to get a listing of security software, configurations, defensive tools, and sensors that are installed on a system or in a cloud environment. This may include things such as firewall rules and anti-virus",
+      "techniques": [
+        "T1518.001"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "ps_script",
+        "definition": "Requirements: Script Block Logging must be enabled"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "False positives might occur due to the nature of the ScriptBlock being ingested as a big blob. Initial tuning is required.",
+        "As the \"selection_cmdlet\" is common in scripts the matching engine might slow down the search. Change into regex or a more accurate string to avoid heavy resource consumption if experienced"
+      ]
+    },
+    {
+      "rule_id": "5afee48e-67dd-4e03-a783-f74259dcf998",
+      "path": "rules/windows/process_creation/proc_creation_win_sysinternals_procdump_lsass.yml",
+      "title": "Potential LSASS Process Dump Via Procdump",
+      "description": "Detects potential credential harvesting attempts through LSASS memory dumps using ProcDump. This rule identifies suspicious command-line patterns that combine memory dump flags (-ma, -mm, -mp) with LSASS-related process markers. LSASS (Local Security Authority Subsystem Service) contains sensitive authentication data including plaintext passwords, NTLM hashes, and Kerberos tickets in memory. Attackers commonly dump LSASS memory to extract credentials for lateral movement and privilege escalation.",
+      "techniques": [
+        "T1003.001",
+        "T1036"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Unlikely, because no one should dump an lsass process memory",
+        "Another tool that uses command line flags similar to ProcDump"
+      ]
+    },
+    {
+      "rule_id": "7ff9db12-1b94-4a79-ba68-a2402c5d6729",
+      "path": "rules/web/webserver_generic/web_win_webshells_in_access_logs.yml",
+      "title": "Windows Webshell Strings",
+      "description": "Detects common commands used in Windows webshells",
+      "techniques": [
+        "T1505.003"
+      ],
+      "logsource": {
+        "category": "webserver"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Web sites like wikis with articles on os commands and pages that include the os commands in the URLs",
+        "User searches in search boxes of the respective website"
+      ]
+    },
+    {
+      "rule_id": "de587dce-915e-4218-aac4-835ca6af6f70",
+      "path": "rules/windows/process_creation/proc_creation_win_reg_add_run_key.yml",
+      "title": "Potential Persistence Attempt Via Run Keys Using Reg.EXE",
+      "description": "Detects suspicious command line reg.exe tool adding key to RUN key in Registry",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reasons.",
+        "Legitimate administrator sets up autorun keys for legitimate reasons."
+      ]
+    },
+    {
+      "rule_id": "9df5f547-c86a-433e-b533-f2794357e242",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_classes.yml",
+      "title": "Classes Autorun Keys Modification",
+      "description": "Detects modification of Windows Registry Classes keys used for persistence. Adversaries modify these autostart extensibility points (ASEP) to execute malicious code when file types are opened or actions are performed. Various legitimate software also uses these keys. Currently, this rule only filters out known legitimate software paths, thus it is recommended to review and tune filters for your environment to reduce false positives before deploying to production.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "38e7f511-3f74-41d4-836e-f57dfa18eead",
+      "path": "rules/cloud/aws/cloudtrail/aws_cloudtrail_ssm_malicious_usage.yml",
+      "title": "Potential Malicious Usage of CloudTrail System Manager",
+      "description": "Detect when System Manager successfully executes commands against an instance.",
+      "techniques": [
+        "T1566",
+        "T1566.002"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "There are legitimate uses of SSM to send commands to EC2 instances",
+        "Legitimate users may have to use SSM to perform actions against machines in the Cloud to update or maintain them"
+      ]
+    },
+    {
+      "rule_id": "c8557060-9221-4448-8794-96320e6f3e74",
+      "path": "rules/web/proxy_generic/proxy_ua_powershell.yml",
+      "title": "Windows PowerShell User Agent",
+      "description": "Detects Windows PowerShell Web Access",
+      "techniques": [
+        "T1071.001"
+      ],
+      "logsource": {
+        "category": "proxy"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Administrative scripts that download files from the Internet",
+        "Administrative scripts that retrieve certain website contents"
+      ]
+    },
+    {
+      "rule_id": "0a5177f4-6ca9-44c2-aacf-d3f3d8b6e4d2",
+      "path": "rules/cloud/aws/cloudtrail/aws_iam_backdoor_users_keys.yml",
+      "title": "AWS IAM Backdoor Users Keys",
+      "description": "Detects AWS API key creation for a user by another user. Backdoored users can be used to obtain persistence in the AWS environment. Also with this alert, you can detect a flow of AWS keys in your org.",
+      "techniques": [
+        "T1098"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Adding user keys to their own accounts (the filter cannot cover all possible variants of user naming)",
+        "AWS API keys legitimate exchange workflows"
+      ]
+    },
+    {
+      "rule_id": "0922467f-db53-4348-b7bf-dee8d0d348c6",
+      "path": "rules/cloud/azure/audit_logs/azure_aad_secops_new_ca_policy_addedby_bad_actor.yml",
+      "title": "New CA Policy by Non-approved Actor",
+      "description": "Monitor and alert on conditional access changes.",
+      "techniques": [
+        "T1548"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "auditlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Misconfigured role permissions",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment."
+      ]
+    },
+    {
+      "rule_id": "4afac85c-224a-4dd7-b1af-8da40e1c60bd",
+      "path": "rules/cloud/azure/signin_logs/azure_blocked_account_attempt.yml",
+      "title": "Account Disabled or Blocked for Sign in Attempts",
+      "description": "Detects when an account is disabled or blocked for sign in but tried to log in",
+      "techniques": [
+        "T1078.004"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "signinlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Account disabled or blocked in error",
+        "Automation account has been blocked or disabled"
+      ]
+    },
+    {
+      "rule_id": "15619216-e993-4721-b590-4c520615a67d",
+      "path": "rules/windows/process_creation/proc_creation_win_hktl_meterpreter_getsystem.yml",
+      "title": "Potential Meterpreter/CobaltStrike Activity",
+      "description": "Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service starting",
+      "techniques": [
+        "T1134.001",
+        "T1134.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Commandlines containing components like cmd accidentally",
+        "Jobs and services started with cmd"
+      ]
+    },
+    {
+      "rule_id": "53389db6-ba46-48e3-a94c-e0f2cefe1583",
+      "path": "rules/network/zeek/zeek_dce_rpc_mitre_bzar_persistence.yml",
+      "title": "MITRE BZAR Indicators for Persistence",
+      "description": "Windows DCE-RPC functions which indicate a persistence techniques on the remote system. All credit for the Zeek mapping of the suspicious endpoint/operation field goes to MITRE.",
+      "techniques": [
+        "T1547.004"
+      ],
+      "logsource": {
+        "product": "zeek",
+        "service": "dce_rpc"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Windows administrator tasks or troubleshooting",
+        "Windows management scripts or software"
+      ]
+    },
+    {
+      "rule_id": "50a3c7aa-ec29-44a4-92c1-fce229eef6fc",
+      "path": "rules/cloud/azure/audit_logs/azure_aad_secops_ca_policy_updatedby_bad_actor.yml",
+      "title": "CA Policy Updated by Non Approved Actor",
+      "description": "Monitor and alert on conditional access changes. Is Initiated by (actor) approved to make changes? Review Modified Properties and compare \"old\" vs \"new\" value.",
+      "techniques": [
+        "T1548",
+        "T1556"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "auditlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Misconfigured role permissions",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment."
+      ]
+    },
+    {
+      "rule_id": "207b0396-3689-42d9-8399-4222658efc99",
+      "path": "rules/windows/process_creation/proc_creation_win_sysinternals_susp_psexec_paexec_flags.yml",
+      "title": "Potential Privilege Escalation To LOCAL SYSTEM",
+      "description": "Detects unknown program using commandline flags usually used by tools such as PsExec and PAExec to start programs with SYSTEM Privileges",
+      "techniques": [
+        "T1587.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Weird admins that rename their tools",
+        "Software companies that bundle PsExec/PAExec with their software and rename it, so that it is less embarrassing"
+      ]
+    },
+    {
+      "rule_id": "a54f842a-3713-4b45-8c84-5f136fdebd3c",
+      "path": "rules/windows/registry/registry_event/registry_event_portproxy_registry_key.yml",
+      "title": "New PortProxy Registry Entry Added",
+      "description": "Detects the modification of the PortProxy registry key which is used for port forwarding.",
+      "techniques": [
+        "T1090"
+      ],
+      "logsource": {
+        "category": "registry_event",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)",
+        "Synergy Software KVM (https://symless.com/synergy)"
+      ]
+    },
+    {
+      "rule_id": "b640c0b8-87f8-4daa-aef8-95a24261dd1d",
+      "path": "rules/network/zeek/zeek_dce_rpc_mitre_bzar_execution.yml",
+      "title": "MITRE BZAR Indicators for Execution",
+      "description": "Windows DCE-RPC functions which indicate an execution techniques on the remote system. All credit for the Zeek mapping of the suspicious endpoint/operation field goes to MITRE",
+      "techniques": [
+        "T1047",
+        "T1053.002",
+        "T1569.002"
+      ],
+      "logsource": {
+        "product": "zeek",
+        "service": "dce_rpc"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Windows administrator tasks or troubleshooting",
+        "Windows management scripts or software"
+      ]
+    },
+    {
+      "rule_id": "66c3b204-9f88-4d0a-a7f7-8a57d521ca55",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_crypto_mining_monero.yml",
+      "title": "Potential Crypto Mining Activity",
+      "description": "Detects command line parameters or strings often used by crypto miners",
+      "techniques": [
+        "T1496"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Legitimate use of crypto miners",
+        "Some build frameworks"
+      ]
+    },
+    {
+      "rule_id": "17769c90-230e-488b-a463-e05c08e9d48f",
+      "path": "rules/windows/process_creation/proc_creation_win_powershell_defender_exclusion.yml",
+      "title": "Powershell Defender Exclusion",
+      "description": "Detects requests to exclude files, folders or processes from Antivirus scanning using PowerShell cmdlets",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Possible Admin Activity",
+        "Other Cmdlets that may use the same parameters"
+      ]
+    },
+    {
+      "rule_id": "b86d356d-6093-443d-971c-9b07db583c68",
+      "path": "rules/linux/process_creation/proc_creation_lnx_susp_curl_useragent.yml",
+      "title": "Suspicious Curl Change User Agents - Linux",
+      "description": "Detects a suspicious curl process start on linux with set useragent options",
+      "techniques": [
+        "T1071.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "linux"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Scripts created by developers and admins",
+        "Administrative activity"
+      ]
+    },
+    {
+      "rule_id": "54773c5f-f1cc-4703-9126-2f797d96a69d",
+      "path": "rules/windows/process_creation/proc_creation_win_pua_advanced_port_scanner.yml",
+      "title": "PUA - Advanced Port Scanner Execution",
+      "description": "Detects the use of Advanced Port Scanner.",
+      "techniques": [
+        "T1046",
+        "T1135"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administrative use",
+        "Tools with similar commandline (very rare)"
+      ]
+    },
+    {
+      "rule_id": "4a0b2c7e-7cb2-495d-8b63-5f268e7bfd67",
+      "path": "rules/windows/process_creation/proc_creation_win_renamed_sysinternals_procdump.yml",
+      "title": "Renamed ProcDump Execution",
+      "description": "Detects the execution of a renamed ProcDump executable. This often done by attackers or malware in order to evade defensive mechanisms.",
+      "techniques": [
+        "T1036.003"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "process_creation"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Procdump illegally bundled with legitimate software.",
+        "Administrators who rename binaries (should be investigated)."
+      ]
+    },
+    {
+      "rule_id": "83c17918-746e-4bd9-920b-8e098bf88c23",
+      "path": "rules/cloud/azure/activity_logs/azure_network_firewall_policy_modified_or_deleted.yml",
+      "title": "Azure Network Firewall Policy Modified or Deleted",
+      "description": "Identifies when a Firewall Policy is Modified or Deleted.",
+      "techniques": [
+        "T1686.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Firewall Policy being modified or deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Firewall Policy modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
+      "path": "rules/windows/builtin/security/win_security_audit_log_cleared.yml",
+      "title": "Security Eventlog Cleared",
+      "description": "One of the Windows Eventlogs has been cleared. e.g. caused by \"wevtutil cl\" command execution",
+      "techniques": [
+        "T1685.005"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "security"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Rollout of log collection agents (the setup routine often includes a reset of the local Eventlog)",
+        "System provisioning (system reset before the golden image creation)"
+      ]
+    },
+    {
+      "rule_id": "20f0ee37-5942-4e45-b7d5-c5b5db9df5cd",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentversion.yml",
+      "title": "CurrentVersion Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "d95de845-b83c-4a9a-8a6a-4fc802ebf6c0",
+      "path": "rules/windows/process_creation/proc_creation_win_net_groups_and_accounts_recon.yml",
+      "title": "Suspicious Group And Account Reconnaissance Activity Using Net.EXE",
+      "description": "Detects suspicious reconnaissance command line activity on Windows systems using Net.EXE Check if the user that executed the commands is suspicious (e.g. service accounts, LOCAL_SYSTEM)",
+      "techniques": [
+        "T1087.001",
+        "T1087.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Inventory tool runs",
+        "Administrative activity"
+      ]
+    },
+    {
+      "rule_id": "81315b50-6b60-4d8f-9928-3466e1022515",
+      "path": "rules/windows/file/file_event/file_event_win_desktop_ini_created_by_uncommon_process.yml",
+      "title": "Desktop.INI Created by Uncommon Process",
+      "description": "Detects unusual processes accessing desktop.ini, which can be leveraged to alter how Explorer displays a folder's content (i.e. renaming files) without changing them on disk.",
+      "techniques": [
+        "T1547.009"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "file_event"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Operations performed through Windows SCCM or equivalent",
+        "Read only access list authority"
+      ]
+    },
+    {
+      "rule_id": "a62b37e0-45d3-48d9-a517-90c1a1b0186b",
+      "path": "rules/windows/builtin/system/microsoft_windows_eventlog/win_system_eventlog_cleared.yml",
+      "title": "Eventlog Cleared",
+      "description": "One of the Windows Eventlogs has been cleared. e.g. caused by \"wevtutil cl\" command execution",
+      "techniques": [
+        "T1685.005"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "system"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Rollout of log collection agents (the setup routine often includes a reset of the local Eventlog)",
+        "System provisioning (system reset before the golden image creation)"
+      ]
+    },
+    {
+      "rule_id": "faa48cae-6b25-4f00-a094-08947fef582f",
+      "path": "rules/windows/process_creation/proc_creation_win_rar_compression_with_password.yml",
+      "title": "Rar Usage with Password and Compression Level",
+      "description": "Detects the use of rar.exe, on the command line, to create an archive with password protection or with a specific compression level. This is pretty indicative of malicious actions.",
+      "techniques": [
+        "T1560.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate use of Winrar command line version",
+        "Other command line tools, that use these flags"
+      ]
+    },
+    {
+      "rule_id": "100ef69e-3327-481c-8e5c-6d80d9507556",
+      "path": "rules/windows/builtin/system/microsoft_windows_eventlog/win_system_susp_eventlog_cleared.yml",
+      "title": "Important Windows Eventlog Cleared",
+      "description": "Detects the clearing of one of the Windows Core Eventlogs. e.g. caused by \"wevtutil cl\" command execution",
+      "techniques": [
+        "T1685.005"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "system"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Rollout of log collection agents (the setup routine often includes a reset of the local Eventlog)",
+        "System provisioning (system reset before the golden image creation)"
+      ]
+    },
+    {
+      "rule_id": "b439f47d-ef52-4b29-9a2f-57d8a96cb6b8",
+      "path": "rules/windows/image_load/image_load_scrcons_wmi_scripteventconsumer.yml",
+      "title": "WMI ActiveScriptEventConsumers Activity Via Scrcons.EXE DLL Load",
+      "description": "Detects signs of the WMI script host process \"scrcons.exe\" loading scripting DLLs which could indicates WMI ActiveScriptEventConsumers EventConsumers activity.",
+      "techniques": [
+        "T1546.003"
+      ],
+      "logsource": {
+        "category": "image_load",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate event consumers",
+        "Dell computers on some versions register an event consumer that is known to cause false positives when brightness is changed by the corresponding keyboard button"
+      ]
+    },
+    {
+      "rule_id": "ab37a6ec-6068-432b-a64e-2c7bf95b1d22",
+      "path": "rules/windows/process_creation/proc_creation_win_regsvr32_susp_parent.yml",
+      "title": "Scripting/CommandLine Process Spawned Regsvr32",
+      "description": "Detects various command line and scripting engines/processes such as \"PowerShell\", \"Wscript\", \"Cmd\", etc. spawning a \"regsvr32\" instance.",
+      "techniques": [
+        "T1218.010"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate \".bat\", \".hta\", \".ps1\" or \".vbs\" scripts leverage legitimately often. Apply additional filter and exclusions as necessary",
+        "Some legitimate Windows services"
+      ]
+    },
+    {
+      "rule_id": "85adeb13-4fc9-4e68-8a4a-c7cb2c336eb7",
+      "path": "rules/windows/pipe_created/pipe_created_hktl_cobaltstrike_susp_pipe_patterns.yml",
+      "title": "CobaltStrike Named Pipe Patterns",
+      "description": "Detects the creation of a named pipe with a pattern found in CobaltStrike malleable C2 profiles",
+      "techniques": [
+        "T1055"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "pipe_created",
+        "definition": "Note that you have to configure logging for Named Pipe Events in Sysmon config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config, https://github.com/olafhartong/sysmon-modular You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config, https://github.com/olafhartong/sysmon-modular. How to test detection? You can always use Cobalt Strike, but also you can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Chrome instances using the exact same pipe name \"mojo.xxx\"",
+        "Websense Endpoint using the pipe name \"DserNamePipe(R|W)\\d{1,5}\"",
+        "Some applications may just coincidentally use the pipe names which contain the same prefix as the ones used by CobaltStrike, e.g. \"f4c3\""
+      ]
+    },
+    {
+      "rule_id": "6ad91e31-53df-4826-bd27-0166171c8040",
+      "path": "rules/cloud/gcp/audit/gcp_kubernetes_admission_controller.yml",
+      "title": "Google Cloud Kubernetes Admission Controller",
+      "description": "Identifies when an admission controller is executed in GCP Kubernetes. A Kubernetes Admission controller intercepts, and possibly modifies, requests to the Kubernetes API server. The behavior of this admission controller is determined by an admission webhook (MutatingAdmissionWebhook or ValidatingAdmissionWebhook) that the user deploys in the cluster. An adversary can use such webhooks as the MutatingAdmissionWebhook for obtaining persistence in the cluster. For example, attackers can intercept and modify the pod creation operations in the cluster and add their malicious container to every created pod. An adversary can use the webhook ValidatingAdmissionWebhook, which could be used to obtain access credentials. An adversary could use the webhook to intercept the requests to the API server, record secrets, and other sensitive information.",
+      "techniques": [
+        "T1078",
+        "T1552",
+        "T1552.007"
+      ],
+      "logsource": {
+        "product": "gcp",
+        "service": "gcp.audit"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Google Cloud Kubernetes Admission Controller may be done by a system administrator.",
+        "If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "65236ec7-ace0-4f0c-82fd-737b04fd4dcb",
+      "path": "rules/windows/file/file_event/file_event_win_create_evtx_non_common_locations.yml",
+      "title": "EVTX Created In Uncommon Location",
+      "description": "Detects the creation of new files with the \".evtx\" extension in non-common or non-standard location. This could indicate tampering with default EVTX locations in order to evade security controls or simply exfiltration of event log to search for sensitive information within. Note that backup software and legitimate administrator might perform similar actions during troubleshooting.",
+      "techniques": [
+        "T1685.001"
+      ],
+      "logsource": {
+        "category": "file_event",
+        "product": "windows",
+        "definition": "Requirements: The \".evtx\" extension should be monitored via a Sysmon configuration. Example: <TargetFilename condition=\"end with\">.evtx<TargetFilename>"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Administrator or backup activity",
+        "An unknown bug seems to trigger the Windows \"svchost\" process to drop EVTX files in the \"C:\\Windows\\Temp\" directory in the form \"<log_name\">_<uuid>.evtx\". See https://superuser.com/questions/1371229/low-disk-space-after-filling-up-c-windows-temp-with-evtx-and-txt-files"
+      ]
+    },
+    {
+      "rule_id": "554601fb-9b71-4bcc-abf4-21a611be4fde",
+      "path": "rules/windows/process_creation/proc_creation_win_takeown_recursive_own.yml",
+      "title": "Suspicious Recursive Takeown",
+      "description": "Adversaries can interact with the DACLs using built-in Windows commands takeown which can grant adversaries higher permissions on specific files and folders",
+      "techniques": [
+        "T1222.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Scripts created by developers and admins",
+        "Administrative activity"
+      ]
+    },
+    {
+      "rule_id": "7745c2ea-24a5-4290-b680-04359cb84b35",
+      "path": "rules/web/webserver_generic/web_path_traversal_exploitation_attempt.yml",
+      "title": "Path Traversal Exploitation Attempts",
+      "description": "Detects path traversal exploitation attempts",
+      "techniques": [
+        "T1190"
+      ],
+      "logsource": {
+        "category": "webserver"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Expected to be continuously seen on systems exposed to the Internet",
+        "Internal vulnerability scanners"
+      ]
+    },
+    {
+      "rule_id": "ce5678bb-b9aa-4fb5-be4b-e57f686256ad",
+      "path": "rules/windows/builtin/ntlm/win_susp_ntlm_rdp.yml",
+      "title": "Potential Remote Desktop Connection to Non-Domain Host",
+      "description": "Detects logons using NTLM to hosts that are potentially not part of the domain.",
+      "techniques": [
+        "T1219.002"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "ntlm",
+        "definition": "Requires events from Microsoft-Windows-NTLM/Operational"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Host connections to valid domains, exclude these.",
+        "Host connections not using host FQDN.",
+        "Host connections to external legitimate domains."
+      ]
+    },
+    {
+      "rule_id": "5bac7a56-da88-4c27-922e-c81e113b20cb",
+      "path": "rules/windows/process_creation/proc_creation_win_github_self_hosted_runner.yml",
+      "title": "Github Self-Hosted Runner Execution",
+      "description": "Detects GitHub self-hosted runners executing workflows on local infrastructure that could be abused for persistence and code execution. Shai-Hulud is an npm supply chain worm targeting CI/CD environments. It installs runners on compromised systems to maintain access after credential theft, leveraging their access to secrets and internal networks.",
+      "techniques": [
+        "T1071",
+        "T1102.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate GitHub self-hosted runner installations on designated CI/CD infrastructure",
+        "Authorized runner deployments by DevOps/Platform teams following change management",
+        "Scheduled runner updates or reconfigurations on existing build agents",
+        "Self-hosted runners that follow expected/known naming patterns"
+      ]
+    },
+    {
+      "rule_id": "fff9d2b7-e11c-4a69-93d3-40ef66189767",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_copy_system_dir.yml",
+      "title": "Suspicious Copy From or To System Directory",
+      "description": "Detects a suspicious copy operation that tries to copy a program from system (System32, SysWOW64, WinSxS) directories to another on disk. Often used to move LOLBINs such as 'certutil' or 'desktopimgdownldr' to a different location with a different name in order to bypass detections based on locations.",
+      "techniques": [
+        "T1036.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Depend on scripts and administrative tools used in the monitored environment (For example an admin scripts like https://www.itexperience.net/sccm-batch-files-and-32-bits-processes-on-64-bits-os/)",
+        "When cmd.exe and xcopy.exe are called directly",
+        "When the command contains the keywords but not in the correct order"
+      ]
+    },
+    {
+      "rule_id": "fe513c69-734c-4d4a-8548-ac5f609be82b",
+      "path": "rules/cloud/gcp/audit/gcp_firewall_rule_modified_or_deleted.yml",
+      "title": "Google Cloud Firewall Modified or Deleted",
+      "description": "Detects when a firewall rule is modified or deleted in Google Cloud Platform (GCP).",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "product": "gcp",
+        "service": "gcp.audit"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Firewall rules being modified or deleted may be performed by a system administrator. Verify that the firewall configuration change was expected.",
+        "Exceptions can be added to this rule to filter expected behavior."
+      ]
+    },
+    {
+      "rule_id": "24357373-078f-44ed-9ac4-6d334a668a11",
+      "path": "rules/windows/process_creation/proc_creation_win_reg_direct_asep_registry_keys_modification.yml",
+      "title": "Direct Autorun Keys Modification",
+      "description": "Detects direct modification of autostart extensibility point (ASEP) in registry using reg.exe.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reasons.",
+        "Legitimate administrator sets up autorun keys for legitimate reasons."
+      ]
+    },
+    {
+      "rule_id": "39019a4e-317f-4ce3-ae63-309a8c6b53c5",
+      "path": "rules/windows/process_creation/proc_creation_win_schtasks_creation_temp_folder.yml",
+      "title": "Suspicious Scheduled Task Creation Involving Temp Folder",
+      "description": "Detects the creation of scheduled tasks that involves a temporary folder and runs only once",
+      "techniques": [
+        "T1053.005"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrative activity",
+        "Software installation"
+      ]
+    },
+    {
+      "rule_id": "b29aed60-ebd1-442b-9cb5-16a1d0324adb",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_wow6432node.yml",
+      "title": "Wow6432Node CurrentVersion Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "f59c3faf-50f3-464b-9f4c-1b67ab512d99",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_common.yml",
+      "title": "Common Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "cd219ff3-fa99-45d4-8380-a7d15116c6dc",
+      "path": "rules/windows/process_creation/proc_creation_win_net_user_add.yml",
+      "title": "New User Created Via Net.EXE",
+      "description": "Identifies the creation of local users via the net.exe command.",
+      "techniques": [
+        "T1136.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate user creation.",
+        "Better use event IDs for user creation rather than command line rules."
+      ]
+    },
+    {
+      "rule_id": "8e3c7994-131e-4ba5-b6ea-804d49113a26",
+      "path": "rules/windows/process_creation/proc_creation_win_odbcconf_uncommon_child_process.yml",
+      "title": "Uncommon Child Process Spawned By Odbcconf.EXE",
+      "description": "Detects an uncommon child process of \"odbcconf.exe\" binary which normally shouldn't have any child processes.",
+      "techniques": [
+        "T1218.008"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "In rare occurrences where \"odbcconf\" crashes. It might spawn a \"werfault\" process",
+        "Other child processes will depend on the DLL being registered by actions like \"regsvr\". In case where the DLLs have external calls (which should be rare). Other child processes might spawn and additional filters need to be applied."
+      ]
+    },
+    {
+      "rule_id": "5b40a734-99b6-4b98-a1d0-1cea51a08ab2",
+      "path": "rules/windows/file/file_event/file_event_win_susp_system_interactive_powershell.yml",
+      "title": "Suspicious Interactive PowerShell as SYSTEM",
+      "description": "Detects the creation of files that indicator an interactive use of PowerShell in the SYSTEM user context",
+      "techniques": [
+        "T1059.001"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "file_event"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrative activity",
+        "PowerShell scripts running as SYSTEM user"
+      ]
+    },
+    {
+      "rule_id": "f674e36a-4b91-431e-8aef-f8a96c2aca35",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentcontrolset.yml",
+      "title": "CurrentControlSet Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "f41b0311-44f9-44f0-816d-dd45e39d4bc8",
+      "path": "rules/windows/file/file_access/file_access_win_susp_crypto_currency_wallets.yml",
+      "title": "Access To Crypto Currency Wallets By Uncommon Applications",
+      "description": "Detects file access requests to crypto currency files by uncommon processes. Could indicate potential attempt of crypto currency wallet stealing.",
+      "techniques": [
+        "T1003"
+      ],
+      "logsource": {
+        "category": "file_access",
+        "product": "windows",
+        "definition": "Requirements: Microsoft-Windows-Kernel-File ETW provider"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Antivirus, Anti-Spyware, Anti-Malware Software",
+        "Backup software",
+        "Legitimate software installed on partitions other than \"C:\\\"",
+        "Searching software such as \"everything.exe\""
+      ]
+    },
+    {
+      "rule_id": "b4a6d707-9430-4f5f-af68-0337f52d5c42",
+      "path": "rules/cloud/azure/signin_logs/azure_conditional_access_failure.yml",
+      "title": "Sign-in Failure Due to Conditional Access Requirements Not Met",
+      "description": "Define a baseline threshold for failed sign-ins due to Conditional Access failures",
+      "techniques": [
+        "T1078.004",
+        "T1110"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "signinlogs"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Service Account misconfigured",
+        "Misconfigured Systems",
+        "Vulnerability Scanners"
+      ]
+    },
+    {
+      "rule_id": "352a54e1-74ba-4929-9d47-8193d67aba1e",
+      "path": "rules/cloud/azure/audit_logs/azure_federation_modified.yml",
+      "title": "Azure Domain Federation Settings Modified",
+      "description": "Identifies when an user or application modified the federation settings on the domain.",
+      "techniques": [
+        "T1078"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "auditlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Federation Settings being modified or deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Federation Settings modified from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "2617e7ed-adb7-40ba-b0f3-8f9945fe6c09",
+      "path": "rules/windows/process_creation/proc_creation_win_susp_system_user_anomaly.yml",
+      "title": "Suspicious SYSTEM User Process Creation",
+      "description": "Detects a suspicious process creation as SYSTEM user (suspicious program or command line parameter)",
+      "techniques": [
+        "T1003",
+        "T1027",
+        "T1134"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Administrative activity",
+        "Scripts and administrative tools used in the monitored environment",
+        "Monitoring activity"
+      ]
+    },
+    {
+      "rule_id": "480421f9-417f-4d3b-9552-fd2728443ec8",
+      "path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_wow6432node_currentversion.yml",
+      "title": "Wow6432Node Windows NT CurrentVersion Autorun Keys Modification",
+      "description": "Detects modification of autostart extensibility point (ASEP) in registry.",
+      "techniques": [
+        "T1547.001"
+      ],
+      "logsource": {
+        "category": "registry_set",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason",
+        "Legitimate administrator sets up autorun keys for legitimate reason"
+      ]
+    },
+    {
+      "rule_id": "1af57a4b-460a-4738-9034-db68b880c665",
+      "path": "rules/windows/process_creation/proc_creation_win_powershell_sam_access.yml",
+      "title": "PowerShell SAM Copy",
+      "description": "Detects suspicious PowerShell scripts accessing SAM hives",
+      "techniques": [
+        "T1003.002"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Some rare backup scenarios",
+        "PowerShell scripts fixing HiveNightmare / SeriousSAM ACLs"
+      ]
+    },
+    {
+      "rule_id": "6fb77778-040f-4015-9440-572aa9b6b580",
+      "path": "rules/cloud/aws/cloudtrail/aws_cloudtrail_security_group_change_ingress_egress.yml",
+      "title": "Ingress/Egress Security Group Modification",
+      "description": "Detects when an account makes changes to the ingress or egress rules of a security group. This can indicate that an attacker is attempting to open up new attack vectors in the account, that they are trying to exfiltrate data over the network, or that they are trying to allow machines in that VPC/Subnet to contact a C&C server.",
+      "techniques": [
+        "T1190"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "New VPCs and Subnets being setup requiring a different security profile to those already defined",
+        "A single port being opened for a new service that is known to be deploying",
+        "Administrators closing unused ports to reduce the attack surface"
+      ]
+    },
+    {
+      "rule_id": "1ec65a5f-9473-4f12-97da-622044d6df21",
+      "path": "rules/windows/process_creation/proc_creation_win_powershell_defender_disable_feature.yml",
+      "title": "Powershell Defender Disable Scan Feature",
+      "description": "Detects requests to disable Microsoft Defender features using PowerShell commands",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Possible administrative activity",
+        "Other Cmdlets that may use the same parameters"
+      ]
+    },
+    {
+      "rule_id": "7090adee-82e2-4269-bd59-80691e7c6338",
+      "path": "rules/windows/process_creation/proc_creation_win_chcp_codepage_lookup.yml",
+      "title": "Console CodePage Lookup Via CHCP",
+      "description": "Detects use of chcp to look up the system locale value as part of host discovery",
+      "techniques": [
+        "T1614.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "During Anaconda update the 'conda.exe' process will eventually execution the 'chcp' command.",
+        "Discord was seen using chcp to look up code pages"
+      ]
+    },
+    {
+      "rule_id": "4281cb20-2994-4580-aa63-c8b86d019934",
+      "path": "rules/windows/process_creation/proc_creation_win_attrib_hiding_files.yml",
+      "title": "Hiding Files with Attrib.exe",
+      "description": "Detects usage of attrib.exe to hide files from users.",
+      "techniques": [
+        "T1564.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe and igfxCUIService.exe is the parent of the cmd.exe)",
+        "Msiexec.exe hiding desktop.ini"
+      ]
+    },
+    {
+      "rule_id": "25cb259b-bbdc-4b87-98b7-90d7c72f8743",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_rolebinding_modified_or_deleted.yml",
+      "title": "Azure Kubernetes RoleBinding/ClusterRoleBinding Modified and Deleted",
+      "description": "Detects the creation or patching of potential malicious RoleBinding/ClusterRoleBinding.",
+      "techniques": [
+        "T1485",
+        "T1489",
+        "T1496"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "RoleBinding/ClusterRoleBinding being modified and deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "RoleBinding/ClusterRoleBinding modification from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "81325ce1-be01-4250-944f-b4789644556f",
+      "path": "rules/windows/process_creation/proc_creation_win_schtasks_env_folder.yml",
+      "title": "Schedule Task Creation From Env Variable Or Potentially Suspicious Path Via Schtasks.EXE",
+      "description": "Detects Schtask creations that point to a suspicious folder or an environment variable often used by malware",
+      "techniques": [
+        "T1053.005"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "process_creation"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Benign scheduled tasks creations or executions that happen often during software installations",
+        "Software that uses the AppData folder and scheduled tasks to update the software in the AppData folders"
+      ]
+    },
+    {
+      "rule_id": "a607e1fe-74bf-4440-a3ec-b059b9103157",
+      "path": "rules/cloud/aws/cloudtrail/aws_securityhub_finding_evasion.yml",
+      "title": "AWS SecurityHub Findings Evasion",
+      "description": "Detects the modification of the findings on SecurityHub.",
+      "techniques": [
+        "T1685"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "System or Network administrator behaviors",
+        "DEV, UAT, SAT environment. You should apply this rule with PROD environment only."
+      ]
+    },
+    {
+      "rule_id": "410d2a41-1e6d-452f-85e5-abdd8257a823",
+      "path": "rules/cloud/azure/audit_logs/azure_application_deleted.yml",
+      "title": "Azure Application Deleted",
+      "description": "Identifies when a application is deleted in Azure.",
+      "techniques": [
+        "T1489"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "auditlogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Application being deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Application deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "eed82177-38f5-4299-8a76-098d50d225ab",
+      "path": "rules/application/kubernetes/audit/kubernetes_audit_change_admission_controller.yml",
+      "title": "Kubernetes Admission Controller Modification",
+      "description": "Detects when a modification (create, update or replace) action is taken that affects mutating or validating webhook configurations, as they can be used by an adversary to achieve persistence or exfiltrate access credentials.",
+      "techniques": [
+        "T1078",
+        "T1552",
+        "T1552.007"
+      ],
+      "logsource": {
+        "product": "kubernetes",
+        "service": "audit"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Modifying the Kubernetes Admission Controller may need to be done by a system administrator.",
+        "Automated processes may need to take these actions and may need to be filtered."
+      ]
+    },
+    {
+      "rule_id": "ada3bc4f-f0fd-42b9-ba91-e105e8af7342",
+      "path": "rules/web/webserver_generic/web_ssti_in_access_logs.yml",
+      "title": "Server Side Template Injection Strings",
+      "description": "Detects SSTI attempts sent via GET requests in access logs",
+      "techniques": [
+        "T1221"
+      ],
+      "logsource": {
+        "category": "webserver"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "User searches in search boxes of the respective website",
+        "Internal vulnerability scanners can cause some serious FPs when used, if you experience a lot of FPs due to this think of adding more filters such as \"User Agent\" strings and more response codes"
+      ]
+    },
+    {
+      "rule_id": "f43f5d2f-3f2a-4cc8-b1af-81fde7dbaf0e",
+      "path": "rules/cloud/aws/cloudtrail/aws_susp_saml_activity.yml",
+      "title": "AWS Suspicious SAML Activity",
+      "description": "Identifies when suspicious SAML activity has occurred in AWS. An adversary could gain backdoor access via SAML.",
+      "techniques": [
+        "T1078",
+        "T1548",
+        "T1550",
+        "T1550.001"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Automated processes that uses Terraform may lead to false positives.",
+        "SAML Provider could be updated by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "SAML Provider being updated from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "c539afac-c12a-46ed-b1bd-5a5567c9f045",
+      "path": "rules/windows/network_connection/net_connection_win_susp_remote_powershell_session.yml",
+      "title": "Potential Remote PowerShell Session Initiated",
+      "description": "Detects a process that initiated a network connection over ports 5985 or 5986 from a non-network service account. This could potentially indicates a remote PowerShell connection.",
+      "techniques": [
+        "T1021.006",
+        "T1059.001"
+      ],
+      "logsource": {
+        "category": "network_connection",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate usage of remote PowerShell, e.g. remote administration and monitoring.",
+        "Network Service user name of a not-covered localization"
+      ]
+    },
+    {
+      "rule_id": "1c71e254-6655-42c1-b2d6-5e4718d7fc0a",
+      "path": "rules/cloud/azure/activity_logs/azure_kubernetes_cronjob.yml",
+      "title": "Azure Kubernetes CronJob",
+      "description": "Identifies when a Azure Kubernetes CronJob runs in Azure Cloud. Kubernetes Job is a controller that creates one or more pods and ensures that a specified number of them successfully terminate. Kubernetes Job can be used to run containers that perform finite tasks for batch jobs. Kubernetes CronJob is used to schedule Jobs. An Adversary may use Kubernetes CronJob for scheduling execution of malicious code that would run as a container in the cluster.",
+      "techniques": [
+        "T1053.003"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Azure Kubernetes CronJob/Job may be done by a system administrator.",
+        "If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "c4e49831-1496-40cf-8ce1-b53f942b02f9",
+      "path": "rules/windows/process_creation/proc_creation_win_renamed_paexec.yml",
+      "title": "Renamed PAExec Execution",
+      "description": "Detects execution of renamed version of PAExec. Often used by attackers",
+      "techniques": [
+        "T1202"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Weird admins that rename their tools",
+        "Software companies that bundle PAExec with their software and rename it, so that it is less embarrassing",
+        "When executed with the \"-s\" flag. PAExec will copy itself to the \"C:\\Windows\\\" directory with a different name. Usually like this \"PAExec-[XXXXX]-[ComputerName]\""
+      ]
+    },
+    {
+      "rule_id": "cd5cfd80-aa5f-44c0-9c20-108c4ae12e3c",
+      "path": "rules/windows/process_creation/proc_creation_win_netsh_fw_add_rule.yml",
+      "title": "New Firewall Rule Added Via Netsh.EXE",
+      "description": "Detects the addition of a new rule to the Windows firewall via netsh",
+      "techniques": [
+        "T1686.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administration activity",
+        "Software installations"
+      ]
+    },
+    {
+      "rule_id": "add64136-62e5-48ea-807e-88638d02df1e",
+      "path": "rules/windows/process_creation/proc_creation_win_fsutil_usage.yml",
+      "title": "Fsutil Suspicious Invocation",
+      "description": "Detects suspicious parameters of fsutil (deleting USN journal, configuring it with small size, etc). Might be used by ransomwares during the attack (seen by NotPetya and others).",
+      "techniques": [
+        "T1070",
+        "T1485"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "stable",
+      "falsepositives": [
+        "Admin activity",
+        "Scripts and administrative tools used in the monitored environment"
+      ]
+    },
+    {
+      "rule_id": "552b6b65-df37-4d3e-a258-f2fc4771ae54",
+      "path": "rules/windows/image_load/image_load_side_load_antivirus.yml",
+      "title": "Potential Antivirus Software DLL Sideloading",
+      "description": "Detects potential DLL sideloading of DLLs that are part of antivirus software suchas McAfee, Symantec...etc",
+      "techniques": [
+        "T1574.001"
+      ],
+      "logsource": {
+        "category": "image_load",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Applications that load the same dlls mentioned in the detection section. Investigate them and filter them out if a lot FPs are caused.",
+        "Dell SARemediation plugin folder (C:\\Program Files\\Dell\\SARemediation\\plugin\\log.dll) is known to contain the 'log.dll' file.",
+        "The Canon MyPrinter folder 'C:\\Program Files\\Canon\\MyPrinter\\' is known to contain the 'log.dll' file"
+      ]
+    },
+    {
+      "rule_id": "778ba9a8-45e4-4b80-8e3e-34a419f0b85e",
+      "path": "rules/windows/dns_query/dns_query_win_teamviewer_domain_query_by_uncommon_app.yml",
+      "title": "TeamViewer Domain Query By Non-TeamViewer Application",
+      "description": "Detects DNS queries to a TeamViewer domain only resolved by a TeamViewer client by an image that isn't named TeamViewer (sometimes used by threat actors for obfuscation)",
+      "techniques": [
+        "T1219.002"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "dns_query"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Unknown binary names of TeamViewer",
+        "Depending on the environment the rule might require some initial tuning before usage to avoid FP with third party applications"
+      ]
+    },
+    {
+      "rule_id": "297ae038-edc2-4b2e-bb3e-7c5fc94dd5c7",
+      "path": "rules/windows/network_connection/net_connection_win_domain_dead_drop_resolvers.yml",
+      "title": "New Connection Initiated To Potential Dead Drop Resolver Domain",
+      "description": "Detects an executable, which is not an internet browser or known application, initiating network connections to legit popular websites, which were seen to be used as dead drop resolvers in previous attacks. In this context attackers leverage known websites such as \"facebook\", \"youtube\", etc. In order to pass through undetected.",
+      "techniques": [
+        "T1102",
+        "T1102.001"
+      ],
+      "logsource": {
+        "category": "network_connection",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "One might need to exclude other internet browsers found in it's network or other applications like ones mentioned above from Microsoft Defender.",
+        "Ninite contacting githubusercontent.com"
+      ]
+    },
+    {
+      "rule_id": "c803b2ce-c4a2-4836-beae-b112010390b1",
+      "path": "rules/cloud/aws/cloudtrail/aws_cloudtrail_new_route_added.yml",
+      "title": "New Network Route Added",
+      "description": "Detects the addition of a new network route to a route table in AWS.",
+      "techniques": [
+        "T1686.001"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "New VPC Creation requiring setup of a new route table",
+        "New subnets added requiring routing setup"
+      ]
+    },
+    {
+      "rule_id": "7a4409fc-f8ca-45f6-8006-127d779eaad9",
+      "path": "rules/cloud/aws/cloudtrail/aws_cloudtrail_security_group_change_loadbalancer.yml",
+      "title": "LoadBalancer Security Group Modification",
+      "description": "Detects changes to the security groups associated with an Elastic Load Balancer (ELB) or Application Load Balancer (ALB). This can indicate that a misconfiguration allowing more traffic into the system than required, or could indicate that an attacker is attempting to enable new connections into a VPC or subnet controlled by the account.",
+      "techniques": [
+        "T1190"
+      ],
+      "logsource": {
+        "product": "aws",
+        "service": "cloudtrail"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Repurposing of an ELB or ALB to serve a different or additional application",
+        "Changes to security groups to allow for new services to be deployed"
+      ]
+    },
+    {
+      "rule_id": "ec1d5e28-8f3b-4188-a6f8-6e8df81dc28e",
+      "path": "rules/windows/process_creation/proc_creation_win_wmi_persistence_script_event_consumer.yml",
+      "title": "WMI Persistence - Script Event Consumer",
+      "description": "Detects the execution of a script event consumer. When scrcons.exe launches, it does so in response to the creation of an ActiveScriptEventConsumer instance and will execute registered JScript or VBScript code as a result. Script event consumers are a built-in Windows Management Instrumentation (WMI) class that automatically executes a predefined script (in VBScript or JScript) whenever a specific system event occurs. Adversaries often abuse script event consumers to maintain persistence on a compromised host by executing a malicious script whenever a specific event occurs.",
+      "techniques": [
+        "T1546.003"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate event consumers",
+        "Dell computers on some versions register an event consumer that is known to cause false positives when brightness is changed by the corresponding keyboard button"
+      ]
+    },
+    {
+      "rule_id": "06ce37c2-61ab-4f05-9ff5-b1a96d18ae32",
+      "path": "rules/windows/image_load/image_load_wmic_remote_xsl_scripting_dlls.yml",
+      "title": "WMIC Loading Scripting Libraries",
+      "description": "Detects threat actors proxy executing code and bypassing application controls by leveraging wmic and the `/FORMAT` argument switch to download and execute an XSL file (i.e js, vbs, etc). It could be an indicator of SquiblyTwo technique, which uses Windows Management Instrumentation (WMI) to execute malicious code.",
+      "techniques": [
+        "T1220"
+      ],
+      "logsource": {
+        "category": "image_load",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "The command wmic os get lastbootuptime loads vbscript.dll",
+        "The command wmic os get locale loads vbscript.dll",
+        "Since the ImageLoad event doesn't have enough information in this case. It's better to look at the recent process creation events that spawned the WMIC process and investigate the command line and parent/child processes to get more insights",
+        "The command `wmic ntevent` loads vbscript.dll"
+      ]
+    },
+    {
+      "rule_id": "508a9374-ad52-4789-b568-fc358def2c65",
+      "path": "rules/macos/process_creation/proc_creation_macos_susp_histfile_operations.yml",
+      "title": "Suspicious History File Operations",
+      "description": "Detects commandline operations on shell history files",
+      "techniques": [
+        "T1552.003"
+      ],
+      "logsource": {
+        "product": "macos",
+        "category": "process_creation"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administrative activity",
+        "Legitimate software, cleaning hist file"
+      ]
+    },
+    {
+      "rule_id": "13f81a90-a69c-4fab-8f07-b5bb55416a9f",
+      "path": "rules/cloud/gcp/audit/gcp_service_account_disabled_or_deleted.yml",
+      "title": "Google Cloud Service Account Disabled or Deleted",
+      "description": "Identifies when a service account is disabled or deleted in Google Cloud.",
+      "techniques": [
+        "T1531"
+      ],
+      "logsource": {
+        "product": "gcp",
+        "service": "gcp.audit"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Service Account being disabled or deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Service Account disabled or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "e290b10b-1023-4452-a4a9-eb31a9013b3a",
+      "path": "rules/windows/process_creation/proc_creation_win_lolbin_data_exfiltration_by_using_datasvcutil.yml",
+      "title": "LOLBAS Data Exfiltration by DataSvcUtil.exe",
+      "description": "Detects when a user performs data exfiltration by using DataSvcUtil.exe",
+      "techniques": [
+        "T1567"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "DataSvcUtil.exe being used may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "DataSvcUtil.exe being executed from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "d7bcd677-645d-4691-a8d4-7a5602b780d1",
+      "path": "rules/windows/process_creation/proc_creation_win_powershell_cmdline_special_characters.yml",
+      "title": "Potential PowerShell Command Line Obfuscation",
+      "description": "Detects the PowerShell command lines with special characters",
+      "techniques": [
+        "T1027",
+        "T1059.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Amazon SSM Document Worker",
+        "Windows Defender ATP"
+      ]
+    },
+    {
+      "rule_id": "eae8ce9f-bde9-47a6-8e79-f20d18419910",
+      "path": "rules/linux/auditd/execve/lnx_auditd_susp_histfile_operations.yml",
+      "title": "Suspicious History File Operations - Linux",
+      "description": "Detects commandline operations on shell history files",
+      "techniques": [
+        "T1552.003"
+      ],
+      "logsource": {
+        "product": "linux",
+        "service": "auditd"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Legitimate administrative activity",
+        "Legitimate software, cleaning hist file"
+      ]
+    },
+    {
+      "rule_id": "025c9fe7-db72-49f9-af0d-31341dd7dd57",
+      "path": "rules/cloud/azure/activity_logs/azure_firewall_rule_collection_modified_or_deleted.yml",
+      "title": "Azure Firewall Rule Collection Modified or Deleted",
+      "description": "Identifies when Rule Collections (Application, NAT, and Network) is being modified or deleted.",
+      "techniques": [
+        "T1686.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Rule Collections (Application, NAT, and Network) being modified or deleted may be performed by a system administrator. Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Rule Collections (Application, NAT, and Network) modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "d84c0ded-edd7-4123-80ed-348bb3ccc4d5",
+      "path": "rules/category/database/db_anomalous_query.yml",
+      "title": "Suspicious SQL Query",
+      "description": "Detects suspicious SQL query keywrods that are often used during recon, exfiltration or destructive activities. Such as dropping tables and selecting wildcard fields",
+      "techniques": [
+        "T1190",
+        "T1505.001"
+      ],
+      "logsource": {
+        "category": "database",
+        "definition": "Requirements: Must be able to log the SQL queries"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Inventory and monitoring activity",
+        "Vulnerability scanners",
+        "Legitimate applications"
+      ]
+    },
+    {
+      "rule_id": "95eadcb2-92e4-4ed1-9031-92547773a6db",
+      "path": "rules/windows/process_creation/proc_creation_win_powershell_script_engine_parent.yml",
+      "title": "Suspicious PowerShell Invocation From Script Engines",
+      "description": "Detects suspicious powershell invocations from interpreters or unusual programs",
+      "techniques": [
+        "T1059.001"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Microsoft Operations Manager (MOM)",
+        "Other scripts"
+      ]
+    },
+    {
+      "rule_id": "80eeab92-0979-4152-942d-96749e11df40",
+      "path": "rules/cloud/azure/activity_logs/azure_keyvault_key_modified_or_deleted.yml",
+      "title": "Azure Keyvault Key Modified or Deleted",
+      "description": "Identifies when a Keyvault Key is modified or deleted in Azure.",
+      "techniques": [
+        "T1552",
+        "T1552.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Key being modified or deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Key modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "496a0e47-0a33-4dca-b009-9e6ca3591f39",
+      "path": "rules/windows/builtin/security/win_security_susp_rc4_kerberos.yml",
+      "title": "Suspicious Kerberos RC4 Ticket Encryption",
+      "description": "Detects service ticket requests using RC4 encryption type",
+      "techniques": [
+        "T1558.003"
+      ],
+      "logsource": {
+        "product": "windows",
+        "service": "security"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Service accounts used on legacy systems (e.g. NetApp)",
+        "Windows Domains with DFL 2003 and legacy systems"
+      ]
+    },
+    {
+      "rule_id": "05c36dd6-79d6-4a9a-97da-3db20298ab2d",
+      "path": "rules/windows/process_creation/proc_creation_win_wmic_xsl_script_processing.yml",
+      "title": "XSL Script Execution Via WMIC.EXE",
+      "description": "Detects the execution of WMIC with the \"format\" flag to potentially load local XSL files. Adversaries abuse this functionality to execute arbitrary files while potentially bypassing application whitelisting defenses. Extensible Stylesheet Language (XSL) files are commonly used to describe the processing and rendering of data within XML files.",
+      "techniques": [
+        "T1047",
+        "T1059.005",
+        "T1059.007",
+        "T1220"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "WMIC.exe FP depend on scripts and administrative methods used in the monitored environment.",
+        "Static format arguments - https://petri.com/command-line-wmi-part-3"
+      ]
+    },
+    {
+      "rule_id": "3eb8c339-a765-48cc-a150-4364c04652bf",
+      "path": "rules/windows/file/file_delete/file_delete_win_delete_iis_access_logs.yml",
+      "title": "IIS WebServer Access Logs Deleted",
+      "description": "Detects the deletion of IIS WebServer access logs which may indicate an attempt to destroy forensic evidence",
+      "techniques": [
+        "T1070"
+      ],
+      "logsource": {
+        "category": "file_delete",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "During uninstallation of the IIS service",
+        "During log rotation"
+      ]
+    },
+    {
+      "rule_id": "65354b83-a2ea-4ea6-8414-3ab38be0d409",
+      "path": "rules/web/webserver_generic/web_xss_in_access_logs.yml",
+      "title": "Cross Site Scripting Strings",
+      "description": "Detects XSS attempts injected via GET requests in access logs",
+      "techniques": [
+        "T1189"
+      ],
+      "logsource": {
+        "category": "webserver"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "JavaScripts,CSS Files and PNG files",
+        "User searches in search boxes of the respective website",
+        "Internal vulnerability scanners can cause some serious FPs when used, if you experience a lot of FPs due to this think of adding more filters such as \"User Agent\" strings and more response codes"
+      ]
+    },
+    {
+      "rule_id": "980a7598-1e7f-4962-9372-2d754c930d0e",
+      "path": "rules/cloud/gcp/audit/gcp_full_network_traffic_packet_capture.yml",
+      "title": "Google Full Network Traffic Packet Capture",
+      "description": "Identifies potential full network packet capture in gcp. This feature can potentially be abused to read sensitive data from unencrypted internal traffic.",
+      "techniques": [
+        "T1074"
+      ],
+      "logsource": {
+        "product": "gcp",
+        "service": "gcp.audit"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Full Network Packet Capture may be done by a system or network administrator.",
+        "If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "a2ea3ae7-d3d0-40a0-a55c-25a45c87cac1",
+      "path": "rules/windows/process_creation/proc_creation_win_lolbin_susp_driver_installed_by_pnputil.yml",
+      "title": "Suspicious Driver Install by pnputil.exe",
+      "description": "Detects when a possible suspicious driver is being installed via pnputil.exe lolbin",
+      "techniques": [
+        "T1547"
+      ],
+      "logsource": {
+        "category": "process_creation",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Pnputil.exe being used may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Pnputil.exe being executed from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "092bc4b9-3d1d-43b4-a6b4-8c8acd83522f",
+      "path": "rules/windows/image_load/image_load_dll_system_management_automation_susp_load.yml",
+      "title": "PowerShell Core DLL Loaded By Non PowerShell Process",
+      "description": "Detects loading of essential DLLs used by PowerShell by non-PowerShell process. Detects behavior similar to meterpreter's \"load powershell\" extension.",
+      "techniques": [
+        "T1059.001"
+      ],
+      "logsource": {
+        "category": "image_load",
+        "product": "windows"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Used by some .NET binaries, minimal on user workstation.",
+        "Used by Microsoft SQL Server Management Studio"
+      ]
+    },
+    {
+      "rule_id": "459a2970-bb84-4e6a-a32e-ff0fbd99448d",
+      "path": "rules/cloud/azure/activity_logs/azure_keyvault_modified_or_deleted.yml",
+      "title": "Azure Key Vault Modified or Deleted",
+      "description": "Identifies when a key vault is modified or deleted.",
+      "techniques": [
+        "T1552",
+        "T1552.001"
+      ],
+      "logsource": {
+        "product": "azure",
+        "service": "activitylogs"
+      },
+      "level": "medium",
+      "status": "test",
+      "falsepositives": [
+        "Key Vault being modified or deleted may be performed by a system administrator.",
+        "Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.",
+        "Key Vault modified or deleted from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule."
+      ]
+    },
+    {
+      "rule_id": "953945c5-22fe-4a92-9f8a-a9edc1e522da",
+      "path": "rules/windows/powershell/powershell_script/posh_ps_using_set_service_to_hide_services.yml",
+      "title": "Abuse of Service Permissions to Hide Services Via Set-Service - PS",
+      "description": "Detects usage of the \"Set-Service\" powershell cmdlet to configure a new SecurityDescriptor that allows a service to be hidden from other utilities such as \"sc.exe\", \"Get-Service\"...etc. (Works only in powershell 7)",
+      "techniques": [
+        "T1574.011"
+      ],
+      "logsource": {
+        "product": "windows",
+        "category": "ps_script",
+        "definition": "Requirements: Script Block Logging must be enabled"
+      },
+      "level": "high",
+      "status": "test",
+      "falsepositives": [
+        "Rare intended use of hidden services",
+        "Rare FP could occur due to the non linearity of the ScriptBlockText log"
+      ]
+    }
+  ]
+}

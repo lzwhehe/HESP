@@ -1,0 +1,474 @@
+{
+  "schema": "hesp.v10b.v1",
+  "family": "sec",
+  "eval_seed": 2028,
+  "dev_seed_base": 810000,
+  "repeats": 3,
+  "lambdas": [
+    0.1,
+    0.25,
+    0.5,
+    0.75
+  ],
+  "perturb_seeds": 20,
+  "quick": false,
+  "results": {
+    "M0_matched": {
+      "catalogue": {
+        "episodes": 72,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.041666666666666664,
+        "cost": 4.902777777777778
+      },
+      "eig_cost": {
+        "episodes": 72,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.4722222222222223
+      },
+      "random": {
+        "episodes": 72,
+        "verified": 0.7916666666666666,
+        "wrong": 0.0,
+        "escalated": 0.1388888888888889,
+        "cost": 6.611111111111111
+      }
+    },
+    "M1_base_only": {
+      "catalogue": {
+        "episodes": 72,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.041666666666666664,
+        "cost": 4.902777777777778
+      },
+      "eig_cost": {
+        "episodes": 72,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.4722222222222223
+      },
+      "random": {
+        "episodes": 72,
+        "verified": 0.7916666666666666,
+        "wrong": 0.0,
+        "escalated": 0.1388888888888889,
+        "cost": 6.611111111111111
+      }
+    },
+    "M1_base_only[base]": {
+      "catalogue": {
+        "episodes": 24,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 3.875
+      },
+      "eig_cost": {
+        "episodes": 24,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.125
+      },
+      "random": {
+        "episodes": 24,
+        "verified": 0.8333333333333334,
+        "wrong": 0.0,
+        "escalated": 0.125,
+        "cost": 6.083333333333333
+      }
+    },
+    "M1_base_only[drift]": {
+      "catalogue": {
+        "episodes": 24,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 5.875
+      },
+      "eig_cost": {
+        "episodes": 24,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.375
+      },
+      "random": {
+        "episodes": 24,
+        "verified": 0.7083333333333334,
+        "wrong": 0.0,
+        "escalated": 0.25,
+        "cost": 7.291666666666667
+      }
+    },
+    "M1_base_only[noise]": {
+      "catalogue": {
+        "episodes": 24,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.125,
+        "cost": 4.958333333333333
+      },
+      "eig_cost": {
+        "episodes": 24,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.9166666666666665
+      },
+      "random": {
+        "episodes": 24,
+        "verified": 0.8333333333333334,
+        "wrong": 0.0,
+        "escalated": 0.041666666666666664,
+        "cost": 6.458333333333333
+      }
+    },
+    "M2_lambda0.1": {
+      "catalogue": {
+        "episodes": 480,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.04375,
+        "cost": 5.21875
+      },
+      "eig_cost": {
+        "episodes": 480,
+        "verified": 0.8958333333333334,
+        "wrong": 0.0,
+        "escalated": 0.008333333333333333,
+        "cost": 3.475
+      },
+      "random": {
+        "episodes": 480,
+        "verified": 0.7479166666666667,
+        "wrong": 0.0,
+        "escalated": 0.15416666666666667,
+        "cost": 7.302083333333333
+      }
+    },
+    "M2_lambda0.25": {
+      "catalogue": {
+        "episodes": 480,
+        "verified": 0.75625,
+        "wrong": 0.0,
+        "escalated": 0.1625,
+        "cost": 6.189583333333333
+      },
+      "eig_cost": {
+        "episodes": 480,
+        "verified": 0.8854166666666666,
+        "wrong": 0.0,
+        "escalated": 0.03125,
+        "cost": 4.55
+      },
+      "random": {
+        "episodes": 480,
+        "verified": 0.5,
+        "wrong": 0.0,
+        "escalated": 0.375,
+        "cost": 8.335416666666667
+      }
+    },
+    "M2_lambda0.5": {
+      "catalogue": {
+        "episodes": 480,
+        "verified": 0.2916666666666667,
+        "wrong": 0.0,
+        "escalated": 0.5916666666666667,
+        "cost": 8.822916666666666
+      },
+      "eig_cost": {
+        "episodes": 480,
+        "verified": 0.49375,
+        "wrong": 0.0,
+        "escalated": 0.32916666666666666,
+        "cost": 7.441666666666666
+      },
+      "random": {
+        "episodes": 480,
+        "verified": 0.22708333333333333,
+        "wrong": 0.0,
+        "escalated": 0.7375,
+        "cost": 9.527083333333334
+      }
+    },
+    "M2_lambda0.75": {
+      "catalogue": {
+        "episodes": 480,
+        "verified": 0.04583333333333333,
+        "wrong": 0.00625,
+        "escalated": 0.9395833333333333,
+        "cost": 9.889583333333333
+      },
+      "eig_cost": {
+        "episodes": 480,
+        "verified": 0.09791666666666667,
+        "wrong": 0.004166666666666667,
+        "escalated": 0.8708333333333333,
+        "cost": 9.697916666666666
+      },
+      "random": {
+        "episodes": 480,
+        "verified": 0.041666666666666664,
+        "wrong": 0.004166666666666667,
+        "escalated": 0.95,
+        "cost": 9.877083333333333
+      }
+    },
+    "M3_missing[authorized_scan]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[credential_stuffing]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.833333333333334
+      }
+    },
+    "M3_missing[dns_c2]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.6666666666666666,
+        "escalated": 0.3333333333333333,
+        "cost": 6.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 3.5
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.5,
+        "escalated": 0.5,
+        "cost": 9.333333333333334
+      }
+    },
+    "M3_missing[false_positive_monitor]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.166666666666666
+      }
+    },
+    "M3_missing[insider_exfil]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      }
+    },
+    "M3_missing[misconfig_exposed_admin]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.666666666666666
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 3.8333333333333335
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[sqli_probe]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 3.1666666666666665
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.6666666666666666,
+        "escalated": 0.3333333333333333,
+        "cost": 7.166666666666667
+      }
+    },
+    "M3_missing[vuln_component]": {
+      "catalogue": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.6666666666666666,
+        "escalated": 0.3333333333333333,
+        "cost": 6.666666666666667
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 3.6666666666666665
+      },
+      "random": {
+        "episodes": 6,
+        "verified": 0.0,
+        "wrong": 0.5,
+        "escalated": 0.5,
+        "cost": 7.833333333333333
+      }
+    },
+    "M4_k1_base_only": {
+      "catalogue": {
+        "episodes": 72,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.041666666666666664,
+        "cost": 4.902777777777778
+      },
+      "eig_cost": {
+        "episodes": 72,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.4722222222222223
+      },
+      "random": {
+        "episodes": 72,
+        "verified": 0.7777777777777778,
+        "wrong": 0.0,
+        "escalated": 0.16666666666666666,
+        "cost": 6.597222222222222
+      }
+    },
+    "M4_k5_base_only": {
+      "catalogue": {
+        "episodes": 72,
+        "verified": 0.875,
+        "wrong": 0.0,
+        "escalated": 0.041666666666666664,
+        "cost": 4.902777777777778
+      },
+      "eig_cost": {
+        "episodes": 72,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.4722222222222223
+      },
+      "random": {
+        "episodes": 72,
+        "verified": 0.7777777777777778,
+        "wrong": 0.0,
+        "escalated": 0.1527777777777778,
+        "cost": 6.611111111111111
+      }
+    },
+    "M3_missing[mean]": {
+      "eig_cost": {
+        "verified": 0.0,
+        "wrong": 0.5,
+        "escalated": 0.5,
+        "cost": 6.770833333333333
+      },
+      "random": {
+        "verified": 0.0,
+        "wrong": 0.25,
+        "escalated": 0.75,
+        "cost": 9.145833333333334
+      },
+      "catalogue": {
+        "verified": 0.0,
+        "wrong": 0.1875,
+        "escalated": 0.8125,
+        "cost": 9.041666666666666
+      }
+    }
+  }
+}
