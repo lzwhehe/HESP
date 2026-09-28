@@ -67,14 +67,7 @@ Finally, the controller alone comes close. The LLM-free run completes 0.917 of c
 
 \subsection{Failure Modes}
 \label{sec:security}
-\Cref{tab:security} breaks the table-source study's verdicts down by error type. These metrics are descriptive and were not pre-registered as endpoints.
-
-\begin{table*}[t]
-  \caption{Table-source study: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict. Missed-attack, false-escalation, and wrong-cause rates are over those verdicts; the unresolved rate is over all 72 episodes.}
-  \label{tab:security}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
-\end{table*}
+\Cref{tab:security} in Appendix~\ref{app:tables} breaks the table-source study's verdicts down by error type. These metrics are descriptive and were not pre-registered as endpoints.
 
 Three observations stand out. First, with counted tables \hesp{} issued a verdict in all 216 episodes, and none named the wrong cause. Second, the baselines fail in scale-dependent ways. The 7B baselines rarely conclude and leave 88 to 97\% of episodes unresolved, while the larger ReAct-style baselines conclude but are often wrong: they call 25\% (32B) and 37\% (72B) of actionable incidents benign and cite invalid evidence in 22\% and 31\% of their citations. Third, the ledger alone removes most of these errors: Memory-only cuts the missed-attack rate to 4\% and 2\%. In the stopping study, the configuration with controller selection and controller stop never called an actionable incident benign on any of the five models.
 
@@ -137,6 +130,6 @@ A controlled environment raises an obvious question: would these results hold on
 
 \paragraph{OTRF Security-Datasets~\citep{otrf}} OTRF contains lab recordings of Windows host telemetry captured while ATT\&CK techniques were executed, with no benign-activity recordings. We audited 27 recordings from the remote-execution family (243{,}000 events), treated every service installation and scheduled-task creation or update as an alert, and labeled it from the recording's metadata. Of the 46 distinct alerts, 8 are attacks and 38 are background operating-system events. A one-glance rule on the alert text, which asks whether the task or service belongs to a Windows component, is correct on 44 of 46, because six of the eight attacks are named by their tooling.
 
-\paragraph{Case study} The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
+\paragraph{Case study} The one OTRF scenario that does require investigation, a scheduled task masquerading as a Windows maintenance task, is resolved by two cheap probes although its alert text looks benign; Appendix~\ref{app:case} gives the details. Because one probe suffices and the scenario is unique, it is qualitative evidence only.
 
 \paragraph{The common gap} The three datasets fail in different ways, but the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. Their benign counterparts are operating-system housekeeping rather than administrators legitimately using the same tools, and their attack emulations leave artifacts that a careful adversary would not. Paired, objectively labeled data of this kind is a prerequisite for evaluating triage agents on real telemetry.

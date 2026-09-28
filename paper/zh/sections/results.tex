@@ -67,14 +67,7 @@
 
 \subsection{失败方式}
 \label{sec:security}
-\Cref{tab:security} 按错误类型拆分了表来源研究中的结论。这些指标是描述性的，没有预注册为终点。
-
-\begin{table*}[t]
-  \caption{表来源研究：面向安全的结果（描述性）。“claimed”统计以结论结束的回合。漏报攻击（missed attack）、误升级（false escalation）和错因（wrong cause）率以这些结论为分母；未解决（unresolved）率以全部 72 个回合为分母。}
-  \label{tab:security}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{../tables/v06_security}\end{adjustbox}
-\end{table*}
+附录~\ref{app:tables} 中的 \cref{tab:security} 按错误类型拆分了表来源研究中的结论。这些指标是描述性的，没有预注册为终点。
 
 有三点观察值得关注。第一，使用计数表时，\hesp{} 在全部 216 个回合中都给出了结论，没有一个给错起因。第二，基线的失败方式随规模而变。7B 基线很少下结论，88\% 到 97\% 的回合未解决；而更大的 ReAct 式基线会下结论但经常出错：它们把 25\%（32B）和 37\%（72B）的需处置事件判为良性，引用中分别有 22\% 和 31\% 是无效证据。第三，仅账本本身就消除了大部分这类错误：Memory-only 把漏报攻击率降到 4\% 和 2\%。在停止研究中，控制器选探针加控制器停止的配置在全部五个模型上都从未把需处置事件判为良性。
 
@@ -137,6 +130,6 @@
 
 \paragraph{OTRF Security-Datasets~\citep{otrf}} OTRF 包含执行 ATT\&CK 技术时在实验室中录制的 Windows 主机遥测，没有良性活动的录制。我们审计了远程执行类别的 27 份录制（243{,}000 个事件），把每次服务安装和计划任务的创建或更新当作一条告警，并用录制自带的元数据标注。在 46 条不同的告警中，8 条是攻击，38 条是后台操作系统事件。一条只看告警文本的简单规则——判断该任务或服务是否属于 Windows 组件——在 46 条中判对 44 条，因为 8 次攻击中有 6 次被其工具的名字暴露了。
 
-\paragraph{案例研究} OTRF 中唯一确实需要调查的场景，在真实日志上展示了 \hesp{} 所针对的那类案例。它的元数据引用了微软对 Solorigate 入侵的分析~\citep{solorigate}，并把该活动标为远程创建计划任务（T1053.005）。告警是 \texttt{WORKSTATION6} 上的安全事件 4698，报告在文件夹 \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform} 中新建了任务 \texttt{EventCacheManager}，其文件夹和名字都与真实的 Windows 任务一致；只看文本的规则判定它为良性。第一个探针发现它是域用户 \texttt{THESHIRE\textbackslash pgustavo} 创建的，而 27 份录制中 \texttt{\textbackslash Microsoft\textbackslash Windows} 下的另外 17 个任务事件全部由机器账户创建。第二个探针发现创建它的会话是来自另一台主机的网络登录（类型 3，Kerberos），这排除了本地持久化和用户上下文更新程序。该任务以 SYSTEM 身份运行 \texttt{cmd.exe}，源主机的进程日志显示了创建它的 \texttt{schtasks /create \dots{} /s} 命令。告警文本和调查结果指向相反的方向，两个便宜的探针就能把它们区分开。由于一个探针就足够、而且场景只有这一个，这个案例无法说明探针顺序是否重要；我们只把它作为定性证据。
+\paragraph{案例研究} OTRF 中唯一确实需要调查的场景——一个伪装成 Windows 维护任务的计划任务——告警文本看起来是良性的，但两个便宜的探针就能把它识别出来；详见附录~\ref{app:case}。由于一个探针就足够、且场景只有这一个，它只是定性证据。
 
 \paragraph{共同的缺口} 三个数据集的失败方式各不相同，但缺的是同一种东西：看起来像日常运维的攻击，以及看起来像攻击的日常运维。它们的良性样本是操作系统的日常维护，而不是管理员合法使用同样的工具；它们的攻击模拟留下了谨慎的攻击者不会留下的痕迹。这类成对的、客观标注的数据，是在真实遥测上评估分诊智能体的前提。

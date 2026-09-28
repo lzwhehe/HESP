@@ -53,6 +53,33 @@
   \label{tab:app-v09terms}
 \end{table*}
 
+\begin{table*}[t]
+  \caption{表来源研究：面向安全的结果（描述性）。“claimed”统计以结论结束的回合。漏报攻击（missed attack）、误升级（false escalation）和错因（wrong cause）率以这些结论为分母；未解决（unresolved）率以全部 72 个回合为分母。}
+  \label{tab:security}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v06_security}\end{adjustbox}
+\end{table*}
+
+\section{案例研究：伪装成 Windows 任务的计划任务}
+\label{app:case}
+
+OTRF 中唯一确实需要调查的场景，在真实日志上展示了 \hesp{} 所针对的那类案例。它的元数据引用了微软对 Solorigate 入侵的分析~\citep{solorigate}，并把该活动标为远程创建计划任务（T1053.005）。告警是 \texttt{WORKSTATION6} 上的安全事件 4698，报告在文件夹 \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform} 中新建了任务 \texttt{EventCacheManager}，其文件夹和名字都与真实的 Windows 任务一致；只看文本的规则判定它为良性。第一个探针发现它是域用户 \texttt{THESHIRE\textbackslash pgustavo} 创建的，而 27 份录制中 \texttt{\textbackslash Microsoft\textbackslash Windows} 下的另外 17 个任务事件全部由机器账户创建。第二个探针发现创建它的会话是来自另一台主机的网络登录（类型 3，Kerberos），这排除了本地持久化和用户上下文更新程序。该任务以 SYSTEM 身份运行 \texttt{cmd.exe}，源主机的进程日志显示了创建它的 \texttt{schtasks /create \dots{} /s} 命令。告警文本和调查结果指向相反的方向，两个便宜的探针就能把它们区分开。由于一个探针就足够、而且场景只有这一个，这个案例无法说明探针顺序是否重要；我们只把它作为定性证据。
+
+\section{设计上的替代方案}
+\label{app:alternatives}
+
+每个设计选择都替换了一个我们实现并测量过的替代方案。在控制器负责选择的前提下，把排序公开给规划器、让它来挑，对完成率的改变不超过 $+0.06$，所以控制器执行自己的选择。一个考虑预算的两步前瞻选择器，在我们开发它的任务家族上比 EIG/成本高 $+0.17$ 到 $+0.21$；但在一个留出的任务家族上（3{,}888 个回合），它与 EIG/成本持平或落后，对 7B 规划器落后 $-0.125$；在 sec-triage 上，它对三个 Qwen 模型的完成率为 0.889、0.972 和 0.958，而 EIG/成本为 0.958、1.000 和 1.000；因此我们保留了贪心规则。向规划器展示超过 0.999 的后验并说明已没有合法探针，并不能让 Llama-3.1-8B 下结论，而由控制器强制执行的停止规则可以。去掉结束守卫时，完成率的变化不超过 $+0.04$，但守卫保证每个被接受的结论都引用了当前的支持性证据，所以我们保留它。
+
+\section{运行时间与成本}
+\label{app:runtime}
+
+端到端延迟主要由 LLM 推理决定；与一次模型调用相比，账本更新和选择的耗时可以忽略。贯穿示例在 8B 模型上做了三次规划器调用，耗时 5.1\,秒；停止研究在五个模型上的 1{,}800 个回合，在一块 GPU 上以 32 个并发回合运行了 28 分钟。控制器选探针还降低了探针成本：在控制器停止下，它把 Llama-3.1-8B 每回合的成本从 4.78 单位减半到 2.35 单位，而无 LLM 控制器的成本是所有配置中最低的。
+
+\section{数据集与许可}
+\label{app:licences}
+
+ExCyTIn-Bench：代码 MIT，数据 CDLA-Permissive-2.0，为研究发布；我们只读取了它的 418 个训练问题。GUIDE：微软发布的匿名事件；我们只读取了训练集，不再分发逐事件数据。OTRF Security-Datasets：LICENSE 文件为 MIT（README 中仍保留旧的 GPL-3.0 说明）；录制包含实验室域中的模拟攻击，不含个人数据。SigmaHQ 检测规则：Detection Rule License 1.1，在提交 07ec293a 处注明出处使用；仓库中保存的是派生的任务规格，而不是规则文件本身。
+
 \FloatBarrier
 \section{示例轨迹}
 \label{app:trace}

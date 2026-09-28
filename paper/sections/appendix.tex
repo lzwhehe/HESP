@@ -53,6 +53,33 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
   \label{tab:app-v09terms}
 \end{table*}
 
+\begin{table*}[t]
+  \caption{Table-source study: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict. Missed-attack, false-escalation, and wrong-cause rates are over those verdicts; the unresolved rate is over all 72 episodes.}
+  \label{tab:security}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
+\end{table*}
+
+\section{Case Study: A Scheduled Task Masquerading as a Windows Task}
+\label{app:case}
+
+The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
+
+\section{Design Alternatives}
+\label{app:alternatives}
+
+Each design choice replaced an alternative that we implemented and measured. Publishing the ranking and letting the planner choose changes completion by at most $+0.06$ once the controller selects, so the controller executes its own choice. A budget-aware two-step lookahead selector beat EIG/cost by $+0.17$ to $+0.21$ on the task family we developed it on, but on a held-out family (3{,}888 episodes) it matched or trailed EIG/cost, by $-0.125$ for the 7B planner, and on sec-triage it completed 0.889, 0.972, and 0.958 against 0.958, 1.000, and 1.000 for the three Qwen models; we kept the greedy rule. Showing the planner a posterior above 0.999 and stating that no legal probe is left does not make Llama-3.1-8B conclude, whereas a stopping rule enforced by the controller does. Without the finish guard, completion changes by at most $+0.04$, but the guard ensures that every accepted verdict cites current supporting evidence, so we keep it.
+
+\section{Runtime and Cost}
+\label{app:runtime}
+
+End-to-end latency is dominated by LLM inference; ledger updates and selection take negligible time next to a model call. The running example took 5.1\,s for three planner calls on an 8B model, and the stopping study's 1{,}800 episodes over five models ran in 28 minutes on one GPU with 32 concurrent episodes. Controller selection also reduces probe cost: with a controller stop, it halves Llama-3.1-8B's cost from 4.78 to 2.35 units per episode, and the LLM-free controller has the lowest cost of any configuration.
+
+\section{Datasets and Licences}
+\label{app:licences}
+
+ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; we read only its 418 training questions. GUIDE: anonymized incidents released by Microsoft; we read only the training split and do not redistribute per-incident data. OTRF Security-Datasets: the LICENSE file is MIT (the README still carries an older GPL-3.0 notice); the recordings contain emulated attacks in a lab domain and no personal data. SigmaHQ detection rules: Detection Rule License 1.1, used with attribution at commit 07ec293a; the repository stores the derived task specifications, not the rule files.
+
 \FloatBarrier
 \section{Example Trace}
 \label{app:trace}
