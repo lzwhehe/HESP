@@ -159,7 +159,7 @@ def corroborating_probes(ledger, action_map, hypothesis, entries):
 
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
         metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True, auto_finish=None,
-        corroborate_benign=None):
+        corroborate_benign=None, stop_rule="posterior", corroborate_unit="probe", redact_raw=False):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
     ``finish_guard`` rejects finish claims not backed by current-state ledger evidence;
     ``auto_finish`` (a threshold) lets the controller conclude by ``controller_claim`` before
@@ -167,7 +167,16 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     finish or stop earlier on its own. ``corroborate_benign`` (an integer k, v1.0) makes a
     verdict for one of the environment's BENIGN causes acceptable - to the guard and to the
     controller stop alike - only if current-state observations from at least k different probes
-    specifically support it (``specific_support``)."""
+    specifically support it (``specific_support``).
+
+    v1.1 options (all off by default):
+    ``stop_rule="confirm"`` - the controller stop additionally requires that at least one current
+    observation *specifically* supports the leader, the table-level analogue of the verifier's
+    signature requirement (it never consults the hidden cause).
+    ``corroborate_unit="source"`` - benign corroboration counts distinct upstream source groups
+    (the environment's SOURCE_GROUPS) instead of distinct probes.
+    ``redact_raw=True`` - the planner sees each observation as probe and structured outcome only; the
+    raw response text, and anything an attacker wrote into it, never reaches the prompt."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
@@ -202,6 +211,9 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "finish_guard": finish_guard, "guard_threshold": guard_threshold if finish_guard else None,
         "show_rankings": show_rankings, "auto_finish": auto_finish,
         **({"corroborate_benign": corroborate_benign} if corroborate_benign is not None else {}),
+        **({"stop_rule": stop_rule} if stop_rule != "posterior" else {}),
+        **({"corroborate_unit": corroborate_unit} if corroborate_unit != "probe" else {}),
+        **({"redact_raw": True} if redact_raw else {}),
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -225,6 +237,14 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     finished_by = None
     max_citations = getattr(environment, "max_citations", 3)
     benign = frozenset(getattr(environment, "BENIGN", ())) if corroborate_benign is not None else frozenset()
+    if stop_rule not in ("posterior", "confirm") or corroborate_unit not in ("probe", "source"):
+        raise ValueError("Unknown stop rule or corroboration unit")
+    source_groups = dict(getattr(environment, "SOURCE_GROUPS", {}))
+
+    def corroboration_count(probes):
+        if corroborate_unit == "source":
+            return len({source_groups.get(a, a) for a in probes})
+        return len(probes)
 
     def conclude(hypothesis, evidence_ids, by):
         nonlocal claimed_hypothesis, claimed_evidence_ids, claim_citation_validity, verified, status, finished_by
@@ -240,14 +260,22 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     def controller_stop():
         claim = controller_claim(ledger, auto_finish, max_citations) if auto_finish is not None else None
         extra = {}
+        if claim and stop_rule == "confirm":
+            confirming = corroborating_probes(ledger, action_map, claim[0], ledger.evidence)
+            if not confirming:
+                journal.write("controller_finish_withheld", hypothesis=claim[0], reason="no confirming observation")
+                return False
+            extra["confirming_probes"] = confirming
         if claim and claim[0] in benign:
             probes = corroborating_probes(ledger, action_map, claim[0], ledger.evidence)
-            if len(probes) < corroborate_benign:
+            if corroboration_count(probes) < corroborate_benign:
                 journal.write("controller_finish_withheld", hypothesis=claim[0], corroborating_probes=probes,
                               required=corroborate_benign)
                 return False
             claim = (claim[0], list(probes.values())[-max_citations:])
-            extra = {"corroborating_probes": probes, "corroboration_required": corroborate_benign}
+            extra = {**extra, "corroborating_probes": probes, "corroboration_required": corroborate_benign,
+                     **({"corroboration_sources": sorted({source_groups.get(a, a) for a in probes})}
+                        if corroborate_unit == "source" else {})}
         if claim:
             journal.write("controller_finish", hypothesis=claim[0], evidence_ids=claim[1],
                           scores=ledger.scores, threshold=auto_finish, **extra)
@@ -294,6 +322,11 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         }
         if mode != "react_style":
             request["investigation"] = ledger.public()
+        if redact_raw:
+            request["history"] = [{**o, "raw": f"{o['action_id']} -> {o['outcome']}"} for o in request["history"]]
+            if "investigation" in request:
+                request["investigation"] = {**request["investigation"], "evidence": [
+                    {**e, "raw": f"{e['action_id']} -> {e['outcome']}"} for e in request["investigation"]["evidence"]]}
         if mode == "hesp":
             # show_rankings=False (v0.8 "blind" arms): the planner gets the same information under
             # every selector -- that the controller picks, and whether any legal probe is left --
@@ -330,9 +363,11 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                                            guard_threshold)
             if decision["hypothesis"] in benign:
                 cited = [e for e in ledger.evidence if e["observation_id"] in set(decision["evidence_ids"])]
-                if len(corroborating_probes(ledger, action_map, decision["hypothesis"], cited)) < corroborate_benign:
-                    reasons.append(f"a benign verdict needs cited evidence from {corroborate_benign} different "
-                                   "probes that each specifically support it")
+                if corroboration_count(corroborating_probes(ledger, action_map, decision["hypothesis"], cited)) \
+                        < corroborate_benign:
+                    unit = "independent sources" if corroborate_unit == "source" else "different probes"
+                    reasons.append(f"a benign verdict needs cited evidence from {corroborate_benign} {unit} "
+                                   "that each specifically support it")
             if reasons:
                 finish_rejections += 1
                 blocked.append({"action_id": "finish:" + decision["hypothesis"],

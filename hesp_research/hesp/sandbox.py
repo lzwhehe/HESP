@@ -94,6 +94,7 @@ class LoopbackSandbox:
     NOISE_EXEMPT = frozenset()
     SIGNATURES = {}
     BENIGN = frozenset()   # causes whose verdict closes the case without action
+    SOURCE_GROUPS = {}     # probe id -> upstream data source (v1.1); absent means every probe is its own source
     STATE_FIELDS = {}
     max_citations = 3
 

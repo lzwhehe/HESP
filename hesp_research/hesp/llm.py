@@ -143,6 +143,19 @@ SYSTEM = (
 )
 
 
+# v1.1 (stopping diagnosis): two pre-specified additions to the system prompt. "v1" is the prompt of
+# every study up to v1.0 and stays the default.
+PROMPT_VARIANTS = {
+    "v1": "",
+    "finish_example": (" Example of a valid final reply once an observation directly shows the cause: "
+                       '{"kind": "finish", "hypothesis": "<cause id>", "evidence_ids": ["o0003"], '
+                       '"reason": "o0003 directly shows this cause"}.'),
+    "explicit_rule": (" When one candidate cause has a clearly highest score and an observation from the current "
+                      "state directly shows it, reply kind=finish now; do not keep probing. If no legal probe is "
+                      "left, you must reply finish or stop."),
+}
+
+
 def _fmt_scores(scores):
     return ", ".join(f"{h}={p:.3f}" for h, p in sorted(scores.items(), key=lambda kv: -kv[1]))
 
@@ -231,14 +244,15 @@ def check_decision(decision, request):
 
 
 class LLMPlanner:
-    def __init__(self, client, seed=0, temperature=0.2, max_attempts=2):
+    def __init__(self, client, seed=0, temperature=0.2, max_attempts=2, prompt_variant="v1"):
         self.client, self.seed, self.temperature, self.max_attempts = client, seed, temperature, max_attempts
-        self.name = f"ollama:{client.model}"
+        self.system = SYSTEM + PROMPT_VARIANTS[prompt_variant]
+        self.name = f"ollama:{client.model}" + ("" if prompt_variant == "v1" else f"+{prompt_variant}")
         self.calls = 0
 
     def decide(self, request):
         self.calls += 1
-        messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": render_request(request)}]
+        messages = [{"role": "system", "content": self.system}, {"role": "user", "content": render_request(request)}]
         usage, error, seconds, chars = {"input_tokens": 0, "output_tokens": 0, "cached_input_tokens": 0}, None, 0.0, 0
         for attempt in range(1, self.max_attempts + 1):
             reply = self.client.chat(messages, seed=self.seed * 1000 + self.calls * 10 + attempt,

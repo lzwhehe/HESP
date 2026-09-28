@@ -99,7 +99,9 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
                         **({"show_rankings": False} if s.get("show_rankings") is False else {}),
                         **({"auto_finish": s["auto_finish"]} if s.get("auto_finish") is not None else {}),
                         **({"corroborate_benign": s["corroborate_benign"]}
-                           if s.get("corroborate_benign") is not None else {})}
+                           if s.get("corroborate_benign") is not None else {}),
+                        **{k: s[k] for k in ("stop_rule", "corroborate_unit", "redact_raw", "prompt_variant")
+                           if s.get(k) not in (None, "posterior", "probe", False, "v1")}}
                  for name, s in arms.items()}
     manifest = {
         "schema": "hesp.suite.v1", "source_sha256": source_hash(), "seed": seed, "repeats": repeats,
@@ -148,7 +150,10 @@ def run_suite(output, tasks, arms, env_factory, repeats=1, seed=42, budget=None,
                          arm=cell["arm"], metadata={"task_id": cell["task_id"], "repeat": cell["repeat"]},
                          finish_guard=bool(spec.get("finish_guard")),
                          show_rankings=spec.get("show_rankings", True), auto_finish=spec.get("auto_finish"),
-                         corroborate_benign=spec.get("corroborate_benign"))
+                         corroborate_benign=spec.get("corroborate_benign"),
+                         stop_rule=spec.get("stop_rule", "posterior"),
+                         corroborate_unit=spec.get("corroborate_unit", "probe"),
+                         redact_raw=bool(spec.get("redact_raw")))
         finally:
             env.close()
         row = {**task_map[cell["task_id"]], **cell, **result, "run_directory": folder}

@@ -52,7 +52,8 @@ def audit_run(directory):
             if not event["evidence_ids"] or not set(event["evidence_ids"]) <= observations:
                 errors.append("Controller finish cites absent evidence")
             required = event.get("corroboration_required")
-            if required is not None and (len(event.get("corroborating_probes") or {}) < required or
+            units = event.get("corroboration_sources") or event.get("corroborating_probes") or {}
+            if required is not None and (len(units) < required or
                                          not set(event["corroborating_probes"].values()) <= observations):
                 errors.append("Controller benign verdict lacks the required corroboration")
         elif kind == "independent_verification":
