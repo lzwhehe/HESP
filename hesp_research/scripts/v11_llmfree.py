@@ -265,7 +265,9 @@ def main():
             a[row["outcome"]] += 1
             a["cost_sum"] += row["cost"]
             a["execution_errors"] += row["execution_error"]
-    summary = {k: {**v, "mean_cost": v["cost_sum"] / v["episodes"]} for k, v in sorted(agg.items())}
+    keys = ("verified", "correct_unverified", "wrong", "escalated", "execution_errors")
+    summary = {k: {**{x: v.get(x, 0) for x in keys}, "episodes": v["episodes"], "cost_sum": v["cost_sum"],
+                   "mean_cost": v["cost_sum"] / v["episodes"]} for k, v in sorted(agg.items())}
     (out / "summary.json").write_text(json.dumps({"schema": "hesp.v11d.v1", "quick": args.quick,
                                                   "results": summary}, indent=2), encoding="utf-8")
     lines = ["# v1.1 part D (LLM-free)", "", "| Group | Family | Config | Variant | N | Verified | Correct, unverified | Wrong | Escalated | Cost |",
