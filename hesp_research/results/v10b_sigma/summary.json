@@ -1,0 +1,1286 @@
+{
+  "schema": "hesp.v10b.v1",
+  "family": "sigma",
+  "matched_tables": "/home/ubuntu/hesp/hesp_research/results/v10a/tables/empirical_20.json",
+  "eval_seed": 2028,
+  "dev_seed_base": 810000,
+  "repeats": 3,
+  "lambdas": [
+    0.1,
+    0.25,
+    0.5,
+    0.75
+  ],
+  "perturb_seeds": 20,
+  "quick": false,
+  "results": {
+    "M0_matched": {
+      "catalogue": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0043859649122807015,
+        "cost": 2.736842105263158
+      },
+      "eig_cost": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.206140350877193
+      },
+      "random": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.8859649122807017,
+        "wrong": 0.0,
+        "escalated": 0.008771929824561403,
+        "cost": 4.157894736842105
+      }
+    },
+    "M1_base_only": {
+      "catalogue": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0043859649122807015,
+        "cost": 2.736842105263158
+      },
+      "eig_cost": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.206140350877193
+      },
+      "random": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.8859649122807017,
+        "wrong": 0.0,
+        "escalated": 0.008771929824561403,
+        "cost": 4.162280701754386
+      }
+    },
+    "M1_base_only[base]": {
+      "catalogue": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 0.9473684210526315,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.3684210526315788
+      },
+      "eig_cost": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.0
+      },
+      "random": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 0.9035087719298246,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 4.008771929824562
+      }
+    },
+    "M1_base_only[noise]": {
+      "catalogue": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 0.8859649122807017,
+        "wrong": 0.0,
+        "escalated": 0.008771929824561403,
+        "cost": 3.1052631578947367
+      },
+      "eig_cost": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.412280701754386
+      },
+      "random": {
+        "episodes": 114,
+        "execution_errors": 0,
+        "verified": 0.868421052631579,
+        "wrong": 0.0,
+        "escalated": 0.017543859649122806,
+        "cost": 4.315789473684211
+      }
+    },
+    "M2_lambda0.1": {
+      "catalogue": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9473684210526315,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.5296052631578947
+      },
+      "eig_cost": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.1447368421052633
+      },
+      "random": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9328947368421052,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 4.40328947368421
+      }
+    },
+    "M2_lambda0.25": {
+      "catalogue": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9526315789473684,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.799342105263158
+      },
+      "eig_cost": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9921052631578947,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.2
+      },
+      "random": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9098684210526315,
+        "wrong": 0.0,
+        "escalated": 0.0125,
+        "cost": 4.99078947368421
+      }
+    },
+    "M2_lambda0.5": {
+      "catalogue": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.8789473684210526,
+        "wrong": 0.0,
+        "escalated": 0.021710526315789475,
+        "cost": 4.1723684210526315
+      },
+      "eig_cost": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.9776315789473684,
+        "wrong": 0.0,
+        "escalated": 0.005263157894736842,
+        "cost": 2.857894736842105
+      },
+      "random": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.8381578947368421,
+        "wrong": 0.0,
+        "escalated": 0.08552631578947369,
+        "cost": 6.5855263157894735
+      }
+    },
+    "M2_lambda0.75": {
+      "catalogue": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.6052631578947368,
+        "wrong": 0.013157894736842105,
+        "escalated": 0.28421052631578947,
+        "cost": 7.499342105263158
+      },
+      "eig_cost": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.8046052631578947,
+        "wrong": 0.009210526315789473,
+        "escalated": 0.14605263157894738,
+        "cost": 5.118421052631579
+      },
+      "random": {
+        "episodes": 1520,
+        "execution_errors": 0,
+        "verified": 0.5131578947368421,
+        "wrong": 0.013157894736842105,
+        "escalated": 0.4381578947368421,
+        "cost": 8.492105263157894
+      }
+    },
+    "M3_missing[azure-keyvault-secrets-modified-or-deleted-b831353c:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[azure-keyvault-secrets-modified-or-deleted-b831353c:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[azure-keyvault-secrets-modified-or-deleted-b831353c:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.666666666666666
+      }
+    },
+    "M3_missing[azure-keyvault-secrets-modified-or-deleted-b831353c:benign_3]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.0
+      }
+    },
+    "M3_missing[azure-kubernetes-sensitive-role-access-818fee0c:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[azure-kubernetes-sensitive-role-access-818fee0c:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[azure-kubernetes-sensitive-role-access-818fee0c:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[ca-policy-removed-by-non-approved-actor-26e7c5e2:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.833333333333334
+      }
+    },
+    "M3_missing[ca-policy-removed-by-non-approved-actor-26e7c5e2:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 8.833333333333334
+      }
+    },
+    "M3_missing[ca-policy-removed-by-non-approved-actor-26e7c5e2:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[credential-dumping-attempt-via-werfault-e5b33f7d:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[credential-dumping-attempt-via-werfault-e5b33f7d:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 2.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 2.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.0
+      }
+    },
+    "M3_missing[credential-dumping-attempt-via-werfault-e5b33f7d:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 2.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 2.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 8.666666666666666
+      }
+    },
+    "M3_missing[disable-or-stop-services-de25eeb8:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.666666666666666
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[disable-or-stop-services-de25eeb8:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[disable-or-stop-services-de25eeb8:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.833333333333334
+      }
+    },
+    "M3_missing[firewall-rule-deleted-via-netsh-exe-1a5fefe6:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[firewall-rule-deleted-via-netsh-exe-1a5fefe6:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[firewall-rule-deleted-via-netsh-exe-1a5fefe6:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.0
+      }
+    },
+    "M3_missing[github-outside-collaborator-detected-eaa9ac35:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[github-outside-collaborator-detected-eaa9ac35:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.5,
+        "escalated": 0.5,
+        "cost": 7.833333333333333
+      }
+    },
+    "M3_missing[github-outside-collaborator-detected-eaa9ac35:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.5
+      }
+    },
+    "M3_missing[mimikatz-use-06d71506:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.666666666666666
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[mimikatz-use-06d71506:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.5
+      }
+    },
+    "M3_missing[mimikatz-use-06d71506:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.666666666666666
+      }
+    },
+    "M3_missing[mimikatz-use-06d71506:benign_3]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 8.833333333333334
+      }
+    },
+    "M3_missing[potential-persistence-via-microsoft-office-start-0e20c89d:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[potential-persistence-via-microsoft-office-start-0e20c89d:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.166666666666666
+      }
+    },
+    "M3_missing[potential-persistence-via-microsoft-office-start-0e20c89d:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.666666666666666
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.333333333333334
+      }
+    },
+    "M3_missing[renamed-megasync-execution-643bdcac:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      }
+    },
+    "M3_missing[renamed-megasync-execution-643bdcac:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.8333333333333334,
+        "escalated": 0.16666666666666666,
+        "cost": 3.3333333333333335
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 1.0,
+        "escalated": 0.0,
+        "cost": 2.3333333333333335
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 8.666666666666666
+      }
+    },
+    "M3_missing[renamed-megasync-execution-643bdcac:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.8333333333333334,
+        "escalated": 0.16666666666666666,
+        "cost": 3.3333333333333335
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 8.666666666666666
+      }
+    },
+    "M3_missing[servicedll-hijack-612e47e9:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[servicedll-hijack-612e47e9:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.3333333333333333,
+        "escalated": 0.6666666666666666,
+        "cost": 8.0
+      }
+    },
+    "M3_missing[servicedll-hijack-612e47e9:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.5,
+        "escalated": 0.5,
+        "cost": 7.0
+      }
+    },
+    "M3_missing[windows-defender-real-time-protection-disabled-b28e58e4:attack]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[windows-defender-real-time-protection-disabled-b28e58e4:benign_1]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      }
+    },
+    "M3_missing[windows-defender-real-time-protection-disabled-b28e58e4:benign_2]": {
+      "catalogue": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 10.0
+      },
+      "eig_cost": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.0,
+        "escalated": 1.0,
+        "cost": 9.833333333333334
+      },
+      "random": {
+        "episodes": 6,
+        "execution_errors": 0,
+        "verified": 0.0,
+        "wrong": 0.16666666666666666,
+        "escalated": 0.8333333333333334,
+        "cost": 9.0
+      }
+    },
+    "M4_k1_base_only": {
+      "catalogue": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0043859649122807015,
+        "cost": 2.736842105263158
+      },
+      "eig_cost": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.206140350877193
+      },
+      "random": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.881578947368421,
+        "wrong": 0.0,
+        "escalated": 0.013157894736842105,
+        "cost": 4.149122807017544
+      }
+    },
+    "M4_k5_base_only": {
+      "catalogue": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.9166666666666666,
+        "wrong": 0.0,
+        "escalated": 0.0043859649122807015,
+        "cost": 2.736842105263158
+      },
+      "eig_cost": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 1.0,
+        "wrong": 0.0,
+        "escalated": 0.0,
+        "cost": 2.206140350877193
+      },
+      "random": {
+        "episodes": 228,
+        "execution_errors": 0,
+        "verified": 0.8859649122807017,
+        "wrong": 0.0,
+        "escalated": 0.008771929824561403,
+        "cost": 4.157894736842105
+      }
+    },
+    "M3_missing[mean]": {
+      "eig_cost": {
+        "verified": 0.0,
+        "wrong": 0.07894736842105263,
+        "escalated": 0.9210526315789473,
+        "cost": 9.267543859649122
+      },
+      "random": {
+        "verified": 0.0,
+        "wrong": 0.14473684210526314,
+        "escalated": 0.8552631578947371,
+        "cost": 9.232456140350877
+      },
+      "catalogue": {
+        "verified": 0.0,
+        "wrong": 0.09649122807017545,
+        "escalated": 0.9035087719298246,
+        "cost": 9.228070175438598
+      }
+    }
+  }
+}
