@@ -11,7 +11,7 @@ D1  controller references on both families, same seeds, tasks and budgets as the
                         confirmation-aware stop
       catalogue_confirm catalogue order, confirmation-aware stop
 D2  threshold sweep: eig_posterior and eig_confirm at 0.6, 0.7, 0.8, 0.9, 0.95, 0.99 (both families)
-D3  sec-triage only, wider table error (confirmation-aware stop, EIG/cost):
+D3  sec-triage only, wider table error (EIG/cost; posterior and confirmation-aware stop):
       confusion   each cause's rows mixed toward the rows of one fixed other cause (beta 0.25, 0.5)
       absent      the true cause is removed from the candidate set altogether (only "other" can absorb it)
       mirror      a second probe reads the same feed as source_ips (correlated evidence counted twice)
@@ -236,14 +236,15 @@ def main():
     reps = 1 if args.quick else 3
     for beta in (0.25, 0.5):
         JOBS_CTX[f"confusion{beta}"] = {k: confusion_tables(v, beta) for k, v in FAMILIES["sec"]["tables"].items()}
-        jobs += [(f"D3 confusion {beta}", "sec", "eig_confirm", t, r, {"tables": f"confusion{beta}"})
-                 for t in sec_tasks for r in range(reps)]
+        jobs += [(f"D3 confusion {beta}", "sec", config, t, r, {"tables": f"confusion{beta}"})
+                 for config in ("eig_posterior", "eig_confirm") for t in sec_tasks for r in range(reps)]
     for cause in CAUSES:
         cls, tables = absent_family(cause)
         JOBS_CTX[f"absent:{cause}"] = tables
         JOBS_CTX[f"absent_factory:{cause}"] = (lambda k: (lambda task, seed: k(task["cause"], task["variant"], seed)))(cls)
-        jobs += [("D3 absent", "sec", "eig_confirm", t, r, {"tables": f"absent:{cause}", "factory": f"absent_factory:{cause}"})
-                 for t in sec_tasks if t["cause"] == cause for r in range(reps)]
+        jobs += [("D3 absent", "sec", config, t, r, {"tables": f"absent:{cause}", "factory": f"absent_factory:{cause}"})
+                 for config in ("eig_posterior", "eig_confirm") for t in sec_tasks if t["cause"] == cause
+                 for r in range(reps)]
     cls, tables = mirror_family()
     JOBS_CTX["mirror"] = tables
     JOBS_CTX["mirror_factory"] = lambda task, seed: cls(task["cause"], task["variant"], seed)
