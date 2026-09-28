@@ -28,6 +28,7 @@ from pathlib import Path
 import random
 import sys
 import tempfile
+import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from hesp.controller import Budget, run
@@ -69,25 +70,27 @@ def family(name, specs_dir=None):
     raise SystemExit(f"unknown family {name}")
 
 
-def count_tables(units, variants, k, omit=None, eps=0.01):
-    """Counted tables per unit from LLM-free development runs; never calls the generative model.
-    ``omit`` = (target, cause): that cause is left out of that unit's development data."""
-    out = {}
-    for ui, env_cls in enumerate(units):
-        est = EmpiricalEstimator(eps=eps)
-        for i in range(1, k + 1):
-            for ci, cause in enumerate(env_cls.CAUSES):
-                if omit == (env_cls.TARGET, cause):
-                    continue
-                for vi, variant in enumerate(variants):
-                    seed = DEV_SEED_BASE + ((ui * 10 + ci) * 10 + vi) * 1000 + i
-                    with env_cls(cause, variant, seed=seed, oracle=False) as env:
-                        for action in env.catalog():
-                            obs = env.execute(action)
-                            if obs.valid:
-                                est.observe(action.id, cause, obs.outcome)
-        out[env_cls.TARGET] = est.tables(env_cls.build_catalog(oracle=False), env_cls.hypotheses_())
-    return out
+def count_unit(ui, env_cls, variants, k, omit_cause=None, eps=0.01):
+    """Counted tables of one unit from LLM-free development runs; never calls the generative model.
+    Seeds depend only on (unit, cause, variant, i), so a unit's tables do not depend on the others."""
+    est = EmpiricalEstimator(eps=eps)
+    for i in range(1, k + 1):
+        for ci, cause in enumerate(env_cls.CAUSES):
+            if cause == omit_cause:
+                continue
+            for vi, variant in enumerate(variants):
+                seed = DEV_SEED_BASE + ((ui * 10 + ci) * 10 + vi) * 1000 + i
+                with env_cls(cause, variant, seed=seed, oracle=False) as env:
+                    for action in env.catalog():
+                        obs = env.execute(action)
+                        if obs.valid:
+                            est.observe(action.id, cause, obs.outcome)
+    return est.tables(env_cls.build_catalog(oracle=False), env_cls.hypotheses_())
+
+
+def count_tables(units, variants, k):
+    """Counted tables for every unit, keyed by the unit's probe target."""
+    return {env_cls.TARGET: count_unit(ui, env_cls, variants, k) for ui, env_cls in enumerate(units)}
 
 
 def perturb(tables_by_target, lam, seed):
@@ -114,8 +117,17 @@ def episode(job):
     mode, sel = SELECTORS[selector_name]
     s = cell_seed(EVAL_SEED, task["task_id"], repeat)
     budget = Budget(max_tool_calls=10, max_decisions=12, max_tool_cost=10, max_seconds=900.0)
+    env = None
+    for attempt in range(30):          # binding port 0 can fail transiently under heavy socket churn
+        try:
+            env = ENV_FACTORY(task, s)
+            break
+        except OSError:
+            time.sleep(0.1 * (attempt + 1))
+    if env is None:
+        raise RuntimeError("could not start a sandbox after 30 attempts")
     with tempfile.TemporaryDirectory() as tmp:
-        with ENV_FACTORY(task, s) as env:
+        with env:
             r = run(env, NeverFinishPlanner(), mode, Path(tmp) / "r", budget,
                     predictor=TargetPredictor(TABLES[tname], tname), selector=Selector(sel, s),
                     show_rankings=False, auto_finish=0.8)
@@ -124,12 +136,14 @@ def episode(job):
     return cname, selector_name, task["variant"], {
         "verified": r["verified_simulation"], "cost": r["tool_cost_units"],
         "wrong": claim is not None and claim != "other" and claim != truth,
-        "escalated": claim is None or claim == "other"}
+        "escalated": claim is None or claim == "other",
+        "execution_error": r["status"] == "EXECUTION_ERROR"}
 
 
 def summarize(rows):
     n = len(rows)
-    return {"episodes": n, **{k: sum(r[k] for r in rows) / n for k in ("verified", "wrong", "escalated", "cost")}}
+    return {"episodes": n, "execution_errors": sum(r["execution_error"] for r in rows),
+            **{k: sum(r[k] for r in rows) / n for k in ("verified", "wrong", "escalated", "cost")}}
 
 
 def main():
@@ -172,11 +186,14 @@ def main():
             # one repeat per perturbation seed: the seeds, not the repeats, carry the variation
             jobs += [(f"M2_lambda{lam}", sel, t, 0, name) for sel in SELECTORS for t in tasks]
     m3_names = []
+    full_dev = count_tables(units, ("base", "noise"), 20)
     for env_cls in units:
         for cause in env_cls.CAUSES:
             name = f"M3_missing[{cause}]" if len(units) == 1 else f"M3_missing[{env_cls.TARGET.rsplit('/', 1)[1]}:{cause}]"
             m3_names.append(name)
-            TABLES[name] = count_tables(units, ("base", "noise"), 20, omit=(env_cls.TARGET, cause))
+            # only the unit that loses the cause changes; every other unit keeps its full tables
+            TABLES[name] = {**full_dev, env_cls.TARGET: count_unit(units.index(env_cls), env_cls, ("base", "noise"), 20,
+                                                                    omit_cause=cause)}
             jobs += [(name, sel, t, r, name) for sel in SELECTORS for t in tasks
                      if unit_of(t) == env_cls.TARGET and t["cause"] == cause and t["variant"] != "drift"
                      for r in range(repeats)]
