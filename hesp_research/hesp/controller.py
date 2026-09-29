@@ -145,21 +145,22 @@ def specific_support(likelihoods, hypothesis, outcome, ratio=SPECIFIC_RATIO):
     return p > 0 and p >= ratio * max(rivals, default=0.0)
 
 
-def corroborating_probes(ledger, action_map, hypothesis, entries):
+def corroborating_probes(ledger, action_map, hypothesis, entries, ratio=SPECIFIC_RATIO):
     """Distinct probes among ``entries`` whose current-state, used observation specifically
     supports ``hypothesis``: {action_id: most recent observation_id}."""
     version = ledger.state["version"]
     found = {}
     for e in entries:
         if (e["used"] and e["state_version"] == version and e["action_id"] in action_map
-                and specific_support(action_map[e["action_id"]].likelihoods, hypothesis, e["outcome"])):
+                and specific_support(action_map[e["action_id"]].likelihoods, hypothesis, e["outcome"], ratio)):
             found[e["action_id"]] = e["observation_id"]
     return found
 
 
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
         metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True, auto_finish=None,
-        corroborate_benign=None, stop_rule="posterior", corroborate_unit="probe", redact_raw=False):
+        corroborate_benign=None, stop_rule="posterior", corroborate_unit="probe", redact_raw=False,
+        specific_ratio=SPECIFIC_RATIO, finish_rejection_limit=None, record_joint=False):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
     ``finish_guard`` rejects finish claims not backed by current-state ledger evidence;
     ``auto_finish`` (a threshold) lets the controller conclude by ``controller_claim`` before
@@ -176,7 +177,17 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     ``corroborate_unit="source"`` - benign corroboration counts distinct upstream source groups
     (the environment's SOURCE_GROUPS) instead of distinct probes.
     ``redact_raw=True`` - the planner sees each observation as probe and structured outcome only; the
-    raw response text, and anything an attacker wrote into it, never reaches the prompt."""
+    raw response text, and anything an attacker wrote into it, never reaches the prompt.
+
+    v1.2 options (all off by default):
+    ``stop_rule="joint"`` - the controller stop additionally requires the leader's current score to be at least
+    ``specific_ratio`` times that of every other NAMED hypothesis (joint evidence, which admits elimination);
+    ``stop_rule="joint_open"`` - the same, and also ``specific_ratio`` times the residual ``other``, so the
+    evidence must be unlikely under an unlisted cause.
+    ``specific_ratio`` - the ratio used by ``confirm``, the joint rules, and benign corroboration (default 10).
+    ``finish_rejection_limit=k`` - in the hesp mode, after k consecutive rejected finishes the controller runs its
+    top-ranked legal probe instead of asking the planner again (recovery from a planner that stalls the guard).
+    ``record_joint=True`` - also record ``verified_joint``: the environment's joint-identification verifier."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
@@ -214,6 +225,9 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         **({"stop_rule": stop_rule} if stop_rule != "posterior" else {}),
         **({"corroborate_unit": corroborate_unit} if corroborate_unit != "probe" else {}),
         **({"redact_raw": True} if redact_raw else {}),
+        **({"specific_ratio": specific_ratio} if specific_ratio != SPECIFIC_RATIO else {}),
+        **({"finish_rejection_limit": finish_rejection_limit} if finish_rejection_limit is not None else {}),
+        **({"record_joint": True} if record_joint else {}),
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -235,9 +249,11 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     claimed_evidence_ids = None
     claim_citation_validity = None
     finished_by = None
+    verified_joint = False
+    rejection_streak = 0
     max_citations = getattr(environment, "max_citations", 3)
     benign = frozenset(getattr(environment, "BENIGN", ())) if corroborate_benign is not None else frozenset()
-    if stop_rule not in ("posterior", "confirm") or corroborate_unit not in ("probe", "source"):
+    if stop_rule not in ("posterior", "confirm", "joint", "joint_open") or corroborate_unit not in ("probe", "source"):
         raise ValueError("Unknown stop rule or corroboration unit")
     source_groups = dict(getattr(environment, "SOURCE_GROUPS", {}))
 
@@ -248,26 +264,40 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
 
     def conclude(hypothesis, evidence_ids, by):
         nonlocal claimed_hypothesis, claimed_evidence_ids, claim_citation_validity, verified, status, finished_by
+        nonlocal verified_joint
         claimed_hypothesis = hypothesis
         claimed_evidence_ids = list(evidence_ids)
         claim_citation_validity = citation_validity(ledger, hypothesis, claimed_evidence_ids)
         verified = environment.verify(hypothesis, claimed_evidence_ids)
         finished_by = by
+        joint = {}
+        if record_joint:
+            verified_joint = environment.verify_joint(hypothesis)
+            joint = {"passed_joint": verified_joint}
         journal.write("independent_verification", passed=verified, hypothesis=hypothesis,
-                      evidence_ids=claimed_evidence_ids, finished_by=by)
+                      evidence_ids=claimed_evidence_ids, finished_by=by, **joint)
         status = "VERIFIED_SIMULATION" if verified else "UNVERIFIED_CLAIM"
 
     def controller_stop():
         claim = controller_claim(ledger, auto_finish, max_citations) if auto_finish is not None else None
         extra = {}
+        if claim and stop_rule in ("joint", "joint_open"):
+            scores = ledger.scores
+            rivals = [scores[h] for h in scores if h not in (claim[0], "other")]
+            if stop_rule == "joint_open":
+                rivals.append(scores.get("other", 0.0))
+            if scores[claim[0]] < specific_ratio * max(rivals, default=0.0):
+                journal.write("controller_finish_withheld", hypothesis=claim[0],
+                              reason=f"joint evidence below ratio {specific_ratio} ({stop_rule})")
+                return False
         if claim and stop_rule == "confirm":
-            confirming = corroborating_probes(ledger, action_map, claim[0], ledger.evidence)
+            confirming = corroborating_probes(ledger, action_map, claim[0], ledger.evidence, specific_ratio)
             if not confirming:
                 journal.write("controller_finish_withheld", hypothesis=claim[0], reason="no confirming observation")
                 return False
             extra["confirming_probes"] = confirming
         if claim and claim[0] in benign:
-            probes = corroborating_probes(ledger, action_map, claim[0], ledger.evidence)
+            probes = corroborating_probes(ledger, action_map, claim[0], ledger.evidence, specific_ratio)
             if corroboration_count(probes) < corroborate_benign:
                 journal.write("controller_finish_withheld", hypothesis=claim[0], corroborating_probes=probes,
                               required=corroborate_benign)
@@ -363,8 +393,8 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                                            guard_threshold)
             if decision["hypothesis"] in benign:
                 cited = [e for e in ledger.evidence if e["observation_id"] in set(decision["evidence_ids"])]
-                if corroboration_count(corroborating_probes(ledger, action_map, decision["hypothesis"], cited)) \
-                        < corroborate_benign:
+                if corroboration_count(corroborating_probes(ledger, action_map, decision["hypothesis"], cited,
+                                                            specific_ratio)) < corroborate_benign:
                     unit = "independent sources" if corroborate_unit == "source" else "different probes"
                     reasons.append(f"a benign verdict needs cited evidence from {corroborate_benign} {unit} "
                                    "that each specifically support it")
@@ -375,7 +405,16 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                                 "state_version": ledger.state["version"]})
                 journal.write("finish_rejected", hypothesis=decision["hypothesis"],
                               evidence_ids=decision["evidence_ids"], reasons=reasons)
-                continue
+                rejection_streak += 1
+                if not (finish_rejection_limit is not None and mode == "hesp" and rankings
+                        and rejection_streak >= finish_rejection_limit):
+                    continue
+                # v1.2 recovery: stop asking; run the controller's own choice as if a probe had been proposed
+                journal.write("forced_probe", after_rejections=rejection_streak)
+                decision = {"kind": "action", "action_id": rankings[0]["action_id"],
+                            "reason": "controller: probe forced after repeated rejected finishes"}
+        if decision["kind"] != "finish":
+            rejection_streak = 0
         if decision["kind"] == "finish":
             conclude(decision["hypothesis"], decision["evidence_ids"], by="planner")
             break
@@ -468,6 +507,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         "claimed_hypothesis": claimed_hypothesis,
         "claimed_evidence_ids": claimed_evidence_ids,
         "claim_citation_validity": claim_citation_validity, "finished_by": finished_by,
+        **({"verified_joint": verified_joint} if record_joint else {}),
         "final_scores": ledger.scores, "source_sha256": config["source_sha256"],
         "research_claim_allowed": False,
         "warning": config["warning"],

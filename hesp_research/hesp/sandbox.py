@@ -260,6 +260,29 @@ class LoopbackSandbox:
         return any(o.state_version == self._version and (o.action_id, o.outcome) in self.SIGNATURES[cause]
                    for o in cited)
 
+    def verify_joint(self, hypothesis, ratio=10.0):
+        """Joint-identification oracle (v1.2): the claim is the cause in effect, and all valid current-state
+        observations of the episode, taken together, are at least ``ratio`` times more likely under it than
+        under every other NAMED cause according to the true generating distributions. Unlike ``verify``, this
+        accepts identification by a combination of individually ambiguous observations, including
+        elimination; it says nothing about causes outside the candidate set."""
+        cause = self._app.cause
+        if hypothesis != cause or cause not in self.CAUSES:
+            return False
+        obs = [o for o in self._observations.values()
+               if o.valid and o.state_version == self._version and o.outcome not in (None, "unclassified")]
+        if not obs:
+            return False
+        lag = self.VARIANTS[self.variant].get("lag", self.TABLE_LAG)
+
+        def likelihood(h):
+            value = 1.0
+            for o in obs:
+                value *= type(self).true_outcome_distribution(o.action_id, h, lag).get(o.outcome, 0.0)
+            return value
+        p = likelihood(cause)
+        return p > 0 and all(likelihood(h) * ratio <= p for h in self.CAUSES if h != cause)
+
 
 def suite(env_cls, prefix, variants=("base", "drift", "noise")):
     """8 causes x variants task specs; drift pairs cause i with cause i+3."""

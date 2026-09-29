@@ -20,7 +20,7 @@ from hesp.secapp import CAUSES, HYPOTHESES, SecTriageEnvironment, make_sec_env, 
 class EmpiricalEstimationTests(unittest.TestCase):
     def test_estimator_never_consults_the_generative_model(self):
         """The whole point of RQ3: no path from the estimator back to the oracle."""
-        original = SecTriageEnvironment.true_outcome_distribution
+        original = SecTriageEnvironment.__dict__["true_outcome_distribution"]   # keep the staticmethod wrapper
 
         def forbidden(*args, **kwargs):
             raise AssertionError("estimator called true_outcome_distribution")
