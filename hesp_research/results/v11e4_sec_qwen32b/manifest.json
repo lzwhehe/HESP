@@ -1,0 +1,4353 @@
+{
+  "schema": "hesp.suite.v1",
+  "source_sha256": "81126159150868ab081e071b4f65298bba50143a3cf6b106ddf4290c77baed18",
+  "seed": 2029,
+  "repeats": 3,
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "arms": {
+    "memory_only": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": false
+    },
+    "memory_only_redacted": {
+      "mode": "memory_only",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": false,
+      "redact_raw": true
+    },
+    "hesp_guard": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": true,
+      "show_rankings": false
+    },
+    "hesp_autostop_noguard": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": false,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    },
+    "hesp_guard_autostop": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": true,
+      "show_rankings": false,
+      "auto_finish": 0.8
+    },
+    "hesp_guard_autostop_corr_probe": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": true,
+      "show_rankings": false,
+      "auto_finish": 0.8,
+      "corroborate_benign": 2
+    },
+    "hesp_guard_autostop_corr_source": {
+      "mode": "hesp",
+      "selector": "eig_cost",
+      "prediction_source": "empirical_20",
+      "planner": "ollama:qwen2.5-32b-instruct-awq",
+      "finish_guard": true,
+      "show_rankings": false,
+      "auto_finish": 0.8,
+      "corroborate_benign": 2,
+      "corroborate_unit": "source"
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "sec-inject-00",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject-01",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject-02",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject-05",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject-06",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject-07",
+      "family": "sec-triage",
+      "variant": "inject",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "family": "sec-triage",
+      "variant": "inject_b",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "family": "sec-triage",
+      "variant": "inject_c",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "family": "sec-triage",
+      "variant": "inject_one",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "family": "sec-triage",
+      "variant": "spoof",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "credential_stuffing",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "sqli_probe",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "misconfig_exposed_admin",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "insider_exfil",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "vuln_component",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "family": "sec-triage",
+      "variant": "spoof_feed",
+      "cause": "dns_c2",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-03",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "authorized_scan",
+      "drift_to": null
+    },
+    {
+      "task_id": "sec-base-04",
+      "family": "sec-triage",
+      "variant": "base",
+      "cause": "false_positive_monitor",
+      "drift_to": null
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-05",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_one-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-02",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-07",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 2,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-02",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_c-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 0,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-06",
+      "repeat": 0,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-05",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-01",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_c-00",
+      "repeat": 1,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_b-06",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_one-06",
+      "repeat": 2,
+      "arm": "hesp_guard"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 1,
+      "arm": "hesp_autostop_noguard"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-05",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-inject_c-02",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-inject_b-00",
+      "repeat": 2,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop"
+    },
+    {
+      "task_id": "sec-base-04",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof-01",
+      "repeat": 1,
+      "arm": "memory_only"
+    },
+    {
+      "task_id": "sec-inject_one-01",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof_feed-05",
+      "repeat": 2,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-base-03",
+      "repeat": 0,
+      "arm": "hesp_guard_autostop_corr_source"
+    },
+    {
+      "task_id": "sec-inject_b-02",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-inject_one-07",
+      "repeat": 1,
+      "arm": "hesp_guard_autostop_corr_probe"
+    },
+    {
+      "task_id": "sec-spoof-00",
+      "repeat": 0,
+      "arm": "memory_only_redacted"
+    },
+    {
+      "task_id": "sec-spoof_feed-07",
+      "repeat": 0,
+      "arm": "hesp_guard"
+    }
+  ],
+  "purpose": "v1.1_e4",
+  "research_claim_allowed": false,
+  "model": {
+    "model": "qwen2.5-32b-instruct-awq",
+    "digest": null,
+    "root": "/root/autodl-tmp/hesp/models/Qwen2.5-32B-Instruct-AWQ",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "temperature": 0.2,
+  "family": "sec",
+  "part": "e4",
+  "table": {
+    "name": "empirical_20",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7"
+  },
+  "created_utc": "2026-09-29T03:46:24.045177+00:00"
+}

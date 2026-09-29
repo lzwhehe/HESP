@@ -1,0 +1,31 @@
+=== 2026-09-29T11:29:33+08:00 model qwen72b
+study e2/sec exit 0 for qwen72b (attempt 1)
+audit results/v11e2_sec_qwen72b: 216/216 passed; source hashes ['81126159']
+530e6be0d046179f360c3cc25a049692b17edb9d87555f7125292602dcea0c65  results/v11e2_sec_qwen72b/runs_archive.tar.gz
+study e2/sigma exit 0 for qwen72b (attempt 1)
+audit results/v11e2_sigma_qwen72b: 456/456 passed; source hashes ['81126159']
+07a25dd8ac8916dbcd58bdc59df44022ffa43c7d472572c04abc45045c9c77e7  results/v11e2_sigma_qwen72b/runs_archive.tar.gz
+study e4/sec exit 0 for qwen72b (attempt 1)
+audit results/v11e4_sec_qwen72b: 798/798 passed; source hashes ['81126159']
+9084489ad8f67c86e252adb086cb5a22ab59541ef3094ac0ca8b56e40a57f781  results/v11e4_sec_qwen72b/runs_archive.tar.gz
+=== 2026-09-29T11:42:23+08:00 model qwen32b
+study e2/sec exit 0 for qwen32b (attempt 1)
+audit results/v11e2_sec_qwen32b: 216/216 passed; source hashes ['81126159']
+a4b39a2406ed56768dd2b628bb1105c7f7cd30696b1da51e1df4457e19dba316  results/v11e2_sec_qwen32b/runs_archive.tar.gz
+study e2/sigma exit 0 for qwen32b (attempt 1)
+audit results/v11e2_sigma_qwen32b: 456/456 passed; source hashes ['81126159']
+e34c53b56bac869d45cc5887677d5062ac64e95d94ca5fb5b8d722134ee55fd8  results/v11e2_sigma_qwen32b/runs_archive.tar.gz
+study e4/sec exit 0 for qwen32b (attempt 1)
+audit results/v11e4_sec_qwen32b: 798/798 passed; source hashes ['81126159']
+31fd69a9d09af1f770ab35c4a9cbc23627ffbacfe450e2475f43f7215548a0b4  results/v11e4_sec_qwen32b/runs_archive.tar.gz
+=== 2026-09-29T11:49:10+08:00 model llama70b
+study e2/sec exit 0 for llama70b (attempt 1)
+audit results/v11e2_sec_llama70b: 216/216 passed; source hashes ['81126159']
+50bb6ce45c6bebb0752b62b537e6f460fa88c87367eb57d132c223e9cea8a0d5  results/v11e2_sec_llama70b/runs_archive.tar.gz
+study e2/sigma exit 0 for llama70b (attempt 1)
+audit results/v11e2_sigma_llama70b: 456/456 passed; source hashes ['81126159']
+c9c2515cc3449c5f9fce6c80e404541815f31db82c00c81c3aceba78d539922f  results/v11e2_sigma_llama70b/runs_archive.tar.gz
+study e4/sec exit 0 for llama70b (attempt 1)
+audit results/v11e4_sec_llama70b: 798/798 passed; source hashes ['81126159']
+0bf3f8f260e852e270e3eea3c5c282a064d3e73887ea38bae555b995e2190146  results/v11e4_sec_llama70b/runs_archive.tar.gz
+=== 2026-09-29T12:07:21+08:00 ALL_DONE

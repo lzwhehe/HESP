@@ -1,12 +1,10 @@
 \section{相关工作}
 \label{sec:related}
 
-\paragraph{攻击调查与分诊} 基于溯源的系统构建主机活动的因果图，并用规则或学习模型使其易于处理。NoDoze~\citep{nodoze} 按告警周围溯源的异常程度为告警排序，以缓解告警疲劳；Kairos~\citep{kairos} 从全系统溯源中检测并重建入侵。这些系统决定分析师应该看什么，而不决定下一步运行哪个查询。Clouseau~\citep{clouseau} 用分层的 LLM 智能体从事件日志中重建攻击叙事，智能体自己选择查询；它报告开源权重模型在复杂场景上落后于一个闭源模型；其作者也指出，叙事重建超出了分诊所需——分诊追求的是快速的“接受或升级”判断。\hesp{} 面向的正是这个判断，使用小型本地模型，并把流程移到模型之外。ExCyTIn-Bench~\citep{excytin} 和 GUIDE~\citep{guide} 为 LLM 和机器学习调查提供了数据；\S\ref{sec:realdata} 测量了为什么两者都无法检验调查策略。
+\paragraph{攻击调查与分诊} 基于溯源的系统构建主机活动的因果图，并用规则或学习模型使其易于处理。NoDoze~\citep{nodoze} 依据周边溯源的异常程度为告警排序以缓解告警疲劳，Kairos~\citep{kairos} 从全系统溯源中检测并重建入侵。这些系统决定分析员应该看什么，而不是下一步运行哪个查询。Clouseau~\citep{clouseau} 用分层的 LLM 智能体自选查询、从事件日志重建攻击叙事，并报告开源权重模型在复杂场景上落后于闭源模型；其作者也指出，叙事重建超出了分诊的需要——分诊追求的是快速的“接受或升级”决定。\hesp{} 针对的正是这一决定，面向小型本地模型，并把流程移出模型。ExCyTIn-Bench~\citep{excytin}、GUIDE~\citep{guide} 和 Cyber Defense Benchmark~\citep{cyberdefensebench} 为调查与威胁狩猎提供了数据；\S\ref{sec:realdata} 讨论它们与本评测的适配性。
 
-\paragraph{面向安全的 LLM} LLM 智能体已被用于渗透测试~\citep{pentestgpt} 和夺旗赛题目~\citep{cybench}。Greshake 等人~\citep{greshake2023} 展示了间接提示注入：隐藏在检索内容中的指令可以劫持集成了 LLM 的应用；AgentDojo~\citep{agentdojo} 在使用工具的智能体上对这类攻击与防御做了基准测试。告警分诊面临同样的暴露，因为智能体读取的证据部分是由攻击者写的；我们的对抗性部分针对分诊结论测量了这一点。关于保护智能体的工作约束智能体能做什么：IsolateGPT~\citep{isolategpt} 隔离 LLM 应用的执行，Progent~\citep{progent} 对工具调用施加权限策略。\hesp{} 与它们共享一个前提，即智能体的行为应在模型之外受到管控；但它管控的是调查流程（运行哪个探针、接受哪个结论、何时停止），而不是访问权限，并且测量了这种管控对任务成功率的影响。
+\paragraph{面向安全的 LLM} LLM 智能体已被用于渗透测试~\citep{pentestgpt} 和 CTF 挑战~\citep{cybench}。间接提示注入（隐藏在检索内容中的指令劫持集成 LLM 的应用）由 Greshake 等人~\citep{greshake2023} 首先展示，AgentDojo~\citep{agentdojo} 为工具型智能体上的此类攻击与防御提供了基准。告警分诊面临同样的暴露面，因为智能体读取的证据部分由攻击者书写，我们的对抗部分针对分诊结论测量了这一点。保护智能体的工作约束的是智能体可以做什么：IsolateGPT~\citep{isolategpt} 隔离 LLM 应用的执行，Progent~\citep{progent} 对工具调用施加权限策略。\hesp{} 与它们共享“智能体的行为应在模型之外受控”这一前提，但它控制的是调查流程（运行哪个探针、接受哪个结论、何时停止）而非访问权限，并测量其对任务成功率的影响。在 ReAct~\citep{react}、Reflexion~\citep{reflexion}、Toolformer~\citep{toolformer} 等通用工具型智能体中，由模型决定下一步做什么以及何时结束；\hesp{} 把这两个决定都移到显式控制器中，并以模型自己的选择作为基线。
 
-\paragraph{使用工具的智能体} ReAct~\citep{react} 交替进行推理和行动，Reflexion~\citep{reflexion} 加入语言化的自我反馈，Toolformer~\citep{toolformer} 学习何时调用工具。在这些设计中，由模型决定下一步做什么以及何时结束。\hesp{} 把探针选择以及（可选的）停止移入一个显式的控制器，并把模型自己的选择作为一个基线配置。
+\paragraph{序贯诊断} 按期望信息增益选择测试可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}。它是经典基于模型的诊断~\citep{dekleer1987} 的基础，对贪心主动学习和含噪假设识别有近似最优保证~\citep{dasgupta2004,golovin2010}。我们原样使用这一教科书准则，研究它与 LLM 规划器的相互作用。语言模型在某些自我评估任务上可以较好地校准~\citep{kadavath2022}，但我们让模型给出的预测表表明，这不能推广到探针结果的似然。
 
-\paragraph{序贯诊断} 按期望信息增益选择测试，可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}。它是经典基于模型的诊断~\citep{dekleer1987} 的基础，并且对贪心主动学习和带噪声的假设识别有近似最优的保证~\citep{dasgupta2004,golovin2010}。我们原样使用教科书中的准则；我们的问题是经验性的：这样的准则如何与不同能力的 LLM 规划器相互作用。语言模型在某些自我评估任务上可以有相当好的校准~\citep{kadavath2022}，但我们的模型自报表表明，这种校准并不能延伸到诊断控制器所需的探针—结果似然。
-
-\paragraph{评估方法} 预注册把确证性分析和探索性分析分开~\citep{nosek2018}，而基于机器学习的安全评估中的陷阱也已有详尽记录~\citep{arp2022dos}。我们对每项研究都做了预注册，冻结源码和表的哈希，并公开勘误。
+预注册把确认性分析与探索性分析分开~\citep{nosek2018}，基于机器学习的安全评估中的陷阱也已有系统总结~\citep{arp2022dos}；我们遵循这两点。

@@ -218,54 +218,54 @@ def v10c():
 
 
 def v11_fair():
-    """v1.1 same evidence standard: LLM-free references (part D1) and guard-on LLM arms (part E2), counts."""
+    """v1.1 same evidence standard: verified episodes per stop rule, LLM-free (part D1) and guard-on LLM arms (E2)."""
     s = json.loads((RESULTS / "v11_summary.json").read_text(encoding="utf-8"))
-    rows = [("LLM-free", "posterior stop", "D1", "eig_posterior"), ("LLM-free", "confirmation stop", "D1", "eig_confirm"),
-            ("LLM-free", "fixed playbook, conf.", "D1", "static_confirm"), ("LLM-free", "catalogue order, conf.", "D1", "catalogue_confirm")]
-    for key, lab in (("qwen7b", "Q-7B"), ("llama8b", "L-8B")):
-        rows += [(lab, "guard, LLM stops", "E2", f"{key}|hesp_guard"), (lab, "guard + posterior stop", "E2", f"{key}|hesp_guard_autostop"),
-                 (lab, "guard + confirmation stop", "E2", f"{key}|hesp_guard_confirmstop")]
-    L = [r"\begin{tabular}{llrrrr}", r"\toprule",
-         r" & & \multicolumn{2}{c}{sec-triage (72)} & \multicolumn{2}{c}{sigma-triage (152)} \\",
-         r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}", r"Planner & Controller & verified & cost & verified & cost \\", r"\midrule"]
-    prev = None
-    for who, lab, part, k in rows:
-        if prev and who != prev:
-            L.append(r"\addlinespace")
-        prev = who
+    L = [r"\begin{tabular}{lrrrrrr}", r"\toprule",
+         r" & \multicolumn{3}{c}{sec-triage (of 72)} & \multicolumn{3}{c}{sigma-triage (of 152)} \\",
+         r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
+         r"Planner & LLM & post. & conf. & LLM & post. & conf. \\", r"\midrule"]
+    d = s["D1"]
+    L.append("none (LLM-free) & -- & " + " & ".join(
+        [str(d[f"sec|{c}"].get("verified", 0)) for c in ("eig_posterior", "eig_confirm")] + ["--"] +
+        [str(d[f"sigma|{c}"].get("verified", 0)) for c in ("eig_posterior", "eig_confirm")]) + r" \\")
+    for key, lab in V08_MODELS:
         cells = []
         for fam in ("sec", "sigma"):
-            if part == "D1":
-                c = s["D1"][f"{fam}|{k}"]
-                cells += [f"{c.get('verified', 0)}", f"{c['mean_cost']:.2f}"]
-            else:
-                model, arm = k.split("|")
-                c = s["E2"][f"{fam}|{model}|{arm}"]
-                cells += [f"{c['verified']}", f"{c['mean_cost']:.2f}"]
-        L.append(f"{who} & {lab} & " + " & ".join(cells) + r" \\")
+            for arm in ("hesp_guard", "hesp_guard_autostop", "hesp_guard_confirmstop"):
+                c = s["E2"].get(f"{fam}|{key}|{arm}")
+                cells.append(str(c["verified"]) if c else "")
+        if any(cells):
+            L.append(f"{lab} & " + " & ".join(cells) + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("v11_fair", L)
 
 
 def v11_attack():
-    """v1.1 attack attribution on Q-7B: missed attacks and unresolved episodes per component, counts."""
+    """v1.1 attack attribution: missed attacks and unresolved episodes per component and model, counts."""
     s = json.loads((RESULTS / "v11_summary.json").read_text(encoding="utf-8"))["E4"]
     arms = [("memory_only", "Memory-only"), ("memory_only_redacted", "Memory-only, raw text removed"),
             ("hesp_guard", r"\hesp{}, guard only"), ("hesp_autostop_noguard", r"\hesp{}, stop, no guard"),
             ("hesp_guard_autostop", r"\hesp{}, guard + stop"), ("hesp_guard_autostop_corr_probe", r"\quad + corroboration by probe"),
             ("hesp_guard_autostop_corr_source", r"\quad + corroboration by source")]
+    models = [(k, m) for k, m in V08_MODELS if f"{k}|inject|memory_only" in s]
     inj = ("inject", "inject_b", "inject_c", "inject_one")
-    L = [r"\begin{tabular}{lrrrrrrr}", r"\toprule",
-         r" & \multicolumn{2}{c}{4 injection texts (72)} & \multicolumn{2}{c}{forged probe (18)} & \multicolumn{2}{c}{forged feed (18)} & benign (6) \\",
-         r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-8}",
-         r"Configuration (Q-7B) & missed & unresolved & missed & escal. & missed & escal. & verified \\", r"\midrule"]
+
+    def rng(vals):
+        lo, hi = min(vals), max(vals)
+        return f"{lo}" if lo == hi else f"{lo}--{hi}"
+    L = [r"\begin{tabular}{l" + "r" * len(models) + "rrr}", r"\toprule",
+         r" & \multicolumn{" + str(len(models)) + r"}{c}{4 injection texts: missed / unresolved (of 72)} & \multicolumn{2}{c}{forged: missed (of 18)} & benign \\",
+         r"\cmidrule(lr){2-" + str(1 + len(models)) + r"}\cmidrule(lr){" + f"{2 + len(models)}-{3 + len(models)}" + r"}\cmidrule(lr){" + f"{4 + len(models)}-{4 + len(models)}" + "}",
+         "Configuration & " + " & ".join(m for _, m in models) + r" & probe & feed & verif.\ (of 6) \\", r"\midrule"]
     for a, lab in arms:
-        c = [s[f"qwen7b|{v}|{a}"] for v in inj]
-        missed = sum(x["missed_attack"] for x in c)
-        unres = sum(x["abstained"] + x["no_verdict"] for x in c)
-        sp, sf, b = s[f"qwen7b|spoof|{a}"], s[f"qwen7b|spoof_feed|{a}"], s[f"qwen7b|base|{a}"]
-        cells = [missed, unres, sp["missed_attack"], sp["escalated"], sf["missed_attack"], sf["escalated"], b["verified"]]
-        L.append(f"{lab} & " + " & ".join(str(x) for x in cells) + r" \\")
+        cells = []
+        for k, _ in models:
+            c = [s[f"{k}|{v}|{a}"] for v in inj]
+            cells.append(f"{sum(x['missed_attack'] for x in c)} / {sum(x['abstained'] + x['no_verdict'] for x in c)}")
+        cells.append(rng([s[f"{k}|spoof|{a}"]["missed_attack"] for k, _ in models]))
+        cells.append(rng([s[f"{k}|spoof_feed|{a}"]["missed_attack"] for k, _ in models]))
+        cells.append(rng([s[f"{k}|base|{a}"]["verified"] for k, _ in models]))
+        L.append(f"{lab} & " + " & ".join(cells) + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("v11_attack", L)
 
