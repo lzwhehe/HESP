@@ -315,6 +315,27 @@ def sensitivity():
     write("sensitivity", L)
 
 
+def v12_policy():
+    """v1.2 G1: evidence policies (LLM-free) across settings; counts."""
+    s = json.loads((RESULTS / "v12b" / "summary.json").read_text(encoding="utf-8"))["results"]
+    rows = [("posterior@10", "posterior (0.8)"), ("confirm@10", "single signature, $r{=}10$"),
+            ("confirm@3", "single signature, $r{=}3$"), ("joint@10", "joint, named causes, $r{=}10$"),
+            ("joint_open@10", "joint, incl.\\ \\textit{other}, $r{=}10$"), ("joint_open@30", "joint, incl.\\ \\textit{other}, $r{=}30$")]
+
+    def g(setting, cfg):
+        return s[f"G1|{setting}|{cfg}"]
+    L = [r"\begin{tabular}{lrrrrrrrrr}", r"\toprule",
+         r" & \multicolumn{2}{c}{sec, matched (48)} & \multicolumn{2}{c}{sec, cause absent (48)} & sec, confusion & \multicolumn{4}{c}{comp-triage (72; 18 attacks)} \\",
+         r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-6}\cmidrule(lr){7-10}",
+         r"Stop rule & single & joint & wrong & escal. & verified & right cause & wrong & missed attack & escal. \\", r"\midrule"]
+    for cfg, lab in rows:
+        m, a, c, k = g("sec-matched", cfg), g("sec-absent", cfg), g("sec-confusion", cfg), g("comp", cfg)
+        L.append(f"{lab} & {m.get('verified', 0)} & {m['verified_joint']} & {a.get('wrong', 0)} & {a.get('escalated', 0)} & "
+                 f"{c.get('verified', 0)} & {k['correct']} & {k.get('wrong', 0)} & {k['missed_attack']} & {k.get('escalated', 0)} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v12_policy", L)
+
+
 if __name__ == "__main__":
     v06()
     v08()
@@ -326,4 +347,5 @@ if __name__ == "__main__":
     v11_attack()
     runtime()
     sensitivity()
+    v12_policy()
     print("tables written to", OUT)

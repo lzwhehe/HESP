@@ -47,7 +47,8 @@ When the decision budget, tool budget, or legal probes run out, the controller s
     \hesp{} guard + stop & v1.0-C, v1.1 & yes & controller (EIG/cost) & no & yes & post.; optional corr.\ (probe) \\
     \hesp{} guard, stop variants & v1.1 & yes & controller (EIG/cost) & no & yes & none / post.\ / conf.; corr.\ (probe or source) \\
     LLM-free controller & v0.9 ref., v1.0-B, v1.1-D & -- & controller & -- & -- & post.\ or conf. \\
-    \hesp{} guard + confirmation stop$^\dagger$ & v1.1 & yes & controller (EIG/cost) & no & yes & conf.; corr.\ (source) for benign \\
+    \hesp{} guard, joint stop rules & v1.2 & yes & controller (EIG/cost) & no & yes & joint (named or incl.\ \textit{other}), $r \in \{3,5,10,30\}$ \\
+    \hesp{} guard + confirmation stop + recovery$^\dagger$ & v1.1, v1.2 & yes & controller (EIG/cost) & no & yes & conf.; corr.\ (source) for benign; probe forced after 2 rejected finishes \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
@@ -74,6 +75,8 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
     Table error, adversarial & v1.0-B/C & \texttt{f8eb0d16} & \texttt{5ecbb10} 09-27 14:50 & 09-27 14:51 & 840 + LLM-free & injection attack success (Q-7B) confirmed \\
     Second family & v1.0-A & \texttt{f8eb0d16} & \texttt{6045509} 09-27 16:06 & 09-27 16:07 & 3{,}800 & ranking and full effect on sigma-triage (Q-7B) confirmed \\
     Follow-up & v1.1 & \texttt{81126159} & \texttt{98f89b7} 09-29 02:09 & 09-29 02:09 & 7{,}926 + 3{,}968 LLM-free & PE1 (Q-72B, both families): no gain \\
+    Evidence policies & v1.2-B & \texttt{4b75a468} & \texttt{480089f} 09-29 10:37 & 09-29 10:37 & 2{,}936 LLM-free & descriptive only \\
+    Fair prompts, raw logs & v1.2-C & \texttt{82b98ff5} & \texttt{4c3198d} 09-29 10:45 & 09-29 10:45 & see \S\ref{sec:results} & controller vs.\ Memory-only with the selected prompt (Q-7B, L-8B) \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
