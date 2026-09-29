@@ -1,7 +1,7 @@
 \section{Evaluation Setup}
 \label{sec:setup}
 
-We ask eight questions: whether \hesp{} makes small local models reliable without the generator's probabilities (\S\ref{sec:rq-help}); whether the gain comes from the information-gain ranking or from taking the choice away from the model (\S\ref{sec:rq-rank}); whether probing and stopping are separate failures (\S\ref{sec:rq-stop}); what the LLM adds once the controller applies the verifier's evidence standard (\S\ref{sec:fair}); how verdicts fail in security terms (\S\ref{sec:security}); whether the effects replicate on a second, Sigma-derived family (\S\ref{sec:external}); how the controller fails when its tables are wrong (\S\ref{sec:mismatch}); and which component stops injected instructions and forged evidence (\S\ref{sec:adversarial}). Each study was designed after the previous one had run (\cref{tab:studies}); the v1.1 study was added in response to review. \S\ref{sec:realdata} asks whether public security data could test the same questions.
+Each study was designed after the previous one had run and was frozen before its first episode (\cref{tab:studies}); the v1.1 study was added in response to review. \S\ref{sec:results} reports the results by question rather than by study.
 
 \begin{table*}[t]
   \caption{Overview of the pre-registered studies: 11{,}912 audited LLM episodes in the five original studies, 7{,}926 in the v1.1 follow-up, and LLM-free episodes. The repository labels the studies by version.}

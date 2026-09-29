@@ -1,0 +1,448 @@
+{
+  "v0.5 Q-7B full HESP - Memory-only": {
+    "task": {
+      "difference": 0.8888888888888888,
+      "ci": [
+        0.75,
+        1.0
+      ],
+      "clusters": 24,
+      "level": 0.95
+    },
+    "cause": {
+      "difference": 0.8888888888888888,
+      "ci": [
+        0.7222222222222222,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "base": {
+      "difference": 0.875,
+      "ci": [
+        0.625,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "noise": {
+      "difference": 0.875,
+      "ci": [
+        0.625,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "drift": {
+      "difference": 0.9166666666666666,
+      "ci": [
+        0.75,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    }
+  },
+  "v0.5 Q-32B full HESP - Memory-only": {
+    "task": {
+      "difference": 0.25,
+      "ci": [
+        0.09722222222222222,
+        0.4166666666666667
+      ],
+      "clusters": 24,
+      "level": 0.95
+    },
+    "cause": {
+      "difference": 0.25,
+      "ci": [
+        0.1111111111111111,
+        0.41666666666666663
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "base": {
+      "difference": 0.125,
+      "ci": [
+        0.0,
+        0.375
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "noise": {
+      "difference": 0.25,
+      "ci": [
+        0.041666666666666664,
+        0.5
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "drift": {
+      "difference": 0.375,
+      "ci": [
+        0.125,
+        0.75
+      ],
+      "clusters": 8,
+      "level": 0.95
+    }
+  },
+  "v0.5 Q-72B full HESP - Memory-only": {
+    "task": {
+      "difference": 0.1111111111111111,
+      "ci": [
+        0.0,
+        0.2361111111111111
+      ],
+      "clusters": 24,
+      "level": 0.95
+    },
+    "cause": {
+      "difference": 0.1111111111111111,
+      "ci": [
+        0.027777777777777776,
+        0.2222222222222222
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "base": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "noise": {
+      "difference": 0.08333333333333333,
+      "ci": [
+        0.0,
+        0.25
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "drift": {
+      "difference": 0.25,
+      "ci": [
+        0.0,
+        0.5
+      ],
+      "clusters": 8,
+      "level": 0.95
+    }
+  },
+  "v0.6 Q-7B counted tables - Memory-only": {
+    "task": {
+      "difference": 0.875,
+      "ci": [
+        0.7361111111111112,
+        0.9722222222222222
+      ],
+      "clusters": 24,
+      "level": 0.95
+    },
+    "cause": {
+      "difference": 0.875,
+      "ci": [
+        0.7083333333333334,
+        0.9861111111111112
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "base": {
+      "difference": 0.875,
+      "ci": [
+        0.625,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "noise": {
+      "difference": 0.875,
+      "ci": [
+        0.625,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    },
+    "drift": {
+      "difference": 0.875,
+      "ci": [
+        0.7083333333333333,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.95
+    }
+  },
+  "v0.8 Q-7B ranking (blind EIG - blind random)": {
+    "task": {
+      "difference": 0.3055555555555555,
+      "ci": [
+        0.1388888888888889,
+        0.4722222222222222
+      ],
+      "clusters": 24,
+      "level": 0.975
+    },
+    "cause": {
+      "difference": 0.3055555555555555,
+      "ci": [
+        0.09722222222222222,
+        0.4583333333333333
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "base": {
+      "difference": 0.25,
+      "ci": [
+        0.041666666666666664,
+        0.5
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "noise": {
+      "difference": 0.3333333333333333,
+      "ci": [
+        0.125,
+        0.625
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "drift": {
+      "difference": 0.3333333333333333,
+      "ci": [
+        -0.08333333333333333,
+        0.6666666666666666
+      ],
+      "clusters": 8,
+      "level": 0.975
+    }
+  },
+  "v0.8 L-8B full HESP - Memory-only": {
+    "task": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 24,
+      "level": 0.975
+    },
+    "cause": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "base": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "noise": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "drift": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    }
+  },
+  "v0.9 L-8B controller stop": {
+    "task": {
+      "difference": 0.9166666666666666,
+      "ci": [
+        0.7916666666666666,
+        1.0
+      ],
+      "clusters": 24,
+      "level": 0.975
+    },
+    "cause": {
+      "difference": 0.9166666666666666,
+      "ci": [
+        0.6666666666666666,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "base": {
+      "difference": 0.875,
+      "ci": [
+        0.5,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "noise": {
+      "difference": 0.875,
+      "ci": [
+        0.5,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "drift": {
+      "difference": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    }
+  },
+  "v0.9 L-8B selection given stop": {
+    "task": {
+      "difference": 0.05555555555555555,
+      "ci": [
+        -0.06944444444444445,
+        0.18055555555555555
+      ],
+      "clusters": 24,
+      "level": 0.975
+    },
+    "cause": {
+      "difference": 0.05555555555555556,
+      "ci": [
+        -0.125,
+        0.2638888888888889
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "base": {
+      "difference": 0.041666666666666664,
+      "ci": [
+        -0.125,
+        0.25
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "noise": {
+      "difference": 0.0,
+      "ci": [
+        -0.25,
+        0.25
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "drift": {
+      "difference": 0.125,
+      "ci": [
+        0.0,
+        0.3333333333333333
+      ],
+      "clusters": 8,
+      "level": 0.975
+    }
+  },
+  "v1.0-C Q-7B injection attack success (Mem. - HESP)": {
+    "task": {
+      "difference": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ],
+      "clusters": 6,
+      "level": 0.9833333333333333
+    },
+    "cause": {
+      "difference": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ],
+      "clusters": 6,
+      "level": 0.9833333333333333
+    },
+    "base": null,
+    "noise": null,
+    "drift": null
+  },
+  "v1.1 PE1-sec Q-72B LLM stop - LLM-free confirmation": {
+    "task": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 24,
+      "level": 0.975
+    },
+    "cause": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "base": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "noise": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    },
+    "drift": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "clusters": 8,
+      "level": 0.975
+    }
+  }
+}

@@ -218,22 +218,26 @@ def v10c():
 
 
 def v11_fair():
-    """v1.1 same evidence standard: verified episodes per stop rule, LLM-free (part D1) and guard-on LLM arms (E2)."""
+    """v1.1 same evidence standard: episodes that meet the evidence policy (verified) and episodes that name the right
+    cause (verified + right cause without a confirming signature), per stop rule; LLM-free (D1) and guard-on LLM arms (E2)."""
     s = json.loads((RESULTS / "v11_summary.json").read_text(encoding="utf-8"))
+
+    def pair(c):
+        return f"{c.get('verified', 0)} / {c.get('verified', 0) + c.get('correct_unverified', 0)}"
     L = [r"\begin{tabular}{lrrrrrr}", r"\toprule",
          r" & \multicolumn{3}{c}{sec-triage (of 72)} & \multicolumn{3}{c}{sigma-triage (of 152)} \\",
          r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
          r"Planner & LLM & post. & conf. & LLM & post. & conf. \\", r"\midrule"]
     d = s["D1"]
     L.append("none (LLM-free) & -- & " + " & ".join(
-        [str(d[f"sec|{c}"].get("verified", 0)) for c in ("eig_posterior", "eig_confirm")] + ["--"] +
-        [str(d[f"sigma|{c}"].get("verified", 0)) for c in ("eig_posterior", "eig_confirm")]) + r" \\")
+        [pair(d[f"sec|{c}"]) for c in ("eig_posterior", "eig_confirm")] + ["--"] +
+        [pair(d[f"sigma|{c}"]) for c in ("eig_posterior", "eig_confirm")]) + r" \\")
     for key, lab in V08_MODELS:
         cells = []
         for fam in ("sec", "sigma"):
             for arm in ("hesp_guard", "hesp_guard_autostop", "hesp_guard_confirmstop"):
                 c = s["E2"].get(f"{fam}|{key}|{arm}")
-                cells.append(str(c["verified"]) if c else "")
+                cells.append(pair(c) if c else "")
         if any(cells):
             L.append(f"{lab} & " + " & ".join(cells) + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
@@ -290,6 +294,27 @@ def runtime():
     write("runtime", L)
 
 
+def sensitivity():
+    """Clustering unit and drift sensitivity of the sec-triage primary endpoints (scripts/cause_sensitivity.py)."""
+    s = json.loads((RESULTS / "cause_sensitivity.json").read_text(encoding="utf-8"))
+
+    def cell(c):
+        if not c:
+            return "--"
+        if c["ci"] is None:
+            return f"{c['difference']:+.3f}"
+        return f"{c['difference']:+.3f} [{c['ci'][0]:+.2f}, {c['ci'][1]:+.2f}]"
+    L = [r"\begin{tabular}{llllrrr}", r"\toprule",
+         r"Endpoint & Level & 24 task clusters & 8 cause clusters & base & noise & drift \\", r"\midrule"]
+    for label, r in s.items():
+        lvl = r["task"]["level"]
+        lab = label.replace("_", r"\_").replace("&", r"\&")
+        L.append(f"{lab} & {lvl * 100:.2f}\\% & {cell(r['task'])} & {cell(r['cause'])} & "
+                 + " & ".join(f"{r[v]['difference']:+.3f}" if r.get(v) else "--" for v in ("base", "noise", "drift")) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("sensitivity", L)
+
+
 if __name__ == "__main__":
     v06()
     v08()
@@ -300,4 +325,5 @@ if __name__ == "__main__":
     v11_fair()
     v11_attack()
     runtime()
+    sensitivity()
     print("tables written to", OUT)

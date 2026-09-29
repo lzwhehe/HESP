@@ -5,7 +5,6 @@ The planner receives a system message and one user message per decision. Below i
 
 \input{tables/prompt_example}
 
-\FloatBarrier
 \section{Execution Loop and Configurations}
 \label{app:loop}
 
@@ -54,7 +53,6 @@ When the decision budget, tool budget, or legal probes run out, the controller s
   \end{adjustbox}
 \end{table*}
 
-\FloatBarrier
 \section{Pre-registration Record}
 \label{app:prereg}
 
@@ -86,6 +84,34 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
 \FloatBarrier
 \section{Detailed Results}
 \label{app:tables}
+
+\begin{table*}[t]
+  \caption{Clustering and drift sensitivity of the sec-triage primary endpoints (exploratory): each endpoint recomputed with the pre-registered task clusters (as reported; the v1.0-C endpoint has 6 injection tasks, one per actionable cause), with causes as clusters (tasks averaged within a cause first), and separately on the base, noise, and drift variants. Bootstrap seeds and interval levels are those of each study.}
+  \label{tab:sensitivity}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/sensitivity}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Table-source study: verified completion by the source of the prediction tables (72 episodes per cell). The 7B comparison against Memory-only is the pre-registered primary endpoint; 32B and 72B are exploratory. Intervals are 95\% task-cluster bootstrap.}
+  \label{tab:v06}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Second task family (sigma-triage): verified completion, with mean probe cost in parentheses, 152 episodes per cell (76 tasks, two repeats). The two contrasts are the pre-registered primary endpoints on Q-7B (98.33\% intervals over 12 rules); the other models' intervals are exploratory 95\% intervals. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:v10a}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10a_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Adversarial evidence (v1.0, sec-triage): attack success, the number of episodes with an actionable cause that end in a benign verdict (of 18: six causes, three repeats), and verified episodes on the two benign causes (of 6). \hesp{} uses the finish guard and controller stop; ``+corr.''\ adds the per-probe corroboration rule. Primary endpoint (Q-7B, injected instruction, Memory-only $-$ \hesp{}, as a share): $+1.000$ $[+1.000,+1.000]$, 98.33\% interval.}
+  \label{tab:v10c}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10c_main}\end{adjustbox}
+\end{table*}
 
 \begin{figure*}[t]
   \centering
@@ -129,13 +155,12 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
   \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
 \end{table*}
 
-\FloatBarrier
 \section{Public Data Audit}
 \label{app:public}
 
 Testing whether a controller chooses probes well requires three things. (i) The alert alone must not reveal the answer, so several explanations must remain plausible. (ii) Probes must differ in cost and in how much they reveal, so that their order matters. (iii) Ground truth must be objective, reflecting what actually happened rather than a labeling convention. Appendix~\ref{app:licences} lists the versions and files read.
 
-\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn poses questions over a simulated Azure tenant's logs, which an agent queries in SQL. The answers can be recovered mechanically from the published investigation graphs (98.5\% of the 1{,}017 questions of the \texttt{opus5} set); the graphs are the evaluator's answer source and are not visible to an agent, so this shows how the questions were generated, not that an agent has a shortcut. On the 418 training questions, 54.8\% name the target alert in the question text, and most others paraphrase it, so the task is to locate the named alert and read an entity. The standard indicator-pivot probe finds the true answer no more often than distractors (0.571 against 0.570 in the alert table), and only 19.4\% of questions have any table that singles out the answer. The questions test navigation and retrieval, not investigation.
+\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn poses questions over a simulated Azure tenant's logs, which an agent queries in SQL. The answers can be recovered mechanically from the published investigation graphs (98.5\% of the 1{,}017 questions of the \texttt{opus5} set); the graphs are the evaluator's answer source and are not visible to an agent, so this shows how the questions were generated, not that an agent has a shortcut. On the 418 training questions, 54.8\% name the target alert in the question text, and most others paraphrase it, so the task is to locate the named alert and read an entity. The standard indicator-pivot probe finds the true answer no more often than distractors (0.571 against 0.570 in the alert table), and only 19.4\% of questions have any table that singles out the answer. For the questions we examined and the probe we adapted, the task resembles navigation and retrieval more than the choice among competing explanations; other adaptations of the benchmark may fit better.
 
 \paragraph{GUIDE~\citep{guide}} GUIDE contains 707{,}108 real, anonymized incidents from 5{,}340 organizations, graded as true positive, benign positive, or false positive. Over ten incident-level probes on its alert metadata, organization identity alone carries 1.03 of the grade's 1.50 bits of entropy, and several large organizations assign one grade to every incident. Within an organization, looking up how it previously graded the same detector reaches 0.911 accuracy, and across organizations the probes do not beat the majority class. On cold-start incidents (a within-organization time split of the training data: the latest 20\% of incidents whose organization--detector pair has little or mixed history), evidence integration ranks true positives against the other two grades with AUROC 0.755, equal to history lookup (0.759; difference $-0.004$ $[-0.028,+0.027]$, organizations resampled). The grade depends strongly on the organization, which may reflect policy, base rates, or detector mix; we did not separate these, and we paused the planned GUIDE study. Its test split remains unread.
 
@@ -143,21 +168,18 @@ Testing whether a controller chooses probes well requires three things. (i) The 
 
 \paragraph{Case study} The one OTRF scenario that does require investigation, a scheduled task masquerading as a Windows maintenance task, is separated from the other task events in these recordings by two cheap probes although its alert text looks benign; Appendix~\ref{app:case} gives the details. Within this sample one probe (the creating account) already separates it; without legitimate remote-administration counterparts, the case is qualitative evidence only.
 
-\paragraph{The common gap} The three datasets fail in different ways, but the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. Their benign counterparts are operating-system housekeeping rather than administrators legitimately using the same tools, and their attack emulations leave artifacts that a careful adversary would not. Paired, objectively labeled data of this kind is a prerequisite for evaluating triage agents on real telemetry.
+\paragraph{The common gap} In the subsets we examined, the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. In the OTRF recordings we audited, the benign events are operating-system housekeeping rather than administrators legitimately using the same tools, and the attack emulations leave tooling artifacts. Paired, objectively labeled data of this kind would be needed to evaluate triage agents on real telemetry.
 
-\FloatBarrier
 \section{Case Study: A Scheduled Task Masquerading as a Windows Task}
 \label{app:case}
 
 The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
 
-\FloatBarrier
 \section{Design Alternatives}
 \label{app:alternatives}
 
 Each design choice replaced an alternative that we implemented and measured. In every \hesp{} configuration the controller executes its own choice; the only variation is whether the planner is also shown the ranking, which changes completion by at most $+0.06$ (decomposition study). Letting the planner choose with the ranking in view is Memory-only plus the ranking, which we did not run. A budget-aware two-step lookahead selector beat EIG/cost by $+0.17$ to $+0.21$ on the task family we developed it on, but on a held-out family (3{,}888 episodes) it matched or trailed EIG/cost, by $-0.125$ for the 7B planner, and on sec-triage it completed 0.889, 0.972, and 0.958 against 0.958, 1.000, and 1.000 for the three Qwen models; we kept the greedy rule. Showing the planner a posterior above 0.999 and stating that no legal probe is left does not make Llama-3.1-8B conclude, whereas a stopping rule enforced by the controller does. Without the finish guard, completion changes by at most $+0.04$, but the guard ensures that every accepted verdict cites current supporting evidence, so we keep it.
 
-\FloatBarrier
 \section{Runtime and Cost}
 \label{app:runtime}
 
@@ -170,13 +192,11 @@ End-to-end latency is dominated by LLM inference; ledger updates and selection t
   \begin{adjustbox}{max width=\columnwidth}\input{tables/runtime}\end{adjustbox}
 \end{table}
 
-\FloatBarrier
 \section{Datasets and Licences}
 \label{app:licences}
 
 ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; question set \texttt{opus5} (1{,}017 questions: 599 test, 418 train) and the investigation graphs from the \texttt{microsoft/SecRL} repository as of 2026-09-24 (commit not recorded), logs of incidents 5 and 38 from the public data release. The feasibility checks read all 1{,}017 questions (erratum E-10); the pivot measurement used only the 418 training questions. The published paper reports 589 test questions for an earlier question set; we did not reconcile the two releases. GUIDE: anonymized incidents released by Microsoft; we read only the training split and do not redistribute per-incident data. OTRF Security-Datasets: the LICENSE file is MIT (the README still carries an older GPL-3.0 notice); the recordings contain emulated attacks in a lab domain and no personal data. SigmaHQ detection rules: Detection Rule License 1.1, used with attribution at commit 07ec293a; the repository stores the derived task specifications, not the rule files.
 
-\FloatBarrier
 \section{Example Trace}
 \label{app:trace}
 \begin{figure*}[t]
@@ -186,7 +206,6 @@ ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; questi
   \label{fig:trace}
 \end{figure*}
 
-\FloatBarrier
 \section{Errata}
 \label{app:errata}
 
