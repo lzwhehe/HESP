@@ -160,7 +160,8 @@ def corroborating_probes(ledger, action_map, hypothesis, entries, ratio=SPECIFIC
 def run(environment, planner, mode, output, budget=None, predictor=None, selector=None, arm=None,
         metadata=None, finish_guard=False, guard_threshold=0.8, show_rankings=True, auto_finish=None,
         corroborate_benign=None, stop_rule="posterior", corroborate_unit="probe", redact_raw=False,
-        specific_ratio=SPECIFIC_RATIO, finish_rejection_limit=None, record_joint=False):
+        specific_ratio=SPECIFIC_RATIO, finish_rejection_limit=None, record_joint=False,
+        benign_requires_trusted=False):
     """One episode. ``predictor`` supplies P(o|h,a); ``selector`` picks actions in the HESP arm;
     ``finish_guard`` rejects finish claims not backed by current-state ledger evidence;
     ``auto_finish`` (a threshold) lets the controller conclude by ``controller_claim`` before
@@ -187,7 +188,13 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     ``specific_ratio`` - the ratio used by ``confirm``, the joint rules, and benign corroboration (default 10).
     ``finish_rejection_limit=k`` - in the hesp mode, after k consecutive rejected finishes the controller runs its
     top-ranked legal probe instead of asking the planner again (recovery from a planner that stalls the guard).
-    ``record_joint=True`` - also record ``verified_joint``: the environment's joint-identification verifier."""
+    ``record_joint=True`` - also record ``verified_joint``: the environment's joint-identification verifier.
+
+    v1.3 option (off by default):
+    ``benign_requires_trusted=True`` - an observation whose ``facts`` carry ``trusted: False`` (v1.3: parsed from
+    raw log text by an LLM) may update the posterior and confirm an actionable cause, but it never counts as
+    specific support for a verdict on one of the environment's BENIGN causes: the confirmation stop, benign
+    corroboration, and the finish guard's benign check see trusted observations only."""
     if mode not in MODES:
         raise ValueError("Unknown experimental mode")
     budget = budget or Budget()
@@ -228,6 +235,7 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         **({"specific_ratio": specific_ratio} if specific_ratio != SPECIFIC_RATIO else {}),
         **({"finish_rejection_limit": finish_rejection_limit} if finish_rejection_limit is not None else {}),
         **({"record_joint": True} if record_joint else {}),
+        **({"benign_requires_trusted": True} if benign_requires_trusted else {}),
         "environment": public_task, "budget": asdict(budget),
         "source_sha256": source_hash(), "python": platform.python_version(),
         "priors": priors, "predictive_catalog": [asdict(a) for a in catalog],
@@ -256,6 +264,13 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
     if stop_rule not in ("posterior", "confirm", "joint", "joint_open") or corroborate_unit not in ("probe", "source"):
         raise ValueError("Unknown stop rule or corroboration unit")
     source_groups = dict(getattr(environment, "SOURCE_GROUPS", {}))
+    benign_causes = frozenset(getattr(environment, "BENIGN", ()))
+
+    def support_entries(hypothesis, entries):
+        """Evidence entries that may specifically support ``hypothesis`` (v1.3: benign verdicts, trusted only)."""
+        if benign_requires_trusted and hypothesis in benign_causes:
+            return [e for e in entries if (e.get("facts") or {}).get("trusted", True)]
+        return entries
 
     def corroboration_count(probes):
         if corroborate_unit == "source":
@@ -291,13 +306,15 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
                               reason=f"joint evidence below ratio {specific_ratio} ({stop_rule})")
                 return False
         if claim and stop_rule == "confirm":
-            confirming = corroborating_probes(ledger, action_map, claim[0], ledger.evidence, specific_ratio)
+            confirming = corroborating_probes(ledger, action_map, claim[0], support_entries(claim[0], ledger.evidence),
+                                              specific_ratio)
             if not confirming:
                 journal.write("controller_finish_withheld", hypothesis=claim[0], reason="no confirming observation")
                 return False
             extra["confirming_probes"] = confirming
         if claim and claim[0] in benign:
-            probes = corroborating_probes(ledger, action_map, claim[0], ledger.evidence, specific_ratio)
+            probes = corroborating_probes(ledger, action_map, claim[0], support_entries(claim[0], ledger.evidence),
+                                          specific_ratio)
             if corroboration_count(probes) < corroborate_benign:
                 journal.write("controller_finish_withheld", hypothesis=claim[0], corroborating_probes=probes,
                               required=corroborate_benign)
@@ -391,9 +408,14 @@ def run(environment, planner, mode, output, budget=None, predictor=None, selecto
         if decision["kind"] == "finish" and finish_guard:
             reasons = finish_guard_reasons(ledger, decision["hypothesis"], decision["evidence_ids"],
                                            guard_threshold)
+            cited = [e for e in ledger.evidence if e["observation_id"] in set(decision["evidence_ids"])]
+            if benign_requires_trusted and decision["hypothesis"] in benign_causes and not corroborating_probes(
+                    ledger, action_map, decision["hypothesis"], support_entries(decision["hypothesis"], cited),
+                    specific_ratio):
+                reasons.append("a benign verdict needs a trusted cited observation that specifically supports it")
             if decision["hypothesis"] in benign:
-                cited = [e for e in ledger.evidence if e["observation_id"] in set(decision["evidence_ids"])]
-                if corroboration_count(corroborating_probes(ledger, action_map, decision["hypothesis"], cited,
+                if corroboration_count(corroborating_probes(ledger, action_map, decision["hypothesis"],
+                                                            support_entries(decision["hypothesis"], cited),
                                                             specific_ratio)) < corroborate_benign:
                     unit = "independent sources" if corroborate_unit == "source" else "different probes"
                     reasons.append(f"a benign verdict needs cited evidence from {corroborate_benign} {unit} "
