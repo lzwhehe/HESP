@@ -5,6 +5,7 @@ The planner receives a system message and one user message per decision. Below i
 
 \input{tables/prompt_example}
 
+\FloatBarrier
 \section{Execution Loop and Configurations}
 \label{app:loop}
 
@@ -21,6 +22,13 @@ The planner receives a system message and one user message per decision. Below i
   \item Journal the prediction $P(o \mid h, a)$ for every cause, execute the probe, journal the observation, and update the ledger. A transient failure is journaled and may be retried; it is not evidence.
 \end{enumerate}
 When the decision budget, tool budget, or legal probes run out, the controller stop (if enabled) is applied once more. The verifier is called on every verdict only to record the evaluation; its result never reaches the controller or the planner. Consequently, with the controller stop enabled and the same acceptance rule as the guard, the planner is never asked again once the rule is met; the value of a strong model ``waiting for confirmation'' (\S\ref{sec:rq-stop}) was measured in configurations \emph{without} the controller stop.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_motivating.pdf}
+  \caption{One alert, one local model, four ways to split the investigation. The alert's true cause is an exposed admin panel; the planner is Llama-3.1-8B in every row, with the same seed. Each chip is a probe that ran (dashed: a duplicate proposal the controller blocked); red marks the observation that confirms the cause. When the model decides when to stop (first two rows), it reaches the decisive evidence and keeps probing until the budget is gone. A controller-side stop concludes (last two rows), and information-gain selection gets there in three probes. All four rows are taken verbatim from the stopping study's archived journals.}
+  \label{fig:motivating}
+\end{figure*}
 
 \begin{table*}[t]
   \caption{Configurations used in the paper. ``Guard'': the finish guard of \S\ref{sec:finish}. ``Stop'': controller-side stop, by posterior (post.) or by the confirmation rule (conf.). ``Corr.'': benign verdicts need two specifically supporting observations from different probes (probe) or different source groups (source). Every configuration uses the same catalogue, budgets, duplicate blocking, and verifier. $^\dagger$Recommended default.}
@@ -46,6 +54,7 @@ When the decision budget, tool budget, or legal probes run out, the controller s
   \end{adjustbox}
 \end{table*}
 
+\FloatBarrier
 \section{Pre-registration Record}
 \label{app:prereg}
 
@@ -74,8 +83,23 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
 
 \paragraph{Disclosed pre-freeze runs} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory. Before freezing the v1.0 study we ran pipeline smoke tests (8 adversarial and 20 sigma-triage episodes, and a reduced table-error run) and an LLM-free simulation of the adversarial variants on disjoint seeds. That simulation already showed that a forged scanner answer makes the controller close every actionable case as benign, and that the asymmetric-evidence rule prevents it; the protocol records this expectation before any LLM episode ran. The v1.0 source hash is unchanged from the adversarial and table-error parts to the second family: the family's code was written and tested before any rule was sampled. Before freezing v1.1 we ran smoke tests of every part; the first one failed on a serving fault that was later traced to prefix caching (E-11), and its episodes, like those of the two study directories discarded for the same reason, enter no analysis. Two further episode sets lie outside \cref{tab:studies}: the 3{,}888 episodes of Appendix~\ref{app:alternatives} come from an exploratory study (v0.4) on an earlier task family with its own protocol and seeds, and the 3{,}968 LLM-free episodes of v1.1-D are counted separately.
 
+\FloatBarrier
 \section{Detailed Results}
 \label{app:tables}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig-decomposition.pdf}
+  \caption{Decomposition study: where the gain over Memory-only comes from, per model (difference in verified completion, 72 paired episodes, task-cluster bootstrap intervals). \emph{Taking the choice away} compares random controller selection with the model's own choices. \emph{Ranking} compares EIG/cost selection with random selection while the planner's prompt is identical. The hollow marker (Qwen 7B, ranking) is a primary endpoint with a 97.5\% interval; the others are exploratory 95\% intervals. Amber marks intervals entirely below zero. Llama-3.1-8B never concludes, so every contrast on it is zero.}
+  \label{fig:decomposition}
+\end{figure*}
+
+\begin{table*}[t]
+  \caption{Stopping study: verified completion, with mean probe cost in parentheses, 72 episodes per cell. ``LLM or controller'': the planner may still finish first. A new seed (2027) makes the first and third rows an independent replication of the decomposition study. The bottom rows replace the LLM with a script that never finishes.}
+  \label{tab:v09}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v09_main}\end{adjustbox}
+\end{table*}
 
 \begin{table*}[t]
   \centering\small
@@ -105,6 +129,7 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
   \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
 \end{table*}
 
+\FloatBarrier
 \section{Public Data Audit}
 \label{app:public}
 
@@ -120,21 +145,32 @@ Testing whether a controller chooses probes well requires three things. (i) The 
 
 \paragraph{The common gap} The three datasets fail in different ways, but the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. Their benign counterparts are operating-system housekeeping rather than administrators legitimately using the same tools, and their attack emulations leave artifacts that a careful adversary would not. Paired, objectively labeled data of this kind is a prerequisite for evaluating triage agents on real telemetry.
 
+\FloatBarrier
 \section{Case Study: A Scheduled Task Masquerading as a Windows Task}
 \label{app:case}
 
 The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
 
+\FloatBarrier
 \section{Design Alternatives}
 \label{app:alternatives}
 
 Each design choice replaced an alternative that we implemented and measured. In every \hesp{} configuration the controller executes its own choice; the only variation is whether the planner is also shown the ranking, which changes completion by at most $+0.06$ (decomposition study). Letting the planner choose with the ranking in view is Memory-only plus the ranking, which we did not run. A budget-aware two-step lookahead selector beat EIG/cost by $+0.17$ to $+0.21$ on the task family we developed it on, but on a held-out family (3{,}888 episodes) it matched or trailed EIG/cost, by $-0.125$ for the 7B planner, and on sec-triage it completed 0.889, 0.972, and 0.958 against 0.958, 1.000, and 1.000 for the three Qwen models; we kept the greedy rule. Showing the planner a posterior above 0.999 and stating that no legal probe is left does not make Llama-3.1-8B conclude, whereas a stopping rule enforced by the controller does. Without the finish guard, completion changes by at most $+0.04$, but the guard ensures that every accepted verdict cites current supporting evidence, so we keep it.
 
+\FloatBarrier
 \section{Runtime and Cost}
 \label{app:runtime}
 
-End-to-end latency is dominated by LLM inference; ledger updates and selection take negligible time next to a model call. The running example took 5.1\,s for three planner calls on an 8B model, and the stopping study's 1{,}800 episodes over five models ran in 28 minutes on one GPU with 32 concurrent episodes. Controller selection also reduces probe cost: with a controller stop, it halves Llama-3.1-8B's cost from 4.78 to 2.35 units per episode, and the LLM-free controller has the lowest cost of any configuration.
+End-to-end latency is dominated by LLM inference; ledger updates and selection take negligible time next to a model call. \Cref{tab:runtime} gives per-episode wall time, planner calls, and tokens in the stopping study. These were measured with 32 episodes sharing one GPU, so they include queueing and overstate the latency of a single investigation; the batch figure (1{,}800 episodes over five models in 28 minutes) is throughput, not latency. The controller stop cuts planner calls from 5.5--10.1 to 2.3 per episode and tokens by a factor of 2.5 to 5, and controller selection halves probe cost (for Llama-3.1-8B, from 4.78 to 2.35 units).
 
+\begin{table}[h]
+  \caption{Stopping study: per-episode wall time (median and 95th percentile), planner calls, and input plus output tokens (72 episodes per row; vLLM 0.30.0 on one RTX PRO 6000D, 32 concurrent episodes).}
+  \label{tab:runtime}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/runtime}\end{adjustbox}
+\end{table}
+
+\FloatBarrier
 \section{Datasets and Licences}
 \label{app:licences}
 
@@ -150,6 +186,7 @@ ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; questi
   \label{fig:trace}
 \end{figure*}
 
+\FloatBarrier
 \section{Errata}
 \label{app:errata}
 

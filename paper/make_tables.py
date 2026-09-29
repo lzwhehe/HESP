@@ -217,6 +217,79 @@ def v10c():
     write("v10c_main", L)
 
 
+def v11_fair():
+    """v1.1 same evidence standard: LLM-free references (part D1) and guard-on LLM arms (part E2), counts."""
+    s = json.loads((RESULTS / "v11_summary.json").read_text(encoding="utf-8"))
+    rows = [("LLM-free", "posterior stop", "D1", "eig_posterior"), ("LLM-free", "confirmation stop", "D1", "eig_confirm"),
+            ("LLM-free", "fixed playbook, conf.", "D1", "static_confirm"), ("LLM-free", "catalogue order, conf.", "D1", "catalogue_confirm")]
+    for key, lab in (("qwen7b", "Q-7B"), ("llama8b", "L-8B")):
+        rows += [(lab, "guard, LLM stops", "E2", f"{key}|hesp_guard"), (lab, "guard + posterior stop", "E2", f"{key}|hesp_guard_autostop"),
+                 (lab, "guard + confirmation stop", "E2", f"{key}|hesp_guard_confirmstop")]
+    L = [r"\begin{tabular}{llrrrr}", r"\toprule",
+         r" & & \multicolumn{2}{c}{sec-triage (72)} & \multicolumn{2}{c}{sigma-triage (152)} \\",
+         r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}", r"Planner & Controller & verified & cost & verified & cost \\", r"\midrule"]
+    prev = None
+    for who, lab, part, k in rows:
+        if prev and who != prev:
+            L.append(r"\addlinespace")
+        prev = who
+        cells = []
+        for fam in ("sec", "sigma"):
+            if part == "D1":
+                c = s["D1"][f"{fam}|{k}"]
+                cells += [f"{c.get('verified', 0)}", f"{c['mean_cost']:.2f}"]
+            else:
+                model, arm = k.split("|")
+                c = s["E2"][f"{fam}|{model}|{arm}"]
+                cells += [f"{c['verified']}", f"{c['mean_cost']:.2f}"]
+        L.append(f"{who} & {lab} & " + " & ".join(cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v11_fair", L)
+
+
+def v11_attack():
+    """v1.1 attack attribution on Q-7B: missed attacks and unresolved episodes per component, counts."""
+    s = json.loads((RESULTS / "v11_summary.json").read_text(encoding="utf-8"))["E4"]
+    arms = [("memory_only", "Memory-only"), ("memory_only_redacted", "Memory-only, raw text removed"),
+            ("hesp_guard", r"\hesp{}, guard only"), ("hesp_autostop_noguard", r"\hesp{}, stop, no guard"),
+            ("hesp_guard_autostop", r"\hesp{}, guard + stop"), ("hesp_guard_autostop_corr_probe", r"\quad + corroboration by probe"),
+            ("hesp_guard_autostop_corr_source", r"\quad + corroboration by source")]
+    inj = ("inject", "inject_b", "inject_c", "inject_one")
+    L = [r"\begin{tabular}{lrrrrrrr}", r"\toprule",
+         r" & \multicolumn{2}{c}{4 injection texts (72)} & \multicolumn{2}{c}{forged probe (18)} & \multicolumn{2}{c}{forged feed (18)} & benign (6) \\",
+         r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-8}",
+         r"Configuration (Q-7B) & missed & unresolved & missed & escal. & missed & escal. & verified \\", r"\midrule"]
+    for a, lab in arms:
+        c = [s[f"qwen7b|{v}|{a}"] for v in inj]
+        missed = sum(x["missed_attack"] for x in c)
+        unres = sum(x["abstained"] + x["no_verdict"] for x in c)
+        sp, sf, b = s[f"qwen7b|spoof|{a}"], s[f"qwen7b|spoof_feed|{a}"], s[f"qwen7b|base|{a}"]
+        cells = [missed, unres, sp["missed_attack"], sp["escalated"], sf["missed_attack"], sf["escalated"], b["verified"]]
+        L.append(f"{lab} & " + " & ".join(str(x) for x in cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v11_attack", L)
+
+
+def runtime():
+    """Per-episode latency, planner calls, and tokens in the stopping study (vLLM 0.30, RTX PRO 6000D, 32 concurrent)."""
+    import statistics
+    def pct(x, q):
+        x = sorted(x)
+        return x[int(round(q * (len(x) - 1)))]
+    L = [r"\begin{tabular}{llrrrr}", r"\toprule",
+         r"Model & Configuration & p50 (s) & p95 (s) & planner calls & tokens \\", r"\midrule"]
+    for key, lab in V08_MODELS:
+        rows = [json.loads(x) for x in (RESULTS / f"v09_{key}" / "outcomes.jsonl").open(encoding="utf-8")]
+        for arm, alab in (("memory_only", "Memory-only"), ("hesp_eigc_blind_autostop", r"\hesp{} + stop")):
+            rs = [r for r in rows if r["arm"] == arm]
+            w = [r["wall_seconds"] for r in rs]
+            tok = [(r["reported_input_tokens"] or 0) + (r["reported_output_tokens"] or 0) for r in rs]
+            L.append(f"{lab} & {alab} & {pct(w, .5):.1f} & {pct(w, .95):.1f} & "
+                     f"{statistics.mean(r['planner_calls'] for r in rs):.1f} & {statistics.mean(tok):,.0f} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("runtime", L)
+
+
 if __name__ == "__main__":
     v06()
     v08()
@@ -224,4 +297,7 @@ if __name__ == "__main__":
     v10a()
     v10b()
     v10c()
+    v11_fair()
+    v11_attack()
+    runtime()
     print("tables written to", OUT)

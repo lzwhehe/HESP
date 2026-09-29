@@ -16,7 +16,7 @@ from hesp.llm import SYSTEM, render_request  # noqa: E402
 
 ARCHIVE = ROOT / "results" / "v09_llama8b" / "runs_archive.tar.gz"
 RUN = "run0087_sec-base-02_0_hesp_eigc_blind_autostop/events.jsonl"
-WIDTH = 56
+WIDTH = 50
 
 
 def wrap(text):
