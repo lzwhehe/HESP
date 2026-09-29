@@ -1,0 +1,13 @@
+{
+  "part": "raw",
+  "seed": 2033,
+  "source_sha256": "82b98ff50a0cb504af9683b17213d7e419f7e899a01ba4fe5249aff22a0cfc82",
+  "model": {
+    "model": "llama-3.1-8b-instruct",
+    "digest": null,
+    "root": "/home/ubuntu/models/Llama-3.1-8B-Instruct",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "episodes": 336
+}

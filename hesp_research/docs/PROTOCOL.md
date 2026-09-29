@@ -557,3 +557,7 @@ vLLM，单卡 RTX 6000D，温度 0.2，每次调用不同种子；sec-triage 24 
 - `hesp/` 源码哈希 `82b98ff5`（B 部分之后只新增 `rawlog.py` 与一个提示变体，默认行为不变，行为指纹 `3d9e5bc5`）。
 - 冒烟测试（披露，不进入分析）：H100 上 Qwen-7B，dev 每 6 个任务取 1 个（32 个回合）、raw 每 8 个任务取 1 个（42 个回合），0 次 FSM 错误，审计全部通过；只检查了能否运行和 LLM 解析器是否返回标签，没有查看完成率或解析准确率。
 - 正式运行顺序：phase1（两个模型各做 dev 与 raw）→ 用 `v12_select_prompt.py` 选定提示变体 → phase2（两个模型各做 fair）。
+
+### v1.2 C 部分：提示变体选择（2026-09-29，按预先写定的规则，在任何测试回合之前）
+
+开发回合（两个模型各 192 个，审计全部通过，0 次 FSM 错误）按 `v12_select_prompt.py` 计算，四个开发格子的平均已验证完成率：v1 0.021、explicit_rule 0.052、finish_example 0.000、clear_finish 0.083；**选定 clear_finish**（`results/v12c_selection.json`）。Llama-8B 在所有变体下的开发完成率都是 0。

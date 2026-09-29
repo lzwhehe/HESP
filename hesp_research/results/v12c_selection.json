@@ -1,0 +1,27 @@
+{
+  "cells": {
+    "v12c_dev_llama8b|memory_only_clear_finish": 0.0,
+    "v12c_dev_llama8b|memory_only_explicit_rule": 0.0,
+    "v12c_dev_llama8b|memory_only_finish_example": 0.0,
+    "v12c_dev_llama8b|memory_only_v1": 0.0,
+    "v12c_dev_llama8b|react_style_clear_finish": 0.0,
+    "v12c_dev_llama8b|react_style_explicit_rule": 0.0,
+    "v12c_dev_llama8b|react_style_finish_example": 0.0,
+    "v12c_dev_llama8b|react_style_v1": 0.0,
+    "v12c_dev_qwen7b|memory_only_clear_finish": 0.333,
+    "v12c_dev_qwen7b|memory_only_explicit_rule": 0.125,
+    "v12c_dev_qwen7b|memory_only_finish_example": 0.0,
+    "v12c_dev_qwen7b|memory_only_v1": 0.083,
+    "v12c_dev_qwen7b|react_style_clear_finish": 0.0,
+    "v12c_dev_qwen7b|react_style_explicit_rule": 0.083,
+    "v12c_dev_qwen7b|react_style_finish_example": 0.0,
+    "v12c_dev_qwen7b|react_style_v1": 0.0
+  },
+  "mean_by_variant": {
+    "v1": 0.021,
+    "explicit_rule": 0.052,
+    "finish_example": 0.0,
+    "clear_finish": 0.083
+  },
+  "selected": "clear_finish"
+}
