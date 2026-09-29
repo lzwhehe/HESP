@@ -1,6 +1,6 @@
 #!/bin/bash
 # v1.1 on the H100 vGPU (20 GB; vLLM 0.11.0; small models only). Same procedure as run_v11_all.sh.
-# --enforce-eager: the machine lacks Python headers, so torch.compile cannot build its kernels; eager
+#: the machine lacks Python headers, so torch.compile cannot build its kernels; eager
 # execution changes speed, not the sampling procedure. For each model: serve it with
 # vLLM on 127.0.0.1 only, run parts e2 (sec, sigma) and e4, plus part f and the replay diagnosis for
 # the two small models; audit and ARCHIVE every run directory, then stop the server. Usage:
@@ -34,7 +34,7 @@ gpu_free() {
 serve() {
   vllm serve "$ROOT/models/${DIR[$1]}" --served-model-name "${NAME[$1]}" \
     --host 127.0.0.1 --port "$PORT" --max-model-len 8192 --gpu-memory-utilization 0.92 \
-    --enable-prefix-caching --max-num-seqs 16 --seed 0 --enforce-eager > "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
+    --enable-prefix-caching --max-num-seqs 16 --seed 0 > "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
   VLLM_PID=$!
   for _ in $(seq 1 360); do
     curl -sf "http://127.0.0.1:$PORT/v1/models" > /dev/null && return 0

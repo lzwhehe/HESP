@@ -100,7 +100,7 @@ ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; we rea
   \item[E-4] In the initial study, the random-selection control could see the EIG ranking. The blind variants of the decomposition study remove this.
   \item[E-5] Before the table-source study, prediction tables were derived from the environment's generator. The counted tables replace them.
   \item[E-6] The ground truth of the descriptive security metrics mishandled drifting episodes and was corrected twice. Every summary script now checks that each verified verdict equals the ground truth used.
-  \item[E-7] In the table-source study, the Memory-only ledger used designer tables while \hesp{} used counted ones. The asymmetry favours the baseline, so that study's primary endpoint is, if anything, underestimated. The decomposition study uses the counted table for every arm.
+  \item[E-7] In the table-source study, the Memory-only ledger used designer tables while \hesp{} used counted ones. We expected the asymmetry to favour the baseline but did not test this; an LLM may respond non-monotonically to the ledger's scores. The decomposition study uses the counted table for every arm and removes the asymmetry.
   \item[E-8] The v1.0 freezing record stated that no mirrored weights were used. The two Llama-3.1 checkpoints have come from non-gated mirrors since the decomposition study; they are the same files used in every earlier study.
   \item[E-9] (Disclosed deviation.) The v1.0 protocol planned to annotate the Sigma rules on a separate 20\,GB GPU, where phi-4 did not fit. Annotation ran instead on the study's own server with the same model, prompt, schema, and temperature, before anything was frozen; the first machine produced no annotation.
 \end{description}
