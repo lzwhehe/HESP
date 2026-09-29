@@ -172,16 +172,21 @@ def v10b():
              ("M4_k1_base_only", r"$k{=}1$, base only"), ("M2_lambda0.25", r"perturbed, $\lambda{=}0.25$"),
              ("M2_lambda0.5", r"perturbed, $\lambda{=}0.5$"), ("M2_lambda0.75", r"perturbed, $\lambda{=}0.75$"),
              ("M3_missing[mean]", "one cause missing (mean)")]
-    cols = "l" + "rrrr" * len(fams)
+    cols = "l" + "rrrrr" * len(fams)
     L = [r"\begin{tabular}{" + cols + "}", r"\toprule",
-         " & " + " & ".join(r"\multicolumn{4}{c}{" + lab + "}" for _, lab in fams) + r" \\",
-         " ".join(r"\cmidrule(lr){" + f"{2 + 4 * i}-{5 + 4 * i}" + "}" for i in range(len(fams))),
-         "Tables & " + " & ".join(["EIG verif. & EIG wrong & EIG esc. & random verif."] * len(fams)) + r" \\", r"\midrule"]
+         " & " + " & ".join(r"\multicolumn{5}{c}{" + lab + "}" for _, lab in fams) + r" \\",
+         " ".join(r"\cmidrule(lr){" + f"{2 + 5 * i}-{6 + 5 * i}" + "}" for i in range(len(fams))),
+         "Tables & " + " & ".join(["verif. & correct, unverif. & wrong & esc. & random verif."] * len(fams)) + r" \\",
+         r"\midrule"]
     for c, label in conds:
         cells = []
         for f, _ in fams:
             e, r = data[f][c]["eig_cost"], data[f][c]["random"]
-            cells += [f"{e['verified']:.3f}", f"{e['wrong']:.3f}", f"{e['escalated']:.3f}", f"{r['verified']:.3f}"]
+            # the four classes are exhaustive: what is neither verified, wrong, nor escalated is the right cause
+            # without a confirming signature
+            unver = max(0.0, 1 - e["verified"] - e["wrong"] - e["escalated"])
+            cells += [f"{e['verified']:.3f}", f"{unver:.3f}", f"{e['wrong']:.3f}", f"{e['escalated']:.3f}",
+                      f"{r['verified']:.3f}"]
         L.append(f"{label} & " + " & ".join(cells) + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("v10b_main", L)
@@ -201,9 +206,12 @@ def v10c():
          r" & \hesp{} & \hesp{}+corr. \\", r"\midrule"]
     for k, m in models:
         t = s[k]["table"]
-        cells = [f"{t['inject'][a]['attack_success']:.2f}" for a, _ in arms]
-        cells += [f"{t['spoof'][a]['attack_success']:.2f}" for a, _ in arms]
-        cells += [f"{t['base'][a]['verified']:.2f}" for a in ("hesp_guard_autostop", "hesp_guard_autostop_corroborate")]
+        def count(v, a, metric):
+            c = t[v][a]
+            return f"{round(c[metric] * c['episodes'])}/{c['episodes']}"
+        cells = [count("inject", a, "attack_success") for a, _ in arms]
+        cells += [count("spoof", a, "attack_success") for a, _ in arms]
+        cells += [count("base", a, "verified") for a in ("hesp_guard_autostop", "hesp_guard_autostop_corroborate")]
         L.append(f"{m} & " + " & ".join(cells) + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("v10c_main", L)

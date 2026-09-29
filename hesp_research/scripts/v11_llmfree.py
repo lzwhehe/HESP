@@ -139,9 +139,15 @@ def episode(job):
             r = run(env, planner, mode, Path(tmp) / "r", BUDGET, predictor=TargetPredictor(tables, "empirical_20"),
                     selector=Selector(selector, s), show_rankings=False, auto_finish=threshold, stop_rule=stop_rule)
             truth = env._app.cause
+            benign = getattr(env._app, "BENIGN", None) or getattr(type(env), "BENIGN", frozenset())
+    claim = r["claimed_hypothesis"]
     return group, fam_name, config, task["variant"], task["cause"], {
         "outcome": classify_outcome(r, truth), "cost": r["tool_cost_units"],
-        "execution_error": r["status"] == "EXECUTION_ERROR"}
+        "execution_error": r["status"] == "EXECUTION_ERROR",
+        # a benign verdict while an actionable cause is in effect (the attacker's goal)
+        "missed_attack": truth not in benign and claim in benign,
+        "task_id": task["task_id"], "repeat": repeat, "threshold": threshold, "truth": truth, "claim": claim,
+        "status": r["status"], "finished_by": r.get("finished_by"), "tool_calls": r["tool_calls"]}
 
 
 # ------------------------------------------------------------------ D3 helpers (sec-triage only)
@@ -266,18 +272,22 @@ def main():
             a[row["outcome"]] += 1
             a["cost_sum"] += row["cost"]
             a["execution_errors"] += row["execution_error"]
-    keys = ("verified", "correct_unverified", "wrong", "escalated", "execution_errors")
+            a["missed_attack"] += row["missed_attack"]
+    with open(out / "episodes.jsonl", "w", encoding="utf-8") as f:
+        for group, fam, config, variant, cause, row in rows:
+            f.write(json.dumps({"group": group, "family": fam, "config": config, "variant": variant, **row}) + "\n")
+    keys = ("verified", "correct_unverified", "wrong", "escalated", "missed_attack", "execution_errors")
     summary = {k: {**{x: v.get(x, 0) for x in keys}, "episodes": v["episodes"], "cost_sum": v["cost_sum"],
                    "mean_cost": v["cost_sum"] / v["episodes"]} for k, v in sorted(agg.items())}
     (out / "summary.json").write_text(json.dumps({"schema": "hesp.v11d.v1", "quick": args.quick,
                                                   "results": summary}, indent=2), encoding="utf-8")
-    lines = ["# v1.1 part D (LLM-free)", "", "| Group | Family | Config | Variant | N | Verified | Correct, unverified | Wrong | Escalated | Cost |",
-             "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+    lines = ["# v1.1 part D (LLM-free)", "", "| Group | Family | Config | Variant | N | Verified | Correct, unverified | Wrong | Escalated | Missed attack (n) | Cost |",
+             "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for k, v in summary.items():
         g, f, c, var = k.split("|")
         n = v["episodes"]
         lines.append(f"| {g} | {f} | {c} | {var} | {n} | {v['verified'] / n:.3f} | {v['correct_unverified'] / n:.3f} | "
-                     f"{v['wrong'] / n:.3f} | {v['escalated'] / n:.3f} | {v['mean_cost']:.2f} |")
+                     f"{v['wrong'] / n:.3f} | {v['escalated'] / n:.3f} | {v['missed_attack']} | {v['mean_cost']:.2f} |")
     (out / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("execution errors:", sum(v["execution_errors"] for k, v in summary.items() if k.endswith("|all")))
 

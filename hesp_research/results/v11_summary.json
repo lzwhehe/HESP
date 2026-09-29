@@ -1,0 +1,259 @@
+{
+  "schema": "hesp.v11.summary.v1",
+  "D1": {
+    "sec|eig_posterior": {
+      "episodes": 72,
+      "verified": 66,
+      "correct_unverified": 6,
+      "missed_attack": 0,
+      "actionable": 51,
+      "mean_cost": 2.3472222222222223
+    },
+    "sec|eig_confirm": {
+      "episodes": 72,
+      "verified": 72,
+      "missed_attack": 0,
+      "actionable": 51,
+      "mean_cost": 2.5416666666666665
+    },
+    "sec|static_confirm": {
+      "episodes": 72,
+      "verified": 66,
+      "escalated": 6,
+      "missed_attack": 0,
+      "actionable": 51,
+      "mean_cost": 2.9027777777777777
+    },
+    "sec|catalogue_confirm": {
+      "episodes": 72,
+      "verified": 65,
+      "escalated": 7,
+      "missed_attack": 0,
+      "actionable": 54,
+      "mean_cost": 4.930555555555555
+    },
+    "sigma|eig_posterior": {
+      "episodes": 152,
+      "verified": 152,
+      "missed_attack": 0,
+      "actionable": 48,
+      "mean_cost": 2.1973684210526314
+    },
+    "sigma|eig_confirm": {
+      "episodes": 152,
+      "verified": 152,
+      "missed_attack": 0,
+      "actionable": 48,
+      "mean_cost": 2.1973684210526314
+    },
+    "sigma|static_confirm": {
+      "episodes": 152,
+      "verified": 152,
+      "missed_attack": 0,
+      "actionable": 48,
+      "mean_cost": 2.1973684210526314
+    },
+    "sigma|catalogue_confirm": {
+      "episodes": 152,
+      "verified": 151,
+      "escalated": 1,
+      "missed_attack": 0,
+      "actionable": 48,
+      "mean_cost": 2.960526315789474
+    }
+  },
+  "E2": {
+    "sec|qwen7b|hesp_guard": {
+      "episodes": 72,
+      "verified": 66,
+      "correct_unverified": 0,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 6,
+      "actionable": 54,
+      "missed_attack": 0,
+      "benign": 18,
+      "false_escalation": 0,
+      "escalated": 6,
+      "controller_stops": 0,
+      "planner_errors": 0,
+      "mean_cost": 7.166666666666667,
+      "mean_planner_calls": 7.847222222222222,
+      "mean_tokens": 13416.430555555555,
+      "wall_p50": 10.049442,
+      "wall_p95": 17.369166
+    },
+    "sec|qwen7b|hesp_guard_autostop": {
+      "episodes": 72,
+      "verified": 66,
+      "correct_unverified": 6,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 0,
+      "actionable": 51,
+      "missed_attack": 0,
+      "benign": 21,
+      "false_escalation": 0,
+      "escalated": 0,
+      "controller_stops": 72,
+      "planner_errors": 0,
+      "mean_cost": 2.3472222222222223,
+      "mean_planner_calls": 2.3472222222222223,
+      "mean_tokens": 3436.652777777778,
+      "wall_p50": 2.551214,
+      "wall_p95": 6.270319
+    },
+    "sec|qwen7b|hesp_guard_confirmstop": {
+      "episodes": 72,
+      "verified": 72,
+      "correct_unverified": 0,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 0,
+      "actionable": 51,
+      "missed_attack": 0,
+      "benign": 21,
+      "false_escalation": 0,
+      "escalated": 0,
+      "controller_stops": 72,
+      "planner_errors": 0,
+      "mean_cost": 2.5416666666666665,
+      "mean_planner_calls": 2.4444444444444446,
+      "mean_tokens": 3607.8333333333335,
+      "wall_p50": 2.431388,
+      "wall_p95": 6.335625
+    },
+    "sigma|qwen7b|hesp_guard": {
+      "episodes": 152,
+      "verified": 126,
+      "correct_unverified": 16,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 10,
+      "actionable": 48,
+      "missed_attack": 0,
+      "benign": 104,
+      "false_escalation": 0,
+      "escalated": 10,
+      "controller_stops": 0,
+      "planner_errors": 0,
+      "mean_cost": 3.223684210526316,
+      "mean_planner_calls": 4.934210526315789,
+      "mean_tokens": 8029.230263157895,
+      "wall_p50": 5.351969,
+      "wall_p95": 17.552992
+    },
+    "sigma|qwen7b|hesp_guard_autostop": {
+      "episodes": 152,
+      "verified": 141,
+      "correct_unverified": 0,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 11,
+      "actionable": 48,
+      "missed_attack": 0,
+      "benign": 104,
+      "false_escalation": 0,
+      "escalated": 11,
+      "controller_stops": 141,
+      "planner_errors": 0,
+      "mean_cost": 2.125,
+      "mean_planner_calls": 2.986842105263158,
+      "mean_tokens": 4450.901315789473,
+      "wall_p50": 2.28039,
+      "wall_p95": 17.683879
+    },
+    "sigma|qwen7b|hesp_guard_confirmstop": {
+      "episodes": 152,
+      "verified": 141,
+      "correct_unverified": 0,
+      "wrong": 0,
+      "other": 0,
+      "abstained": 0,
+      "no_verdict": 11,
+      "actionable": 48,
+      "missed_attack": 0,
+      "benign": 104,
+      "false_escalation": 0,
+      "escalated": 11,
+      "controller_stops": 141,
+      "planner_errors": 0,
+      "mean_cost": 2.125,
+      "mean_planner_calls": 2.986842105263158,
+      "mean_tokens": 4450.861842105263,
+      "wall_p50": 2.317675,
+      "wall_p95": 17.513537
+    }
+  },
+  "PE1": {},
+  "E2_vs_D1": {
+    "sec|qwen7b|hesp_guard": {
+      "difference": -0.08333333333333333,
+      "ci": [
+        -0.19444444444444445,
+        0.0
+      ],
+      "level": 0.95,
+      "clusters": 24,
+      "pairs": 72
+    },
+    "sec|qwen7b|hesp_guard_autostop": {
+      "difference": -0.08333333333333333,
+      "ci": [
+        -0.20833333333333334,
+        0.0
+      ],
+      "level": 0.95,
+      "clusters": 24,
+      "pairs": 72
+    },
+    "sec|qwen7b|hesp_guard_confirmstop": {
+      "difference": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ],
+      "level": 0.95,
+      "clusters": 24,
+      "pairs": 72
+    },
+    "sigma|qwen7b|hesp_guard": {
+      "difference": -0.171875,
+      "ci": [
+        -0.2604166666666667,
+        -0.08854166666666666
+      ],
+      "level": 0.95,
+      "clusters": 12,
+      "pairs": 152
+    },
+    "sigma|qwen7b|hesp_guard_autostop": {
+      "difference": -0.06770833333333333,
+      "ci": [
+        -0.13715277777777776,
+        0.0
+      ],
+      "level": 0.95,
+      "clusters": 12,
+      "pairs": 152
+    },
+    "sigma|qwen7b|hesp_guard_confirmstop": {
+      "difference": -0.06770833333333333,
+      "ci": [
+        -0.13715277777777776,
+        0.0
+      ],
+      "level": 0.95,
+      "clusters": 12,
+      "pairs": 152
+    }
+  },
+  "E4": {},
+  "F": {},
+  "F_replay": {}
+}

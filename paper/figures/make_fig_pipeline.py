@@ -136,8 +136,8 @@ RANKING
 \node[card=black!50, minimum width=4.6cm, minimum height=0.95cm, align=center] at (15.07,3.35)
   {\footnotesize\bfseries\color{red!75!black} Verdict: exposed admin panel\\[-1pt] \scriptsize cites o3, o2, o1};
 \draw[flow=black!60] (15.07,2.87) -- (15.07,2.47);
-\node[card=ver, minimum width=4.6cm, minimum height=0.62cm, font=\footnotesize\bfseries, text=ver] at (15.07,2.12)
-  {Independent verifier {\ding{51}}};
+\node[card=ver, dashed, minimum width=4.6cm, minimum height=0.62cm, align=center, text=ver] at (15.07,2.12)
+  {\footnotesize\bfseries Independent verifier {\ding{51}}\\[-2pt] \scriptsize\itshape offline evaluation only};
 
 % ---------- journal band (bottom)
 \draw[stage] (0.2,0.05) rectangle (17.5,1.25);
