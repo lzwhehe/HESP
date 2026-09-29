@@ -23,6 +23,7 @@
 
 \newcommand{\hesp}{HESP}
 \newcommand{\todo}[1]{\textcolor{red}{[待补：#1]}}
+\newcommand{\repourl}{\url{https://github.com/lzwhehe/HESP}}
 \DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
 \graphicspath{{../figures/}{../../docs/assets/}}
 \setlength{\emergencystretch}{3em}
@@ -65,6 +66,9 @@
 \input{sections/related}
 \input{sections/conclusion}
 \input{sections/ethics}
+
+\section*{数据可得性}
+除初始研究的 1{,}944 个回合只保留了结果汇总外（勘误 E-2），全部 19{,}838 个 LLM 回合和 3{,}968 个不含 LLM 回合的日志都已归档并计算哈希。代码、冻结的协议、预测表、任务规格、结果文件、日志、勘误，以及重新生成每张表和每幅图的脚本见 \repourl{}。
 
 {\footnotesize
 \bibliographystyle{IEEEtranN}
