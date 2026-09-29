@@ -3,7 +3,11 @@
 # The venv uses a uv-managed CPython 3.10 that ships its headers: the system Python has none, and
 # Triton must compile the JSON-mode (xgrammar) bitmask kernel at run time. For each model: serve it with
 # vLLM on 127.0.0.1 only, run parts e2 (sec, sigma) and e4, plus part f and the replay diagnosis for
-# the two small models; audit and ARCHIVE every run directory, then stop the server. Usage:
+# the two small models; audit and ARCHIVE every run directory, then stop the server.
+# Serving fault rule (PROTOCOL v1.1): vLLM 0.11 can enter a state in which xgrammar logs
+# "Failed to advance FSM" and every JSON-mode reply is invalid. If the server log shows that error
+# during a study, the whole study directory is moved to results/_aborted_fsm/, the server is
+# restarted, and the study is rerun from scratch (at most 3 attempts). Usage:
 #   nohup scripts/server/run_v11_h100.sh [MODEL_KEY ...] > logs/v11_all.log 2>&1 &
 set -uo pipefail
 ROOT=${HESP_ROOT:-$HOME}
@@ -13,12 +17,13 @@ WORKERS=${WORKERS:-16}
 . "$HOME/hesp-venv/bin/activate"
 export VLLM_USE_FLASHINFER_SAMPLER=0
 cd "$CODE"
-mkdir -p "$ROOT/logs" results
+mkdir -p "$ROOT/logs" results results/_aborted_fsm
 
 declare -A DIR=([qwen7b]=Qwen2.5-7B-Instruct [qwen32b]=Qwen2.5-32B-Instruct-AWQ [qwen72b]=Qwen2.5-72B-Instruct-AWQ
                 [llama8b]=Llama-3.1-8B-Instruct [llama70b]=Meta-Llama-3.1-70B-Instruct-AWQ-INT4)
 declare -A NAME=([qwen7b]=qwen2.5-7b-instruct [qwen32b]=qwen2.5-32b-instruct-awq [qwen72b]=qwen2.5-72b-instruct-awq
                  [llama8b]=llama-3.1-8b-instruct [llama70b]=llama-3.1-70b-instruct-awq)
+FSM_ERR="Failed to advance FSM"
 
 gpu_free() {
   for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2> /dev/null); do kill "$pid" 2> /dev/null; done
@@ -31,10 +36,11 @@ gpu_free() {
   sleep 10
 }
 
-serve() {
+serve() {  # $1 = key; appends to the model's vLLM log so that restarts keep the full record
+  echo "=== $(date -Is) serve $1" >> "$ROOT/logs/vllm_v11_$1.log"
   vllm serve "$ROOT/models/${DIR[$1]}" --served-model-name "${NAME[$1]}" \
     --host 127.0.0.1 --port "$PORT" --max-model-len 8192 --gpu-memory-utilization 0.92 \
-    --enable-prefix-caching --max-num-seqs 16 --seed 0 > "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
+    --enable-prefix-caching --max-num-seqs 16 --seed 0 >> "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
   VLLM_PID=$!
   for _ in $(seq 1 360); do
     curl -sf "http://127.0.0.1:$PORT/v1/models" > /dev/null && return 0
@@ -43,6 +49,15 @@ serve() {
   done
   echo "vLLM did not become ready"; return 1
 }
+
+restart() {  # $1 = key
+  kill $VLLM_PID 2> /dev/null; wait $VLLM_PID 2> /dev/null
+  gpu_free
+  serve "$1"
+}
+
+log_lines() { wc -l < "$ROOT/logs/vllm_v11_$1.log"; }
+fsm_errors_since() { tail -n +"$(( $2 + 1 ))" "$ROOT/logs/vllm_v11_$1.log" | grep -c "$FSM_ERR"; }
 
 audit_archive() {  # $1 = results dir
   local d=$1
@@ -61,11 +76,35 @@ for b in bad: print('  FAILED', b)
 }
 
 study() {  # $1 = key, $2 = part, $3 = family
-  local out="results/v11${2}_${3}_$1"
-  python -u scripts/run_v11_study.py --part "$2" --family "$3" --output "$out" --model "${NAME[$1]}" \
-    --base-url "http://127.0.0.1:$PORT/v1" --workers "$WORKERS" --resume > "$ROOT/logs/study_v11${2}_${3}_$1.log" 2>&1
-  echo "study $2/$3 exit $? for $1"
+  local out="results/v11${2}_${3}_$1" attempt start n
+  for attempt in 1 2 3; do
+    start=$(log_lines "$1")
+    python -u scripts/run_v11_study.py --part "$2" --family "$3" --output "$out" --model "${NAME[$1]}" \
+      --base-url "http://127.0.0.1:$PORT/v1" --workers "$WORKERS" --resume >> "$ROOT/logs/study_v11${2}_${3}_$1.log" 2>&1
+    echo "study $2/$3 exit $? for $1 (attempt $attempt)"
+    n=$(fsm_errors_since "$1" "$start")
+    [ "$n" -eq 0 ] && break
+    echo "SERVING FAULT: $n FSM errors during $2/$3 for $1; discarding the study and restarting vLLM"
+    mv "$out" "results/_aborted_fsm/$(basename "$out")_attempt$attempt"
+    restart "$1" || return 1
+  done
   audit_archive "$out"
+}
+
+replay() {  # $1 = key
+  local attempt start n out="results/v11f_replay_$1.json"
+  for attempt in 1 2 3; do
+    start=$(log_lines "$1")
+    python -u scripts/v11_replay.py --archive "results/v09_$1/runs_archive.tar.gz" --model "${NAME[$1]}" \
+      --model-dir "$ROOT/models/${DIR[$1]}" --base-url "http://127.0.0.1:$PORT/v1" \
+      --out "$out" >> "$ROOT/logs/replay_v11_$1.log" 2>&1
+    echo "replay exit $? for $1 (attempt $attempt)"
+    n=$(fsm_errors_since "$1" "$start")
+    [ "$n" -eq 0 ] && break
+    echo "SERVING FAULT: $n FSM errors during the replay for $1; restarting vLLM"
+    mv "$out" "results/_aborted_fsm/$(basename "$out" .json)_attempt$attempt.json"
+    restart "$1" || return 1
+  done
 }
 
 gpu_free
@@ -77,10 +116,7 @@ for key in ${@:-qwen7b llama8b}; do
   study "$key" e4 sec
   if [ "$key" = qwen7b ] || [ "$key" = llama8b ]; then
     study "$key" f sec
-    python -u scripts/v11_replay.py --archive "results/v09_$key/runs_archive.tar.gz" --model "${NAME[$key]}" \
-      --model-dir "$ROOT/models/${DIR[$key]}" --base-url "http://127.0.0.1:$PORT/v1" \
-      --out "results/v11f_replay_$key.json" > "$ROOT/logs/replay_v11_$key.log" 2>&1
-    echo "replay exit $? for $key"
+    replay "$key"
   fi
   kill $VLLM_PID 2> /dev/null; wait $VLLM_PID 2> /dev/null
   gpu_free
