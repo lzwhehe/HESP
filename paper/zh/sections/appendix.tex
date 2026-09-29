@@ -5,7 +5,6 @@
 
 \input{../tables/prompt_example}
 
-\FloatBarrier
 \section{执行循环与配置}
 \label{app:loop}
 
@@ -48,13 +47,13 @@
     \hesp{} 守卫 + 停止 & v1.0-C、v1.1 & 是 & 控制器（EIG/成本） & 否 & 是 & post.；可选佐证（probe） \\
     \hesp{} 守卫，不同停止 & v1.1 & 是 & 控制器（EIG/成本） & 否 & 是 & 无 / post. / conf.；佐证（probe 或 source） \\
     不含 LLM 的控制器 & v0.9 参照、v1.0-B、v1.1-D & -- & 控制器 & -- & -- & post. 或 conf. \\
-    \hesp{} 守卫 + 确认条件停止$^\dagger$ & v1.1 & 是 & 控制器（EIG/成本） & 否 & 是 & conf.；良性结论按 source 佐证 \\
+    \hesp{} 守卫，联合证据停止 & v1.2 & 是 & 控制器（EIG/成本） & 否 & 是 & joint（具名原因或含 \textit{other}），$r \in \{3,5,10,30\}$ \\
+    \hesp{} 守卫 + 确认条件停止 + 恢复$^\dagger$ & v1.1、v1.2 & 是 & 控制器（EIG/成本） & 否 & 是 & conf.；良性结论按 source 佐证；结束连续被拒 2 次后强制运行探针 \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
 \end{table*}
 
-\FloatBarrier
 \section{预注册记录}
 \label{app:prereg}
 
@@ -76,6 +75,8 @@
     表误差、对抗 & v1.0-B/C & \texttt{f8eb0d16} & \texttt{5ecbb10} 09-27 14:50 & 09-27 14:51 & 840 + 不含 LLM & 注入攻击成功率（Q-7B）成立 \\
     第二任务族 & v1.0-A & \texttt{f8eb0d16} & \texttt{6045509} 09-27 16:06 & 09-27 16:07 & 3{,}800 & sigma-triage 上排序与完整效应（Q-7B）成立 \\
     追加研究 & v1.1 & \texttt{81126159} & \texttt{98f89b7} 09-29 02:09 & 09-29 02:09 & 7{,}926 + 3{,}968 不含 LLM & PE1（Q-72B，两个任务族）：无增益 \\
+    证据政策 & v1.2-B & \texttt{4b75a468} & \texttt{480089f} 09-29 10:37 & 09-29 10:37 & 2{,}936 不含 LLM & 仅描述性 \\
+    公平提示词、原始日志 & v1.2-C & \texttt{82b98ff5} & \texttt{4c3198d} 09-29 10:45 & 09-29 10:45 & 见 \S\ref{sec:results} & 所选提示下控制器 vs.\ Memory-only（Q-7B、L-8B）：成立 \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
@@ -86,6 +87,34 @@
 \FloatBarrier
 \section{详细结果}
 \label{app:tables}
+
+\begin{table*}[t]
+  \caption{sec-triage 主要终点对聚类单位和漂移的敏感性（探索性）：每个终点分别用预先登记的任务聚类（与报告值相同；v1.0-C 终点只有 6 个注入任务，每个需处置原因一个）、以原因为聚类（先在原因内对任务求平均）重新计算，并在 base、noise、drift 变体上分别计算。bootstrap 种子和区间水平与各项研究相同。}
+  \label{tab:sensitivity}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/sensitivity}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{表来源研究：按预测表来源给出的已验证完成率（每格 72 个回合）。7B 相对 Memory-only 的比较是预先登记的主要终点；32B 和 72B 为探索性结果。区间为 95\% 任务聚类 bootstrap。}
+  \label{tab:v06}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v06_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{第二任务族（sigma-triage）：已验证完成率，括号内为平均探针成本，每格 152 个回合（76 个任务，重复两次）。两个对比是 Q-7B 上预先登记的主要终点（12 条规则上的 98.33\% 区间）；其他模型的区间为探索性 95\% 区间。Q = Qwen2.5，L = Llama-3.1。}
+  \label{tab:v10a}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v10a_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{对抗性证据（v1.0，sec-triage）：攻击成功数，即需处置原因的回合中以良性结论结束的数量（共 18 个：六个原因，各重复三次），以及两个良性原因上的已验证回合数（共 6 个）。\hesp{} 使用结束守卫和控制器停止；“+corr.”加上按探针的佐证规则。主要终点（Q-7B，注入指令，Memory-only $-$ \hesp{}，按比例）：$+1.000$ $[+1.000,+1.000]$，98.33\% 区间。}
+  \label{tab:v10c}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v10c_main}\end{adjustbox}
+\end{table*}
 
 \begin{figure*}[t]
   \centering
@@ -129,13 +158,12 @@
   \begin{adjustbox}{max width=\textwidth}\input{../tables/v06_security}\end{adjustbox}
 \end{table*}
 
-\FloatBarrier
 \section{公开数据审查}
 \label{app:public}
 
 要检验控制器是否善于选择探针，需要三个条件。(i) 仅凭告警不能得出答案，必须有多种解释同时成立。(ii) 探针的成本和信息量必须不同，使顺序有意义。(iii) 真值必须客观，反映实际发生了什么，而不是一种标注惯例。附录~\ref{app:licences} 列出了读取的版本和文件。
 
-\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn 针对一个模拟 Azure 租户的日志提出问题，智能体用 SQL 查询。答案可以从公开的调查图中机械还原（\texttt{opus5} 题集 1{,}017 题中的 98.5\%）；调查图是评测方的答案来源，智能体看不到，因此这说明的是题目如何生成，而不是智能体有捷径。在 418 道训练题中，54.8\% 在题面中直接点名目标告警，其余大多是换一种说法，所以任务是定位被点名的告警并读出一个实体。标准的指标关联探针找到正确答案的频率并不高于干扰项（告警表中 0.571 对 0.570），只有 19.4\% 的题目存在能唯一定位答案的表。这些题目考的是导航和检索，而不是调查。
+\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn 针对一个模拟 Azure 租户的日志提出问题，智能体用 SQL 查询。答案可以从公开的调查图中机械还原（\texttt{opus5} 题集 1{,}017 题中的 98.5\%）；调查图是评测方的答案来源，智能体看不到，因此这说明的是题目如何生成，而不是智能体有捷径。在 418 道训练题中，54.8\% 在题面中直接点名目标告警，其余大多是换一种说法，所以任务是定位被点名的告警并读出一个实体。标准的指标关联探针找到正确答案的频率并不高于干扰项（告警表中 0.571 对 0.570），只有 19.4\% 的题目存在能唯一定位答案的表。就我们考察的题目和我们适配的探针而言，这项任务更像导航和检索，而不是在相互竞争的解释之间做选择；该基准的其他适配方式可能更合适。
 
 \paragraph{GUIDE~\citep{guide}} GUIDE 包含来自 5{,}340 个组织的 707{,}108 起真实的匿名事件，分级为真阳性、良性阳性或假阳性。在其告警元数据上的十个事件级探针中，仅组织身份就携带了分级 1.50 比特熵中的 1.03 比特，几个大型组织对所有事件都给同一个分级。在组织内部，查询该组织以前如何给同一检测器分级即可达到 0.911 的准确率；跨组织时，这些探针都不优于多数类。在冷启动事件上（训练数据内按组织做时间切分：组织—检测器组合历史很少或混杂的最新 20\% 事件），证据整合对真阳性与其余两级的排序 AUROC 为 0.755，与历史查表（0.759）相同（差 $-0.004$ $[-0.028,+0.027]$，按组织重抽样）。分级强烈依赖于组织，这可能反映策略、基率或检测器构成；我们没有把这些因素分开，并暂停了原计划的 GUIDE 研究。其测试集至今未读取。
 
@@ -143,21 +171,18 @@
 
 \paragraph{案例研究} 在这些录制中，唯一确实需要调查的 OTRF 场景是一个伪装成 Windows 维护任务的计划任务；尽管它的告警文本看起来是良性的，两个低成本探针就能把它与其他任务事件区分开，详见附录~\ref{app:case}。在这个样本中，一个探针（创建账户）就已足以区分；由于缺少合法远程管理的对照，该案例只作为定性证据。
 
-\paragraph{共同的缺口} 三个数据集的问题各不相同，但缺少的东西是一样的：看起来像日常管理的攻击，以及看起来像攻击的日常管理。它们的良性样本是操作系统的日常维护，而不是管理员合法地使用同样的工具；它们的攻击模拟留下了谨慎的攻击者不会留下的痕迹。这种配对且客观标注的数据，是在真实遥测上评测分诊智能体的前提。
+\paragraph{共同的缺口} 在我们考察的子集中，缺少的东西是一样的：看起来像日常管理的攻击，以及看起来像攻击的日常管理。在我们审查的 OTRF 录制中，良性事件是操作系统的日常维护，而不是管理员合法地使用同样的工具，攻击模拟也留下了工具痕迹。要在真实遥测上评测分诊智能体，需要这种配对且客观标注的数据。
 
-\FloatBarrier
 \section{案例研究：伪装成 Windows 任务的计划任务}
 \label{app:case}
 
 这个唯一确实需要调查的 OTRF 场景，在真实日志上展示了 \hesp{} 所针对的那类案例。其元数据引用了微软对 Solorigate 入侵的分析~\citep{solorigate}，并把该活动标为远程计划任务创建（T1053.005）。告警是 \texttt{WORKSTATION6} 上的安全事件 4698，报告在文件夹 \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform} 中新建了任务 \texttt{EventCacheManager}，文件夹和名称都与真实的 Windows 任务吻合；只看文本的规则判其为良性。第一个探针发现它由域用户 \texttt{THESHIRE\textbackslash pgustavo} 创建，而 27 份录制中 \texttt{\textbackslash Microsoft\textbackslash Windows} 下的其余 17 个任务事件全部由机器账户创建。第二个探针发现创建会话是来自另一台主机的网络登录（类型 3，Kerberos），从而排除了本地持久化和用户上下文的更新程序。该任务以 SYSTEM 身份运行 \texttt{cmd.exe}，源主机的进程日志显示了创建它的 \texttt{schtasks /create \dots{} /s} 命令。告警文本与调查结果指向相反方向，两个低成本探针就能把它们分开。由于一个探针就已足够且场景唯一，该案例不能说明探针顺序的重要性；我们只把它作为定性证据。
 
-\FloatBarrier
 \section{设计取舍}
 \label{app:alternatives}
 
 每个设计选择都替换了一个我们实现并测量过的替代方案。在每个 \hesp{} 配置中，控制器都执行自己的选择；唯一的变化是是否同时向规划器展示排序，这对完成率的影响至多 $+0.06$（分解研究）。让规划器在看到排序的情况下自行选择，相当于 Memory-only 加排序，我们没有运行这一配置。一个考虑预算的两步前瞻选择器在我们开发它的任务族上比 EIG/成本高 $+0.17$ 到 $+0.21$，但在一个保留的任务族上（3{,}888 个回合）持平或落后于 EIG/成本，7B 规划器下落后 $-0.125$；在 sec-triage 上，三个 Qwen 模型分别完成 0.889、0.972 和 0.958，而 EIG/成本为 0.958、1.000 和 1.000；因此我们保留了贪心规则。在我们的提示下，向规划器展示超过 0.999 的后验并说明已无合法探针，并不能让 Llama-3.1-8B 给出结论，而由控制器执行的停止规则可以。不启用结束守卫时完成率变化至多 $+0.04$，但守卫保证每个被接受的结论都引用了当前的支持证据，因此我们保留它。
 
-\FloatBarrier
 \section{运行时间与成本}
 \label{app:runtime}
 
@@ -170,13 +195,11 @@
   \begin{adjustbox}{max width=\columnwidth}\input{../tables/runtime}\end{adjustbox}
 \end{table}
 
-\FloatBarrier
 \section{数据集与许可}
 \label{app:licences}
 
 ExCyTIn-Bench：代码 MIT，数据 CDLA-Permissive-2.0，仅供研究使用；题集 \texttt{opus5}（1{,}017 题：599 道测试题、418 道训练题）和调查图取自 2026-09-24 时的 \texttt{microsoft/SecRL} 仓库（未记录提交号），事件 5 和 38 的日志取自公开数据发布。可行性检查读取了全部 1{,}017 道题（勘误 E-10）；关联探针测量只使用 418 道训练题。原论文报告的 589 道测试题属于更早的题集；我们没有核对两个版本之间的差异。GUIDE：微软发布的匿名事件；我们只读取训练集，不再分发逐事件数据。OTRF Security-Datasets：LICENSE 文件为 MIT（README 中仍保留旧的 GPL-3.0 声明）；录制内容是实验室域中的模拟攻击，不含个人数据。SigmaHQ 检测规则：Detection Rule License 1.1，在提交 07ec293a 下署名使用；仓库保存的是派生的任务规格，而不是规则文件本身。
 
-\FloatBarrier
 \section{示例轨迹}
 \label{app:trace}
 \begin{figure*}[t]
@@ -186,7 +209,6 @@ ExCyTIn-Bench：代码 MIT，数据 CDLA-Permissive-2.0，仅供研究使用；�
   \label{fig:trace}
 \end{figure*}
 
-\FloatBarrier
 \section{勘误}
 \label{app:errata}
 
