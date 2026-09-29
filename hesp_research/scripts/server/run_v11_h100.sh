@@ -1,7 +1,7 @@
 #!/bin/bash
 # v1.1 on the H100 vGPU (20 GB; vLLM 0.11.0; small models only). Same procedure as run_v11_all.sh.
-#: the machine lacks Python headers, so torch.compile cannot build its kernels; eager
-# execution changes speed, not the sampling procedure. For each model: serve it with
+# The venv uses a uv-managed CPython 3.10 that ships its headers: the system Python has none, and
+# Triton must compile the JSON-mode (xgrammar) bitmask kernel at run time. For each model: serve it with
 # vLLM on 127.0.0.1 only, run parts e2 (sec, sigma) and e4, plus part f and the replay diagnosis for
 # the two small models; audit and ARCHIVE every run directory, then stop the server. Usage:
 #   nohup scripts/server/run_v11_h100.sh [MODEL_KEY ...] > logs/v11_all.log 2>&1 &
