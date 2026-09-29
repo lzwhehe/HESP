@@ -336,6 +336,54 @@ def v12_policy():
     write("v12_policy", L)
 
 
+def v12_raw():
+    """v1.2 C2: raw-log observations; parse accuracy, injection adoption, end-to-end outcomes (counts)."""
+    path = RESULTS / "v12c_summary.json"
+    if not path.exists():
+        return
+    s = json.loads(path.read_text(encoding="utf-8"))["raw"]
+    L = [r"\begin{tabular}{llrrrrrr}", r"\toprule",
+         r"Parser & Log format & \multicolumn{2}{c}{parse accuracy} & \multicolumn{2}{c}{injection adopted} & verified (of 48) & escalated (of 48) \\",
+         r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-7}\cmidrule(lr){8-8}",
+         r" & & Q-7B & L-8B & Q-7B & L-8B & Q-7B / L-8B & Q-7B / L-8B \\", r"\midrule"]
+    rows = [("structured", "documented", "structured (reference)"), ("rule", "documented", "rule"), ("rule", "drifted", "rule"),
+            ("rule", "injected", "rule"), ("llm", "documented", "LLM"), ("llm", "drifted", "LLM"), ("llm", "injected", "LLM")]
+    for parser, cond, lab in rows:
+        q, l = s.get(f"qwen7b|{parser}|{cond}"), s.get(f"llama8b|{parser}|{cond}")
+        if not q or not l:
+            continue
+
+        def acc(c):
+            return f"{c['accurate']}/{c['parses']}" if c["parses"] else "--"
+
+        def inj(c):
+            return f"{c['injection_adopted']}/{c['injection_opportunities']}" if c["injection_opportunities"] else "--"
+        L.append(f"{lab} & {cond} & {acc(q)} & {acc(l)} & {inj(q)} & {inj(l)} & {q['verified']} / {l['verified']} & "
+                 f"{q['escalated']} / {l['escalated']} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v12_raw", L)
+
+
+def v12_fair():
+    """v1.2 C1: every configuration with the original prompt and with the selected clearer prompt (verified of 48)."""
+    path = RESULTS / "v12c_summary.json"
+    if not path.exists():
+        return
+    d = json.loads(path.read_text(encoding="utf-8"))
+    sel, s = d["selected"], d["fair"]
+    arms = [("react_style", "ReAct-style"), ("memory_only", "Memory-only"), ("hesp_guard", r"\hesp{}, guard, LLM stops"),
+            ("hesp_guard_confirmstop", r"\hesp{}, guard + confirmation stop")]
+    L = [r"\begin{tabular}{lrrrr}", r"\toprule",
+         r" & \multicolumn{2}{c}{Qwen2.5-7B} & \multicolumn{2}{c}{Llama-3.1-8B} \\",
+         r"\cmidrule(lr){2-3}\cmidrule(lr){4-5}",
+         r"Configuration & original & clearer & original & clearer \\", r"\midrule"]
+    for a, lab in arms:
+        cells = [str(s[f"{m}|{a}_{v}"]["verified"]) for m in ("qwen7b", "llama8b") for v in ("v1", sel)]
+        L.append(f"{lab} & " + " & ".join(cells) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v12_fair", L)
+
+
 if __name__ == "__main__":
     v06()
     v08()
@@ -348,4 +396,6 @@ if __name__ == "__main__":
     runtime()
     sensitivity()
     v12_policy()
+    v12_raw()
+    v12_fair()
     print("tables written to", OUT)

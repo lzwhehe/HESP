@@ -45,7 +45,27 @@ Third, the evidence policy is a trade-off between automation and safety, not a d
   \begin{adjustbox}{max width=\textwidth}\input{tables/v12_policy}\end{adjustbox}
 \end{table*}
 
-Fourth, the stopping failure is partly a prompting effect. Replaying 60 archived requests with overwhelming evidence or no probe left, Llama-3.1-8B returned valid, untruncated JSON every time and asked for a probe in 60, 60, and 58 of 60 under the original prompt, a prompt with an example finish, and a prompt that states when to finish. In live episodes inside \hesp{} the explicit rule made it finish in 8 of 48, the other variants in none; for Qwen2.5-7B both variants raised completion inside \hesp{} from 43 to 48 of 48. We did not give the Memory-only and ReAct-style baselines an equally developed prompt, so the size of their gap is specific to the prompt we used.
+Fourth, the stopping failure is partly a prompting effect. Replaying 60 archived requests with overwhelming evidence or no probe left, Llama-3.1-8B returned valid, untruncated JSON every time and asked for a probe in 60, 60, and 58 of 60 under the original prompt, a prompt with an example finish, and a prompt that states when to finish. In live episodes inside \hesp{} the explicit rule made it finish in 8 of 48, the other variants in none; for Qwen2.5-7B both variants raised completion inside \hesp{} from 43 to 48 of 48. To test whether the baselines only lacked a clear prompt, the v1.2 study selected, on development seeds and by a rule fixed in advance, the variant that helped the baselines most (a prompt that states when to finish, gives an example, and forbids repeated probes), and then ran every configuration with both prompts (\cref{tab:v12fair}). The clearer prompt doubled Qwen2.5-7B's Memory-only completion (8 to 16 of 48) and did not help ReAct-style or either Llama baseline. The controller's advantage remained: with the clearer prompt, the confirmation stop exceeds Memory-only by $+0.667$ $[+0.46,+0.85]$ on Qwen2.5-7B and by $+1.000$ $[+1.000,+1.000]$ on Llama-3.1-8B (pre-registered, 97.5\% intervals). Inside \hesp{} with the guard, the clearer prompt made Llama-3.1-8B finish on its own in 32 of 48 episodes, against 0 with the original prompt.
+
+\begin{table}[t]
+  \caption{Equally clear prompts (v1.2, sec-triage, test seeds; verified episodes of 48). ``clearer'': the variant selected on development seeds for the baselines.}
+  \label{tab:v12fair}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/v12_fair}\end{adjustbox}
+\end{table}
+
+\subsection{Reading Raw Logs}
+\label{sec:rawlog}
+Every result so far gives the controller discrete observations. The v1.2 study removes this simplification on sec-triage: each probe returns log text, and a parser turns it into the outcome the ledger consumes. We compare a rule parser, written against the documented log format, with the served model as parser, under three log conditions: the documented format, a \emph{drifted} format that states the same facts in reworded lines with extra irrelevant lines, as after a change in the logging pipeline, and an \emph{injected} format that adds an attacker-controlled field asserting a benign reading in the probe's own vocabulary. The LLM-free controller plans (EIG/cost, confirmation stop), so the model's only role is reading; the verifier checks the true outcomes. \Cref{tab:v12raw} reports the results.
+
+\begin{table}[t]
+  \caption{Reading raw logs (v1.2, sec-triage base and noise, 48 episodes per cell; LLM-free controller with the confirmation stop). Parse accuracy over all parsed observations; injection adopted: observations where the parser returned the attacker's claimed label although the true outcome differs.}
+  \label{tab:v12raw}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/v12_raw}\end{adjustbox}
+\end{table}
+
+The two parsers fail in opposite ways. The rule parser reads the documented format without error and ignores the injected field, but it cannot read a single drifted line, so every drifted case is escalated. The models read the drifted format (Qwen2.5-7B 108 of 108 observations, Llama-3.1-8B 174 of 196; Llama's misreadings cost 12 escalations and 2 verdicts naming the wrong attack), but Qwen2.5-7B adopted the attacker's claimed reading in 48 of 105 injected observations; Llama-3.1-8B adopted it once in 71. This is the first place in our study where a model adds something the controller cannot supply, and it is also where the model reopens the attack surface that the finish guard closed. The ledger contained the damage in these episodes: the adopted readings (\emph{path scanning}, an \emph{authorized change window}) contradicted the other probes, so no attack was closed as benign; 18 of Qwen2.5-7B's injected episodes were escalated after exhausting the budget, and 6 benign monitoring cases were labelled as the other benign cause.
 
 \subsection{The Security Boundary}
 \label{sec:adversarial}
