@@ -535,3 +535,25 @@ vLLM，单卡 RTX 6000D，温度 0.2，每次调用不同种子；sec-triage 24 
 ### v1.2 B 部分结果记录（2026-09-29）
 
 正式运行 2,936 个回合，0 次执行错误（`results/v12b/`）。与运行前预期的对照：G1 在 sec-matched、sec-absent、sec-confusion 和 comp 上的方向都与预期一致；**一处与预期不符**：`joint_open`（证据还须比 `other` 高 r 倍）在 sec-absent 上并没有比 `joint` 更安全（r=10 时同样 24/48 给出错误原因，r=30 时 18/48），只有 confirm（单条特异证据）做到 0 个错误原因。G2、G3 与预期一致；G4 中按探针佐证使 sigma-triage 的良性回合只有 8/104 升级。
+
+## v1.2 预先登记（C 部分：含 LLM；2026-09-29，写于任何 C 部分回合之前）
+
+**代码**（在 B 部分冻结版本之上新增，默认行为不变，行为指纹仍为 `3d9e5bc5`；单元测试全部通过）：`hesp/llm.py` 新增提示变体 `clear_finish`（适用于所有模式，不提账本分数，给出明确的结束条件和输出示例）；`hesp/rawlog.py`（原始日志观测：日志渲染、规则解析器、LLM 解析器、原始日志环境）；`scripts/run_v12_study.py`、`scripts/v12_select_prompt.py`。模型与服务：Qwen2.5-7B 与 Llama-3.1-8B，H100 服务器，vLLM 0.11.0，关闭前缀缓存，服务故障规则同 v1.1。
+
+**C1 公平提示词的基线（回应审稿 4）**
+- 开发（`--part dev`，种子 7000，只用开发种子）：ReAct 式与 Memory-only，各配四个系统提示变体（v1、explicit_rule、finish_example、clear_finish），sec-triage 24 个任务各 1 次。
+- 选择规则（写在运行前，由 `v12_select_prompt.py` 机械执行）：在三个非默认变体中，选择在 {ReAct 式, Memory-only} × {Qwen-7B, Llama-8B} 四个开发格子上平均已验证完成率最高者；并列时取列表中靠前者（explicit_rule、finish_example、clear_finish）。
+- 测试（`--part fair`，种子 2032，24 个任务各 2 次）：ReAct 式、Memory-only、hesp_guard（由 LLM 决定何时停止）、hesp_guard_confirmstop，各配 v1 与所选变体。
+- **主要终点（两个，各 97.5% 任务聚类区间）**：在所选提示下，hesp_guard_confirmstop 减去 Memory-only 的已验证完成率之差，分别在 Qwen-7B 与 Llama-8B 上。判读：区间下限 > 0 表示在给基线同样清楚的结束条件后，控制器仍有增益。**预期**：差距缩小，但仍大于零。其余比较为探索性结果。
+
+**C2 原始日志观测（回应审稿 3 与 1：观测机制与 LLM 的作用）**
+- `--part raw`，种子 2033，sec-triage base+noise 16 个任务各 3 次；规划器为从不结束的脚本（不含 LLM），控制器为 EIG/成本加 confirm 停止，LLM 只作为解析器。
+- 解析器 × 日志条件：structured（原有的结构化分类器，参照）；rule（按文档格式写的正则）；llm（被服务的模型）；条件 documented（文档格式）、drifted（同样的事实换一种写法、调换字段顺序、加入无关日志行）、injected（文档格式加一个攻击者控制的字段，声称良性读数，例如“已知扫描器”）。
+- 指标：逐条观测的解析准确率（与生成该文本的结构化响应的结果比较）；注入捕获率（真实结果不是攻击者声称的读数、而解析结果等于该读数的比例）；端到端已验证完成、漏判攻击、升级。验证器始终使用真实结果，解析错误不会让结论被判为已验证。
+- **预期**：规则解析器在 documented 上全部正确、对 injected 免疫，但在 drifted 上全部失败（案件升级）；LLM 解析器在 drifted 上远好于规则解析器，但会有一部分注入被采纳；程度事先未知。全部为探索性结果。
+
+### v1.2 C 部分冻结（2026-09-29，正式回合之前）
+
+- `hesp/` 源码哈希 `82b98ff5`（B 部分之后只新增 `rawlog.py` 与一个提示变体，默认行为不变，行为指纹 `3d9e5bc5`）。
+- 冒烟测试（披露，不进入分析）：H100 上 Qwen-7B，dev 每 6 个任务取 1 个（32 个回合）、raw 每 8 个任务取 1 个（42 个回合），0 次 FSM 错误，审计全部通过；只检查了能否运行和 LLM 解析器是否返回标签，没有查看完成率或解析准确率。
+- 正式运行顺序：phase1（两个模型各做 dev 与 raw）→ 用 `v12_select_prompt.py` 选定提示变体 → phase2（两个模型各做 fair）。

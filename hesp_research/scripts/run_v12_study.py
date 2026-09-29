@@ -49,7 +49,7 @@ def llm_parts(args, client, factory, tables, digest, suite):
         for v in VARIANTS:
             arms[f"react_style_{v}"] = {"mode": "react_style", "planner": planner(v), "predictor": predictor, "prompt_variant": v}
             arms[f"memory_only_{v}"] = {"mode": "memory_only", "planner": planner(v), "predictor": predictor, "prompt_variant": v}
-        tasks, seed, repeats = suite(("base", "drift", "noise")), 7000, 1
+        tasks, seed, repeats = suite(("base", "drift", "noise"))[::args.task_stride], 7000, 1
     else:
         if args.variant not in VARIANTS or args.variant == "v1":
             raise SystemExit("--variant must be the selected non-default variant")
@@ -59,7 +59,7 @@ def llm_parts(args, client, factory, tables, digest, suite):
             arms[f"hesp_guard_{v}"] = {**guard, "planner": planner(v), "prompt_variant": v}
             arms[f"hesp_guard_confirmstop_{v}"] = {**guard, "planner": planner(v), "prompt_variant": v,
                                                    "auto_finish": STOP, "stop_rule": "confirm"}
-        tasks, seed, repeats = suite(("base", "drift", "noise")), 2032, 2
+        tasks, seed, repeats = suite(("base", "drift", "noise"))[::args.task_stride], 2032, 2
     start = time.time()
 
     def progress(i, n, row):
@@ -80,7 +80,7 @@ def raw_part(args, client, tables):
     from hesp.secapp import make_sec_env, sec_suite
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=args.resume)
-    tasks = sec_suite(("base", "noise"))
+    tasks = sec_suite(("base", "noise"))[::args.task_stride]
     parsers = {"rule": RuleParser(), "llm": LLMParser(client)}
     jobs = []
     for parser_name in ("structured", "rule", "llm"):
@@ -137,6 +137,7 @@ def main():
     ap.add_argument("--temperature", type=float, default=0.2)
     ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--task-stride", type=int, default=1, help="smoke tests only")
     args = ap.parse_args()
     client = OpenAICompatClient(args.model, args.base_url)
     factory, tables, digest, suite = family("sec")
