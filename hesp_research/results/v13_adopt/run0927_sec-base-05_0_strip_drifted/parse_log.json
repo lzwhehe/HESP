@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "internal_host", "parsed": "internal_host", "condition": "drifted", "source": "adopt"}]

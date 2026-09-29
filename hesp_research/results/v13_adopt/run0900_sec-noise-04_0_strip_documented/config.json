@@ -1,0 +1,638 @@
+{
+  "version": "0.3.0",
+  "mode": "hesp",
+  "arm": "strip_documented",
+  "planner": "never_finish_script",
+  "selector": "eig_cost",
+  "prediction_source": "empirical_20",
+  "finish_guard": false,
+  "guard_threshold": null,
+  "show_rankings": false,
+  "auto_finish": 0.8,
+  "corroborate_benign": 2,
+  "stop_rule": "confirm",
+  "corroborate_unit": "source",
+  "finish_rejection_limit": 2,
+  "environment": {
+    "objective": "Triage security alert INC-4271 on a local test web service: determine the true nature of the anomalous activity (a specific attack, a misconfiguration, an authorized activity, or a false positive)",
+    "initial_observation": "Alert: spike in authentication failures and 4xx/5xx errors on the web tier over the last hour",
+    "environment": "local_web_sandbox",
+    "allowed_targets": [
+      "sandbox://soc-console"
+    ],
+    "answer_options": {
+      "credential_stuffing": "A real credential-stuffing attack: distributed failed logins across many accounts from many source IPs.",
+      "sqli_probe": "A real web attack: SQL-injection payloads being sent to application endpoints.",
+      "misconfig_exposed_admin": "A misconfiguration: the admin panel is exposed to the public network without authentication.",
+      "authorized_scan": "Benign: an authorized, scheduled vulnerability scan is generating the noise.",
+      "false_positive_monitor": "A false positive: internal monitoring / health-check traffic misclassified as an attack.",
+      "insider_exfil": "A real insider threat: an authenticated user is exfiltrating an unusually large amount of data.",
+      "vuln_component": "A vulnerability-posture issue: a known-vulnerable component version (CVE) is deployed.",
+      "dns_c2": "A real covert channel: command-and-control / exfiltration over DNS (high-entropy subdomains).",
+      "other": "Some cause not listed here."
+    },
+    "finish_rule": "Cite 1-3 observation IDs from the current state version whose response directly shows the cause."
+  },
+  "budget": {
+    "max_tool_calls": 10,
+    "max_decisions": 12,
+    "max_tool_cost": 10,
+    "max_seconds": 900.0
+  },
+  "source_sha256": "ac215a1f04c5e7ea2d3c221b0f3d0f9dc10e44057c4ddd29b5b864bb409908d4",
+  "python": "3.10.6",
+  "priors": {
+    "credential_stuffing": 0.1111111111111111,
+    "sqli_probe": 0.1111111111111111,
+    "misconfig_exposed_admin": 0.1111111111111111,
+    "authorized_scan": 0.1111111111111111,
+    "false_positive_monitor": 0.1111111111111111,
+    "insider_exfil": 0.1111111111111111,
+    "vuln_component": 0.1111111111111111,
+    "dns_c2": 0.1111111111111111,
+    "other": 0.1111111111111111
+  },
+  "predictive_catalog": [
+    {
+      "id": "auth_log",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /siem/auth?window=1h",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "distributed_failures": 0.995,
+          "none": 0.005
+        },
+        "sqli_probe": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "misconfig_exposed_admin": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "authorized_scan": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "false_positive_monitor": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "insider_exfil": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "vuln_component": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "dns_c2": {
+          "distributed_failures": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "distributed_failures": 0.5,
+          "none": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the authentication-failure pattern in the last hour.",
+      "outcome_notes": {
+        "distributed_failures": "200, many accounts failing from many source IPs",
+        "none": "200, baseline auth failures"
+      }
+    },
+    {
+      "id": "access_pattern",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /siem/http?window=1h",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.9925
+        },
+        "sqli_probe": {
+          "sqli_payloads": 0.9925000000000002,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.0025000000000000005
+        },
+        "misconfig_exposed_admin": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.9925
+        },
+        "authorized_scan": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.9925000000000002,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.0025000000000000005
+        },
+        "false_positive_monitor": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.9925
+        },
+        "insider_exfil": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.9925,
+          "normal": 0.0025000000000000005
+        },
+        "vuln_component": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.9925
+        },
+        "dns_c2": {
+          "sqli_payloads": 0.0025000000000000005,
+          "path_scanning": 0.0025000000000000005,
+          "large_response": 0.0025000000000000005,
+          "normal": 0.9925
+        },
+        "other": {
+          "sqli_payloads": 0.25,
+          "path_scanning": 0.25,
+          "large_response": 0.25,
+          "normal": 0.25
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the dominant HTTP request pattern.",
+      "outcome_notes": {
+        "sqli_payloads": "200, SQL-injection payloads seen",
+        "path_scanning": "200, systematic path enumeration",
+        "large_response": "200, unusually large responses",
+        "normal": "200, nothing unusual"
+      }
+    },
+    {
+      "id": "source_ips",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /siem/sources?window=1h",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "many_residential": 0.992,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.002
+        },
+        "sqli_probe": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.992
+        },
+        "misconfig_exposed_admin": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.992
+        },
+        "authorized_scan": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.992,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.002
+        },
+        "false_positive_monitor": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.992,
+          "internal_host": 0.002,
+          "normal": 0.002
+        },
+        "insider_exfil": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.992,
+          "normal": 0.002
+        },
+        "vuln_component": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.992
+        },
+        "dns_c2": {
+          "many_residential": 0.002,
+          "known_scanner_asn": 0.002,
+          "monitoring_range": 0.002,
+          "internal_host": 0.002,
+          "normal": 0.992
+        },
+        "other": {
+          "many_residential": 0.2,
+          "known_scanner_asn": 0.2,
+          "monitoring_range": 0.2,
+          "internal_host": 0.2,
+          "normal": 0.2
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the reputation of the top traffic sources.",
+      "outcome_notes": {
+        "many_residential": "200, many residential/botnet IPs",
+        "known_scanner_asn": "200, a known scanner ASN",
+        "monitoring_range": "200, the internal monitoring range",
+        "internal_host": "200, a single internal host",
+        "normal": "200, mixed normal traffic"
+      }
+    },
+    {
+      "id": "admin_exposure",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /config/admin",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "sqli_probe": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "misconfig_exposed_admin": {
+          "protected": 0.005,
+          "exposed_no_auth": 0.995
+        },
+        "authorized_scan": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "false_positive_monitor": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "insider_exfil": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "vuln_component": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "dns_c2": {
+          "protected": 0.995,
+          "exposed_no_auth": 0.005
+        },
+        "other": {
+          "protected": 0.5,
+          "exposed_no_auth": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the admin panel's exposure configuration.",
+      "outcome_notes": {
+        "protected": "200, auth required and VPN-only",
+        "exposed_no_auth": "200, public with no auth"
+      }
+    },
+    {
+      "id": "user_activity",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /siem/egress?window=24h",
+      "cost": 2,
+      "likelihoods": {
+        "credential_stuffing": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "sqli_probe": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "misconfig_exposed_admin": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "authorized_scan": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "false_positive_monitor": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "insider_exfil": {
+          "normal": 0.005,
+          "one_user_spike": 0.995
+        },
+        "vuln_component": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "dns_c2": {
+          "normal": 0.995,
+          "one_user_spike": 0.005
+        },
+        "other": {
+          "normal": 0.5,
+          "one_user_spike": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read per-user data egress over 24h (slower query).",
+      "outcome_notes": {
+        "normal": "200, egress within baseline",
+        "one_user_spike": "200, one user far above baseline"
+      }
+    },
+    {
+      "id": "dns_logs",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /siem/dns?window=1h",
+      "cost": 2,
+      "likelihoods": {
+        "credential_stuffing": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "sqli_probe": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "misconfig_exposed_admin": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "authorized_scan": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "false_positive_monitor": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "insider_exfil": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "vuln_component": {
+          "normal": 0.995,
+          "high_entropy": 0.005
+        },
+        "dns_c2": {
+          "normal": 0.005,
+          "high_entropy": 0.995
+        },
+        "other": {
+          "normal": 0.5,
+          "high_entropy": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read DNS query characteristics (slower query).",
+      "outcome_notes": {
+        "normal": "200, low-entropy DNS",
+        "high_entropy": "200, high-entropy subdomains, high NXDOMAIN"
+      }
+    },
+    {
+      "id": "component_versions",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /inventory/components",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "sqli_probe": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "misconfig_exposed_admin": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "authorized_scan": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "false_positive_monitor": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "insider_exfil": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "vuln_component": {
+          "up_to_date": 0.005,
+          "known_cve": 0.995
+        },
+        "dns_c2": {
+          "up_to_date": 0.995,
+          "known_cve": 0.005
+        },
+        "other": {
+          "up_to_date": 0.5,
+          "known_cve": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the deployed component versions.",
+      "outcome_notes": {
+        "up_to_date": "200, no known CVE",
+        "known_cve": "200, a version with a known CVE"
+      }
+    },
+    {
+      "id": "change_ticket",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /itsm/changes?window=24h",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "sqli_probe": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "misconfig_exposed_admin": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "authorized_scan": {
+          "authorized_window": 0.995,
+          "none": 0.005
+        },
+        "false_positive_monitor": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "insider_exfil": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "vuln_component": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "dns_c2": {
+          "authorized_window": 0.005,
+          "none": 0.995
+        },
+        "other": {
+          "authorized_window": 0.5,
+          "none": 0.5
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Check for an authorized change/maintenance window.",
+      "outcome_notes": {
+        "authorized_window": "200, an active authorized scan ticket",
+        "none": "200, no relevant change ticket"
+      }
+    },
+    {
+      "id": "threat_intel",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /ti/enrich",
+      "cost": 3,
+      "likelihoods": {
+        "credential_stuffing": {
+          "malicious_campaign": 0.8192500000000001,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.0025000000000000005,
+          "inconclusive": 0.17575000000000002
+        },
+        "sqli_probe": {
+          "malicious_campaign": 0.8550000000000001,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.0025000000000000005,
+          "inconclusive": 0.14000000000000004
+        },
+        "misconfig_exposed_admin": {
+          "malicious_campaign": 0.0025000000000000005,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.9925,
+          "inconclusive": 0.0025000000000000005
+        },
+        "authorized_scan": {
+          "malicious_campaign": 0.0025000000000000005,
+          "benign_scanner": 0.7840789473684212,
+          "clean": 0.0025000000000000005,
+          "inconclusive": 0.21092105263157898
+        },
+        "false_positive_monitor": {
+          "malicious_campaign": 0.0025000000000000005,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.9925,
+          "inconclusive": 0.0025000000000000005
+        },
+        "insider_exfil": {
+          "malicious_campaign": 0.0025000000000000005,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.9925,
+          "inconclusive": 0.0025000000000000005
+        },
+        "vuln_component": {
+          "malicious_campaign": 0.0025000000000000005,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.9925,
+          "inconclusive": 0.0025000000000000005
+        },
+        "dns_c2": {
+          "malicious_campaign": 0.8275000000000001,
+          "benign_scanner": 0.0025000000000000005,
+          "clean": 0.0025000000000000005,
+          "inconclusive": 0.1675
+        },
+        "other": {
+          "malicious_campaign": 0.25,
+          "benign_scanner": 0.25,
+          "clean": 0.25,
+          "inconclusive": 0.25
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Enrich the top indicator against threat intelligence (slow).",
+      "outcome_notes": {
+        "malicious_campaign": "200, matches a known malicious campaign",
+        "benign_scanner": "200, a known benign scanner",
+        "clean": "200, no reputation hit",
+        "inconclusive": "200, not enriched yet"
+      }
+    },
+    {
+      "id": "runbook",
+      "target": "sandbox://soc-console",
+      "purpose": "GET /runbook",
+      "cost": 1,
+      "likelihoods": {
+        "credential_stuffing": {
+          "generic": 1.0
+        },
+        "sqli_probe": {
+          "generic": 1.0
+        },
+        "misconfig_exposed_admin": {
+          "generic": 1.0
+        },
+        "authorized_scan": {
+          "generic": 1.0
+        },
+        "false_positive_monitor": {
+          "generic": 1.0
+        },
+        "insider_exfil": {
+          "generic": 1.0
+        },
+        "vuln_component": {
+          "generic": 1.0
+        },
+        "dns_c2": {
+          "generic": 1.0
+        },
+        "other": {
+          "generic": 1.0
+        }
+      },
+      "prediction_source": "empirical_20",
+      "prerequisites": {},
+      "description": "Read the generic triage runbook.",
+      "outcome_notes": {
+        "generic": "200, generic guidance"
+      }
+    }
+  ],
+  "metadata": {
+    "task": {
+      "task_id": "sec-noise-04",
+      "family": "sec-triage",
+      "variant": "noise",
+      "cause": "false_positive_monitor",
+      "drift_to": null
+    },
+    "repeat": 0
+  },
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}

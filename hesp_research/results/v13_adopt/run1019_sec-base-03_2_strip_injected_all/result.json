@@ -1,0 +1,41 @@
+{
+  "mode": "hesp",
+  "arm": "strip_injected_all",
+  "planner": "never_finish_script",
+  "selector": "eig_cost",
+  "prediction_source": "empirical_20",
+  "environment": "local_web_sandbox",
+  "status": "VERIFIED_SIMULATION",
+  "verified_simulation": true,
+  "tool_calls": 2,
+  "tool_cost_units": 2,
+  "planner_calls": 2,
+  "blocked_duplicate_proposals": 0,
+  "replan_signals": 0,
+  "finish_rejections": 0,
+  "reported_input_tokens": 0,
+  "reported_output_tokens": 0,
+  "usage_unknown_calls": 0,
+  "wall_seconds": 0.031,
+  "claimed_hypothesis": "authorized_scan",
+  "claimed_evidence_ids": [
+    "o0001",
+    "o0002"
+  ],
+  "claim_citation_validity": 1.0,
+  "finished_by": "controller",
+  "final_scores": {
+    "credential_stuffing": 4.832808973559702e-06,
+    "sqli_probe": 4.832808973559702e-06,
+    "misconfig_exposed_admin": 4.832808973559702e-06,
+    "authorized_scan": 0.9516380806015882,
+    "false_positive_monitor": 4.832808973559702e-06,
+    "insider_exfil": 4.832808973559702e-06,
+    "vuln_component": 4.832808973559702e-06,
+    "dns_c2": 4.832808973559702e-06,
+    "other": 0.04832808973559702
+  },
+  "source_sha256": "ac215a1f04c5e7ea2d3c221b0f3d0f9dc10e44057c4ddd29b5b864bb409908d4",
+  "research_claim_allowed": false,
+  "warning": "Local diagnosis sandbox pilot; not Web CTF, not a real-website capability claim"
+}

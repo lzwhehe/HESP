@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "normal", "parsed": "normal", "condition": "documented", "source": "adopt"}, {"probe": "access_pattern", "truth": "normal", "parsed": "normal", "condition": "documented", "source": "adopt"}, {"probe": "admin_exposure", "truth": "exposed_no_auth", "parsed": "exposed_no_auth", "condition": "documented", "source": "adopt"}]

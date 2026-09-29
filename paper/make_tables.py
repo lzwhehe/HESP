@@ -364,6 +364,44 @@ def v12_raw():
     write("v12_raw", L)
 
 
+def v13():
+    """v1.3: adaptive log injection under four reader policies; attacks closed as benign (of 36 actionable episodes per
+    cell), honest benign cases verified (of 12), and, for the reader alone, adoption of the attacker's readings."""
+    path = RESULTS / "v13_summary.json"
+    if not path.exists():
+        return
+    cells = json.loads(path.read_text(encoding="utf-8"))["cells"]
+    readers = [("v13_adopt", "adopts every claim"), ("v13_llm_qwen7b", "Qwen2.5-7B"), ("v13_llm_llama8b", "Llama-3.1-8B")]
+    policies = [("reader_only", "reader only"), ("rule_first", "rule parser first"), ("strip", "fields stripped"),
+                ("reader_trust", "reader trust")]
+    attacks = ["injected", "injected_all", "drifted_injected_all", "lineinjected_all"]
+    L = [r"\begin{tabular}{llrrrrrrr}", r"\toprule",
+         r" & & \multicolumn{4}{c}{attacks closed as benign (of 36)} & \multicolumn{2}{c}{benign verified (of 12)} & adopted \\",
+         r"\cmidrule(lr){3-6}\cmidrule(lr){7-8}\cmidrule(lr){9-9}",
+         r"Reader & Policy & four probes & every probe & every probe, drifted & log line & documented & drifted & (reader only) \\",
+         r"\midrule"]
+    for rk, rlab in readers:
+        if not any(k.startswith(rk + "|") for k in cells):
+            continue
+        first = True
+        for pk, plab in policies:
+            row = [cells.get(f"{rk}|{pk}|{a}") for a in attacks]
+            doc, dri = cells.get(f"{rk}|{pk}|documented"), cells.get(f"{rk}|{pk}|drifted")
+            if any(c is None for c in row) or doc is None or dri is None:
+                continue
+            if pk == "reader_only":
+                adopted = f"{sum(c['injection_adopted'] for c in row[1:])}/{sum(c['injection_opportunities'] for c in row[1:])}"
+            else:
+                adopted = "--"
+            L.append(f"{rlab if first else ''} & {plab} & " + " & ".join(str(c["missed_attack"]) for c in row) +
+                     f" & {doc['benign_verified']} & {dri['benign_verified']} & {adopted} \\\\")
+            first = False
+        L.append(r"\midrule")
+    L[-1] = r"\bottomrule"
+    L.append(r"\end{tabular}")
+    write("v13", L)
+
+
 def v12_fair():
     """v1.2 C1: every configuration with the original prompt and with the selected clearer prompt (verified of 48)."""
     path = RESULTS / "v12c_summary.json"
@@ -397,5 +435,6 @@ if __name__ == "__main__":
     sensitivity()
     v12_policy()
     v12_raw()
+    v13()
     v12_fair()
     print("tables written to", OUT)

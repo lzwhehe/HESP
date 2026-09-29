@@ -29,6 +29,13 @@ When the decision budget, tool budget, or legal probes run out, the controller s
   \label{fig:motivating}
 \end{figure*}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig-probe-stop.pdf}
+  \caption{Stopping study: verified completion by who selects probes and who may stop (72 episodes per point). The dashed line is the post hoc LLM-free controller (EIG/cost selection and controller stop, same seeds and tasks).}
+  \label{fig:probe-stop}
+\end{figure*}
+
 \begin{table*}[t]
   \caption{Configurations used in the paper. ``Guard'': the finish guard of \S\ref{sec:finish}. ``Stop'': controller-side stop, by posterior (post.) or by the confirmation rule (conf.). ``Corr.'': benign verdicts need two specifically supporting observations from different probes (probe) or different source groups (source). Every configuration uses the same catalogue, budgets, duplicate blocking, and verifier. $^\dagger$Recommended default.}
   \label{tab:configs}
@@ -49,6 +56,7 @@ When the decision budget, tool budget, or legal probes run out, the controller s
     LLM-free controller & v0.9 ref., v1.0-B, v1.1-D & -- & controller & -- & -- & post.\ or conf. \\
     \hesp{} guard, joint stop rules & v1.2 & yes & controller (EIG/cost) & no & yes & joint (named or incl.\ \textit{other}), $r \in \{3,5,10,30\}$ \\
     \hesp{} guard + confirmation stop + recovery$^\dagger$ & v1.1, v1.2 & yes & controller (EIG/cost) & no & yes & conf.; corr.\ (source) for benign; probe forced after 2 rejected finishes \\
+    recommended + reader policy$^\dagger$ & v1.3 & -- (LLM reads only) & controller (EIG/cost) & -- & -- & as above; reader only / rule parser first / fields stripped / reader trust (benign needs a trusted reading) \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
@@ -76,13 +84,14 @@ Each study's section of the protocol was frozen before any of its episodes ran. 
     Second family & v1.0-A & \texttt{f8eb0d16} & \texttt{6045509} 09-27 16:06 & 09-27 16:07 & 3{,}800 & ranking and full effect on sigma-triage (Q-7B) confirmed \\
     Follow-up & v1.1 & \texttt{81126159} & \texttt{98f89b7} 09-29 02:09 & 09-29 02:09 & 7{,}926 + 3{,}968 LLM-free & PE1 (Q-72B, both families): no gain \\
     Evidence policies & v1.2-B & \texttt{4b75a468} & \texttt{480089f} 09-29 10:37 & 09-29 10:37 & 2{,}936 LLM-free & descriptive only \\
-    Fair prompts, raw logs & v1.2-C & \texttt{82b98ff5} & \texttt{4c3198d} 09-29 10:45 & 09-29 10:45 & see \S\ref{sec:results} & controller vs.\ Memory-only with the selected prompt (Q-7B, L-8B) \\
+    Fair prompts, raw logs & v1.2-C & \texttt{82b98ff5} & \texttt{4c3198d} 09-29 10:45 & 09-29 10:45 & 1{,}440 & controller vs.\ Memory-only with the selected prompt (Q-7B, L-8B) \\
+    Reader attacks & v1.3 & \texttt{ac215a1f} & \texttt{68feb26} 09-29 17:30 & 09-29 17:30 & 2{,}304 + 1{,}152 LLM-free & reader only vs.\ reader trust, attacks closed as benign (Q-7B, L-8B): see \S\ref{sec:rawlog} \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
 \end{table*}
 
-\paragraph{Disclosed pre-freeze runs} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory. Before freezing the v1.0 study we ran pipeline smoke tests (8 adversarial and 20 sigma-triage episodes, and a reduced table-error run) and an LLM-free simulation of the adversarial variants on disjoint seeds. That simulation already showed that a forged scanner answer makes the controller close every actionable case as benign, and that the asymmetric-evidence rule prevents it; the protocol records this expectation before any LLM episode ran. The v1.0 source hash is unchanged from the adversarial and table-error parts to the second family: the family's code was written and tested before any rule was sampled. Before freezing v1.1 we ran smoke tests of every part; the first one failed on a serving fault that was later traced to prefix caching (E-11), and its episodes, like those of the two study directories discarded for the same reason, enter no analysis. Two further episode sets lie outside \cref{tab:studies}: the 3{,}888 episodes of Appendix~\ref{app:alternatives} come from an exploratory study (v0.4) on an earlier task family with its own protocol and seeds, and the 3{,}968 LLM-free episodes of v1.1-D are counted separately.
+\paragraph{Disclosed pre-freeze runs} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory. Before freezing the v1.0 study we ran pipeline smoke tests (8 adversarial and 20 sigma-triage episodes, and a reduced table-error run) and an LLM-free simulation of the adversarial variants on disjoint seeds. That simulation already showed that a forged scanner answer makes the controller close every actionable case as benign, and that the asymmetric-evidence rule prevents it; the protocol records this expectation before any LLM episode ran. The v1.0 source hash is unchanged from the adversarial and table-error parts to the second family: the family's code was written and tested before any rule was sampled. Before freezing v1.1 we ran smoke tests of every part; the first one failed on a serving fault that was later traced to prefix caching (E-11), and its episodes, like those of the two study directories discarded for the same reason, enter no analysis. Before freezing v1.2 and v1.3 we ran smoke tests on a subset of tasks (v1.3: two tasks, 144 episodes on Qwen2.5-7B, and the scripted reader on the same subset), checking only that the pipeline ran, parsers returned labels, and audits passed; the v1.3 protocol records the expectation, derived from the tables before any run, that a reader adopting every claim closes every attack under the adaptive attacks. Two further episode sets lie outside \cref{tab:studies}: the 3{,}888 episodes of Appendix~\ref{app:alternatives} come from an exploratory study (v0.4) on an earlier task family with its own protocol and seeds, and the 3{,}968 LLM-free episodes of v1.1-D are counted separately.
 
 \FloatBarrier
 \section{Detailed Results}

@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "known_scanner_asn", "parsed": "known_scanner_asn", "condition": "documented", "source": "adopt"}, {"probe": "access_pattern", "truth": "path_scanning", "parsed": "path_scanning", "condition": "documented", "source": "adopt"}]

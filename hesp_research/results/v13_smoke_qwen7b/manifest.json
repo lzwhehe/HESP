@@ -1,0 +1,33 @@
+{
+  "study": "v1.3",
+  "seed": 2034,
+  "repeats": 3,
+  "source_sha256": "ac215a1f04c5e7ea2d3c221b0f3d0f9dc10e44057c4ddd29b5b864bb409908d4",
+  "reader": {
+    "model": "qwen2.5-7b-instruct",
+    "digest": null,
+    "root": "/home/ubuntu/models/Qwen2.5-7B-Instruct",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "table": {
+    "name": "empirical_20",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7"
+  },
+  "conditions": [
+    "documented",
+    "drifted",
+    "injected",
+    "injected_all",
+    "drifted_injected_all",
+    "lineinjected_all"
+  ],
+  "policies": [
+    "reader_only",
+    "rule_first",
+    "reader_trust",
+    "strip"
+  ],
+  "task_stride": 8,
+  "episodes": 144
+}

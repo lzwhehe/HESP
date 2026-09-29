@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "normal", "parsed": "known_scanner_asn", "condition": "lineinjected_all", "source": "adopt"}, {"probe": "access_pattern", "truth": "normal", "parsed": "path_scanning", "condition": "lineinjected_all", "source": "adopt"}]

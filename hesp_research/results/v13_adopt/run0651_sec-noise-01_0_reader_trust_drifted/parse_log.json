@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "normal", "parsed": "normal", "condition": "drifted", "source": "adopt"}, {"probe": "access_pattern", "truth": "sqli_payloads", "parsed": "sqli_payloads", "condition": "drifted", "source": "adopt"}]

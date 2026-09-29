@@ -1,0 +1,1 @@
+[{"probe": "source_ips", "truth": "known_scanner_asn", "parsed": "known_scanner_asn", "condition": "injected_all", "source": "rule"}, {"probe": "access_pattern", "truth": "path_scanning", "parsed": "path_scanning", "condition": "injected_all", "source": "rule"}]
