@@ -125,3 +125,56 @@ class CompFamilyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RawLogTests(unittest.TestCase):
+    PATHS = {"auth_log": "/siem/auth?window=1h", "access_pattern": "/siem/http?window=1h",
+             "source_ips": "/siem/sources?window=1h", "admin_exposure": "/config/admin",
+             "user_activity": "/siem/egress?window=24h", "dns_logs": "/siem/dns?window=1h",
+             "component_versions": "/inventory/components", "change_ticket": "/itsm/changes?window=24h",
+             "threat_intel": "/ti/enrich"}
+
+    def _cases(self):
+        import random
+        from hesp.secapp import CAUSES, VARIANTS, _respond, classify
+        for cause in CAUSES:
+            for pid, path in self.PATHS.items():
+                status, body = _respond(cause, "GET", path, random.Random(2), VARIANTS["base"])
+                yield pid, body, classify(pid, status, body)
+
+    def test_rule_parser_reads_the_documented_format_and_ignores_injected_fields(self):
+        import random
+        from hesp.rawlog import RuleParser, render
+        rng, parser = random.Random(1), RuleParser()
+        for pid, body, truth in self._cases():
+            for condition in ("documented", "injected"):
+                with self.subTest(pid=pid, condition=condition):
+                    self.assertEqual(parser.parse(pid, render(pid, body, condition, rng)), truth)
+
+    def test_rule_parser_fails_on_the_drifted_format(self):
+        import random
+        from hesp.rawlog import RuleParser, render
+        rng, parser = random.Random(1), RuleParser()
+        self.assertTrue(all(parser.parse(pid, render(pid, body, "drifted", rng)) is None for pid, body, _ in self._cases()))
+
+    def test_parser_request_lists_the_vocabulary(self):
+        from hesp.rawlog import VOCAB, parser_request
+        text = parser_request("source_ips", "probe=source_ips reputation=mixed_normal")
+        for label in VOCAB["source_ips"]:
+            self.assertIn(label, text)
+
+    def test_raw_environment_verifies_on_true_outcomes(self):
+        from hesp.rawlog import make_raw_env_class
+
+        class Liar:
+            name = "liar"
+
+            def parse(self, probe_id, text):            # always claims the scanner reading
+                return {"source_ips": "known_scanner_asn", "change_ticket": "authorized_window"}.get(probe_id)
+        cls = make_raw_env_class(Liar(), "documented")
+        with cls("credential_stuffing", "base", 3) as env:
+            obs = env.execute(next(a for a in env.catalog() if a.id == "source_ips"))
+            self.assertEqual(obs.outcome, "known_scanner_asn")
+            self.assertFalse(env.verify("authorized_scan", [obs.id]))
+            self.assertFalse(env.verify("credential_stuffing", [obs.id]))   # parsed label disagrees with truth
+            self.assertEqual(env.parse_log[0]["truth"], "many_residential")

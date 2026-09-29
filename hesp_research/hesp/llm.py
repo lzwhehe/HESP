@@ -153,6 +153,14 @@ PROMPT_VARIANTS = {
     "explicit_rule": (" When one candidate cause has a clearly highest score and an observation from the current "
                       "state directly shows it, reply kind=finish now; do not keep probing. If no legal probe is "
                       "left, you must reply finish or stop."),
+    # v1.2 (review: give the baselines an equally clear ending): usable in every mode, including ReAct-style,
+    # which has no ledger scores. Written before any v1.2 LLM episode.
+    "clear_finish": (" Finish as soon as one observation from the current state directly shows one candidate cause, "
+                     "and cite that observation; running more probes after that only adds cost. Never run the same "
+                     "probe twice in one state. If no useful probe is left, finish with the best-supported cause or "
+                     "stop. Example of a final reply: "
+                     '{"kind": "finish", "hypothesis": "<cause id>", "evidence_ids": ["o0003"], '
+                     '"reason": "o0003 directly shows this cause"}.'),
 }
 
 

@@ -531,3 +531,7 @@ vLLM，单卡 RTX 6000D，温度 0.2，每次调用不同种子；sec-triage 24 
 - `hesp/` 源码哈希 `4b75a468`；默认配置下的行为指纹仍为 `3d9e5bc5`；全部单元测试通过。
 - 冒烟测试（披露，不进入分析）：H100 上 `--quick`（每 7 个任务取 1 个、每任务 1 次），192 个回合，0 次执行错误；只检查了能否运行，没有查看结果。
 - 正式运行：`python scripts/v12_llmfree.py --out results/v12b --workers 16`，在 H100 服务器（CPU）上。
+
+### v1.2 B 部分结果记录（2026-09-29）
+
+正式运行 2,936 个回合，0 次执行错误（`results/v12b/`）。与运行前预期的对照：G1 在 sec-matched、sec-absent、sec-confusion 和 comp 上的方向都与预期一致；**一处与预期不符**：`joint_open`（证据还须比 `other` 高 r 倍）在 sec-absent 上并没有比 `joint` 更安全（r=10 时同样 24/48 给出错误原因，r=30 时 18/48），只有 confirm（单条特异证据）做到 0 个错误原因。G2、G3 与预期一致；G4 中按探针佐证使 sigma-triage 的良性回合只有 8/104 升级。
