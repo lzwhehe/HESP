@@ -4,10 +4,12 @@
 # Triton must compile the JSON-mode (xgrammar) bitmask kernel at run time. For each model: serve it with
 # vLLM on 127.0.0.1 only, run parts e2 (sec, sigma) and e4, plus part f and the replay diagnosis for
 # the two small models; audit and ARCHIVE every run directory, then stop the server.
-# Serving fault rule (PROTOCOL v1.1): vLLM 0.11 can enter a state in which xgrammar logs
-# "Failed to advance FSM" and every JSON-mode reply is invalid. If the server log shows that error
-# during a study, the whole study directory is moved to results/_aborted_fsm/, the server is
-# restarted, and the study is rerun from scratch (at most 3 attempts). Usage:
+# Prefix caching is OFF here: with it on, vLLM 0.11 on this machine fails every JSON-mode request of the
+# second study served by a warm server (xgrammar logs "Failed to advance FSM"; reproduced, and absent with
+# caching off). Caching changes throughput, not the output distribution.
+# Serving fault rule (PROTOCOL v1.1): if the server log still shows that error during a study, the whole
+# study directory is moved to results/_aborted_fsm/, the server is restarted, and the study is rerun from
+# scratch (at most 3 attempts). Usage:
 #   nohup scripts/server/run_v11_h100.sh [MODEL_KEY ...] > logs/v11_all.log 2>&1 &
 set -uo pipefail
 ROOT=${HESP_ROOT:-$HOME}
@@ -40,7 +42,7 @@ serve() {  # $1 = key; appends to the model's vLLM log so that restarts keep the
   echo "=== $(date -Is) serve $1" >> "$ROOT/logs/vllm_v11_$1.log"
   vllm serve "$ROOT/models/${DIR[$1]}" --served-model-name "${NAME[$1]}" \
     --host 127.0.0.1 --port "$PORT" --max-model-len 8192 --gpu-memory-utilization 0.92 \
-    --enable-prefix-caching --max-num-seqs 16 --seed 0 >> "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
+    --no-enable-prefix-caching --max-num-seqs 16 --seed 0 >> "$ROOT/logs/vllm_v11_$1.log" 2>&1 &
   VLLM_PID=$!
   for _ in $(seq 1 360); do
     curl -sf "http://127.0.0.1:$PORT/v1/models" > /dev/null && return 0
