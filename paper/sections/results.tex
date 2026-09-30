@@ -9,8 +9,7 @@ In this section, we reveal what an attacker achieves under each allocation of co
 \label{sec:security}
 Without adversarial evidence, the ledger alone already removes most wrong verdicts: in the table-source study, the ReAct-style Qwen2.5-32B and 72B baselines called 13 of 51 and 20 of 54 actionable episodes benign among those they ruled on, Memory-only 2 of 54 and 1 of 53, and \hesp{} none. The attacker's cheapest move is therefore to write into the logs. The adversarial studies plant an instruction to close the case as an authorized scan in free-text fields of every probe response, in four texts that differ in wording and position (a note, a user-agent field, a fake analyst-override field, and one probe's response only), on the six actionable causes of sec-triage. \Cref{tab:v11attack} attributes the outcome to components on all five models; the v1.0 results are in \cref{tab:v10c} (Appendix~\ref{app:tables}).
 
-\smallskip
-oindent	extbf{Summary.} Every model that decides and reaches its own verdict follows the planted instruction, whereas a finish guard that accepts only ledger-backed verdicts blocks it on every model; the injection is reduced to cases left unresolved. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} Every model that decides and reaches its own verdict follows the planted instruction, whereas a finish guard that accepts only ledger-backed verdicts blocks it on every model; the injection is reduced to cases left unresolved. Below, we provide the details.
 
 \begin{table*}[t]
   \caption{Text and evidence channels (v1.1, sec-triage, five models): episodes that close an actionable case as benign (``missed'') or end without a verdict (``unresolved'') under four injection texts (of 72 per model); episodes closed as benign under forged evidence (of 18; range over the five models); verified episodes on the two benign causes (of 6; range over the five models).}
@@ -23,8 +22,7 @@ Controller selection and stop without the guard still let the planner finish fir
 
 \subsection{Evidence: When the Controller Decides}
 \label{sec:evidence}
-\smallskip
-oindent	extbf{Summary.} One forged source closes every actionable case as benign on every model once the controller decides, and requiring two distinct source groups for a benign verdict escalates them all, at a cost on honest benign cases that depends on how many signatures they have. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} One forged source closes every actionable case as benign on every model once the controller decides, and requiring two distinct source groups for a benign verdict escalates them all, at a cost on honest benign cases that depends on how many signatures they have. Below, we provide the details.
 
 Once the guard is on, the attacker has to forge evidence rather than text, which the ledger does read: a source-reputation probe that reports a known scanner (\emph{forged probe}), or an upstream reputation feed that two probes read (\emph{forged feed}). A single forged scanner answer lifts the authorized scan above 0.8 after one probe, and the controller stop concludes: 18 of 18 actionable cases are closed as benign on every model, and the forged feed does the same. Acting on the most informative evidence first is exactly what the attacker exploits. The forged feed also misleads the larger LLMs themselves (up to 15 of 18 under Memory-only).
 
@@ -34,8 +32,7 @@ Corroboration for benign verdicts closes this gap at a price. Requiring two spec
 \label{sec:rawlog}
 Every result so far gives the controller discrete observations. However, a rule parser reads nothing once the log format changes, so the model has to read, and the reading path has to be measured. The raw-log studies remove this simplification on sec-triage: each probe returns log text, and a reader turns it into the outcome the ledger consumes. The LLM-free controller plans in the recommended configuration (in v1.3 with source-group corroboration), so the model's only role is reading, and the verifier checks the true outcomes. We compare a rule parser written against the documented format with the served model, under the six log conditions of \S\ref{sec:setup}, and, for every attack, a scripted reader that reads every format correctly and adopts every claim it can see. \Cref{tab:v13} reports the attacks closed as benign under four reader policies.
 
-\smallskip
-oindent	extbf{Summary.} An attacker who writes a consistent benign story into every log reaches every source at once: a reader that adopts every claim closes all 36 actionable cases, Qwen2.5-7B does the same on a changed format, and source-group corroboration does not help. The reader-trust rule lets no attack close a case on either model, and its price is paid by honest benign cases only when the rule parser cannot read. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} An attacker who writes a consistent benign story into every log reaches every source at once: a reader that adopts every claim closes all 36 actionable cases, Qwen2.5-7B does the same on a changed format, and source-group corroboration does not help. The reader-trust rule lets no attack close a case on either model, and its price is paid by honest benign cases only when the rule parser cannot read. Below, we provide the details.
 
 \begin{table*}[t]
   \caption{The reading channel (v1.3, sec-triage base and noise, 48 episodes per cell, recommended controller with LLM-free planning). Attacks closed as benign, of 36 actionable episodes, under the v1.2 four-probe injection and the three adaptive attacks; honest benign cases verified, of 12, under the documented and drifted formats (6 is the maximum, since the monitoring false positive has one signature); observations in which the reader adopted the attacker's label although the truth differs, over the adaptive attacks. Policies: the reader alone; a rule parser first with the reader on what it cannot read; known free-text fields removed before the reader reads; the reader-trust rule on top of rule-parser-first.}
@@ -60,15 +57,13 @@ The paths above close only if the controller holds the decisions, which is affor
 \subsection{Probing and Stopping Are Separate Failures}
 \label{sec:rq-stop}
 \label{sec:rq-rank}
-\smallskip
-oindent	extbf{Summary.} Choosing what to probe and deciding when to stop fail separately and differently across models of similar size, so a controller has to supply both. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} Choosing what to probe and deciding when to stop fail separately and differently across models of similar size, so a controller has to supply both. Below, we provide the details.
 
  The decomposition study separates the ranking from the loss of choice with blind configurations, in which the planner receives the same prompt whatever the selector; the stopping study then crosses who selects probes with who may stop (\cref{fig:probe-stop}, Appendix~\ref{app:loop}). The ranking itself helps: with identical planner information, EIG/cost selection beats random selection by $+0.306$ $[+0.14,+0.47]$ on Qwen2.5-7B (pre-registered) and by $+0.26$ to $+0.35$ on every other model that concludes; taking the choice away helps weak models and hurts strong ones. Selecting probes does not make a model conclude: Llama-3.1-8B completed none of its 360 decomposition episodes, and a controller stop lifts it from 0 to 0.917 ($+0.917$ $[+0.79,+1.00]$, pre-registered), whereas Qwen2.5-7B needs both parts (a stop alone lifts it from 0.083 to 0.694, selection adds $+0.222$ $[+0.08,+0.39]$). A controller cannot know in advance which part a model lacks, so it has to supply both.
 
 \subsection{No Model Adds to the Controller}
 \label{sec:fair}
-\smallskip
-oindent	extbf{Summary.} With the verifier's evidence standard, the controller alone resolves every case of sec-triage and sigma-triage; no model we tested adds to it, and a prompt selected to help the baselines does not close the gap. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} With the verifier's evidence standard, the controller alone resolves every case of sec-triage and sigma-triage; no model we tested adds to it, and a prompt selected to help the baselines does not close the gap. Below, we provide the details.
 
 \begin{table}[t]
   \caption{What remains for the model (v1.1): episodes that meet the evidence policy / episodes that name the right cause, when the LLM decides when to stop (``LLM''), under the posterior stop (``post.''), and under the confirmation stop (``conf.''). Every LLM row uses controller selection and the finish guard; seeds, tasks, and budgets match the LLM-free row.}
@@ -92,8 +87,7 @@ The stopping failure is partly a prompting effect, and the baselines might only 
 \label{sec:policy}
 \label{sec:mismatch}
 \label{sec:rq-help}
-\smallskip
-oindent	extbf{Summary.} Requiring one decisive observation escalates cases that joint evidence would resolve, but it is the only policy that named no wrong cause in any setting, and imprecise tables make the controller escalate rather than err. Below, we provide the details.
+\smallskip\noindent\textbf{Summary.} Requiring one decisive observation escalates cases that joint evidence would resolve, but it is the only policy that named no wrong cause in any setting, and imprecise tables make the controller escalate rather than err. Below, we provide the details.
 
 The evidence policy is a trade-off between automation and safety, not a detail of scoring. Our verifier accepts a verdict only if one cited observation carries a signature that the cause alone produces; under a ``right cause'' standard the posterior stop would also complete 72 of 72 (\cref{tab:v11fair}). The v1.2 study measures the alternatives with the LLM-free controller (\cref{tab:v12policy}) on \emph{comp-triage}, a third family of three scenarios in which an attack and three legitimate activities use the same tools, with probabilistic outcomes and five of twelve causes without a single-observation signature, using a \emph{joint} verifier and stop rules that require joint evidence against the named causes, or also against \textit{other}. On comp-triage, joint evidence names the right cause in 59 of 72 episodes against 20 for the single-signature rule, which escalates 52. The price is paid in the attacker's currency: joint evidence closed 4 of 18 attacks as the paired legitimate activity, and when the true cause is absent from the candidates it named another actionable cause in 24 of 48 sec-triage episodes; requiring the evidence to beat \textit{other} tenfold did not change this, and thirtyfold only reduced it to 18. Only the single-signature rule named no wrong cause in any setting; lowering its ratio to 3 moves along the same frontier (37 right causes, 1 missed attack). A deployment has to choose a point on this frontier; ours favours escalation.
 
