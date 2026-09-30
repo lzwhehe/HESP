@@ -1,10 +1,10 @@
 \section{相关工作}
 \label{sec:related}
 
-\paragraph{用于调查与分诊的 LLM 智能体} 研究 LLM 智能体如何调查安全告警的工作很少，据我们所知，没有一项测量过往证据里写东西的攻击者能做到什么。Clouseau~\citep{clouseau} 用一组自行选择查询的分层 LLM 智能体从事件日志重建攻击叙事，并报告开源权重模型在复杂场景上落后于专有模型；其作者指出，叙事重建超出了分诊的需要，因为分诊追求的是快速的接受或升级决定。ExCyTIn-Bench~\citep{excytin}、GUIDE~\citep{guide} 和 Cyber Defense Benchmark~\citep{cyberdefensebench} 为调查和威胁狩猎提供数据，它们与本问题的契合度见 \S\ref{sec:realdata}。据我们所知，本研究首次把攻击者触及分诊智能体结论的路径定位为“模型掌握哪些决定”的函数；对每条路径，我们都在五个模型上测量了攻击，给出了关闭它的规则，并测量了规则的代价。
+\paragraph{安全运营中的 LLM 智能体} 近期工作评估并构建用于事件分析和分诊的 LLM 智能体。SIABench 在安全事件分析和告警分诊上对 LLM 智能体做基准测试~\citep{siabench}，ExCyTIn-Bench 在事件图上的威胁调查上做基准测试~\citep{excytin}，CORTEX 协调多个 LLM 智能体做告警分诊~\citep{cortex}；Clouseau 用分层 LLM 智能体重建攻击叙事，并报告开源权重模型落后于专有模型~\citep{clouseau}。这些工作测量或改进模型调查得多好；我们关心的是模型负责调查之后攻击者能做什么，并把决定移出模型。思路上最接近的是 SENTINEL-RL，它把 LLM 限制在查询和摘要上，把处置决定交给一个训练好的策略~\citep{sentinelrl}；我们对分诊结论做同样的分工，并在攻击者面前评估它。LogInject 测量了通过日志字段对 LLM 日志分析实施的被动提示注入，发现没有单一防御能消除它~\citep{loginject}；我们的读取器攻击在分诊智能体中证实了这一威胁，并说明了哪条架构规则能阻止它。
 
-\paragraph{针对工具型智能体的攻击与防御} Greshake 等人~\citep{greshake2023}展示了间接提示注入，即隐藏在检索内容中的指令劫持集成 LLM 的应用；AgentDojo~\citep{agentdojo} 在工具型智能体上对这类攻击与防御进行了基准测试；通过未转义的用户可控字段实施的日志注入是同一问题更早的实例~\citep{owasp_loginjection}。保护智能体的工作约束智能体能做什么：IsolateGPT~\citep{isolategpt} 隔离 LLM 应用的执行，Progent~\citep{progent} 对工具调用施加权限策略。在 ReAct~\citep{react}、Reflexion~\citep{reflexion} 和 Toolformer~\citep{toolformer} 等通用工具型智能体中，由模型决定下一步做什么、何时结束。\hesp{} 同样认为智能体应当在模型之外受到约束，但分诊智能体只读不写，所以它约束的是结论（运行哪个探针、接受哪个结论、何时停止、哪些读数可以支持良性结论），而不是访问权限。
+\paragraph{提示注入防御} 模型层面的防御在输入格式或训练中把指令与数据分开~\citep{struq,secalign}，MELON~\citep{melon} 这类检测式防御比较智能体在有无检索数据时的行为；它们都不能对自适应攻击者提供保证~\citep{promptinjection_bench,agentdojo}。系统层面的防御约束智能体能做什么：IsolateGPT 隔离 LLM 应用~\citep{isolategpt}，Progent 对工具调用施加权限策略~\citep{progent}，CaMeL 和 FIDES 追踪值的来源并在工具运行前施加策略~\citep{camel,fides}。\hesp{} 同样认为安全不能依赖模型的推理，但分诊智能体没有危险的工具：它唯一有害的输出是结论。读取器信任是同一类来源规则，被用在分诊中唯一关键的那个决定上，并在结论上做成不对称的。
 
-\paragraph{基于溯源的分诊} 基于溯源的系统构建主机活动的因果图，并用规则或学习模型使其易于处理：NoDoze~\citep{nodoze} 依据告警周围溯源的异常程度对告警排序以缓解告警疲劳，Kairos~\citep{kairos} 从全系统溯源中检测并重建入侵。这些系统决定分析员应该看什么，而不是下一步运行哪个查询；\hesp{} 针对的正是这下一步及其后的结论。
+\paragraph{基于溯源的检测与分诊} NoDoze 依据告警周围溯源的异常程度对告警排序~\citep{nodoze}，Kairos 从全系统溯源中检测并重建入侵~\citep{kairos}。它们决定分析员应该看什么；\hesp{} 决定下一步运行哪个查询、证据是否已经足够。
 
-\paragraph{序贯诊断} 按期望信息增益选择测试可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}。它是经典基于模型的诊断~\citep{dekleer1987}的基础，并对贪心主动学习和含噪假设识别具有近似最优保证~\citep{dasgupta2004,golovin2010}。我们原样使用这一教科书准则，研究它如何与 LLM 规划器相互作用；语言模型在某些自我评估任务上可以是校准的~\citep{kadavath2022}，但我们向模型询问得到的表表明，这并不适用于探针结果的似然。预注册把验证性分析与探索性分析分开~\citep{nosek2018}，基于机器学习的安全评测中的陷阱已有充分记录~\citep{arp2022dos}；我们两者都遵循。
+\paragraph{序贯诊断} 按期望信息增益选择测试可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}，它是基于模型的诊断~\citep{dekleer1987}的基础，并对含噪假设识别具有近似最优保证~\citep{dasgupta2004,golovin2010}。我们原样使用这一准则；我们的贡献在于它相对于模型所处的位置，以及这对攻击者意味着什么。
