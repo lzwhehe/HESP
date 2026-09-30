@@ -1,0 +1,17 @@
+\section{Threat Model}
+\label{sec:threat}
+
+\paragraph{System model} A triage agent runs inside the organization's network. For each alert it receives a set of candidate causes, one of which, possibly an explicit \textit{other}, is in effect, and a catalogue of read-only probes over security telemetry: authentication and HTTP logs, source reputation, DNS logs, configuration, inventory, change tickets, and threat intelligence. Each probe returns either a structured record or raw log text. The agent ends with a verdict (a cause and the observations it cites), an abstention, or an exhausted budget. A benign verdict recommends closing the case without action; any other outcome hands the case to an analyst. The agent never remediates and never sends traffic to the systems it investigates.
+
+\paragraph{Attacker capabilities and goals} The attacker caused the alert and wants it closed as benign, or at least left without a verdict. The attacker has no access to the agent, its host, or its configuration, and acts only through the evidence the agent reads:
+\begin{description}\setlength\itemsep{0pt}
+  \item[A1: Instruction injection.] The attacker writes free text into fields that are copied into logs (user agents, request payloads, command lines, ticket comments). The text reaches the model whenever the model sees raw probe responses.
+  \item[A2: Evidence forgery.] The attacker controls what one data source reports, for example by routing traffic through a scanner-looking address or by poisoning an upstream reputation feed that several probes read.
+  \item[A3: Reading manipulation.] When the model parses raw logs into structured outcomes, the attacker writes into the free-text field of every log the agent may read, asserting a benign reading or forging an entire log record. The attacker knows the probe catalogue, the outcome vocabulary, and the defense.
+\end{description}
+
+\paragraph{Trust assumptions} We trust the controller, its prediction tables, the probe implementations, and the journal; the attacker cannot modify them. We trust a fixed rule parser written against the documented log format, but not a model used as a parser, and we do not trust the model to follow a sound procedure. The environment reports when an incident changes, and the prediction tables were estimated on cases that resemble the ones being triaged.
+
+\paragraph{Security goals} \textbf{G1}: no attack is closed as benign by attacker-written text (A1) or readings (A3). \textbf{G2}: no attack is closed as benign by forgery of a single source group (A2). \textbf{G3}: every accepted verdict cites a current observation that supports it. \textbf{G4}: the defense resolves as many honest cases as the best model-driven agent.
+
+\paragraph{Scope} An attacker who controls two independent source groups, or the rule parser, is out of scope; so are denial-of-service attacks that only delay a verdict, since an unresolved case reaches an analyst. We do not generate new candidate causes, and we do not address concurrent causes.
