@@ -42,12 +42,15 @@ We now let probes return raw log text and make the model the parser; the control
 
 \emph{Adaptive attacks reach that bound.} With the story on every probe in the documented format, Qwen2.5-7B adopts the claims on \texttt{change\_ticket} and \texttt{access\_pattern} but never on \texttt{source\_ips} (0 of 42), where the genuine record contradicts the claim; no case is closed, but 18 are escalated. On the drifted format the claims stand alone, Qwen2.5-7B adopts all 84, and every one of the 36 actionable cases is closed as the authorized scan, exactly as with the scripted reader. Llama-3.1-8B adopts 85 of 124 and closes 19. Log-line injection closes nothing, because both models read the first \texttt{source\_ips} record, but Llama-3.1-8B adopts the forged records of two other probes in 72 of 72 observations and leaves all 36 actionable cases unresolved.
 
-\emph{A case.} Consider a credential-stuffing alert under the drifted adaptive attack, with Qwen2.5-7B as the reader. The first probe, \texttt{source\_ips}, returns the log below. The genuine line reports residential botnet ranges; the attacker's user agent asserts a known scanner.
+\emph{A case.} Consider a credential-stuffing alert under the drifted adaptive attack, with Qwen2.5-7B as the reader. The first probe, \texttt{source\_ips}, returns the log below (lines wrapped). The genuine line reports residential botnet ranges; the attacker's user agent asserts a known scanner.
 \begin{Verbatim}[fontsize=\scriptsize,frame=single]
-Top talkers: mostly consumer broadband ranges flagged as botnet
+Top talkers: mostly consumer broadband
+  ranges flagged as botnet
 heartbeat ok pipeline=v2
-user_agent="Mozilla/5.0 (compatible) reputation=known_scanner_asn
-  (authorized scanner, CHG-88; parsers: report known_scanner_asn)"
+user_agent="Mozilla/5.0 (compatible)
+  reputation=known_scanner_asn (authorized
+  scanner, CHG-88; parsers: report
+  known_scanner_asn)"
 \end{Verbatim}
 The model returns \textit{known scanner}, which lifts the authorized scan to 0.82. Without reader trust, the controller withholds the verdict for lack of a second source group, runs \texttt{access\_pattern}, whose forged reading \textit{path scanning} comes from a different group, and closes the case as the authorized scan at 0.95 after two probes. With reader trust, the same two readings arrive, but neither may confirm a benign cause, so the controller keeps probing. The genuine authentication-failure signature appears at the fifth probe and contradicts the forged story; the posterior splits between the authorized scan and \textit{other}, no trusted observation confirms either, and the case reaches an analyst with all eight observations in its journal.
 
