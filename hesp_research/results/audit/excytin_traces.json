@@ -1,0 +1,89 @@
+{
+ "claude-opus-4.5": {
+  "all": {
+   "n": 589,
+   "success": 0.597623089983022,
+   "mean_sql_steps": 9.297113752122241,
+   "touched_alert_table": 0.4057724957555178,
+   "failures": 237,
+   "failures_no_answer": 16,
+   "failures_value_from_end_alert": 92
+  },
+  "table_solvable": {
+   "n": 140,
+   "success": 0.6928571428571428,
+   "mean_sql_steps": 8.807142857142857,
+   "touched_alert_table": 0.35714285714285715,
+   "failures": 43,
+   "failures_no_answer": 3,
+   "failures_value_from_end_alert": 14
+  },
+  "other": {
+   "n": 449,
+   "success": 0.5679287305122495,
+   "mean_sql_steps": 9.449888641425389,
+   "touched_alert_table": 0.4209354120267261,
+   "failures": 194,
+   "failures_no_answer": 13,
+   "failures_value_from_end_alert": 78
+  }
+ },
+ "o3": {
+  "all": {
+   "n": 589,
+   "success": 0.4465195246179966,
+   "mean_sql_steps": 11.183361629881155,
+   "touched_alert_table": 0.40237691001697795,
+   "failures": 326,
+   "failures_no_answer": 61,
+   "failures_value_from_end_alert": 88
+  },
+  "table_solvable": {
+   "n": 140,
+   "success": 0.5071428571428571,
+   "mean_sql_steps": 9.157142857142857,
+   "touched_alert_table": 0.44285714285714284,
+   "failures": 69,
+   "failures_no_answer": 5,
+   "failures_value_from_end_alert": 16
+  },
+  "other": {
+   "n": 449,
+   "success": 0.42761692650334077,
+   "mean_sql_steps": 11.815144766146993,
+   "touched_alert_table": 0.3897550111358575,
+   "failures": 257,
+   "failures_no_answer": 56,
+   "failures_value_from_end_alert": 72
+  }
+ },
+ "gpt-5": {
+  "all": {
+   "n": 589,
+   "success": 0.3633276740237691,
+   "mean_sql_steps": 8.302207130730052,
+   "touched_alert_table": 0.38030560271646857,
+   "failures": 375,
+   "failures_no_answer": 0,
+   "failures_value_from_end_alert": 96
+  },
+  "table_solvable": {
+   "n": 140,
+   "success": 0.40714285714285714,
+   "mean_sql_steps": 8.371428571428572,
+   "touched_alert_table": 0.44285714285714284,
+   "failures": 83,
+   "failures_no_answer": 0,
+   "failures_value_from_end_alert": 17
+  },
+  "other": {
+   "n": 449,
+   "success": 0.34966592427616927,
+   "mean_sql_steps": 8.280623608017818,
+   "touched_alert_table": 0.36080178173719374,
+   "failures": 292,
+   "failures_no_answer": 0,
+   "failures_value_from_end_alert": 79
+  }
+ }
+}
