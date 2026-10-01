@@ -1,0 +1,3832 @@
+{
+ "summary": {
+  "split": "train",
+  "questions": 418,
+  "named": 263,
+  "adjacent": 330,
+  "graph_correct": 127,
+  "table_correct": 103,
+  "per_incident": {
+   "incident_134": {
+    "named": 17,
+    "adjacent": 22,
+    "graph_correct": 11,
+    "table_correct": 2,
+    "n": 23
+   },
+   "incident_166": {
+    "named": 17,
+    "adjacent": 27,
+    "graph_correct": 6,
+    "table_correct": 5,
+    "n": 34
+   },
+   "incident_322": {
+    "named": 21,
+    "adjacent": 15,
+    "graph_correct": 7,
+    "table_correct": 7,
+    "n": 23
+   },
+   "incident_34": {
+    "named": 23,
+    "adjacent": 20,
+    "graph_correct": 11,
+    "table_correct": 10,
+    "n": 34
+   },
+   "incident_38": {
+    "named": 4,
+    "adjacent": 4,
+    "graph_correct": 2,
+    "table_correct": 2,
+    "n": 4
+   },
+   "incident_39": {
+    "named": 59,
+    "adjacent": 79,
+    "graph_correct": 21,
+    "table_correct": 19,
+    "n": 100
+   },
+   "incident_5": {
+    "named": 46,
+    "adjacent": 81,
+    "graph_correct": 43,
+    "table_correct": 41,
+    "n": 100
+   },
+   "incident_55": {
+    "named": 76,
+    "adjacent": 82,
+    "graph_correct": 26,
+    "table_correct": 17,
+    "n": 100
+   }
+  }
+ },
+ "rows": [
+  {
+   "incident": "incident_134",
+   "index": 0,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_134",
+   "index": 1,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 2,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 3,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 4,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 5,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 6,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 7,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 8,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 9,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 10,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 11,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 12,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 13,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 14,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 15,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 16,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 17,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 18,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 19,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 20,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 21,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_134",
+   "index": 22,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_166",
+   "index": 0,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 1,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_166",
+   "index": 2,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 3,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 4,
+   "qtype": null,
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 5,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 6,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 7,
+   "qtype": "url",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 8,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 9,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 10,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 11,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 12,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 13,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 14,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 15,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 16,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_166",
+   "index": 17,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 18,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 19,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 20,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 21,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 22,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 23,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 24,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 25,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 26,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 27,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 28,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_166",
+   "index": 29,
+   "qtype": null,
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 30,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 31,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_166",
+   "index": 32,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_166",
+   "index": 33,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 0,
+   "qtype": null,
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 1,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 2,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 3,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 4,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 5,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 6,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 7,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 8,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 9,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 10,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 11,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 12,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 13,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 14,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 15,
+   "qtype": "file",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 16,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 17,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 18,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 19,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_322",
+   "index": 20,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 21,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_322",
+   "index": 22,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 0,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 1,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 2,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 3,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 4,
+   "qtype": "file",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 5,
+   "qtype": "host",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 6,
+   "qtype": "host",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 7,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 8,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 9,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 10,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 11,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 12,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 13,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 14,
+   "qtype": "process",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 15,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 16,
+   "qtype": "host",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 17,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 18,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 19,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 20,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 21,
+   "qtype": "file",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 22,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 23,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 24,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 25,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 26,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 27,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 28,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 29,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 30,
+   "qtype": "host",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_34",
+   "index": 31,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 32,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_34",
+   "index": 33,
+   "qtype": "host",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_38",
+   "index": 0,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_38",
+   "index": 1,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_38",
+   "index": 2,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_38",
+   "index": 3,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 0,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 1,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 2,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 3,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 4,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 5,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 6,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 7,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 8,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 9,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 10,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 11,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 12,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 13,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 14,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 15,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 16,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 17,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 18,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 19,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 20,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 21,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 22,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 23,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 24,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 25,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 26,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 27,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 28,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 29,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 30,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 31,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 32,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 33,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 34,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 35,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 36,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 37,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 38,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 39,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 40,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 41,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 42,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 43,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 44,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 45,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 46,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 47,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 48,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 49,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 50,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 51,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 52,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 53,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 54,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 55,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 56,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 57,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 58,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 59,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 60,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 61,
+   "qtype": "hash",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 62,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 63,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 64,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 65,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 66,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 67,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 68,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 69,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 70,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 71,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 72,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 73,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 74,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 75,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 76,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 77,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 78,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 79,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 80,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 81,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 82,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 83,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 84,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 85,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 86,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 87,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 88,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 89,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 90,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 91,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 92,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 93,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 94,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 95,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 96,
+   "qtype": "hash",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 97,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_39",
+   "index": 98,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_39",
+   "index": 99,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 0,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 1,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 2,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 3,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 4,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 5,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 6,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 7,
+   "qtype": "host",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 8,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 9,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 10,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 11,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 12,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 13,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 14,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 15,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 16,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 17,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 18,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 19,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 20,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 21,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 22,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 23,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 24,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 25,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 26,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 27,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 28,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 29,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 30,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 31,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 32,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 33,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 34,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 35,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 36,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 37,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 38,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 39,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 40,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 41,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 42,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 43,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 44,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 45,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 46,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 47,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 48,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 49,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 50,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 51,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 52,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 53,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 54,
+   "qtype": "process",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 55,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 56,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 57,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 58,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 59,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 60,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 61,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 62,
+   "qtype": "hash",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 63,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 64,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 65,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 66,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 67,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 68,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 69,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 70,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 71,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 72,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 73,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 74,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 75,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 76,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 77,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 78,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 79,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 80,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 81,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 82,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 83,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 84,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 85,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 86,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 87,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 88,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 89,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 90,
+   "qtype": "file",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 91,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 92,
+   "qtype": "host",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 93,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 94,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 95,
+   "qtype": "host",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 96,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 97,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_5",
+   "index": 98,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_5",
+   "index": 99,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 0,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 1,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 2,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 3,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 4,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 5,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 6,
+   "qtype": null,
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 7,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 8,
+   "qtype": null,
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 9,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 10,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 11,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 12,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 13,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 14,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 15,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 16,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 17,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 18,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 19,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 20,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 21,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 22,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 23,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 24,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 25,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 26,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 27,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 28,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 29,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 30,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 31,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 32,
+   "qtype": "account",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 33,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 34,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 35,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 36,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 37,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 38,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 39,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 40,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 41,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 42,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 43,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 44,
+   "qtype": "ip",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 45,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 46,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 47,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 48,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 49,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 50,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 51,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 52,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 53,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 54,
+   "qtype": "host",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 55,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 56,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 57,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 58,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 59,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 60,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 61,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 62,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 63,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 64,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 65,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 66,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 67,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 68,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 69,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 70,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 71,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 72,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 73,
+   "qtype": null,
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 74,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 75,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 76,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 77,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 78,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 79,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 80,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 81,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 82,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 83,
+   "qtype": "file",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 84,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 85,
+   "qtype": "mailbox",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 86,
+   "qtype": "process",
+   "named": false,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 87,
+   "qtype": null,
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 88,
+   "qtype": "url",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 89,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 90,
+   "qtype": "url",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 91,
+   "qtype": "account",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 92,
+   "qtype": "account",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 93,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 94,
+   "qtype": "ip",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 95,
+   "qtype": "process",
+   "named": true,
+   "adjacent": false,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 96,
+   "qtype": "url",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": true,
+   "table_correct": true
+  },
+  {
+   "incident": "incident_55",
+   "index": 97,
+   "qtype": "account",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 98,
+   "qtype": "mailbox",
+   "named": false,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  },
+  {
+   "incident": "incident_55",
+   "index": 99,
+   "qtype": "file",
+   "named": true,
+   "adjacent": true,
+   "graph_correct": false,
+   "table_correct": false
+  }
+ ]
+}

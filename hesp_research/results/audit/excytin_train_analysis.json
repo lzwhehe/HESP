@@ -1,0 +1,120 @@
+{
+ "split": "train",
+ "questions": 418,
+ "rates": {
+  "named": {
+   "count": 263,
+   "rate": 0.6291866028708134,
+   "ci95_incident_cluster": [
+    0.5334928229665071,
+    0.7484143763213531
+   ]
+  },
+  "adjacent": {
+   "count": 330,
+   "rate": 0.7894736842105263,
+   "ci95_incident_cluster": [
+    0.7302052785923754,
+    0.8286384976525821
+   ]
+  },
+  "graph_correct": {
+   "count": 127,
+   "rate": 0.3038277511961722,
+   "ci95_incident_cluster": [
+    0.23374827109266944,
+    0.391304347826087
+   ]
+  },
+  "table_correct": {
+   "count": 103,
+   "rate": 0.24641148325358853,
+   "ci95_incident_cluster": [
+    0.17293233082706766,
+    0.33933933933933935
+   ]
+  }
+ },
+ "per_incident": {
+  "incident_5": {
+   "named_rate": 0.46,
+   "graph_rate": 0.43
+  },
+  "incident_34": {
+   "named_rate": 0.6764705882352942,
+   "graph_rate": 0.3235294117647059
+  },
+  "incident_38": {
+   "named_rate": 1.0,
+   "graph_rate": 0.5
+  },
+  "incident_39": {
+   "named_rate": 0.59,
+   "graph_rate": 0.21
+  },
+  "incident_55": {
+   "named_rate": 0.76,
+   "graph_rate": 0.26
+  },
+  "incident_134": {
+   "named_rate": 0.7391304347826086,
+   "graph_rate": 0.4782608695652174
+  },
+  "incident_166": {
+   "named_rate": 0.5,
+   "graph_rate": 0.17647058823529413
+  },
+  "incident_322": {
+   "named_rate": 0.9130434782608695,
+   "graph_rate": 0.30434782608695654
+  }
+ },
+ "h3": {
+  "spearman_by_model": {
+   "GPT-4o": 0.3333333333333333,
+   "GPT-4o-mini": 0.8263621207201486,
+   "o1-mini": 0.09523809523809523,
+   "Phi-4-14B": 0.40476190476190477,
+   "Llama4-17b-Mav": 0.6428571428571429,
+   "Llama4-17b-Scout": 0.11904761904761904,
+   "GPT-4.1": 0.40476190476190477,
+   "GPT-4.1-mini": -0.05988131309566294,
+   "GPT-4.1-nano": -0.14285714285714285,
+   "o3-mini": 0.09523809523809523,
+   "o4-mini": 0.5952380952380952,
+   "Gemini 2.5 Flash": 0.40476190476190477,
+   "Qwen-3-32b": -0.11904761904761904,
+   "o3": 0.7619047619047619,
+   "Grok-4": 0.42857142857142855,
+   "Qwen-3-235b-thinking": 0.5714285714285714,
+   "Claude-Sonnet-4.5": 0.6666666666666666,
+   "GPT-5.1 (Reasoning=High)": 0.4523809523809524,
+   "Claude-Opus-4.5": 0.42857142857142855
+  },
+  "positive": 16,
+  "models": 19,
+  "sign_test_one_sided_p": 0.0022125244140625,
+  "median": 0.40476190476190477
+ },
+ "reported_average_reward": {
+  "GPT-4o": 0.293,
+  "GPT-4o-mini": 0.192,
+  "o1-mini": 0.222,
+  "Phi-4-14B": 0.085,
+  "Llama4-17b-Mav": 0.29,
+  "Llama4-17b-Scout": 0.262,
+  "GPT-4.1": 0.338,
+  "GPT-4.1-mini": 0.271,
+  "GPT-4.1-nano": 0.136,
+  "o3-mini": 0.296,
+  "o4-mini": 0.368,
+  "Gemini 2.5 Flash": 0.305,
+  "Qwen-3-32b": 0.182,
+  "o3": 0.456,
+  "Grok-4": 0.344,
+  "Qwen-3-235b-thinking": 0.302,
+  "Claude-Sonnet-4.5": 0.487,
+  "GPT-5.1 (Reasoning=High)": 0.582,
+  "Claude-Opus-4.5": 0.606
+ }
+}
