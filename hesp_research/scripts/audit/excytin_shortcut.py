@@ -142,6 +142,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--split", choices=("train", "test"), required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--qdir", help="question directory of another release, e.g. questions_old/o1/v0/test "
+                    "(files incident_<i>_*.json); input path only, the rules are unchanged")
     args = ap.parse_args()
     rows = []
     for gf in sorted(glob.glob(os.path.join(ROOT, "graphs", "*.graphml"))):
@@ -149,7 +151,9 @@ def main():
         nodes, adj = load_graph(gf)
         galerts = [n for n, d in nodes.items() if d.get("type") == "alert"]
         table = load_alert_table(inc)
-        for k, item in enumerate(json.load(open(os.path.join(ROOT, "questions", f"{inc}_{args.split}.json"), encoding="utf-8"))):
+        qpath = (glob.glob(os.path.join(args.qdir, f"{inc}_*.json"))[0] if args.qdir
+                 else os.path.join(ROOT, "questions", f"{inc}_{args.split}.json"))
+        for k, item in enumerate(json.load(open(qpath, encoding="utf-8"))):
             q, gold = item["question"], norm(item["answer"])
             end = str(item.get("end_alert"))
             top, gans = graph_answer(q, nodes, adj, galerts)

@@ -1,0 +1,402 @@
+{
+ "summary": {
+  "alerts": 35,
+  "true_positive": 5,
+  "attacker_rule_correct": 35,
+  "majority_correct": 30,
+  "reported_accuracy": {
+   "GPT-5": 0.971,
+   "Claude-4.5-Sonnet": 0.8857,
+   "DeepSeek-Reasoner": 0.857,
+   "GPT-4o-mini": 0.514
+  },
+  "reported_source": "SIABench (arXiv:2603.06422), alert-triage results table"
+ },
+ "rows": [
+  {
+   "alert": "alert_1",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.9",
+    "151.101.208.166"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_2",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.25",
+    "23.46.180.139"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_3",
+   "gold": "false positive",
+   "ips": [
+    "23.15.4.9",
+    "192.168.10.14"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_4",
+   "gold": "false positive",
+   "ips": [
+    "195.88.55.95",
+    "192.168.10.9"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_5",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.3",
+    "192.168.10.5"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_6",
+   "gold": "false positive",
+   "ips": [
+    "104.27.144.213",
+    "192.168.10.16"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_7",
+   "gold": "false positive",
+   "ips": [
+    "13.107.4.50",
+    "192.168.10.15"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_8",
+   "gold": "false positive",
+   "ips": [
+    "165.254.0.104",
+    "192.168.10.14"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_9",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.14",
+    "125.1.77.19"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_10",
+   "gold": "false positive",
+   "ips": [
+    "104.88.21.85",
+    "192.168.10.25"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_11",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.14",
+    "13.107.4.50"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_12",
+   "gold": "false positive",
+   "ips": [
+    "13.107.4.50",
+    "192.168.10.15"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_13",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.9",
+    "54.164.201.153"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_14",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.9",
+    "68.67.178.111"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_15",
+   "gold": "false positive",
+   "ips": [
+    "104.88.86.189",
+    "192.168.10.25"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_16",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.9",
+    "23.194.182.116"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_17",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.17",
+    "34.205.104.161"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_18",
+   "gold": "false positive",
+   "ips": [
+    "13.107.4.50",
+    "192.168.10.15"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_19",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.12",
+    "192.168.10.255"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_20",
+   "gold": "false positive",
+   "ips": [
+    "23.203.82.243",
+    "192.168.10.17"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_21",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.25",
+    "151.101.20.207"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_22",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.25",
+    "192.243.232.58"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_23",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.25",
+    "81.90.96.10"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_24",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.3",
+    "192.168.10.25"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_25",
+   "gold": "false positive",
+   "ips": [
+    "192.168.10.5",
+    "192.168.10.3"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_26",
+   "gold": "false positive",
+   "ips": [
+    "13.107.4.50",
+    "192.168.10.15"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_27",
+   "gold": "false positive",
+   "ips": [
+    "13.107.4.50",
+    "192.168.10.15"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_28",
+   "gold": "false positive",
+   "ips": [
+    "104.27.145.213",
+    "192.168.10.51"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_29",
+   "gold": "false positive",
+   "ips": [
+    "104.24.24.85",
+    "192.168.10.17"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_30",
+   "gold": "false positive",
+   "ips": [
+    "52.84.143.247",
+    "192.168.10.17"
+   ],
+   "attacker_rule": "false positive",
+   "attacker_correct": true,
+   "majority_correct": true
+  },
+  {
+   "alert": "alert_31",
+   "gold": "true positive",
+   "ips": [
+    "192.168.10.50",
+    "172.16.0.1"
+   ],
+   "attacker_rule": "true positive",
+   "attacker_correct": true,
+   "majority_correct": false
+  },
+  {
+   "alert": "alert_32",
+   "gold": "true positive",
+   "ips": [
+    "172.16.0.1",
+    "192.168.10.50"
+   ],
+   "attacker_rule": "true positive",
+   "attacker_correct": true,
+   "majority_correct": false
+  },
+  {
+   "alert": "alert_33",
+   "gold": "true positive",
+   "ips": [
+    "172.16.0.1",
+    "192.168.10.50"
+   ],
+   "attacker_rule": "true positive",
+   "attacker_correct": true,
+   "majority_correct": false
+  },
+  {
+   "alert": "alert_34",
+   "gold": "true positive",
+   "ips": [
+    "172.16.0.1",
+    "192.168.10.50"
+   ],
+   "attacker_rule": "true positive",
+   "attacker_correct": true,
+   "majority_correct": false
+  },
+  {
+   "alert": "alert_35",
+   "gold": "true positive",
+   "ips": [
+    "172.16.0.1",
+    "192.168.10.50"
+   ],
+   "attacker_rule": "true positive",
+   "attacker_correct": true,
+   "majority_correct": false
+  }
+ ]
+}

@@ -1,0 +1,64 @@
+{
+ "recordings": 27,
+ "distinct_alerts": 46,
+ "attack_alerts": 8,
+ "benign_alerts": 38,
+ "attack_named_by_alert_text": 6,
+ "attack_disguised_as_benign": 2,
+ "benign_flagged_by_rule": 0,
+ "rule_accuracy": 0.957,
+ "disguised": [
+  {
+   "recording": "schtask_create.zip",
+   "kind": "task",
+   "name": "\\Microsoft\\Windows\\SoftwareProtectionPlatform\\EventCacheManager",
+   "creator": "pgustavo"
+  },
+  {
+   "recording": "schtask_modification.zip",
+   "kind": "task",
+   "name": "\\Microsoft\\Windows\\SoftwareProtectionPlatform\\EventCacheManager",
+   "creator": "pgustavo"
+  }
+ ],
+ "leaked": [
+  {
+   "recording": "empire_schtasks_creation_standard_user.zip",
+   "kind": "task",
+   "name": "\\MordorSchtask"
+  },
+  {
+   "recording": "empire_smbexec_dcerpc_smb_svcctl.zip",
+   "kind": "service",
+   "name": "PGUJLOAKFQFVOMHGFQPX"
+  },
+  {
+   "recording": "empire_psexec_dcerpc_tcp_svcctl.zip",
+   "kind": "service",
+   "name": "Updater"
+  },
+  {
+   "recording": "covenant_sharpsc_create_dcerpc_smb_svcctl.zip",
+   "kind": "service",
+   "name": "OTR"
+  },
+  {
+   "recording": "covenant_sharpsc_create_dcerpc_smb_svcctl.zip",
+   "kind": "service",
+   "name": "Cyb3rWard0g"
+  },
+  {
+   "recording": "empire_schtasks_creation_execution_elevated_user.zip",
+   "kind": "task",
+   "name": "\\MordorElevated"
+  }
+ ],
+ "benign_flagged": [],
+ "benign_creators": [
+  "MORDORDC$",
+  "WORKSTATION5$",
+  "WORKSTATION6$",
+  "sbeavers",
+  "wardog"
+ ]
+}
