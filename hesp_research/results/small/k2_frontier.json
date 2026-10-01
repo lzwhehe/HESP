@@ -1,0 +1,86 @@
+{
+ "Qwen3-235B-A22B-Thinking-2507": {
+  "matched": 589,
+  "accuracy": 0.2631578947368421,
+  "accuracy_resistant": 0.22580645161290322,
+  "benchmark_success": 0.2920203735144312
+ },
+ "claude-haiku-4.5": {
+  "matched": 589,
+  "accuracy": 0.15280135823429541,
+  "accuracy_resistant": 0.12365591397849462,
+  "benchmark_success": 0.1935483870967742
+ },
+ "claude-opus-4.5": {
+  "matched": 589,
+  "accuracy": 0.533106960950764,
+  "accuracy_resistant": 0.43010752688172044,
+  "benchmark_success": 0.597623089983022
+ },
+ "claude-sonnet-4.5": {
+  "matched": 589,
+  "accuracy": 0.4244482173174873,
+  "accuracy_resistant": 0.34946236559139787,
+  "benchmark_success": 0.4770797962648557
+ },
+ "gpt-5-mini": {
+  "matched": 589,
+  "accuracy": 0.24448217317487267,
+  "accuracy_resistant": 0.1881720430107527,
+  "benchmark_success": 0.35823429541595925
+ },
+ "gpt-5-nano": {
+  "matched": 589,
+  "accuracy": 0.04074702886247878,
+  "accuracy_resistant": 0.03763440860215054,
+  "benchmark_success": 0.0865874363327674
+ },
+ "gpt-5.1-rhigh": {
+  "matched": 589,
+  "accuracy": 0.22410865874363328,
+  "accuracy_resistant": 0.20430107526881722,
+  "benchmark_success": 0.5755517826825127
+ },
+ "gpt-5.1-rlow": {
+  "matched": 589,
+  "accuracy": 0.13412563667232597,
+  "accuracy_resistant": 0.10752688172043011,
+  "benchmark_success": 0.4431239388794567
+ },
+ "gpt-5.1-rmed": {
+  "matched": 589,
+  "accuracy": 0.20882852292020374,
+  "accuracy_resistant": 0.24731182795698925,
+  "benchmark_success": 0.533106960950764
+ },
+ "gpt-5.1-rnone": {
+  "matched": 589,
+  "accuracy": 0.12224108658743633,
+  "accuracy_resistant": 0.12365591397849462,
+  "benchmark_success": 0.31069609507640067
+ },
+ "gpt-5": {
+  "matched": 589,
+  "accuracy": 0.30560271646859083,
+  "accuracy_resistant": 0.24193548387096775,
+  "benchmark_success": 0.3633276740237691
+ },
+ "gpt-5_high": {
+  "matched": 589,
+  "accuracy": 0.5076400679117148,
+  "accuracy_resistant": 0.44623655913978494,
+  "benchmark_success": 0.5534804753820034
+ },
+ "grok4": {
+  "matched": 589,
+  "accuracy": 0.2937181663837012,
+  "accuracy_resistant": 0.24731182795698925,
+  "benchmark_success": 0.33446519524617996
+ },
+ "o3": {
+  "matched": 589,
+  "accuracy": 0.3531409168081494,
+  "accuracy_resistant": 0.3118279569892473,
+  "benchmark_success": 0.4465195246179966
+ }
+}
