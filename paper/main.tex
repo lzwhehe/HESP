@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb}
-\usepackage{booktabs,makecell,multirow}
+\usepackage{array,booktabs,makecell,multirow}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
@@ -13,6 +13,7 @@
 \usepackage{placeins}
 \usepackage{fancyvrb}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalize,noabbrev]{cleveref}
 
@@ -21,13 +22,14 @@
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
 \DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
 \graphicspath{{figures/}{../docs/assets/}}
+\input{tables/audit_numbers}
 \setlength{\emergencystretch}{3em}
 % Bold run-in paragraph headings, as in ACSAC/RAID exemplars ("Example.", "Limitations.").
 \renewcommand{\paragraph}[1]{\par\vspace{0.6ex}\noindent\textbf{#1.}\hspace{0.45em}\ignorespaces}
 
 \begin{document}
 
-\title{\hesp{}: Securing Local LLM Alert Triage by Letting the Model Read, Not Decide}
+\title{Do Benchmarks for LLM Security-Operations Agents Measure Investigation?}
 
 \author{\IEEEauthorblockN{Zhuowen Liu}
 \IEEEauthorblockA{Cybersecurity Lab\\
@@ -47,10 +49,10 @@ Dalian, Liaoning, China\\
 \input{sections/abstract}
 \input{sections/introduction}
 \input{sections/background}
-\input{sections/threat}
-\input{sections/approach}
-\input{sections/setup}
+\input{sections/method}
 \input{sections/results}
+\input{sections/scores}
+\input{sections/design}
 \input{sections/discussion}
 \input{sections/related}
 \input{sections/conclusion}

@@ -9,7 +9,7 @@
 \xeCJKsetup{CJKecglue={\hskip 0.2em plus 0.1em}}
 \linespread{1.08}
 \usepackage{amsmath,amssymb}
-\usepackage{booktabs,makecell,multirow}
+\usepackage{array,booktabs,makecell,multirow}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
@@ -18,6 +18,7 @@
 \usepackage{placeins}
 \usepackage{fancyvrb}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalize,noabbrev]{cleveref}
 
@@ -26,6 +27,7 @@
 \newcommand{\repourl}{\url{https://github.com/lzwhehe/HESP}}
 \DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
 \graphicspath{{../figures/}{../../docs/assets/}}
+\input{../tables/audit_numbers}
 \setlength{\emergencystretch}{3em}
 \renewcommand{\paragraph}[1]{\par\vspace{0.6ex}\noindent\textbf{#1。}\hspace{0.2em}\ignorespaces}
 
@@ -40,7 +42,7 @@
 
 \begin{document}
 
-\title{\hesp{}：让模型只负责读取、不负责决定\\保护本地 LLM 告警分诊}
+\title{面向安全运营的 LLM 智能体基准\\真的在衡量调查能力吗？}
 
 \author{\IEEEauthorblockN{Zhuowen Liu}
 \IEEEauthorblockA{北陆先端科学技术大学院大学（JAIST）网络安全实验室\\
@@ -58,17 +60,17 @@
 \input{sections/abstract}
 \input{sections/introduction}
 \input{sections/background}
-\input{sections/threat}
-\input{sections/approach}
-\input{sections/setup}
+\input{sections/method}
 \input{sections/results}
+\input{sections/scores}
+\input{sections/design}
 \input{sections/discussion}
 \input{sections/related}
 \input{sections/conclusion}
 \input{sections/ethics}
 
 \section*{数据可得性}
-除初始研究的 1{,}944 个回合只保留了结果汇总外（勘误 E-2），全部 23{,}582 个 LLM 回合以及 v1.1 到 v1.3 不含 LLM 回合的日志都已归档并计算哈希。代码、冻结的协议、预测表、任务规格、结果文件、日志、勘误，以及重新生成每张表和每幅图的脚本见 \repourl{}。
+审计脚本、冻结的协议、我们审计过的每个 ExCyTIn 题集的逐题捷径标记、SIABench/GUIDE/OTRF 的派生结果，以及生成文中每张表、每幅图和每个数字的脚本见 \repourl{}。基准数据和智能体日志不再分发，脚本从公开来源下载或读取。
 
 {\footnotesize
 \bibliographystyle{IEEEtranN}

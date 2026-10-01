@@ -1,0 +1,28 @@
+\section{智能体的分数衡量了什么？}
+\label{sec:scores}
+
+基准中存在捷径，并不意味着智能体使用了它。ExCyTIn 的作者公开了 \lgModels{} 次智能体运行在报告成绩所用 589 道测试题上的完整日志（十个模型；GPT-5.1 有四种推理设置，GPT-5 有两种），并附有每道题的判分结果。借助这些日志，我们可以逐题回答 \textbf{RQ3}：智能体是因为捷径而成功的吗？分析方案在读取日志之前已经登记（\cref{sec:protocol}）；成功指判分器接受了最终答案。
+
+\begin{table*}[t]
+  \caption{题目点名答案所在告警时，智能体并不更常成功。每次公开运行在 589 道 ExCyTIn 测试题上的成功率（\%）：全部题目；点名终点告警的题（337）与其余题（252），以及两者之差和 95\% 区间（按事件重抽）；告警表查找可精确答对的题（"Lookup"，140）；抗捷径题（"Resist."，\lgResN：未点名，且两种查找都答不对），括号内为该运行在这些题上的排名。按总成功率排序。}
+  \label{tab:logs}
+  \centering\footnotesize
+  \input{../tables/audit_logs}
+\end{table*}
+
+\paragraph{点名告警并不帮助智能体} 如果智能体是通过找到被点名的告警来找到答案，那么它们在点名题上应当更常成功。事实并非如此（\cref{tab:logs}）。\lgModels{} 次运行中只有 \lgPos{} 次在点名题上成功率更高（单侧符号检验 $p=\lgP$）；差值在 \lgDmin{} 到 \lgDmax{} 个百分点之间，没有一个区间排除零。因此 \cref{sec:excytin} 中的分事件相关来自事件之间的差异，而不是点名本身。告警表查找可以精确答对的题目要容易一些：\lgModels{} 次运行中 \lgTPos{} 次在这些题上表现更好，差值在 \lgTmin{} 到 \lgTmax{} 个百分点之间（中位数 \lgTmedian），但只有 \lgTCI{} 个差值的区间排除零；这些题在各运行成功题中所占比例（\lgShareMin--\lgShareMax\%）与其在测试集中的比例（\oTable\%）接近。
+
+\paragraph{即使一次查询就够，智能体也照样调查} 日志说明了捷径为什么没有被使用。在 140 道只需查询一次告警表就能答对的题上，Claude-Opus-4.5 平均发出 \tcOpusStepsLookup{} 次 SQL 查询，其余题上为 \tcOpusStepsOther{} 次；GPT-5 为 \tcGFiveStepsLookup{} 次和 \tcGFiveStepsOther{} 次，o3 为 \tcOThreeStepsLookup{} 次和 \tcOThreeStepsOther{} 次。在这些题上，三次运行中查询过 \texttt{SecurityAlert} 表的比例都不超过 \tcMaxAlertTable\%（Claude-Opus-4.5：\tcOpusAlertTable\%）。不论题目说了什么，智能体都按照基准提示词的通用策略行事：探索表结构，在事件表之间跳转。
+
+\paragraph{抗捷径题目给出同样的排名} 在 \lgResN{} 道既不点名终点告警、两种查找也答不对的题上，每次运行的成功率最多比总体低 \lgDropMax{} 个百分点，排名几乎不变（Kendall $\tau=\lgTau$；\cref{fig:logs}）。最强的四次运行与相邻者互换位置，没有一次运行的排名变动超过两位。
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig_logs.pdf}
+  \caption{成功率只微弱地依赖题目所需的调查量。每次公开运行在全部题目、140 道一次告警表查找即可答对的题目以及 \lgResN{} 道抗捷径题目上的成功率。}
+  \label{fig:logs}
+\end{figure}
+
+\paragraph{失败很少能用调查深度解释} 最好的一次运行在 140 道一次查找即可答对的题中答错 \tcOpusFail{} 道；其中只有 \tcOpusFailNoAns{} 道没有提交答案，所以它既不是步数耗尽，也不是放弃。在按生成路径长度（ExCyTIn 用作难度的指标）所做的探索性划分中，Claude-Opus-4.5 在 \plN{} 道答案就在背景所述告警中的题上成功率为 \plOpusOne\%，路径长度为三的题为 \plOpusThree\%，更长的题为 \plOpusFive\%。即使没有任何东西需要调查，最强的智能体也答错了超过四分之一。
+
+\smallskip\noindent\textbf{发现 2（RQ3）。}ExCyTIn 的智能体没有利用点名捷径：无论题目是否点名答案所在告警，它们的成功率都相同，强智能体的排名在抗捷径题目上依然成立。分数只微弱地反映调查深度：一次查找就能答对的题只比需要多跳跳转的题容易几个百分点，而最强的智能体在无需调查的题上仍答错超过四分之一。这个基准衡量的更多是智能体能否可靠地取回并报告正确的值，而不是它调查得有多深。

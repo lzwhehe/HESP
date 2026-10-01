@@ -1,10 +1,8 @@
 \section{相关工作}
 \label{sec:related}
 
-\paragraph{安全运营中的 LLM 智能体} 近期工作评估并构建用于事件分析和分诊的 LLM 智能体。SIABench 在安全事件分析和告警分诊上对 LLM 智能体做基准测试~\citep{siabench}，ExCyTIn-Bench 在事件图上的威胁调查上做基准测试~\citep{excytin}，CORTEX 协调多个 LLM 智能体做告警分诊~\citep{cortex}；Clouseau 用分层 LLM 智能体重建攻击叙事，并报告开源权重模型落后于专有模型~\citep{clouseau}。这些工作测量或改进模型调查得多好；我们关心的是模型负责调查之后攻击者能做什么，并把决定移出模型。思路上最接近的是 SENTINEL-RL，它把 LLM 限制在查询和摘要上，把处置决定交给一个训练好的策略~\citep{sentinelrl}；我们对分诊结论做同样的分工，并在攻击者面前评估它。LogInject 测量了通过日志字段对 LLM 日志分析实施的被动提示注入，发现没有单一防御能消除它~\citep{loginject}；我们的读取器攻击在分诊智能体中证实了这一威胁，并说明了哪条架构规则能阻止它。
+\paragraph{安全运营 LLM 智能体的基准} ExCyTIn-Bench~\citep{excytin}、SIABench~\citep{siabench} 和 Cyber Defense Benchmark~\citep{cyberdefensebench} 分别在威胁调查、事件分析和威胁狩猎上评测智能体；AuditBench 在告警分诊、持久化排查等审计日志调查任务上评测~\citep{auditbench}，DiagChain 和 CyberClear 评测从遥测重建攻击链~\citep{diagchain,cyberclear}，Cybench 评测攻击性任务~\citep{cybench}。SIR-Bench~\citep{sirbench} 在动机上最接近：它评估事件响应智能体是否发现了新证据，而不是复述告警。这些工作构建基准；我们用不调查的基线和逐题日志审计现有基准，我们的检查项同样适用于新基准。CORTEX、Clouseau、SENTINEL-RL 等系统构建分诊与调查智能体~\citep{cortex,clouseau,sentinelrl}；关于这类系统的结论，依赖的正是我们所审计的这类基准。
 
-\paragraph{提示注入防御} 模型层面的防御在输入格式或训练中把指令与数据分开~\citep{struq,secalign}，MELON~\citep{melon} 这类检测式防御比较智能体在有无检索数据时的行为；它们都不能对自适应攻击者提供保证~\citep{promptinjection_bench,agentdojo}。系统层面的防御约束智能体能做什么：IsolateGPT 隔离 LLM 应用~\citep{isolategpt}，Progent 对工具调用施加权限策略~\citep{progent}，CaMeL 和 FIDES 追踪值的来源并在工具运行前施加策略~\citep{camel,fides}。\hesp{} 同样认为安全不能依赖模型的推理，但分诊智能体没有危险的工具：它唯一有害的输出是结论。读取器信任是同一类来源规则，被用在分诊中唯一关键的那个决定上，并在结论上做成不对称的。
+\paragraph{安全领域的重新评估} Arp 等人总结了安全中机器学习的常见陷阱，包括虚假相关和只在实验室评测~\citep{arp2022dos}。Engelen 等人发现 CIC-IDS2017 中的标注和生成错误~\citep{engelen2021cicids}，而它正是 SIABench 分诊告警的来源。Bilot 等人重新评估溯源入侵检测系统，表明简单基线与复杂系统相当~\citep{bilot2025simpler}。我们把这类重新评估带到 LLM 智能体基准上：捷径可能藏在题目文字里而不是特征里，而逐题的智能体日志让我们能检验模型是否用了它。
 
-\paragraph{基于溯源的检测与分诊} NoDoze 依据告警周围溯源的异常程度对告警排序~\citep{nodoze}，Kairos 从全系统溯源中检测并重建入侵~\citep{kairos}。它们决定分析员应该看什么；\hesp{} 决定下一步运行哪个查询、证据是否已经足够。
-
-\paragraph{序贯诊断} 按期望信息增益选择测试可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}，它是基于模型的诊断~\citep{dekleer1987}的基础，并对含噪假设识别具有近似最优保证~\citep{dasgupta2004,golovin2010}。我们原样使用这一准则；我们的贡献在于它相对于模型所处的位置，以及这对攻击者意味着什么。
+\paragraph{机器学习中的捷径与痕迹} 捷径学习~\citep{geirhos2020shortcut}和标注痕迹~\citep{gururangan2018artifacts}描述的是模型利用基准中的线索。我们在 ExCyTIn 上的结果是相反的情形：线索存在，模型没有使用，但基准仍然没有衡量它想衡量的东西，因为成功率只微弱地依赖题目所需的调查。

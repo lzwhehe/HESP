@@ -1,0 +1,38 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{What Counts as a Shortcut}
+\label{sec:def}
+
+A benchmark item has a \emph{shortcut} if a fixed rule that uses only information available to the agent, and that does not perform the investigation the benchmark describes, produces the correct answer. The definition has three parts. The rule must be \emph{fixed}: written once and applied to every item, not tuned per item. It must use only \emph{what the agent can see}: the prompt, and data the agent can query; a rule that reads the benchmark's answer key or its generation graph only bounds the problem. And it must \emph{skip the intended work}: for ExCyTIn, the multi-hop pivot from start alert to end alert; for SIABench, the analysis of the packet capture; for GUIDE, the use of the incident's evidence; for OTRF, the correlation of an event with its context.
+
+We distinguish four kinds of shortcut, by where the information comes from.
+\begin{itemize}\setlength\itemsep{1pt}
+\item[\textbf{S1}] \emph{Target leakage}: the question names the evidence that holds the answer. Generated questions describe the end of the generation path in order to be unambiguous, and the description is enough to find it.
+\item[\textbf{S2}] \emph{Context labels}: the label is determined by who produced it rather than by the incident, for example by an organization's grading policy.
+\item[\textbf{S3}] \emph{Generation artifacts}: the way the data was produced leaves a cue that separates the classes, such as the address of the attack network or the default names of attack tools, while benign data is drawn from a different, easier distribution.
+\item[\textbf{S4}] \emph{Constructed determinism}: in environments built by the benchmark authors, a fixed procedure over the evidence model solves every case, so the benchmark cannot separate a model that investigates from a script.
+\end{itemize}
+The kinds are not exclusive. They differ in who can fix them: S1 and S4 are fixed by changing how questions or environments are generated; S2 and S3 require different data.
+
+\subsection{Investigation-Free Baselines}
+\label{sec:baselines}
+
+For each benchmark we write one rule of the cheapest kind that the shortcut allows, with no LLM.
+
+\paragraph{ExCyTIn} Two rules answer a question by reading the alert it names. The \emph{graph baseline} ranks the alert nodes of the incident graph by word overlap between the question and the alert name (stop words removed), takes the top alert, and answers with its first neighboring entity whose type matches the type the question asks for (a fixed keyword list maps ``IP address'' to IP entities, ``account'' to account entities, and so on), excluding values already in the question. The \emph{alert-table baseline} does the same using only the \texttt{AlertName} and \texttt{Entities} columns of the \texttt{SecurityAlert} table, which every agent can query. The graph is not visible to agents; the graph baseline measures how much of the benchmark the naming cue explains, and the alert-table baseline shows that an agent can exploit it. Both give a single answer, scored by exact string match after normalization. ExCyTIn instead scores with an LLM judge and gives partial credit for intermediate steps; our scoring is stricter, so the comparison favors the models. We also record two properties of each question: whether the end alert is ranked first by word overlap (\emph{named}), and whether the gold answer is an entity of the end alert (\emph{adjacent}).
+
+\paragraph{SIABench} The rule answers ``true positive'' if and only if the alert text involves 172.16.0.1, the address through which the CIC-IDS2017 attack network reaches the victim network~\citep{cicids2017}. We also report the majority class.
+
+\paragraph{GUIDE} The rule answers with the grade the same organization most often gave the same detector in its earlier incidents. We measure it on a time split within each organization of the training data, and compare it with classifiers that use only the incident's own metadata on organization-disjoint splits.
+
+\paragraph{OTRF} We treat every service installation and scheduled-task creation or update in 27 remote-execution recordings as an alert and label it from the recording's metadata. The rule calls an alert benign if the task lies under \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash} or is the OneDrive updater, or if the service runs \texttt{svchost -k} or a Defender component.
+
+\paragraph{Constructed environments} We also apply the method to three simulated triage environments that we built earlier for work on LLM triage agents: \emph{sec-triage} (72 cases of network and host alerts with competing benign and malicious causes), \emph{sigma-triage} (152 cases derived from SigmaHQ detection rules~\citep{sigmahq}), and \emph{comp-triage} (72 cases in which each attack is paired with legitimate activity that uses the same tools). The investigation-free baseline is a controller without an LLM: it chooses probes by expected information gain and stops when one observation specifically confirms the leading cause.
+
+\subsection{Protocol}
+\label{sec:protocol}
+
+The ExCyTIn rules were written on the 418 training questions of the benchmark's latest release and frozen, with written hypotheses, before a single run on its 599 test questions (\cref{app:protocol}). Afterwards we found that the scores in the ExCyTIn paper come from an earlier release with 589 test questions, generated from the same incidents, and that the authors publish per-question logs of 14 model runs on that release. Before reading any of these logs, we registered an addendum: the same frozen rules on the earlier release, and the comparison of each model's success on questions with and without the shortcut. The SIABench rule was found after reading the data and is reported as a post hoc observation; it is a single comparison on a documented property of the dataset. The GUIDE and OTRF measurements use the GUIDE training split only and the 27 OTRF recordings we downloaded; the GUIDE test split was not read.
+
+\paragraph{Statistics} ExCyTIn has only eight incidents, and questions from one incident share alerts and entities. We therefore resample incidents, not questions: 95\% intervals come from 2{,}000 incident-clustered bootstrap resamples (seed 2040). Across models we use one-sided sign tests. Model scores that we do not compute ourselves are copied from the benchmark papers and labeled as reported.

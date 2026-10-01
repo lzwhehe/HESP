@@ -1,0 +1,28 @@
+\section{What Do the Agents' Scores Measure?}
+\label{sec:scores}
+
+A shortcut in a benchmark does not mean that the agents use it. ExCyTIn's authors publish the full logs of \lgModels{} agent runs on the 589 test questions behind their reported scores (ten models; GPT-5.1 at four reasoning settings and GPT-5 at two), with the judge's verdict for every question. These logs let us ask, question by question, \textbf{RQ3}: do the agents succeed because of the shortcut? We registered the analysis before reading the logs (\cref{sec:protocol}); success means that the judge accepted the final answer.
+
+\begin{table*}[t]
+  \caption{Agents do not succeed more often when the question names the answer's alert. Success (\%) of each published run on the 589 ExCyTIn test questions: all questions; questions that name the end alert (337) and the others (252), with the difference and its 95\% interval (incidents resampled); questions the alert-table lookup answers exactly (``Lookup'', 140); and the shortcut-resistant questions (``Resist.'', \lgResN: not named, and neither lookup answers them), with the run's rank on them. Runs are sorted by overall success.}
+  \label{tab:logs}
+  \centering\footnotesize
+  \input{tables/audit_logs}
+\end{table*}
+
+\paragraph{Naming the alert does not help the agents} If agents found the answer by finding the named alert, they would succeed more often on named questions. They do not (\cref{tab:logs}). Only \lgPos{} of the \lgModels{} runs succeed more often on named questions (one-sided sign test $p=\lgP$); the differences range from \lgDmin{} to \lgDmax{} points, and no interval excludes zero. The per-incident correlation of \cref{sec:excytin} therefore comes from differences between incidents, not from the naming. Questions that the alert-table lookup answers exactly are somewhat easier: \lgTPos{} of \lgModels{} runs do better on them, by \lgTmin{} to \lgTmax{} points (median \lgTmedian), but only \lgTCI{} of these differences have intervals that exclude zero, and these questions make up a share of each run's successes (\lgShareMin--\lgShareMax\%) close to their share of the test set (\oTable\%).
+
+\paragraph{The agents investigate even when one query would do} The logs show why the shortcut is not used. On the 140 questions that a single query of the alert table answers, Claude-Opus-4.5 issues \tcOpusStepsLookup{} SQL queries on average, against \tcOpusStepsOther{} on the other questions; GPT-5 issues \tcGFiveStepsLookup{} and \tcGFiveStepsOther, o3 \tcOThreeStepsLookup{} and \tcOThreeStepsOther. On these questions, no run among the three queries the \texttt{SecurityAlert} table in more than \tcMaxAlertTable\% of cases (Claude-Opus-4.5: \tcOpusAlertTable\%). The agents follow the generic strategy of the benchmark's prompt, exploring the schema and pivoting through event tables, whatever the question says.
+
+\paragraph{Shortcut-resistant questions rank the agents the same way} On the \lgResN{} questions that neither name the end alert nor yield to either lookup, every run scores at most \lgDropMax{} points below its overall success, and the ranking of the runs is nearly unchanged (Kendall $\tau=\lgTau$; \cref{fig:logs}). The four strongest runs swap neighboring places, and no run moves by more than two ranks.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig_logs.pdf}
+  \caption{Success depends only weakly on how much investigation a question needs. For each published run: success on all questions, on the 140 questions one alert-table lookup answers, and on the \lgResN{} shortcut-resistant questions.}
+  \label{fig:logs}
+\end{figure}
+
+\paragraph{Depth explains little of the failures} The best run fails \tcOpusFail{} of the 140 questions that one lookup answers; it submits a wrong answer in all but \tcOpusFailNoAns{} of them, so it neither runs out of steps nor gives up. In an exploratory split by the length of the generation path, which ExCyTIn uses as its measure of difficulty, Claude-Opus-4.5 succeeds on \plOpusOne\% of the \plN{} questions whose answer lies in the alert already described in the context, against \plOpusThree\% for paths of length three and \plOpusFive\% for longer ones. Even with nothing to investigate, the strongest agent misses more than a quarter of the answers.
+
+\smallskip\noindent\textbf{Finding 2 (RQ3).} The ExCyTIn agents do not exploit the naming shortcut: their success is the same whether or not the question names the answer's alert, and the ranking of strong agents survives on shortcut-resistant questions. What the score reflects only weakly is the depth of investigation: a question that one lookup answers is a few points easier than one that needs a multi-hop pivot, and the strongest agent misses more than a quarter of the questions with nothing to investigate. The benchmark measures how reliably an agent retrieves and reports the right value more than how deeply it investigates.

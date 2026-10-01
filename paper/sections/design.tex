@@ -1,0 +1,30 @@
+\section{Building Benchmarks That Measure Investigation}
+\label{sec:design}
+
+\textbf{RQ4} asks what benchmark builders can do. Each shortcut kind suggests a check that costs little compared with building the benchmark (\cref{tab:checklist}). We illustrate the two least obvious ones.
+
+\begin{table}[t]
+  \caption{Checks for benchmark builders, with the shortcut kind each one targets.}
+  \label{tab:checklist}
+  \centering\footnotesize
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.55cm}>{\raggedright\arraybackslash}p{7.25cm}@{}}
+    \toprule
+    Kind & Check \\
+    \midrule
+    all & \textbf{Report an investigation-free floor.} Publish one fixed rule without an LLM next to the model scores; a score below it is not evidence of investigation. \\
+    S1 & \textbf{Measure target leakage.} Rank the candidate evidence by plain text overlap with the question; if the target ranks first far more often than chance, describe it by role or time instead of by name. \\
+    S2 & \textbf{Split by the source of the label.} Hold out organizations (or analysts) and report how much of the label the source alone explains. \\
+    S3, S4 & \textbf{Pair each attack with a benign twin} that uses the same tools, accounts, or rule, so that no single observation separates them. \\
+    all & \textbf{Check that difficulty tracks depth.} Report success by required investigation (hops, shortcut flags); a benchmark that measures investigation should show lower success where more is needed. \\
+    all & \textbf{Release per-item flags and logs.} Flags let others score shortcut-free subsets; logs make analyses like \cref{sec:scores} possible. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Benign twins remove the single-observation shortcut} The third of our simulated environments, comp-triage, was built against shortcut S4. Each of its three scenarios (remote service creation, a scheduled task, a large outbound transfer) pairs an attack with three legitimate activities that use the same tools; for remote service creation, lateral movement with stolen administrator credentials competes with an administrator's maintenance, an authorized penetration test, and a deployment agent. No cause has an observation that it alone produces, and 18 of the 72 cases are attacks. The LLM-free controller that solves the other two environments by waiting for one confirming observation identifies the correct cause in only \compSingle{} of \compN{} cases and escalates \compSingleEsc. A controller that combines several observations identifies \compJoint{} but closes \compJointMissed{} attacks as their benign twins. The pair design turns triage back into a problem in which evidence must be combined and in which the cost of a wrong combination is a missed attack, which is what an investigation benchmark should measure.
+
+\paragraph{Benign twins exist in real logs, but rarely in public datasets} The disguised task in OTRF (\cref{sec:otrf}) is a natural twin: its name and folder are those of a Windows task, and only the creating account and logon type separate it. In the recordings we audited, it is the only such case; the benign events never include an administrator doing the same thing legitimately. Building twins requires recording benign administration alongside the attacks, with the same tools, which none of the public datasets we audited does.
+
+\paragraph{Shortcut-resistant subsets} For ExCyTIn, we release the per-question flags (named, adjacent, lookup answers) for every question set we audited and the list of the \lgResN{} shortcut-resistant test questions. On these questions, the ranking of strong agents holds (\cref{sec:scores}), and a lookup scores zero by construction, so a model's score there is not inflated by naming.
+
+\smallskip\noindent\textbf{Finding 3 (RQ4).} Each shortcut kind has a cheap check. The checks that change what a benchmark measures are a reported investigation-free floor, benign twins, and a test that success falls as the required investigation grows.

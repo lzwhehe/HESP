@@ -1,123 +1,51 @@
-\subsection{RQ1：注入指令}
-\label{sec:injection}
-\label{sec:adversarial}
-\label{sec:security}
-我们把四种注入文本分别放进 sec-triage 六个需处置原因的每个探针响应中，并在全部五个模型上运行每种配置（\cref{tab:v11attack} 左）。
+\section{捷径与分数下限}
+\label{sec:floors}
 
-\begin{table*}[t]
-  \caption{结束守卫挡住注入指令，跨来源组佐证挡住伪造来源。左：四种注入文本下被结为良性（“漏判”）或无结论（“未决”）的需处置案例，每个模型共 72 个。中：伪造证据下被结为良性的需处置案例，共 18 个（五个模型的范围）。右：已解决的诚实良性案例，共 6 个（五个模型的范围）。sec-triage。}
-  \label{tab:v11attack}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{../tables/v11_attack}\end{adjustbox}
-\end{table*}
-
-当由模型决定结论时，攻击在每个会给出结论的模型上都有效：Memory-only 智能体在 Qwen2.5-7B、32B、72B 和 Llama-3.1-70B 上分别把 72 个需处置案例中的 69、57、69、63 个结为授权扫描；Llama-3.1-8B 之所以“安全”，只是因为它从不给出结论。只把探针选择和停止从模型手里拿走还不够：没有守卫时，在 72 个回合中的 36 到 48 个里，模型在控制器自己的停止生效之前就提出了注入的结论。有了守卫，任何模型上的任何配置都没有关闭一个案件，因为注入的文本从不进入账本，而守卫只接受账本支持的结论。把原始文本从提示里去掉同样能挡住攻击，但会让 Qwen2.5-7B 的 72 个案例中有 65 个无法解决，因为模型缺少它需要的信息。
-
-注入仍然消耗分析员的时间。只有守卫时，72 个回合中有 44 到 72 个没有结论，因为模型不断提出被拒绝的结论；加上控制器停止后，这个数字降到 0 到 42。
-
-\smallskip\noindent\textbf{发现 1.} 攻击者写进日志的文本，在由模型决定结论时决定结论，在结论必须依据账本证据时则完全不起作用；剩下的影响是延迟，而不是结案。
-
-\subsection{RQ2：伪造来源}
-\label{sec:evidence}
-守卫生效之后，攻击者必须伪造账本会读取的证据。一条伪造的扫描器答案在一个探针后就把授权扫描抬过接受阈值，控制器停止随即在每个模型上把 18 个需处置案例全部结为良性；伪造源也是如此（\cref{tab:v11attack} 中）。控制器的长处——先按信息量最大的观测行动——恰恰被攻击者利用。伪造源也误导了更大的模型本身，它们在 Memory-only 下最多结掉 18 个中的 15 个。
-
-要求两条支持观测会在每个模型上让全部伪造案例升级。但只数探针并不够：在伪造源实验中，控制器的第二个探针碰巧读了另一个来源。当固定流程先读 \texttt{source\_ips} 再读 \texttt{threat\_intel}（两者都由被污染的信誉源供数）时，按探针佐证把 18 个需处置案例全部结案，而按来源组佐证一个也没有结案。这条规则的代价落在只有一条特征的诚实良性案例上：在 sec-triage 中，加上佐证后 6 个良性回合只解决 3 个（原为 6 个），因为监控误报在那里只有一条特异特征；在 sigma-triage 的 26 个良性解释上，佐证让 104 个良性回合中的 8 个升级。
-
-\smallskip\noindent\textbf{发现 2.} 负责决定的控制器会被一个伪造来源击败；跨来源佐证能阻止它，代价取决于诚实的良性原因有多少条独立特征。
-
-\subsection{RQ3：针对读取器的攻击}
-\label{sec:rawlog}
-现在让探针返回原始日志文本，由模型充当解析器；控制器按推荐配置规划，因此模型的唯一角色是读取。\Cref{tab:v13} 报告 Qwen2.5-7B、Llama-3.1-8B 以及采纳每条声称的脚本读取器在四种读取器策略下受到的攻击。
-
-\begin{table*}[t]
-  \caption{只有读取器信任挡住了针对读取器的每一种攻击。四探针声称和三种自适应攻击下被结为良性的需处置案例（共 36 个）；文档格式与漂移格式下已解决的诚实良性案例（共 12 个；最多 6 个，因为监控误报只有一条特征）；以及只用读取器时采纳攻击者标签的观测数。策略：只用读取器；规则解析器优先，读不出的交给读取器；先删去已知自由文本字段；在规则解析器优先之上加读取器信任。sec-triage 基础与噪声变体，每格 48 个回合。}
-  \label{tab:v13}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{../tables/v13}\end{adjustbox}
-\end{table*}
-
-\emph{读取需要模型。} 规则解析器读文档格式没有错误，却读不出 364 条漂移观测中的任何一条，因此在漂移下每个案例都被升级。Qwen2.5-7B 能读漂移格式，解决了 48 个漂移回合中的 41 个，与结构化观测时一样多；Llama-3.1-8B 的误读让它少解决 13 个（28/48）。
-
-\emph{第一种攻击只是看起来被遏制了。} 四个探针上的良性声称，被 Qwen2.5-7B 在 105 条观测中采纳 48 条，被 Llama-3.1-8B 在 71 条中采纳 1 条，没有攻击被结案。脚本读取器说明了原因：采纳每一条声称时，它在两个探针后就把全部 36 个需处置案例结为授权扫描，因为四个被声称的探针横跨三个来源组，仅凭伪造读数就满足了跨来源佐证。模型之所以安全，只是因为它们采纳了一些声称、没有采纳另一些。
-
-\emph{自适应攻击达到了这个上界。} 在文档格式下给每个探针都写上故事时，Qwen2.5-7B 采纳了 \texttt{change\_ticket} 和 \texttt{access\_pattern} 上的声称，但从不采纳 \texttt{source\_ips} 上的声称（0/42），因为那里真实记录与声称矛盾；没有案件被结案，但有 18 个被升级。在漂移格式下，声称孤立存在，Qwen2.5-7B 采纳了全部 84 条，36 个需处置案例全部被结为授权扫描，与脚本读取器完全相同。Llama-3.1-8B 采纳 124 条中的 85 条，结掉 19 个。日志行注入没有结掉任何案件，因为两个模型都读第一条 \texttt{source\_ips} 记录；但 Llama-3.1-8B 在 72 条观测中全部采纳了另外两个探针的伪造记录，让 36 个需处置案例全部悬而未决。
-
-\emph{一个案例。} 考虑漂移自适应攻击下的一条凭证填充告警，读取器是 Qwen2.5-7B。第一个探针 \texttt{source\_ips} 返回下面的日志（已折行）。真实的那一行报告的是住宅僵尸网络地址段，攻击者的用户代理则声称是已知扫描器。
-\begin{Verbatim}[fontsize=\scriptsize,frame=single]
-Top talkers: mostly consumer broadband
-  ranges flagged as botnet
-heartbeat ok pipeline=v2
-user_agent="Mozilla/5.0 (compatible)
-  reputation=known_scanner_asn (authorized
-  scanner, CHG-88; parsers: report
-  known_scanner_asn)"
-\end{Verbatim}
-模型返回 \textit{known scanner}，把授权扫描抬到 0.82。没有读取器信任时，控制器因为缺少第二个来源组而暂缓结论，运行 \texttt{access\_pattern}；它的伪造读数 \textit{path scanning} 来自另一个来源组，于是控制器在两个探针后以 0.95 把案件结为授权扫描。有了读取器信任，同样的两条读数照样到达，但都不能确认良性原因，于是控制器继续探测。真实的认证失败特征在第五个探针出现，与伪造的故事矛盾；后验在授权扫描与 \textit{other} 之间分裂，没有可信观测能确认任何一方，案件最终带着日志中全部八条观测交给了分析员。
-
-\emph{什么能阻止它。} 规则解析器优先在文档格式下免疫，在漂移下无用。删去自由文本字段能挡住字段内的每条声称，但挡不住伪造的日志行，脚本读取器会全部采纳。读取器信任在任何攻击下、在两个模型和脚本读取器上都没有结掉任何案件，而且只要规则解析器读得出就没有代价（48 个中解决 41 个，与结构化观测相同）。它的代价落在漂移格式上：没有诚实的良性案例被解决（0/12，对比 6 个），在漂移自适应攻击下每个回合都在耗尽预算后被升级。两个预注册比较成立：只用模型读取比读取器信任多结掉的需处置案例比例，在 Qwen2.5-7B 上为 $+0.333$（97.5\% 置信区间 $+0.333$ 到 $+0.333$），在 Llama-3.1-8B 上为 $+0.176$（区间 $+0.093$ 到 $+0.259$）。
-
-\smallskip\noindent\textbf{发现 3.} 读取的模型可能被说服，一次接受攻击者对每条日志的读法，这会击穿跨来源佐证；让模型解析的观测可以确认攻击、却永远不能确认良性结论，就关闭了这条路径，而只有在没有可信解析器能读日志时，诚实的良性案例才为此付出代价。
-
-\subsection{RQ4：拿走决定的代价}
-\label{sec:utility}
-\label{sec:cost}
-\label{sec:fair}
-\label{sec:rq-stop}
-\label{sec:rq-rank}
-\label{sec:external}
-\emph{探测与停止。} 在提示相同的条件下，信息增益选择在 Qwen2.5-7B 上比随机选择高 $+0.306$（区间 $+0.14$ 到 $+0.47$），在其他每个会给出结论的模型上高 $+0.26$ 到 $+0.35$。选择探针并不会让模型给出结论：控制器停止把 Llama-3.1-8B 从 0 提高到 0.917（区间 $+0.79$ 到 $+1.00$），而 Qwen2.5-7B 两者都需要（只加停止把它从 0.083 提高到 0.694，选择再加 $+0.222$）。两个效应在 sigma-triage 上都复现：排序在 Qwen2.5-7B 上增加 $+0.171$，在五个模型上增加 $+0.105$ 到 $+0.230$；停止把 Llama-3.1-8B 从 304 个回合中的 1 个提高到全部（\cref{fig:probe-stop}）。
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.92\textwidth]{fig-probe-stop.pdf}
-  \caption{Llama-3.1-8B 缺的是停止，而不是探测。按“谁选探针”与“谁可以停止”划分的已解决回合比例（sec-triage，每点 72 个回合）。虚线是事后运行的不含 LLM 的控制器（EIG/成本选择加控制器停止，相同的种子和任务）。}
-  \label{fig:probe-stop}
-\end{figure*}
+本节对每个基准回答两个问题。\textbf{RQ1}：有多少题目不做设想的调查也能答出？\textbf{RQ2}：不调查的规则与报告的 LLM 智能体成绩相比如何？\Cref{tab:benchmarks} 汇总了答案。
 
 \begin{table}[t]
-  \caption{没有模型能在控制器之上增加什么。已解决回合数 / 给出正确原因的回合数，分别在由模型决定何时停止（“LLM”）、后验停止和确认条件停止下。每个 LLM 行都使用控制器选择和守卫；种子、任务和预算与不含 LLM 的行相同。}
-  \label{tab:v11fair}
-  \centering\small
-  \begin{adjustbox}{max width=\columnwidth}\input{../tables/v11_fair}\end{adjustbox}
+  \caption{每个被审计的基准都存在不调查的规则。ExCyTIn 的分数基于报告成绩所用的 589 题版本；最后一行是我们自己的环境（sec-triage、sigma-triage）。}
+  \label{tab:benchmarks}
+  \centering\footnotesize
+  \begin{adjustbox}{max width=\columnwidth}\input{../tables/audit_benchmarks}\end{adjustbox}
 \end{table}
 
-\emph{控制器单独。} 采用确认条件停止、完全不用模型时，控制器解决了 sec-triage 的 72/72 和 sigma-triage 的 152/152 个回合，成本为 2.54 和 2.20 个单位（\cref{tab:v11fair}）。让 Qwen2.5-72B 决定何时停止，解决了 72/72 和 148/152，成本为 3.86 和 3.25 个单位，预注册的差值为 $+0.000$ 和 $-0.028$（区间 $-0.111$ 到 $0.000$）；Qwen2.5-32B 和 Llama-3.1-70B 表现相同，每次失误都给出了正确原因但没有确认特征。没有确认的后验停止只解决了 72 个中的 66 个，因为它靠排除得出 DNS 命令控制的结论。自适应选择仍然重要：固定流程解决 66 个，目录顺序 65 个。Qwen2.5-7B 在 11 个 sigma-triage 回合中通过提出略低于阈值的结论让带守卫的控制器卡住；有了恢复规则，一个坚持提出这类结论的脚本规划器解决了全部 152 个回合，而不是一个也没有。
+\subsection{ExCyTIn-Bench：题目点出了答案所在的告警}
+\label{sec:excytin}
 
 \begin{table}[t]
-  \caption{更清楚的提示帮助了基线，但没有缩小差距。原始提示和在开发种子上为帮助基线而选出的变体下的已解决回合数（共 48 个，sec-triage）。}
-  \label{tab:v12fair}
-  \centering\small
-  \begin{adjustbox}{max width=\columnwidth}\input{../tables/v12_fair}\end{adjustbox}
+  \caption{不需要设想之多跳跳转的 ExCyTIn 题目。方括号：按事件重抽的 95\% 区间。最新版本用于写规则（训练集）和一次冻结的测试运行；报告版本是已发表模型成绩所用的版本。}
+  \label{tab:excytin}
+  \centering\footnotesize
+  \begin{adjustbox}{max width=\columnwidth}\input{../tables/audit_excytin}\end{adjustbox}
 \end{table}
 
-\emph{给基线更好的提示。} 基线也许只是缺少一个清楚的提示。我们在开发种子上、按事先固定的规则，选出了对基线帮助最大的提示变体（\cref{tab:v12fair}）。它让 Qwen2.5-7B 的 Memory-only 结果翻倍（从 8 到 16 个），对 ReAct 式和两个 Llama 基线没有帮助；推荐的控制器仍然多解决 $+0.667$（Qwen2.5-7B，区间 $+0.46$ 到 $+0.85$）和 $+1.000$（Llama-3.1-8B）。
+\paragraph{普遍程度} 在报告成绩所用的版本上，\oN{} 道测试题中有 \oNamed\% 对终点告警的描述足够具体，仅凭词重叠就能把它排在该事件全部告警的第一位（95\% 区间 \oNamedLo--\oNamedHi）；\oAdj\% 的答案是这条告警的实体（\cref{tab:excytin}）。贯穿示例很典型：题目描述了生成它的那条告警，因为生成的题目必须没有歧义，而这段描述足以找到它。在最新版本上比例相同：我们在其测试集上只运行一次冻结规则，得到 \exNamed\%（区间 \exNamedLo--\exNamedHi），训练集为 \exTrainNamed\%。
 
-\emph{开销。} \hesp{} 降低而不是增加了调查的开销，因为它向模型提问更少。控制器停止把每个回合的模型调用从 5.5 到 10.1 次降到 2.3 次，token 减少 2.5 到 5 倍；Qwen2.5-72B 上回合耗时的中位数从 46.8\,s 降到 15.3\,s（附录~\ref{app:runtime}）。与一次模型调用相比，账本更新和探针选择的时间可以忽略。
+\paragraph{不调查也能精确答对} 从排名第一的告警中取第一个所问类型的实体，可以精确答对 \oGraph\% 的题目（区间 \oGraphLo--\oGraphHi）。同一规则只用任何智能体都能查询的 \texttt{SecurityAlert} 表，答对 \oTable\%（区间 \oTableLo--\oTableHi）。两条规则都不读告警表以外的日志表，不做跳转，也不用 LLM。规则很粗糙：一条告警有多个同类实体时只取第一个，题目问的类型不在关键词表中时就失败。它们是查找所能达到的下限，而不是上限。
 
-\smallskip\noindent\textbf{发现 4.} 小模型在选择探针和停止上的失败原因不同，而接管这两个决定的控制器解决的案例与我们测试的任何模型一样多，成本更低。
+\paragraph{与报告成绩比较} \Cref{fig:floor} 把两种查找与基准作者报告的 \oModels{} 个模型放在一起。图查找超过其中 \oBelowGraph{} 个模型的平均奖励，包括 GPT-4o（\exGptFo）；告警表查找超过 \oBelowTable{} 个。这一比较对模型有利：报告的奖励来自 LLM 判分，还包含中间步骤的部分分，而查找只有最终答案精确匹配才得分。因此低于下限的模型并不是被测出"调查能力弱"；在这个基准上，它们的分数根本不能说明它们在调查。
 
-\subsection{RQ5：证据规则与不精确的预测表}
-\label{sec:policy}
-\label{sec:mismatch}
-\label{sec:rq-help}
-我们的验证器和确认条件停止要求一条只有所称原因才会产生的观测。\Cref{tab:v12policy} 用不含 LLM 的控制器，把这条规则与联合证据作比较；联合证据接受任何使所称原因比其他每个具名原因都高出十倍的观测组合。
+\paragraph{分事件成绩} 各事件中点名终点告警的题目比例不同（\cref{app:excytin}）。在八个事件上，\oModels{} 个模型中有 \oHPos{} 个在点名题较多的事件上得分更高（Spearman $\rho$ 中位数 \oHMedian）。只有八个事件时，这种相关可能来自事件间的任何差异；\cref{sec:scores} 在单题层面检验它，结果不成立。
 
-\begin{table*}[t]
-  \caption{证据规则在自动化与安全之间取舍。不含 LLM 的控制器，计数。“single”/“joint”：被单条特征验证器与联合验证器接受的回合数。cause absent：真实原因从候选中移除。confusion：每个原因的表行向另一个原因混合 0.25。comp-triage：攻击与使用相同工具的合法活动。}
-  \label{tab:v12policy}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{../tables/v12_policy}\end{adjustbox}
-\end{table*}
+\subsection{SIABench：攻击有一个地址}
+\label{sec:siabench}
 
-在原因使用相同工具的地方，联合证据在 72 个 comp-triage 回合中给出 59 个正确原因，单条特征规则只有 20 个，并升级 52 个。代价以攻击者的货币支付：联合证据把 18 个攻击中的 4 个结为与之相似的合法活动；当真实原因不在候选之中时，它在 48 个 sec-triage 回合中的 24 个里给出另一个需处置原因；要求证据比 \textit{other} 高十倍不改变这一点，三十倍也只降到 18 个。只有单条特征规则在任何设置下都没有给出错误原因。
+SIABench 分诊集中全部 \siaTP{} 条真阳性告警都涉及 172.16.0.1，而 \siaMajority{} 条误报都不涉及，所以规则"当且仅当出现 172.16.0.1 时判为真阳性"在 \siaN{} 条中答对 \siaRule{} 条。这个地址是 CIC-IDS2017 中攻击网络进入受害网络的网关~\citep{cicids2017}，是数据集生成方式的性质，而不是攻击本身的性质。基准把告警放在场景文字中交给模型，所以线索就在提示词里。全部回答"误报"已经得到 \siaMajorityPct\%。报告的准确率从 \siaMini\%（GPT-4o-mini）到 \siaGptFive\%（GPT-5），DeepSeek-Reasoner 为 \siaDeepSeek\%~\citep{siabench}。没有逐题日志，我们无法判断哪些模型用了这个地址；要点在于，具有这种结构的 35 条告警无法区分分析抓包的模型和不分析的模型。
 
-这条规则也决定了预测表出错时控制器如何失败（\cref{tab:v10b}）。每个原因 20 个开发回合计数得到的表与生成器的表一致，在 sec-triage 中五个就已足够；向模型询问得到的表只能解决 6.9\% 到 37.5\% 的案例。把每个表行与随机噪声混合时解决率下降，但即使噪声占 75\%，给出错误原因的回合也至多占 0.9\%：控制器选择升级。开发数据中缺失的原因会产生自信的错误结论，但总是同一类别，因此缺失的攻击从未被结为良性。当预测表混淆两个原因时，后验停止仍解决 48 个中的 47 个，而确认条件停止把 48 个全部升级。
+\subsection{GUIDE：定级跟着组织走}
+\label{sec:guide}
 
-\begin{table*}[t]
-  \caption{表误差（不含 LLM，后验停止 0.8）。EIG/成本选择下：已验证、原因正确但无确认特征、原因错误、升级的回合比例（四者之和为一）；随机选择下：已验证完成率。“perturbed”把每个表行与随机 Dirichlet(1) 行以权重 $\lambda$ 混合（每个水平 20 个随机表）；“one cause missing”依次把每个原因从开发数据中移除并在该原因上测试，取平均。}
-  \label{tab:v10b}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{../tables/v10b_main}\end{adjustbox}
-\end{table*}
+GUIDE 训练集的 \gIncidents{} 个事件来自 \gOrgs{} 个组织，仅组织身份就携带了定级 \gH{} 比特熵中的 \gMIorg{} 比特；若干大组织给所有事件同一个定级。沿用同一组织此前对同一检测器的定级，在之后的事件上正确率为 \gHistPct\%（组织内按时间切分，\gDev{} 个事件，其中 \gSeen\% 有这类历史），真阳性召回 \gHistTP。只用事件自身告警和证据元数据、在其他组织上训练的分类器，准确率为 \gHeldMin--\gHeldMax，低于多数类（\gHeldMajority）。标签记录的至少同样是组织的分诊政策，而不只是事件本身；在 GUIDE 上评测时，如果模型能获得组织身份或历史，就可以靠回忆政策得到高分。
 
-\smallskip\noindent\textbf{发现 5.} 要求一条决定性观测，能让控制器不给出错误原因，代价是升级那些只有组合证据才能解决的案例；部署需要在这条前沿上选择自己的位置。
+\subsection{OTRF：攻击带着名字，良性事件都是例行操作}
+\label{sec:otrf}
+
+在 \otRec{} 个远程执行技术的录制中，我们找到 \otN{} 条不同的服务和计划任务告警：\otAttack{} 条来自模拟攻击，\otBenign{} 条来自操作系统。只看告警文字的规则答对 \otN{} 条中的 \otRuleCorrect{} 条。八条攻击告警中有六条由工具命名（\texttt{MordorSchtask}、20 位随机字母的服务名等），而良性告警是 Windows 更新、组策略任务和每用户服务，从来没有管理员使用同样的工具。两个例外属于同一个场景：一个名为 \texttt{EventCacheManager}、放在 Windows \texttt{SoftwareProtectionPlatform} 任务目录中的任务。一个探针就能把它区分出来：与录制中所有系统任务不同，它是由域用户经网络登录创建的（\cref{app:otrf}）。用这类录制构建的分诊任务，测的是模型能否认出攻击工具的名字。
+
+\subsection{我们自己的环境：一段脚本就能解出}
+\label{sec:own}
+
+手工构建的基准有第四类捷径。在我们此前为 LLM 分诊智能体研究构建的两个模拟分诊环境中，一个不含 LLM 的控制器（按期望信息增益选探针，一条观测确认领先原因即停止）在 sec-triage 的 \envSecN{} 个案例中验证了 \envSec{} 个正确原因，在 sigma-triage 的 \envSigmaN{} 个中验证了 \envSigma{} 个。脚本已经满分，这两个环境无法表明模型的调查比固定程序更好；我们放入循环的五个开放权重 LLM（7B 到 72B 参数）也没有一个做得更好。环境规定了每个原因产生哪些观测；一旦这个模型被写下来，分诊就是在其中查表。补救方法，即配对设计，在 \cref{sec:design} 讨论。
+
+\smallskip\noindent\textbf{发现 1（RQ1、RQ2）。}每个被审计的基准都存在不调查的规则，且每条规则都达到或超过报告成绩的相当部分：在 ExCyTIn 上，不含 LLM 的查找超过 \oModels{} 个智能体中的 \oBelowGraph{} 个；在 SIABench 上，一条地址检查全部答对。

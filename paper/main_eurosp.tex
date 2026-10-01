@@ -9,13 +9,14 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
-\usepackage{booktabs,makecell,multirow}
+\usepackage{array,booktabs,makecell,multirow}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{xurl}
 \usepackage{adjustbox}
 \usepackage{placeins}
 \usepackage{fancyvrb}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage[colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
 \usepackage[capitalize,noabbrev]{cleveref}
 
@@ -24,10 +25,13 @@
 \newcommand{\repourl}{\todo{anonymous repository URL (e.g.\ anonymous.4open.science)}}
 \DeclareRobustCommand{\stepnum}[1]{\tikz[baseline=-0.6ex]\node[circle,fill=black,text=white,font=\scriptsize\bfseries,inner sep=0.6pt,minimum size=9pt]{#1};}
 \graphicspath{{figures/}{../docs/assets/}}
+\input{tables/audit_numbers}
+% Bold run-in paragraph headings.
+\renewcommand{\paragraph}[1]{\par\vspace{0.6ex}\noindent\textbf{#1.}\hspace{0.45em}\ignorespaces}
 
 \begin{document}
 
-\title{\hesp{}: Securing Local LLM Alert Triage by Letting the Model Read, Not Decide
+\title{Do Benchmarks for LLM Security-Operations Agents Measure Investigation?
 \thanks{NB: appendices, if any, did not benefit from peer review.}}
 
 \author{\IEEEauthorblockN{Anonymous Submission}}
@@ -37,25 +41,25 @@
 \input{sections/abstract}
 
 \begin{IEEEkeywords}
-alert triage, LLM agents, prompt injection, log injection, security operations, sequential diagnosis
+LLM agents, security operations, benchmarks, shortcut learning, alert triage, evaluation methodology
 \end{IEEEkeywords}
 
 \input{sections/introduction}
 \input{sections/background}
-\input{sections/threat}
-\input{sections/approach}
-\input{sections/setup}
+\input{sections/method}
 \input{sections/results}
+\input{sections/scores}
+\input{sections/design}
 \input{sections/discussion}
 \input{sections/related}
 \input{sections/conclusion}
 \input{sections/ethics}
 
 \section*{Data Availability}
-Journals of all 23{,}582 LLM episodes and of the LLM-free v1.1 to v1.3 episodes are archived and hashed, except the 1{,}944 of the initial study, for which only outcome summaries remain (erratum E-2). Code, frozen protocols, tables, task specifications, outcome files, journals, errata, and the scripts that regenerate every table and figure are at \repourl{}.
+The audit scripts, frozen protocols, per-question shortcut flags for every ExCyTIn question set we audited, the derived outputs for SIABench, GUIDE, and OTRF, and the scripts that generate every table, figure, and number in the text are at \repourl{}. Benchmark data and agent logs are not redistributed; the scripts download or read them from their public sources.
 
 \section*{Acknowledgments}
-\todo{authors to confirm this disclosure before submission} In line with the EuroS\&P policy on generative AI, we disclose that Claude (Anthropic), used through the Claude Code agent, was used extensively in this work: to write most of the controller, experiment, and analysis code, to write the scripts that generate every table and figure, and to draft and edit the text of all sections. All numbers in the paper are produced by scripts from the raw outcome files. The authors directed the work, approved every pre-registration and its changes, reviewed the code, results, and text, and take full responsibility for the content.
+\todo{authors to confirm this disclosure before submission} In line with the EuroS\&P policy on generative AI, we disclose that Claude (Anthropic), used through the Claude Code agent, was used extensively in this work: to write most of the audit and analysis code, to write the scripts that generate every table and figure, and to draft and edit the text of all sections. All numbers in the paper are produced by scripts from the raw outcome files. The authors directed the work, approved every pre-registration and its changes, reviewed the code, results, and text, and take full responsibility for the content.
 
 {\footnotesize
 \bibliographystyle{IEEEtranN}

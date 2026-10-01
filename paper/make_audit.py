@@ -1,8 +1,8 @@
-"""Generate the tables and the figure of the benchmark-shortcut paper from hesp_research/results/audit/*.
+"""Generate the tables, figures, and prose numbers of the benchmark-audit paper from hesp_research/results/audit/*.
 
 Numbers in the paper are never typed by hand. Run after any audit output changes:
 
-    python paper/make_audit.py        # writes paper/tables/audit_*.tex and paper/figures/fig_shortcut.pdf
+    python paper/make_audit.py   # writes paper/tables/audit_*.tex and paper/figures/fig_floor.pdf, fig_logs.pdf
 """
 import json
 import re
@@ -12,6 +12,11 @@ HERE = Path(__file__).resolve().parent
 RES = HERE.parent / "hesp_research" / "results"
 AUD = RES / "audit"
 OUT = HERE / "tables"
+NICE = {"claude-opus-4.5": "Claude-Opus-4.5", "gpt-5.1-rhigh": "GPT-5.1 (high)", "gpt-5_high": "GPT-5 (high)",
+        "gpt-5.1-rmed": "GPT-5.1 (medium)", "claude-sonnet-4.5": "Claude-Sonnet-4.5", "o3": "o3",
+        "gpt-5.1-rlow": "GPT-5.1 (low)", "gpt-5": "GPT-5", "gpt-5-mini": "GPT-5-mini", "grok4": "Grok-4",
+        "gpt-5.1-rnone": "GPT-5.1 (none)", "Qwen3-235B-A22B-Thinking-2507": "Qwen3-235B-Thinking",
+        "claude-haiku-4.5": "Claude-Haiku-4.5", "gpt-5-nano": "GPT-5-nano"}
 
 
 def load(name):
@@ -28,60 +33,74 @@ def pct(x):
     return f"{100 * x:.1f}"
 
 
-def macros(m):
-    """Numbers quoted in the prose, as LaTeX macros (\\newcommand), so the text never retypes them."""
-    L = [f"\\newcommand{{\\{k}}}{{{v}}}" for k, v in m.items()]
-    write("audit_numbers", L)
+def ci(c):
+    return f"[{pct(c[0])}, {pct(c[1])}]"
+
+
+def sgn(x, nd=1):
+    """Signed number with a typographic minus."""
+    return f"{x:+.{nd}f}".replace("-", "$-$")
 
 
 def guide_numbers():
     t = (AUD / "guide_diagnose.txt").read_text(encoding="utf-8")
-    hist = re.search(r"org\+detector history\s+accuracy ([\d.]+)\s+TP recall ([\d.]+)", t)
-    maj = re.search(r"global majority\s+accuracy ([\d.]+)", t)
-    mi = re.search(r"I\(grade; org\) = ([\d.]+) bits\s+H\(grade\) = ([\d.]+)", t)
-    seen = re.search(r"seen in the org's past: ([\d.]+)%", t)
-    split = re.search(r"fit ([\d,]+), dev ([\d,]+)", t)
-    inc = re.search(r"([\d,]+) incidents in ([\d,]+) orgs", t)
-    det = re.search(r"detector\s+([\d.]+)\s*$", t, re.M)
-    ent = re.search(r"entity_types\s+([\d.]+) -> ([\d.]+)", t)
-    held = (AUD / "guide_orgheldout.txt").read_text(encoding="utf-8") if (AUD / "guide_orgheldout.txt").exists() else ""
-    hmaj = re.search(r"majority-class accuracy on dev sample:\s*([\d.]+)", held)
-    pil = json.loads((AUD / "guide_orgheldout.json").read_text(encoding="utf-8"))
-    accs = [v["accuracy"] for k, v in pil.items() if isinstance(v, dict) and "accuracy" in v]
-    return {"hist_acc": float(hist.group(1)), "hist_tp": float(hist.group(2)), "majority": float(maj.group(1)),
-            "mi_org": float(mi.group(1)), "h_grade": float(mi.group(2)), "seen": float(seen.group(1)),
-            "dev": split.group(2), "incidents": inc.group(1), "orgs": inc.group(2), "mi_det": float(det.group(1)),
-            "ent_mi": float(ent.group(1)), "ent_mi_det": float(ent.group(2)),
-            "held_majority": float(hmaj.group(1)) if hmaj else None, "held_min": min(accs), "held_max": max(accs)}
+    held = (AUD / "guide_orgheldout.txt").read_text(encoding="utf-8")
+    pil = load("guide_orgheldout.json")
+    accs = [v["accuracy"] for v in pil.values() if isinstance(v, dict) and "accuracy" in v]
+    g = lambda pat, txt=t: re.search(pat, txt)  # noqa: E731
+    return {"hist_acc": float(g(r"org\+detector history\s+accuracy ([\d.]+)").group(1)),
+            "hist_tp": float(g(r"org\+detector history\s+accuracy [\d.]+\s+TP recall ([\d.]+)").group(1)),
+            "majority": float(g(r"global majority\s+accuracy ([\d.]+)").group(1)),
+            "mi_org": float(g(r"I\(grade; org\) = ([\d.]+)").group(1)),
+            "h_grade": float(g(r"H\(grade\) = ([\d.]+)").group(1)),
+            "seen": float(g(r"seen in the org's past: ([\d.]+)%").group(1)),
+            "dev": g(r"fit [\d,]+, dev ([\d,]+)").group(1), "incidents": g(r"([\d,]+) incidents in ([\d,]+) orgs").group(1),
+            "orgs": g(r"([\d,]+) incidents in ([\d,]+) orgs").group(2),
+            "held_majority": float(g(r"majority-class accuracy on dev sample:\s*([\d.]+)", held).group(1)),
+            "held_min": min(accs), "held_max": max(accs)}
 
 
 def main():
-    tr, te = load("excytin_train_analysis.json"), load("excytin_test_analysis.json")
+    tr, te, o1 = load("excytin_train_analysis.json"), load("excytin_test_analysis.json"), load("excytin_o1v0_test_analysis.json")
     rep = load("excytin_reported_table2.json")
+    lg, tc, pl = load("excytin_logs_analysis.json"), load("excytin_traces.json"), load("excytin_pathlen.json")
     sia = load("siabench.json")["summary"]
     otrf = load("otrf.json")
     g = guide_numbers()
     v11 = json.loads((RES / "v11_summary.json").read_text(encoding="utf-8"))["D1"]
     comp = json.loads((RES / "v12b" / "summary.json").read_text(encoding="utf-8"))["results"]
 
-    # ---- Table: ExCyTIn shortcut rates, train and test ----------------------------------------------------------
-    rows = [("named", "Question names the end alert (rank 1 by word overlap)"),
-            ("adjacent", "Answer is a neighbour of the end alert (upper bound)"),
-            ("graph_correct", "Graph baseline answers exactly"),
-            ("table_correct", "Alert-table baseline answers exactly")]
-    L = [r"\begin{tabular}{lrr}", r"\toprule",
-         f"Measure & Train ($n{{=}}{tr['questions']}$) & Test ($n{{=}}{te['questions']}$), 95\\% CI \\\\", r"\midrule"]
+    # ---- Table: ExCyTIn shortcut measures on three question sets ------------------------------------------------
+    rows = [("named", "Question names the end alert"), ("adjacent", "Answer is an entity of the end alert"),
+            ("graph_correct", "Graph baseline, exact"), ("table_correct", "Alert-table baseline, exact")]
+    L = [r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
+         r" & \multicolumn{2}{c}{Latest release} & Reported \\", r"\cmidrule(lr){2-3}\cmidrule(lr){4-4}",
+         f"Measure (\\%) & train ({tr['questions']}) & test ({te['questions']}) & test ({o1['questions']}) \\\\", r"\midrule"]
     for k, lab in rows:
-        a, b = tr["rates"][k], te["rates"][k]
-        lo, hi = b["ci95_incident_cluster"]
-        L.append(f"{lab} & {pct(a['rate'])} & {pct(b['rate'])} [{pct(lo)}, {pct(hi)}] \\\\")
+        a, b, c = tr["rates"][k], te["rates"][k], o1["rates"][k]
+        L.append(f"{lab} & {pct(a['rate'])} & {pct(b['rate'])} & {pct(c['rate'])} \\\\")
+        L.append(f" & & \\scriptsize{ci(b['ci95_incident_cluster'])} & \\scriptsize{ci(c['ci95_incident_cluster'])} \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("audit_excytin", L)
 
+    # ---- Table: per-model success split by shortcut availability (logs) ---------------------------------------
+    ms = lg["models"]
+    order = sorted(ms, key=lambda m: -ms[m]["success"])
+    rf, rr = lg["A4"]["rank_full"], lg["A4"]["rank_resistant"]
+    L = [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+         r"Model & All & Named & Other & $\Delta$ [95\% CI] & Lookup & Resist. \\", r"\midrule"]
+    for m in order:
+        v = ms[m]
+        L.append(f"{NICE.get(m, m)} & {pct(v['success'])} & {pct(v['success_named'])} & {pct(v['success_not_named'])} & "
+                 f"{sgn(100 * v['diff_named'])} \\scriptsize[{sgn(100 * v['ci_named'][0], 0)}, {sgn(100 * v['ci_named'][1], 0)}] & "
+                 f"{pct(v['success_table'])} & {pct(v['success_resistant'])} ({rr[m]}) \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("audit_logs", L)
+
     # ---- Table: per incident (appendix) ------------------------------------------------------------------------
-    per = load("excytin_test.json")["summary"]["per_incident"]
+    per = load("excytin_o1v0_test.json")["summary"]["per_incident"]
     show = ["GPT-4o", "o3", "Claude-Opus-4.5"]
-    L = [r"\begin{tabular}{lrrrr" + "r" * len(show) + "}", r"\toprule",
+    L = [r"\begin{tabular}{@{}lrrrr" + "r" * len(show) + "@{}}", r"\toprule",
          "Incident & $n$ & Named & Graph & Table & " + " & ".join(show) + r" \\", r"\midrule"]
     for j, inc in enumerate(rep["incidents"]):
         p = per[inc]
@@ -90,112 +109,154 @@ def main():
     L += [r"\bottomrule", r"\end{tabular}"]
     write("audit_excytin_incidents", L)
 
-    # ---- Table: per-model Spearman (appendix) ------------------------------------------------------------------
-    h3 = te["h3"]
-    items = sorted(h3["spearman_by_model"].items(), key=lambda kv: -te["reported_average_reward"][kv[0]])
+    # ---- Table: all benchmarks --------------------------------------------------------------------------------
+    rew = rep["models"]
+    rew = {m: v[8] for m, v in rew.items()}
+    og, ot = o1["rates"]["graph_correct"]["rate"], o1["rates"]["table_correct"]["rate"]
+    L = [r"\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}p{2.05cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{1.65cm}@{}}", r"\toprule",
+         r"Benchmark & Shortcut & Investigation-free rule & Rule score \\", r"\midrule",
+         f"ExCyTIn & S1: question names the answer's alert & read the named alert's entity & "
+         f"{pct(og)}\\% (graph), {pct(ot)}\\% (table) \\\\",
+         f"SIABench & S3: attack-network address & TP iff the alert involves 172.16.0.1 & "
+         f"{sia['attacker_rule_correct']}/{sia['alerts']} \\\\",
+         f"GUIDE & S2: grade follows the organization & repeat the org's past grade for the detector & "
+         f"{pct(g['hist_acc'])}\\% \\\\",
+         f"OTRF & S3: tool names; benign = OS routine & flag non-system task or service names & "
+         f"{otrf['distinct_alerts'] - otrf['attack_disguised_as_benign']}/{otrf['distinct_alerts']} \\\\",
+         f"Our triage environments & S4: deterministic evidence model & LLM-free controller & "
+         f"{v11['sec|eig_confirm']['verified']}/{v11['sec|eig_confirm']['episodes']}, "
+         f"{v11['sigma|eig_confirm']['verified']}/{v11['sigma|eig_confirm']['episodes']} \\\\",
+         r"\bottomrule", r"\end{tabular}"]
+    write("audit_benchmarks", L)
+
+    # ---- Table: per-model Spearman, reported release (appendix) -----------------------------------------------
+    h3 = o1["h3"]
+    items = sorted(h3["spearman_by_model"].items(), key=lambda kv: -rew[kv[0]])
     half = (len(items) + 1) // 2
-    L = [r"\begin{tabular}{lrr@{\hspace{1.5em}}lrr}", r"\toprule",
+    L = [r"\begin{tabular}{@{}lrr@{\hspace{1em}}lrr@{}}", r"\toprule",
          r"Model & Reward & $\rho$ & Model & Reward & $\rho$ \\", r"\midrule"]
     for i in range(half):
         a = items[i]
-        cell = f"{a[0]} & {100 * te['reported_average_reward'][a[0]]:.1f} & {a[1]:+.2f}"
+        cell = f"{a[0].replace(' (Reasoning=High)', '')} & {100 * rew[a[0]]:.1f} & {sgn(a[1], 2)}"
         if i + half < len(items):
             b = items[i + half]
-            cell += f" & {b[0]} & {100 * te['reported_average_reward'][b[0]]:.1f} & {b[1]:+.2f}"
+            cell += f" & {b[0]} & {100 * rew[b[0]]:.1f} & {sgn(b[1], 2)}"
         else:
             cell += " & & &"
         L.append(cell + r" \\")
     L += [r"\bottomrule", r"\end{tabular}"]
     write("audit_h3", L)
 
-    # ---- Table: all benchmarks --------------------------------------------------------------------------------
-    rew = te["reported_average_reward"]
-    graph = te["rates"]["graph_correct"]["rate"]
-    table = te["rates"]["table_correct"]["rate"]
-    below_graph = sum(v < graph for v in rew.values())
-    below_table = sum(v < table for v in rew.values())
-    best = max(rew.items(), key=lambda kv: kv[1])
-    sia_rep = sia["reported_accuracy"]
-    rule_acc = otrf["rule_accuracy"]
-    L = [r"\begin{tabular}{p{1.45cm}p{2.0cm}p{2.15cm}p{1.6cm}}", r"\toprule",
-         r"Benchmark & Shortcut & Investigation-free rule & Rule score \\", r"\midrule",
-         f"ExCyTIn & S1: question names the answer's alert & read the named alert's entity & "
-         f"{pct(graph)} (graph), {pct(table)} (table) \\\\",
-         f"SIABench & S3: attacker address from data generation & TP iff alert involves 172.16.0.1 & "
-         f"{sia['attacker_rule_correct']}/{sia['alerts']} \\\\",
-         f"GUIDE & S2: label set by organisation policy & repeat the org's past grade for the detector & "
-         f"{pct(g['hist_acc'])} \\\\",
-         f"OTRF & S3: tool default names; benign = OS routine & flag non-system task or service names & "
-         f"{otrf['distinct_alerts'] - otrf['attack_disguised_as_benign']}/{otrf['distinct_alerts']} \\\\",
-         f"Built triage environments & S4: deterministic evidence model & LLM-free controller & "
-         f"{v11['sec|eig_confirm']['verified']}/{v11['sec|eig_confirm']['episodes']}, "
-         f"{v11['sigma|eig_confirm']['verified']}/{v11['sigma|eig_confirm']['episodes']} \\\\",
-         r"\bottomrule", r"\end{tabular}"]
-    write("audit_benchmarks", L)
-
     # ---- Numbers quoted in prose ------------------------------------------------------------------------------
-    t = te["rates"]
+    t, u = te["rates"], o1["rates"]
+    opus, o3m, g5 = tc["claude-opus-4.5"], tc["o3"], tc["gpt-5"]
+    diffs = [ms[m]["diff_named"] for m in ms]
+    tdiffs = [ms[m]["diff_table"] for m in ms]
+    drops = [ms[m]["success"] - ms[m]["success_resistant"] for m in ms]
     m = {
+        # latest release, pre-registered
         "exTestN": te["questions"], "exTrainN": tr["questions"],
         "exNamed": pct(t["named"]["rate"]), "exNamedLo": pct(t["named"]["ci95_incident_cluster"][0]),
-        "exNamedHi": pct(t["named"]["ci95_incident_cluster"][1]), "exNamedCount": t["named"]["count"],
-        "exAdj": pct(t["adjacent"]["rate"]), "exGraph": pct(graph), "exGraphCount": t["graph_correct"]["count"],
-        "exGraphLo": pct(t["graph_correct"]["ci95_incident_cluster"][0]),
-        "exGraphHi": pct(t["graph_correct"]["ci95_incident_cluster"][1]),
-        "exTable": pct(table), "exTableLo": pct(t["table_correct"]["ci95_incident_cluster"][0]),
-        "exTableHi": pct(t["table_correct"]["ci95_incident_cluster"][1]),
+        "exNamedHi": pct(t["named"]["ci95_incident_cluster"][1]), "exAdj": pct(t["adjacent"]["rate"]),
+        "exGraph": pct(t["graph_correct"]["rate"]), "exGraphLo": pct(t["graph_correct"]["ci95_incident_cluster"][0]),
+        "exGraphHi": pct(t["graph_correct"]["ci95_incident_cluster"][1]), "exTable": pct(t["table_correct"]["rate"]),
         "exTrainNamed": pct(tr["rates"]["named"]["rate"]), "exTrainGraph": pct(tr["rates"]["graph_correct"]["rate"]),
-        "exTrainTable": pct(tr["rates"]["table_correct"]["rate"]),
-        "exModels": len(rew), "exBelowGraph": below_graph, "exBelowTable": below_table,
-        "exBest": f"{100 * best[1]:.1f}", "exBestModel": best[0],
-        "exGptFo": f"{100 * rew['GPT-4o']:.1f}", "exOThree": f"{100 * rew['o3']:.1f}",
-        "exGptFourOne": f"{100 * rew['GPT-4.1']:.1f}",
-        "hPos": h3["positive"], "hMedian": f"{h3['median']:.2f}", "hP": f"{h3['sign_test_one_sided_p']:.4f}",
+        # reported release
+        "oN": o1["questions"], "oNamed": pct(u["named"]["rate"]), "oNamedLo": pct(u["named"]["ci95_incident_cluster"][0]),
+        "oNamedHi": pct(u["named"]["ci95_incident_cluster"][1]), "oAdj": pct(u["adjacent"]["rate"]),
+        "oGraph": pct(og), "oGraphLo": pct(u["graph_correct"]["ci95_incident_cluster"][0]),
+        "oGraphHi": pct(u["graph_correct"]["ci95_incident_cluster"][1]), "oTable": pct(ot),
+        "oTableCount": u["table_correct"]["count"], "oTableLo": pct(u["table_correct"]["ci95_incident_cluster"][0]),
+        "oTableHi": pct(u["table_correct"]["ci95_incident_cluster"][1]),
+        "oModels": len(rew), "oBelowGraph": sum(v < og for v in rew.values()), "oBelowTable": sum(v < ot for v in rew.values()),
+        "oHPos": h3["positive"], "oHMedian": f"{h3['median']:.2f}",
+        "exGptFo": f"{100 * rew['GPT-4o']:.1f}", "exGptFourOne": f"{100 * rew['GPT-4.1']:.1f}",
+        "exBest": f"{100 * max(rew.values()):.1f}",
+        # logs
+        "lgModels": len(ms), "lgPos": lg["A2"]["positive"], "lgP": f"{lg['A2']['sign_test_one_sided_p']:.2f}",
+        "lgCIzero": lg["A2"]["ci_excludes_zero"], "lgDmin": sgn(100 * min(diffs)), "lgDmax": sgn(100 * max(diffs)),
+        "lgTPos": lg["A3"]["positive"], "lgTP": f"{lg['A3']['sign_test_one_sided_p']:.4f}",
+        "lgTCI": lg["A3"]["ci_excludes_zero"], "lgTmin": sgn(100 * min(tdiffs)), "lgTmax": sgn(100 * max(tdiffs)),
+        "lgTau": f"{lg['A4']['kendall_tau']:.2f}", "lgTmedian": f"{100 * sorted(tdiffs)[len(tdiffs) // 2]:.1f}", "lgResN": lg["A4"]["resistant_n"],
+        "lgDropMax": f"{100 * max(drops):.1f}",
+        "lgShareMin": f"{100 * min(ms[x]['share_successes_table_solvable'] for x in ms):.0f}",
+        "lgShareMax": f"{100 * max(ms[x]['share_successes_table_solvable'] for x in ms):.0f}",
+        "lgOpusAll": pct(ms["claude-opus-4.5"]["success"]), "lgOpusLookup": pct(ms["claude-opus-4.5"]["success_table"]),
+        "lgOThreeLookup": pct(ms["o3"]["success_table"]), "lgGFiveLookup": pct(ms["gpt-5"]["success_table"]),
+        "lgOpusResist": pct(ms["claude-opus-4.5"]["success_resistant"]),
+        "tcOpusStepsLookup": f"{opus['table_solvable']['mean_sql_steps']:.1f}", "tcOpusStepsOther": f"{opus['other']['mean_sql_steps']:.1f}",
+        "tcGFiveStepsLookup": f"{g5['table_solvable']['mean_sql_steps']:.1f}", "tcGFiveStepsOther": f"{g5['other']['mean_sql_steps']:.1f}",
+        "tcOThreeStepsLookup": f"{o3m['table_solvable']['mean_sql_steps']:.1f}", "tcOThreeStepsOther": f"{o3m['other']['mean_sql_steps']:.1f}",
+        "tcOpusAlertTable": f"{100 * opus['table_solvable']['touched_alert_table']:.0f}",
+        "tcMaxAlertTable": f"{100 * max(x['table_solvable']['touched_alert_table'] for x in tc.values()):.0f}",
+        "tcOpusFail": opus["table_solvable"]["failures"], "tcOpusFailNoAns": opus["table_solvable"]["failures_no_answer"],
+        "plN": pl["claude-opus-4.5"]["1"]["n"], "plOpusOne": pct(pl["claude-opus-4.5"]["1"]["success"]),
+        "plOpusThree": pct(pl["claude-opus-4.5"]["3"]["success"]), "plOpusFive": pct(pl["claude-opus-4.5"][">=5"]["success"]),
+        # other benchmarks
         "siaN": sia["alerts"], "siaTP": sia["true_positive"], "siaRule": sia["attacker_rule_correct"],
-        "siaMajority": sia["majority_correct"], "siaGptFive": pct(sia_rep["GPT-5"]),
-        "siaSonnet": f"{100 * sia_rep['Claude-4.5-Sonnet']:.1f}", "siaMini": pct(sia_rep["GPT-4o-mini"]),
-        "gHist": f"{g['hist_acc']:.3f}", "gHistTP": f"{g['hist_tp']:.3f}", "gMajority": f"{g['majority']:.3f}",
+        "siaMajority": sia["majority_correct"], "siaMajorityPct": pct(sia["majority_correct"] / sia["alerts"]),
+        "siaGptFive": pct(sia["reported_accuracy"]["GPT-5"]), "siaSonnet": pct(sia["reported_accuracy"]["Claude-4.5-Sonnet"]),
+        "siaDeepSeek": pct(sia["reported_accuracy"]["DeepSeek-Reasoner"]), "siaMini": pct(sia["reported_accuracy"]["GPT-4o-mini"]),
+        "gHist": f"{g['hist_acc']:.3f}", "gHistPct": pct(g["hist_acc"]), "gHistTP": f"{g['hist_tp']:.3f}", "gMajority": f"{g['majority']:.3f}",
         "gMIorg": f"{g['mi_org']:.2f}", "gH": f"{g['h_grade']:.2f}", "gSeen": f"{g['seen']:.1f}",
         "gDev": g["dev"].replace(",", "{,}"), "gIncidents": g["incidents"].replace(",", "{,}"),
-        "gOrgs": g["orgs"].replace(",", "{,}"), "gMIdet": f"{g['mi_det']:.2f}",
-        "gEnt": f"{g['ent_mi']:.2f}", "gEntDet": f"{g['ent_mi_det']:.3f}",
-        "gHeldMin": f"{g['held_min']:.2f}", "gHeldMax": f"{g['held_max']:.2f}",
-        "gHeldMajority": f"{g['held_majority']:.3f}" if g["held_majority"] is not None else r"\todo{majority}",
+        "gOrgs": g["orgs"].replace(",", "{,}"), "gHeldMin": f"{g['held_min']:.2f}", "gHeldMax": f"{g['held_max']:.2f}",
+        "gHeldMajority": f"{g['held_majority']:.3f}",
         "otN": otrf["distinct_alerts"], "otAttack": otrf["attack_alerts"], "otBenign": otrf["benign_alerts"],
-        "otRule": f"{rule_acc:.3f}", "otRec": otrf["recordings"], "otNamedAttack": otrf["attack_named_by_alert_text"],
+        "otRule": f"{otrf['rule_accuracy']:.3f}", "otRec": otrf["recordings"], "otNamedAttack": otrf["attack_named_by_alert_text"],
+        "otRuleCorrect": otrf["distinct_alerts"] - otrf["attack_disguised_as_benign"],
         "envSec": v11["sec|eig_confirm"]["verified"], "envSecN": v11["sec|eig_confirm"]["episodes"],
         "envSigma": v11["sigma|eig_confirm"]["verified"], "envSigmaN": v11["sigma|eig_confirm"]["episodes"],
         "compSingle": comp["G1|comp|confirm@10"]["correct"], "compJoint": comp["G1|comp|joint@10"]["correct"],
         "compN": comp["G1|comp|confirm@10"]["episodes"], "compSingleEsc": comp["G1|comp|confirm@10"]["escalated"],
         "compJointMissed": comp["G1|comp|joint@10"]["missed_attack"],
     }
-    macros(m)
+    write("audit_numbers", [f"\\newcommand{{\\{k}}}{{{v}}}" for k, v in m.items()])
 
-    # ---- Figure: reported model rewards vs investigation-free baselines ---------------------------------------
+    # ---- Figures ----------------------------------------------------------------------------------------------
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "DejaVu Serif"], "font.size": 8,
                          "axes.spines.top": False, "axes.spines.right": False, "pdf.fonttype": 42})
+
     names = sorted(rew, key=lambda k: rew[k])
     vals = [100 * rew[k] for k in names]
-    fig, ax = plt.subplots(figsize=(3.4, 3.1))
-    colors = ["#B0BEC5" if v / 100 < graph else "#264653" for v in vals]
-    ax.barh(range(len(names)), vals, color=colors, height=0.68)
+    fig, ax = plt.subplots(figsize=(3.4, 3.0))
+    ax.barh(range(len(names)), vals, color=["#B0BEC5" if v / 100 < og else "#264653" for v in vals], height=0.68)
     ax.set_yticks(range(len(names)))
     ax.set_yticklabels([n.replace(" (Reasoning=High)", "") for n in names], fontsize=6.6)
-    for x, lo, hi, lab, c, ls in [(graph, *t["graph_correct"]["ci95_incident_cluster"], "graph baseline", "#E76F51", "-"),
-                                  (table, *t["table_correct"]["ci95_incident_cluster"], "alert-table baseline", "#2A9D8F", "--")]:
-        ax.axvspan(100 * lo, 100 * hi, color=c, alpha=0.12, lw=0)
-        ax.axvline(100 * x, color=c, ls=ls, lw=1.2, label=f"{lab} ({100 * x:.1f})")
-    ax.set_xlabel("ExCyTIn test score (%): models = reported mean reward;\nbaselines = exact match, no LLM, no log query",
+    for x, c95, lab, col, ls in [(og, u["graph_correct"]["ci95_incident_cluster"], "graph lookup", "#E76F51", "-"),
+                                 (ot, u["table_correct"]["ci95_incident_cluster"], "alert-table lookup", "#2A9D8F", "--")]:
+        ax.axvspan(100 * c95[0], 100 * c95[1], color=col, alpha=0.12, lw=0)
+        ax.axvline(100 * x, color=col, ls=ls, lw=1.2, label=f"{lab}, no LLM ({100 * x:.1f})")
+    ax.set_xlabel("ExCyTIn test score (%): models = reported mean reward\n(LLM judge, partial credit); lookups = exact match",
                   fontsize=6.8)
     ax.set_xlim(0, 65)
-    ax.legend(loc="lower right", fontsize=6.4, frameon=False)
+    ax.legend(loc="lower right", fontsize=6.3, frameon=False)
     fig.tight_layout()
-    fig.savefig(HERE / "figures" / "fig_shortcut.pdf")
-    fig.savefig(HERE / "figures" / "fig_shortcut.png", dpi=200)
-    print("ok", {k: m[k] for k in ("exNamed", "exGraph", "exTable", "exBelowGraph", "exBelowTable", "gHeldMajority")})
+    fig.savefig(HERE / "figures" / "fig_floor.pdf")
+    fig.savefig(HERE / "figures" / "fig_floor.png", dpi=200)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(3.4, 2.9))
+    ys = list(range(len(order)))[::-1]
+    for y, mm in zip(ys, order):
+        v = ms[mm]
+        pts = [100 * v["success_resistant"], 100 * v["success"], 100 * v["success_table"]]
+        ax.plot([min(pts), max(pts)], [y, y], color="#CFD8DC", lw=1.6, zorder=1)
+        ax.scatter(pts[0], y, marker="o", color="#264653", s=14, zorder=3, label="shortcut-resistant" if y == ys[0] else None)
+        ax.scatter(pts[1], y, marker="|", color="black", s=40, zorder=3, label="all questions" if y == ys[0] else None)
+        ax.scatter(pts[2], y, marker="D", color="#E76F51", s=12, zorder=3, label="one lookup answers it" if y == ys[0] else None)
+    ax.set_yticks(ys)
+    ax.set_yticklabels([NICE.get(x, x) for x in order], fontsize=6.6)
+    ax.set_xlabel(f"Success on ExCyTIn test questions (%), {len(order)} published runs", fontsize=7)
+    ax.set_xlim(0, 80)
+    ax.legend(loc="lower right", fontsize=6.3, frameon=False)
+    fig.tight_layout()
+    fig.savefig(HERE / "figures" / "fig_logs.pdf")
+    fig.savefig(HERE / "figures" / "fig_logs.png", dpi=200)
+    print("ok", {k: m[k] for k in ("oGraph", "oTable", "oBelowGraph", "oBelowTable", "lgPos", "lgTau")})
 
 
 if __name__ == "__main__":
