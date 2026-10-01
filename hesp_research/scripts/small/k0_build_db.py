@@ -17,7 +17,7 @@ NUL = chr(0)
 
 
 def load_table(con, name, path):
-    with open(path, encoding="utf-8-sig", newline="") as f:
+    with open(path, encoding="utf-8-sig", errors="replace", newline="") as f:
         rd = csv.reader((line.replace(NUL, "") for line in f), delimiter=SEP, quotechar='"')
         header, seen = [], set()
         for c in next(rd):
@@ -66,7 +66,7 @@ def main():
             if fn.endswith(".csv"):
                 n, bad = load_table(con, fn[:-4], p)
             elif os.path.isdir(p):  # folder of CSV parts for one table
-                parts = sorted(x for x in os.listdir(p) if x.endswith(".csv"))
+                parts = sorted(x for x in os.listdir(p) if x.endswith(".csv") and not x.startswith("._"))
                 n = bad = 0
                 for i, x in enumerate(parts):
                     if i == 0:

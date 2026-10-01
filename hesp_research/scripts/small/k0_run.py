@@ -117,6 +117,8 @@ class Env:
                 raise sqlite3.OperationalError(f"Table 'env_monitor_db.{t}' doesn't exist")
             rows = self.con.execute(f'PRAGMA table_info("{match[0]}")').fetchall()
             return None, [(r[1], "text", "YES", "", None, "") for r in rows]
+        # MySQL JSON operators col->'$.p' / col->>'$.p' (unsupported by older SQLite) -> json_extract(col, '$.p')
+        s = re.sub(r"([`\w.]+)\s*->>?\s*('[^']*')", lambda m: f"json_extract({m.group(1)}, {m.group(2)})", s)
         return s, None
 
     def query(self, q):
