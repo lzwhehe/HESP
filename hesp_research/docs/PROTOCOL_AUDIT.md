@@ -37,3 +37,12 @@
 
 - 测试集只运行一次：`python scripts/audit/excytin_shortcut.py --split test --out results/audit/excytin_test.json`，随后运行 `scripts/audit/excytin_analysis.py` 生成区间和相关性。
 - 冻结提交见 git 日志（本文件与脚本同一提交）。
+
+## 结果记录（2026-10-01，测试集只运行一次）
+
+- **H2 成立**：named 383/599 = 0.639，事件聚类 95% 区间 [0.517, 0.762]。
+- **H1 成立**：graph 精确匹配 216/599 = 0.361，区间 [0.294, 0.435]；高于原论文表 2 中 GPT-4o（0.293）、o3-mini（0.296）、Qwen-3-235b-thinking（0.302）、Gemini 2.5 Flash（0.305）的平均奖励（奖励含部分得分，评判为 LLM）。
+- **H4 成立**：table 170/599 = 0.284，区间 [0.210, 0.370]，与 graph 相差 7.7 个百分点。
+- **H3（探索性）**：19 个模型中 17 个的分事件奖励与分事件 named 比例正相关，Spearman 中位数 0.21，符号检验单侧 p = 0.0004。相关强度弱，只说明方向一致。
+- adjacent 496/599 = 0.828，区间 [0.795, 0.866]。
+- 与训练集一致（named 0.629、graph 0.304、table 0.246），没有出现训练—测试差异。
