@@ -1,0 +1,482 @@
+[
+ {
+  "incident": "incident_134",
+  "index": 2,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_134",
+  "index": 17,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 8,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 20,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 23,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 24,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 26,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_166",
+  "index": 31,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_322",
+  "index": 11,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_322",
+  "index": 18,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_322",
+  "index": 21,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_34",
+  "index": 3,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_34",
+  "index": 6,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_34",
+  "index": 17,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_34",
+  "index": 28,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_34",
+  "index": 32,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_38",
+  "index": 2,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_39",
+  "index": 6,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 8,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 12,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 19,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 24,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 28,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_39",
+  "index": 29,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 32,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 35,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 43,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 46,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 61,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 63,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 67,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 68,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 72,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 75,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 90,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 94,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 95,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_39",
+  "index": 97,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 4,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 8,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 12,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 14,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 18,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 27,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 40,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 46,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 59,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 65,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 68,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 71,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 72,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 73,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 75,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 76,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 79,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 87,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 90,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 91,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_5",
+  "index": 92,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_5",
+  "index": 98,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_55",
+  "index": 3,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_55",
+  "index": 11,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 14,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 24,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 32,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 35,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 37,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 48,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 49,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 55,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 56,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 66,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 73,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 74,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 79,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_55",
+  "index": 81,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 86,
+  "resistant": 1,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 93,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ },
+ {
+  "incident": "incident_55",
+  "index": 94,
+  "resistant": 0,
+  "table_lookup_correct": 1
+ },
+ {
+  "incident": "incident_55",
+  "index": 99,
+  "resistant": 0,
+  "table_lookup_correct": 0
+ }
+]
