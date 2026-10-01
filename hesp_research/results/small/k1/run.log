@@ -1,0 +1,330 @@
++ for c in C4 C1 C2 C3
++ python3 k1_run.py --cond C4 --questions k1_questions.json --db /home/ubuntu/k0/db --out k1/C4.jsonl --workers 6
+C4 incident_134 2 correct 4 Nathan@avoriaz.alpineskihouse.co
+C4 incident_134 17 correct 2 170.54.121.63
+C4 incident_166 8 wrong 3 67.166.245.221
+C4 incident_166 20 wrong 2 180.144.153.174
+C4 incident_166 23 wrong 3 67.166.245.221
+C4 incident_166 24 wrong 2 Jordan P
+C4 incident_166 26 wrong 3 67.166.245.221
+C4 incident_166 31 correct 2 Jordan P
+C4 incident_322 11 correct 2 Hailey Johnson
+C4 incident_322 18 wrong 34 
+C4 incident_322 21 wrong 2 https://dj01161621.bravesand-e1ccd718.eastus.azurecontainera
+C4 incident_34 3 correct 7 WinATP-Intro-Backdoor.exe
+C4 incident_34 6 wrong 2 vnevado-win10v
+C4 incident_34 17 wrong 11 
+C4 incident_34 28 wrong 14 
+C4 incident_34 32 wrong 2 dp5hn
+C4 incident_38 2 correct 2 https://wcdstaticfilesprdeus.blob.core.windows.net/wcdstatic
+C4 incident_39 6 wrong 2 tgs2z
+C4 incident_39 8 wrong 2 tgs2z
+C4 incident_39 12 wrong 2 tgs2z
+C4 incident_39 19 wrong 28 
+C4 incident_39 24 wrong 2 LocalSystem
+C4 incident_39 28 correct 2 https://ac27145722.livelygrass-8d4c4013.eastus2.azurecontain
+C4 incident_39 29 wrong 19 
+C4 incident_39 32 wrong 2 tgs2z
+C4 incident_39 35 wrong 2 wmiprvse.exe -secured -Embedding
+C4 incident_39 43 wrong 2 LocalSystem
+C4 incident_39 46 wrong 2 fk8mq
+C4 incident_39 61 wrong 11 
+C4 incident_39 63 wrong 2 https://ac27145722.livelygrass-8d4c4013.eastus2.azurecontain
+C4 incident_39 67 wrong 2 35.202.74.47
+C4 incident_39 68 correct 2 S-5-7-21-1843151660-3234030288-105586167-1422
+C4 incident_39 72 wrong 2 powershell.exe C:\M365DAttack\Get-KRBTicket.ps1
+C4 incident_39 75 wrong 2 S-5-7-21-1843151660-3234030288-105586167-1422
+C4 incident_39 90 wrong 2 tgs2z
+C4 incident_39 94 wrong 2 "mimikatz.exe" "lsadump::dcsync /domain:vnevado.alpineskihou
+C4 incident_39 95 wrong 2 35.202.74.47
+C4 incident_39 97 wrong 2 "mimikatz.exe" "lsadump::dcsync /domain:vnevado.alpineskihou
+C4 incident_5 4 wrong 4 kiters.7z
+C4 incident_5 8 wrong 2 kiters.7z
+C4 incident_5 12 wrong 7 cryptdll.dll
+C4 incident_5 14 wrong 2 tgs2z
+C4 incident_5 18 correct 2 99.83.111.100
+C4 incident_5 27 wrong 15 
+C4 incident_5 40 correct 2 mimikatz.exe
+C4 incident_5 46 wrong 2 S-5-7-21-1843151660-3234030288-105586167-1422
+C4 incident_5 59 correct 2 mimilib.dll
+C4 incident_5 65 wrong 8 kiters.7z
+C4 incident_5 68 correct 2 mimilib.dll
+C4 incident_5 71 wrong 2 dp5hn
+C4 incident_5 72 correct 2 vectorsandarrows.com
+C4 incident_5 73 wrong 16 
+C4 incident_5 75 wrong 2 dp5hn
+C4 incident_5 76 wrong 2 mimilib.dll
+C4 incident_5 79 correct 2 107.224.99.179
+C4 incident_5 87 wrong 10 
+C4 incident_5 90 wrong 2 kiters.7z
+C4 incident_5 91 correct 2 107.224.99.179
+C4 incident_5 92 wrong 2 vnevado-win10s
+C4 incident_5 98 correct 2 198.43.121.209
+C4 incident_55 3 correct 2 gsmith
+C4 incident_55 11 wrong 2 tgs2z
+C4 incident_55 14 wrong 3 vnevado-win11u
+C4 incident_55 24 wrong 2 raphaelt@vnevado.alpineskihouse.co
+C4 incident_55 32 wrong 2 Luciano Herrera
+C4 incident_55 35 wrong 3 samuelf
+C4 incident_55 37 wrong 2 raphaelt@vnevado.alpineskihouse.co
+C4 incident_55 48 wrong 26 
+C4 incident_55 49 wrong 21 
+C4 incident_55 55 wrong 2 2de70991-2799-4a95-b734-8e3df3a50118
+C4 incident_55 56 wrong 2 "iy2orr1e.rrg.exe" -windowstyle hidden -encodedCommand QwA6A
+C4 incident_55 66 wrong 2 https://ac27145722.livelygrass-8d4c4013.eastus2.azurecontain
+C4 incident_55 73 wrong 2 S-1-5-21-551436448-9871687716-9837441745-1903
+C4 incident_55 74 wrong 25 
+C4 incident_55 79 correct 2 powershell.exe
+C4 incident_55 81 wrong 2 tgs2z
+C4 incident_55 86 wrong 2 "mimikatz.exe" "lsadump::dcsync /domain:vnevado.alpineskihou
+C4 incident_55 93 wrong 16 
+C4 incident_55 94 correct 4 72.5.72.208
+C4 incident_55 99 wrong 2 WinATP-Intro-Backdoor.exe
++ for c in C4 C1 C2 C3
++ python3 k1_run.py --cond C1 --questions k1_questions.json --db /home/ubuntu/k0/db --out k1/C1.jsonl --workers 6
+C1 incident_134 2 wrong 3 raphaelt@vnevado.alpineskihouse.co
+C1 incident_134 17 wrong 7 None
+C1 incident_166 8 wrong 25 
+C1 incident_166 20 wrong 4 107.253.5.27
+C1 incident_166 23 wrong 6 255.246.85.58
+C1 incident_166 24 wrong 10 20893
+C1 incident_166 26 wrong 5 laylaw
+C1 incident_166 31 wrong 25 
+C1 incident_322 11 correct 8 Hailey Johnson
+C1 incident_322 18 correct 5 ntdsutil.exe
+C1 incident_322 21 wrong 8 None
+C1 incident_34 3 wrong 6 powershell.exe
+C1 incident_34 6 wrong 4 16320fec-8d90-403b-b7fe-78f715d4728d
+C1 incident_34 17 wrong 25 
+C1 incident_34 28 wrong 7 ldapsearch.exe
+C1 incident_34 32 wrong 7 u141@ash.alpineskihouse.co
+C1 incident_38 2 wrong 25 
+C1 incident_39 6 wrong 3 lucasb
+C1 incident_39 8 correct 2 1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1
+C1 incident_39 12 correct 3 Get-KRBTicket.ps1
+C1 incident_39 19 wrong 5 tgs2z
+C1 incident_39 24 wrong 6 tgs2z
+C1 incident_39 28 wrong 11 https://security.microsoft.com/threatanalytics3/9ce0ac71-e10
+C1 incident_39 29 wrong 5 tgs2z@vnevado.alpineskihouse.co
+C1 incident_39 32 wrong 17 mimikatz.exe
+C1 incident_39 35 wrong 6 None
+C1 incident_39 43 wrong 6 lucasb
+C1 incident_39 46 wrong 25 
+C1 incident_39 61 wrong 22 6879
+C1 incident_39 63 wrong 15 lucasb@alpineskihouse.co
+C1 incident_39 67 wrong 5 35.202.74.47
+C1 incident_39 68 correct 2 S-5-7-21-1843151660-3234030288-105586167-1422
+C1 incident_39 72 wrong 3 "powershell.exe C:\\M365DAttack\\Get-KRBTicket.ps1", 7092
+C1 incident_39 75 wrong 25 
+C1 incident_39 90 wrong 6 get-krbticket.ps1
+C1 incident_39 94 wrong 25 
+C1 incident_39 95 wrong 9 85.54.134.236
+C1 incident_39 97 wrong 4 4676
+C1 incident_5 4 wrong 12 vnevado-win11t
+C1 incident_5 8 wrong 6 mimikatz.exe
+C1 incident_5 12 wrong 2 e5799261-6720-4297-961e-bd9ca4275033
+C1 incident_5 14 correct 2 dp5hn
+C1 incident_5 18 correct 4 99.83.111.100
+C1 incident_5 27 wrong 11 cmd /c del /f /q %systemdrive%\*.* & cmd /c vssadmin delete 
+C1 incident_5 40 wrong 6 vssblatemp.exe
+C1 incident_5 46 correct 3 S-1-5-21-1840191660-8534830288-125585561-1522
+C1 incident_5 59 wrong 25 
+C1 incident_5 65 wrong 3 5512, "2024-06-20T09:10:50.2899021Z", "vssblatemp.exe delete
+C1 incident_5 68 correct 7 mimilib.dll
+C1 incident_5 71 wrong 8 dp5hn@vnevado.alpineskihouse.co
+C1 incident_5 72 correct 4 vectorsandarrows.com
+C1 incident_5 73 wrong 2 f5b847aa-8712-4bf6-b4f7-ed6cd89e1505
+C1 incident_5 75 wrong 3 1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1
+C1 incident_5 76 wrong 2 mimikatz.exe
+C1 incident_5 79 wrong 25 
+C1 incident_5 87 wrong 4 None
+C1 incident_5 90 wrong 8 file.txt
+C1 incident_5 91 wrong 3 130.203.88.207
+C1 incident_5 92 wrong 5 vnevado-win11u
+C1 incident_5 98 correct 5 198.43.121.209
+C1 incident_55 3 wrong 5 bjenkins
+C1 incident_55 11 correct 2 whoami.exe
+C1 incident_55 14 wrong 6 None
+C1 incident_55 24 wrong 5 None
+C1 incident_55 32 wrong 4 Luciano Herrera
+C1 incident_55 35 correct 3 pwilson
+C1 incident_55 37 wrong 5 pwilson@niseko.alpineskihouse.co
+C1 incident_55 48 wrong 25 
+C1 incident_55 49 wrong 4 pwilson
+C1 incident_55 55 wrong 5 None
+C1 incident_55 56 wrong 8 None
+C1 incident_55 66 wrong 8 pwilson@niseko.alpineskihouse.co
+C1 incident_55 73 correct 3 a66a4b44-d1f7-4563-95bf-a89d1b05b325
+C1 incident_55 74 correct 7 pwilson@niseko.alpineskihouse.co
+C1 incident_55 79 wrong 7 impacket.getNTLM.py
+C1 incident_55 81 wrong 25 
+C1 incident_55 86 wrong 2 "\"iy2orr1e.rrg.exe\" -windowstyle hidden -encodedCommand Qw
+C1 incident_55 93 wrong 3 ec3ec68b-fdeb-4fe4-9a29-acd445e1ccc5
+C1 incident_55 94 wrong 18 85.54.134.236
+C1 incident_55 99 wrong 25 
++ for c in C4 C1 C2 C3
++ python3 k1_run.py --cond C2 --questions k1_questions.json --db /home/ubuntu/k0/db --out k1/C2.jsonl --workers 6
+C2 incident_134 2 correct 3 Nathan@avoriaz.alpineskihouse.co
+C2 incident_134 17 wrong 3 243.187.229.182
+C2 incident_166 8 correct 5 192.238.237.190
+C2 incident_166 20 wrong 11 None
+C2 incident_166 23 wrong 6 255.246.85.58
+C2 incident_166 24 correct 7 100
+C2 incident_166 26 wrong 6 laylaw@vnevado.alpineskihouse.co
+C2 incident_166 31 correct 8 Jordan P
+C2 incident_322 11 correct 4 Hailey Johnson
+C2 incident_322 18 correct 4 ntdsutil.exe
+C2 incident_322 21 correct 6 alyssat@vnevado.alpineskihouse.co
+C2 incident_34 3 correct 4 WinATP-Intro-Backdoor.exe
+C2 incident_34 6 wrong 6 02b8f519-1123-4228-b32a-ccb78af3449f
+C2 incident_34 17 wrong 4 wmiprvse.exe
+C2 incident_34 28 correct 3 WINWORD.EXE
+C2 incident_34 32 wrong 6 dp5hn
+C2 incident_38 2 correct 9 https://wcdstaticfilesprdeus.blob.core.windows.net/wcdstatic
+C2 incident_39 6 wrong 3 tgs2z
+C2 incident_39 8 wrong 4 97e6a954-b6bd-48a5-808c-bd8464cce677
+C2 incident_39 12 wrong 5 DomainDominance27.ps1
+C2 incident_39 19 wrong 17 lucasb@vnevado.alpineskihouse.co
+C2 incident_39 24 wrong 3 tgs2z
+C2 incident_39 28 correct 6 https://ac27145722.livelygrass-8d4c4013.eastus2.azurecontain
+C2 incident_39 29 correct 3 fk8mq@vnevado.alpineskihouse.co
+C2 incident_39 32 wrong 5 mimikatz.exe
+C2 incident_39 35 wrong 4 powershell.exe  -Command "net.exe stop ntds /y; Add-ADDBSidH
+C2 incident_39 43 wrong 5 lucasb
+C2 incident_39 46 wrong 5 fk8mq
+C2 incident_39 61 wrong 8 4748 xfbzkp
+C2 incident_39 63 correct 7 tgs2z@vnevado.alpineskihouse.co
+C2 incident_39 67 wrong 3 35.202.74.47
+C2 incident_39 68 wrong 7 S-1-5-21-1440151660-4837038288-105596163-1120
+C2 incident_39 72 wrong 3 6636
+C2 incident_39 75 wrong 4 S-5-7-21-1843151660-3234030288-105586167-1422
+C2 incident_39 90 wrong 5 Get-KRBTicket.ps1
+C2 incident_39 94 wrong 5 process.ProcessId=7092, process.CommandLine="mimikatz.exe" p
+C2 incident_39 95 wrong 3 35.202.74.47
+C2 incident_39 97 wrong 3 7644
+C2 incident_5 4 wrong 4 vnevado-win11t
+C2 incident_5 8 wrong 7 get-userprttoken.ps1
+C2 incident_5 12 wrong 3 e5799261-6720-4297-961e-bd9ca4275033
+C2 incident_5 14 correct 3 dp5hn
+C2 incident_5 18 correct 3 99.83.111.100
+C2 incident_5 27 wrong 7 1332
+C2 incident_5 40 wrong 6 C:\Users\tgs2z\Downloads\humw21
+C2 incident_5 46 wrong 4 S-5-7-21-1843151660-3234030288-105586167-1422
+C2 incident_5 59 wrong 5 vectorsandarrows.com
+C2 incident_5 65 wrong 3 ProcessId=5512, CommandLine=vssblatemp.exe delete shadows /a
+C2 incident_5 68 correct 3 mimilib.dll
+C2 incident_5 71 wrong 3 dp5hn
+C2 incident_5 72 correct 5 vectorsandarrows.com
+C2 incident_5 73 wrong 7 f5b847aa-8712-4bf6-b4f7-ed6cd89e1505
+C2 incident_5 75 correct 3 731adb71-b11c-4bbf-850b-57989b350e96
+C2 incident_5 76 wrong 4 mimilib.dll
+C2 incident_5 79 correct 4 107.224.99.179
+C2 incident_5 87 wrong 3 ProcessId=1900, CommandLine=vssblatemp.exe delete shadows /a
+C2 incident_5 90 wrong 9 kiters.7z
+C2 incident_5 91 wrong 3 99.83.111.100
+C2 incident_5 92 wrong 4 vnevado-win10s
+C2 incident_5 98 correct 14 198.43.121.209
+C2 incident_55 3 correct 3 gsmith
+C2 incident_55 11 correct 4 whoami.exe
+C2 incident_55 14 wrong 7 36.193.21.220
+C2 incident_55 24 correct 5 gsmith@niseko.alpineskihouse.co
+C2 incident_55 32 wrong 3 pwilson@niseko.alpineskihouse.co
+C2 incident_55 35 correct 6 pwilson
+C2 incident_55 37 wrong 16 pwilson@niseko.alpineskihouse.co
+C2 incident_55 48 wrong 4 samuelf@vnevado.alpineskihouse.co
+C2 incident_55 49 wrong 3 lucasb
+C2 incident_55 55 correct 4 a66a4b44-d1f7-4563-95bf-a89d1b05b325
+C2 incident_55 56 wrong 6 iy2orr1e.rrg.exe
+C2 incident_55 66 wrong 4 bjenkins@niseko.alpineskihouse.co
+C2 incident_55 73 correct 3 a66a4b44-d1f7-4563-95bf-a89d1b05b325
+C2 incident_55 74 correct 3 pwilson@niseko.alpineskihouse.co
+C2 incident_55 79 wrong 15 -EncodedCommand
+C2 incident_55 81 correct 6 lsass.exe
+C2 incident_55 86 wrong 4 8764, 2024-07-04T00:00:01.698205Z, "iy2orr1e.rrg.exe" -windo
+C2 incident_55 93 wrong 14 None
+C2 incident_55 94 wrong 19 None
+C2 incident_55 99 wrong 3 iy2orr1e.rrg.exe
++ for c in C4 C1 C2 C3
++ python3 k1_run.py --cond C3 --questions k1_questions.json --db /home/ubuntu/k0/db --out k1/C3.jsonl --workers 6
+C3 incident_134 2 correct 3 Nathan@avoriaz.alpineskihouse.co
+C3 incident_134 17 wrong 4 e7e504e4-b95e-567c-1f1d-42bc96eeebbb
+C3 incident_166 8 wrong 7 67.166.245.221
+C3 incident_166 20 wrong 25 
+C3 incident_166 23 wrong 7 75.226.31.176
+C3 incident_166 24 wrong 8 E6
+C3 incident_166 26 wrong 7 laylaw@vnevado.alpineskihouse.co
+C3 incident_166 31 wrong 25 
+C3 incident_322 11 correct 5 Hailey Johnson
+C3 incident_322 18 correct 8 ntdsutil.exe
+C3 incident_322 21 correct 3 alyssat@vnevado.alpineskihouse.co
+C3 incident_34 3 correct 4 WinATP-Intro-Backdoor.exe
+C3 incident_34 6 wrong 25 
+C3 incident_34 17 wrong 7 WinATP-Intro-Backdoor.exe
+C3 incident_34 28 wrong 4 E7
+C3 incident_34 32 correct 4 samuelf
+C3 incident_38 2 wrong 4 E9
+C3 incident_39 6 wrong 5 tgs2z
+C3 incident_39 8 correct 4 1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1
+C3 incident_39 12 correct 8 C:\M365DAttack\Get-KRBTicket.ps1
+C3 incident_39 19 wrong 5 tgs2z@vnevado.alpineskihouse.co
+C3 incident_39 24 wrong 3 kyleg
+C3 incident_39 28 correct 4 https://ac27145722.livelygrass-8d4c4013.eastus2.azurecontain
+C3 incident_39 29 correct 3 fk8mq@vnevado.alpineskihouse.co
+C3 incident_39 32 wrong 4 E7.process.CommandLine=mimikatz.exe
+C3 incident_39 35 wrong 4 ProcessId: 3780, CreationTimeUtc: 2024-06-27T14:34:10.547727
+C3 incident_39 43 wrong 3 lucasb
+C3 incident_39 46 wrong 3 Emma Clark
+C3 incident_39 61 wrong 9 4748
+C3 incident_39 63 wrong 17 
+C3 incident_39 67 wrong 3 35.202.74.47
+C3 incident_39 68 correct 3 S-5-7-21-1843151660-3234030288-105586167-1422
+C3 incident_39 72 wrong 4 powershell.exe C:\M365DAttack\Get-KRBTicket.ps1, 6636
+C3 incident_39 75 wrong 3 S-1-5-21-1540151660-3530000288-105586595-1517
+C3 incident_39 90 wrong 5 dkwj.mze
+C3 incident_39 94 wrong 4 "mimikatz.exe" privilege::debug "sekurlsa::pth /user:fk8mq /
+C3 incident_39 95 wrong 4 35.202.74.47
+C3 incident_39 97 wrong 5 5924
+C3 incident_5 4 wrong 4 vnevado-win11t
+C3 incident_5 8 wrong 9 vssblatemp.exe
+C3 incident_5 12 wrong 3 e5799261-6720-4297-961e-bd9ca4275033
+C3 incident_5 14 correct 3 dp5hn
+C3 incident_5 18 correct 3 99.83.111.100
+C3 incident_5 27 wrong 3 5512
+C3 incident_5 40 correct 3 mimikatz.exe
+C3 incident_5 46 wrong 25 
+C3 incident_5 59 wrong 5 CommandAndControl
+C3 incident_5 65 wrong 25 
+C3 incident_5 68 wrong 4 mimikatz.exe
+C3 incident_5 71 wrong 3 Grace Chen
+C3 incident_5 72 correct 4 vectorsandarrows.com
+C3 incident_5 73 correct 4 e5799261-6720-4297-961e-bd9ca4275033
+C3 incident_5 75 wrong 4 1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1
+C3 incident_5 76 wrong 5 get-userprttoken.ps1
+C3 incident_5 79 correct 3 107.224.99.179
+C3 incident_5 87 wrong 4 vssblatemp.exe delete shadows /all
+C3 incident_5 90 wrong 4 kiters.7z.lockbit
+C3 incident_5 91 wrong 4 99.83.111.100
+C3 incident_5 92 wrong 6 vnevado-win10s
+C3 incident_5 98 wrong 3 99.83.111.100
+C3 incident_55 3 correct 3 gsmith
+C3 incident_55 11 correct 6 whoami.exe
+C3 incident_55 14 wrong 3 vnevado-win10v
+C3 incident_55 24 wrong 5 samuelf@vnevado.alpineskihouse.co
+C3 incident_55 32 wrong 4 pwilson
+C3 incident_55 35 wrong 4 gsmith
+C3 incident_55 37 wrong 6 tgs2z@vnevado.alpineskihouse.co
+C3 incident_55 48 wrong 6 1348
+C3 incident_55 49 wrong 3 lucasb@vnevado.alpineskihouse.co
+C3 incident_55 55 correct 5 a66a4b44-d1f7-4563-95bf-a89d1b05b325
+C3 incident_55 56 wrong 4 ProcessId: 3116, CommandLine: "iy2orr1e.rrg.exe" -windowstyl
+C3 incident_55 66 wrong 3 tgs2z@vnevado.alpineskihouse.co
+C3 incident_55 73 correct 4 a66a4b44-d1f7-4563-95bf-a89d1b05b325
+C3 incident_55 74 correct 3 pwilson@niseko.alpineskihouse.co
+C3 incident_55 79 correct 4 powershell.exe
+C3 incident_55 81 wrong 10 rrg.exe
+C3 incident_55 86 wrong 4 ProcessId=3008, CommandLine="mimikatz.exe" privilege::debug 
+C3 incident_55 93 wrong 9 ec3ec68b-fdeb-4fe4-9a29-acd445e1ccc5
+C3 incident_55 94 wrong 13 192.168.1.100
+C3 incident_55 99 wrong 4 C:\Users\tgs2z\Downloads\DomainDominance27\DomainDominance27
++ echo ALLDONE
+ALLDONE

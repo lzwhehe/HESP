@@ -1,0 +1,418 @@
+{
+ "questions": 80,
+ "resistant": 40,
+ "conditions": {
+  "C1": {
+   "accuracy": 0.1875,
+   "accuracy_resistant": 0.125,
+   "accuracy_other": 0.25,
+   "no_answer": 12,
+   "overflow": 1,
+   "rejected_once": 0,
+   "mean_steps": 8.8125
+  },
+  "C2": {
+   "accuracy": 0.35,
+   "accuracy_resistant": 0.2,
+   "accuracy_other": 0.5,
+   "no_answer": 0,
+   "overflow": 0,
+   "rejected_once": 5,
+   "mean_steps": 5.525
+  },
+  "C3": {
+   "accuracy": 0.2875,
+   "accuracy_resistant": 0.125,
+   "accuracy_other": 0.45,
+   "no_answer": 6,
+   "overflow": 2,
+   "rejected_once": 25,
+   "mean_steps": 6.0875
+  },
+  "C4": {
+   "accuracy": 0.2375,
+   "accuracy_resistant": 0.05,
+   "accuracy_other": 0.425,
+   "no_answer": 13,
+   "overflow": 0,
+   "rejected_once": 0,
+   "mean_steps": 5.0875
+  }
+ },
+ "best_structure": "C2",
+ "contrasts": {
+  "C2-C1": {
+   "diff": 0.16249999999999998,
+   "ci95": [
+    0.07142857142857142,
+    0.375
+   ],
+   "a_only": 17,
+   "b_only": 4
+  },
+  "C2-C4": {
+   "diff": 0.11249999999999999,
+   "ci95": [
+    0.0,
+    0.2753623188405797
+   ],
+   "a_only": 16,
+   "b_only": 7
+  },
+  "C2-C4 (resistant)": {
+   "diff": 0.15000000000000002,
+   "ci95": [
+    0.0,
+    0.4347826086956522
+   ],
+   "a_only": 7,
+   "b_only": 1
+  },
+  "C3-C2": {
+   "diff": -0.0625,
+   "ci95": [
+    -0.23255813953488372,
+    0.03448275862068967
+   ],
+   "a_only": 7,
+   "b_only": 12
+  },
+  "C3-C1": {
+   "diff": 0.09999999999999998,
+   "ci95": [
+    0.04273504273504275,
+    0.2142857142857143
+   ],
+   "a_only": 12,
+   "b_only": 4
+  }
+ },
+ "decision": {
+  "G1": true,
+  "G2": true,
+  "G3_not_worse": false,
+  "continue": true
+ },
+ "manual_check": [
+  {
+   "cond": "C1",
+   "incident": "incident_5",
+   "index": 14,
+   "gold": "dp5hn",
+   "answer": "dp5hn",
+   "scored_correct": true
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_39",
+   "index": 12,
+   "gold": "get-krbticket.ps1",
+   "answer": "Get-KRBTicket.ps1",
+   "scored_correct": true
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_5",
+   "index": 72,
+   "gold": "vectorsandarrows.com",
+   "answer": "vectorsandarrows.com",
+   "scored_correct": true
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_166",
+   "index": 26,
+   "gold": "Jordan P",
+   "answer": "laylaw",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_322",
+   "index": 18,
+   "gold": "ntdsutil.exe",
+   "answer": "ntdsutil.exe",
+   "scored_correct": true
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_55",
+   "index": 49,
+   "gold": "Luciano Herrera (the CIO account)",
+   "answer": "pwilson",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_34",
+   "index": 6,
+   "gold": "The Azure AD Device ID of host `vnevado-win10e` is `02b8f519-1123-4228-b32a-ccb78af3449f`.",
+   "answer": "16320fec-8d90-403b-b7fe-78f715d4728d",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_5",
+   "index": 59,
+   "gold": "mimilib.dll",
+   "answer": "",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_166",
+   "index": 31,
+   "gold": "Jordan P",
+   "answer": "",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_55",
+   "index": 32,
+   "gold": "Luciano Herrera (account name), whose sign-in identity is pwilson@niseko.alpineskihouse.co",
+   "answer": "Luciano Herrera",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_39",
+   "index": 46,
+   "gold": "kyleg",
+   "answer": "",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_166",
+   "index": 23,
+   "gold": "95.202.65.202",
+   "answer": "255.246.85.58",
+   "scored_correct": false
+  },
+  {
+   "cond": "C1",
+   "incident": "incident_34",
+   "index": 3,
+   "gold": "winatp-intro-backdoor.exe",
+   "answer": "powershell.exe",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_5",
+   "index": 87,
+   "gold": "Command line: `vssblatemp.exe delete shadows /all`, Process ID: 1900 (created 2024-06-20T09:29:40.8785892Z)",
+   "answer": "ProcessId=1900, CommandLine=vssblatemp.exe delete shadows /all",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_5",
+   "index": 76,
+   "gold": "mimidrv.sys",
+   "answer": "mimilib.dll",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_322",
+   "index": 11,
+   "gold": "Hailey Johnson",
+   "answer": "Hailey Johnson",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_39",
+   "index": 67,
+   "gold": "141.216.110.153",
+   "answer": "35.202.74.47",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_34",
+   "index": 3,
+   "gold": "winatp-intro-backdoor.exe",
+   "answer": "WinATP-Intro-Backdoor.exe",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_55",
+   "index": 56,
+   "gold": "Process ID: 5752, Created Time (UTC): 2024-07-06T00:00:01.7155092Z, Command Line: `\"iy2orr1e.rrg.exe\" -windowstyle hidden -encodedcommand qwa6afwauwbjahiaaqbwahqacwbcaeuaeabwag8acgb0aeearabgafmavabvagsazqbuafmaaqbnag4aaqbuaemazqbyahqalgbwahmamqa=`",
+   "answer": "iy2orr1e.rrg.exe",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_5",
+   "index": 79,
+   "gold": "107.224.99.179",
+   "answer": "107.224.99.179",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_166",
+   "index": 31,
+   "gold": "Jordan P",
+   "answer": "Jordan P",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_34",
+   "index": 32,
+   "gold": "samuelf",
+   "answer": "dp5hn",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_39",
+   "index": 61,
+   "gold": "Process ID 4112 (created 2024-06-27T14:32:36.6706405Z), targeting the user account `kyleg` (NTLM hash 96def1a633fc6790124d5f8fe31cc72b, domain vnevado.alpineskihouse.co)",
+   "answer": "4748 xfbzkp",
+   "scored_correct": false
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_55",
+   "index": 73,
+   "gold": "a66a4b44-d1f7-4563-95bf-a89d1b05b325",
+   "answer": "a66a4b44-d1f7-4563-95bf-a89d1b05b325",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_5",
+   "index": 72,
+   "gold": "vectorsandarrows.com",
+   "answer": "vectorsandarrows.com",
+   "scored_correct": true
+  },
+  {
+   "cond": "C2",
+   "incident": "incident_166",
+   "index": 26,
+   "gold": "Jordan P",
+   "answer": "laylaw@vnevado.alpineskihouse.co",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 61,
+   "gold": "Process ID 4112 (created 2024-06-27T14:32:36.6706405Z), targeting the user account `kyleg` (NTLM hash 96def1a633fc6790124d5f8fe31cc72b, domain vnevado.alpineskihouse.co)",
+   "answer": "4748",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_166",
+   "index": 24,
+   "gold": "100",
+   "answer": "E6",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_55",
+   "index": 66,
+   "gold": "santiago@vnevado.alpineskihouse.co",
+   "answer": "tgs2z@vnevado.alpineskihouse.co",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 6,
+   "gold": "kyleg",
+   "answer": "tgs2z",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 97,
+   "gold": "Process ID: 6636, Created Time (UTC): 2024-06-27T14:32:46.5860644Z, Command line: `powershell.exe c:\\m365dattack\\get-krbticket.ps1`",
+   "answer": "5924",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_5",
+   "index": 76,
+   "gold": "mimidrv.sys",
+   "answer": "get-userprttoken.ps1",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 8,
+   "gold": "1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1",
+   "answer": "1d94aaf6-efe6-4e76-ad56-ffd7d1257bc1",
+   "scored_correct": true
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_55",
+   "index": 55,
+   "gold": "a66a4b44-d1f7-4563-95bf-a89d1b05b325",
+   "answer": "a66a4b44-d1f7-4563-95bf-a89d1b05b325",
+   "scored_correct": true
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_34",
+   "index": 32,
+   "gold": "samuelf",
+   "answer": "samuelf",
+   "scored_correct": true
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_5",
+   "index": 8,
+   "gold": "earlap.doc",
+   "answer": "vssblatemp.exe",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 29,
+   "gold": "fk8mq@vnevado.alpineskihouse.co",
+   "answer": "fk8mq@vnevado.alpineskihouse.co",
+   "scored_correct": true
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_34",
+   "index": 17,
+   "gold": "schtasks.exe",
+   "answer": "WinATP-Intro-Backdoor.exe",
+   "scored_correct": false
+  },
+  {
+   "cond": "C3",
+   "incident": "incident_39",
+   "index": 32,
+   "gold": "powershell.exe",
+   "answer": "E7.process.CommandLine=mimikatz.exe",
+   "scored_correct": false
+  },
+  {
+   "cond": "C4",
+   "incident": "incident_5",
+   "index": 65,
+   "gold": "Process ID: 1900, Created Time (UTC): 2024-06-20T09:29:40.8785892Z, Command line: `vssblatemp.exe delete shadows /all`",
+   "answer": "kiters.7z",
+   "scored_correct": false
+  }
+ ]
+}
