@@ -1,0 +1,12 @@
+\section{相关工作}
+\label{sec:related}
+
+\paragraph{攻击调查与分诊} 基于溯源的系统构建主机活动的因果图，并用规则或学习模型使其易于处理。NoDoze~\citep{nodoze} 按告警周围溯源的异常程度为告警排序，以缓解告警疲劳；Kairos~\citep{kairos} 从全系统溯源中检测并重建入侵。这些系统决定分析师应该看什么，而不决定下一步运行哪个查询。Clouseau~\citep{clouseau} 用分层的 LLM 智能体从事件日志中重建攻击叙事，智能体自己选择查询；它报告开源权重模型在复杂场景上落后于一个闭源模型；其作者也指出，叙事重建超出了分诊所需——分诊追求的是快速的“接受或升级”判断。\hesp{} 面向的正是这个判断，使用小型本地模型，并把流程移到模型之外。ExCyTIn-Bench~\citep{excytin} 和 GUIDE~\citep{guide} 为 LLM 和机器学习调查提供了数据；\S\ref{sec:realdata} 测量了为什么两者都无法检验调查策略。
+
+\paragraph{面向安全的 LLM} LLM 智能体已被用于渗透测试~\citep{pentestgpt} 和夺旗赛题目~\citep{cybench}。关于保护智能体的工作约束智能体能做什么：IsolateGPT~\citep{isolategpt} 隔离 LLM 应用的执行，Progent~\citep{progent} 对工具调用施加权限策略。\hesp{} 与它们共享一个前提，即智能体的行为应在模型之外受到管控；但它管控的是调查流程（运行哪个探针、接受哪个结论、何时停止），而不是访问权限，并且测量了这种管控对任务成功率的影响。
+
+\paragraph{使用工具的智能体} ReAct~\citep{react} 交替进行推理和行动，Reflexion~\citep{reflexion} 加入语言化的自我反馈，Toolformer~\citep{toolformer} 学习何时调用工具。在这些设计中，由模型决定下一步做什么以及何时结束。\hesp{} 把探针选择以及（可选的）停止移入一个显式的控制器，并把模型自己的选择作为一个基线配置。
+
+\paragraph{序贯诊断} 按期望信息增益选择测试，可以追溯到 Lindley~\citep{lindley1956} 和贝叶斯实验设计~\citep{chaloner1995}。它是经典基于模型的诊断~\citep{dekleer1987} 的基础，并且对贪心主动学习和带噪声的假设识别有近似最优的保证~\citep{dasgupta2004,golovin2010}。我们原样使用教科书中的准则；我们的问题是经验性的：这样的准则如何与不同能力的 LLM 规划器相互作用。语言模型在某些自我评估任务上可以有相当好的校准~\citep{kadavath2022}，但我们的模型自报表表明，这种校准并不能延伸到诊断控制器所需的探针—结果似然。
+
+\paragraph{评估方法} 预注册把确证性分析和探索性分析分开~\citep{nosek2018}，而基于机器学习的安全评估中的陷阱也已有详尽记录~\citep{arp2022dos}。我们对每项研究都做了预注册，冻结源码和表的哈希，并公开勘误。

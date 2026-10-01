@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1426 560" width="1426" height="560"><defs></defs><rect width="1426" height="560" fill="#FFFFFF"/><text x="118.0" y="40.0" font-family="'Times New Roman', Times, serif" font-size="29" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="118.0,730.0">The model decides when to stop</text>
+<line x1="118.0" y1="430.0" x2="730.0" y2="430.0" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="106.0" y="438.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="48.0,112.0">0</text>
+<line x1="118.0" y1="350.0" x2="730.0" y2="350.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<text x="106.0" y="358.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="48.0,112.0">0.25</text>
+<line x1="118.0" y1="270.0" x2="730.0" y2="270.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<text x="106.0" y="278.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="48.0,112.0">0.5</text>
+<line x1="118.0" y1="190.0" x2="730.0" y2="190.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<text x="106.0" y="198.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="48.0,112.0">0.75</text>
+<line x1="118.0" y1="110.0" x2="730.0" y2="110.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<text x="106.0" y="118.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#6B7280" text-anchor="end" data-fit="48.0,112.0">1</text>
+<text x="179.2" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="120.0,238.4">Qwen 7B</text>
+<circle cx="161.2" cy="403.3" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="197.2" cy="132.2" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="301.6" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="242.4,360.8">Qwen 32B</text>
+<circle cx="283.6" cy="141.1" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="319.6" cy="110.0" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="424.0" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="364.8,483.2">Qwen 72B</text>
+<circle cx="406.0" cy="154.4" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="442.0" cy="136.7" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="546.4" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="487.2,605.6">Llama 8B</text>
+<circle cx="528.4" cy="430.0" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="564.4" cy="430.0" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="668.8" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="609.6,728.0">Llama 70B</text>
+<circle cx="650.8" cy="145.6" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="686.8" cy="110.0" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="790.0" y="40.0" font-family="'Times New Roman', Times, serif" font-size="29" font-weight="700" font-style="normal" fill="#111827" text-anchor="start" data-fit="790.0,1402.0">The controller may also stop</text>
+<line x1="790.0" y1="430.0" x2="1402.0" y2="430.0" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="790.0" y1="350.0" x2="1402.0" y2="350.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<line x1="790.0" y1="270.0" x2="1402.0" y2="270.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<line x1="790.0" y1="190.0" x2="1402.0" y2="190.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<line x1="790.0" y1="110.0" x2="1402.0" y2="110.0" stroke="#E5E7EB" stroke-width="1.2" stroke-linecap="butt"/>
+<line x1="790.0" y1="136.7" x2="1402.0" y2="136.7" stroke="#B45309" stroke-width="2.5" stroke-linecap="butt" stroke-dasharray="10 7"/>
+<text x="1402.0" y="124.7" font-family="'Times New Roman', Times, serif" font-size="22" font-weight="700" font-style="normal" fill="#B45309" text-anchor="end" data-fit="1004.2,1406.0">no LLM, controller only: 0.917</text>
+<text x="851.2" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="792.0,910.4">Qwen 7B</text>
+<circle cx="825.2" cy="207.8" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="851.2" cy="136.7" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M877.2,182.9 L887.7,202.4 L866.7,202.4 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="973.6" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="914.4,1032.8">Qwen 32B</text>
+<circle cx="947.6" cy="167.8" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="973.6" cy="136.7" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M999.6,191.8 L1010.1,211.3 L989.1,211.3 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="1096.0" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="1036.8,1155.2">Qwen 72B</text>
+<circle cx="1070.0" cy="163.3" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="1096.0" cy="150.0" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M1122.0,196.3 L1132.5,215.8 L1111.5,215.8 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="1218.4" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="1159.2,1277.6">Llama 8B</text>
+<circle cx="1192.4" cy="154.4" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="1218.4" cy="136.7" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M1244.4,178.5 L1254.9,198.0 L1233.9,198.0 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="1340.8" y="466.0" font-family="'Times New Roman', Times, serif" font-size="23" font-weight="400" font-style="normal" fill="#111827" text-anchor="middle" data-fit="1281.6,1400.0">Llama 70B</text>
+<circle cx="1314.8" cy="145.6" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<circle cx="1340.8" cy="136.7" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<path d="M1366.8,178.5 L1377.3,198.0 L1356.3,198.0 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="24.0" y="270.0" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#374151" text-anchor="middle" data-fit="-276.0,324.0" transform="rotate(-90 24 270.0)">Verified completion</text>
+<circle cx="128.0" cy="522.0" r="10" fill="#FFFFFF" stroke="#4B5563" stroke-width="3"/>
+<text x="150.0" y="530.0" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#111827" text-anchor="start" data-fit="146.0,514.0">model selects probes</text>
+<circle cx="528.0" cy="522.0" r="10" fill="#1D4ED8" stroke="#1D4ED8" stroke-width="3"/>
+<text x="550.0" y="530.0" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#111827" text-anchor="start" data-fit="546.0,914.0">controller selects (EIG/cost)</text>
+<path d="M928.0,510.5 L938.5,530.0 L917.5,530.0 Z" fill="#93C5FD" stroke="#93C5FD" stroke-width="3"/>
+<text x="950.0" y="530.0" font-family="'Times New Roman', Times, serif" font-size="25" font-weight="400" font-style="normal" fill="#111827" text-anchor="start" data-fit="946.0,1314.0">controller selects (random)</text></svg>

@@ -1,0 +1,76 @@
+\section{规划器提示}
+\label{app:prompt}
+
+规划器每次决策收到一条系统消息和一条用户消息。下面是 \S\ref{sec:approach} 贯穿示例中的第三次请求（Llama-3.1-8B，带控制器停止的盲配置），用生成模型提示的同一个函数从归档日志渲染而来。提示是模型实际看到的原文，因此保留英文；为便于打印，长行已折行。
+
+\input{../tables/prompt_example}
+
+\section{预注册记录}
+\label{app:prereg}
+
+每项研究在协议中的对应部分都在其任何回合运行之前冻结。冻结内容包括全文、控制器源码的哈希和预测表的哈希。冻结之后的改动以勘误形式追加。
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{lllrl}
+    \toprule
+    研究 & 版本 & 源码哈希 & 回合数 & 主要终点及结果 \\
+    \midrule
+    初始研究 & v0.5 & \texttt{5a5fccd2} & 1{,}944 & 7B 和 32B 证实；72B 区间触及零（E-1） \\
+    表来源研究 & v0.6 & \texttt{dcf1e79e} & 1{,}728 & 7B，计数表对 Memory-only：证实 \\
+    分解研究 & v0.8 & \texttt{8c355d97} & 1{,}800 & Q-7B 上的排序：证实；L-8B 上 \hesp{} 对 Memory-only：未证实 \\
+    停止研究 & v0.9 & \texttt{b7b821b9} & 1{,}800 & L-8B 上的控制器停止：证实；L-8B 上给定停止后的选择：未证实 \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table*}
+
+\paragraph{已披露的冻结前运行} 在冻结表来源研究、分解研究和停止研究之前，我们运行了 10 到 16 个回合的流水线冒烟测试。对停止研究，我们还在不相交的开发种子上运行了一次无 LLM 模拟。这些运行都不进入任何分析。该模拟为控制器停止终点的预期提供了依据；阈值 0.8 沿用自结束守卫，没有调过。\cref{tab:v09} 中的无 LLM 参照是在停止研究之后运行的，属于探索性结果。
+
+\section{详细结果}
+\label{app:tables}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v08_verified}\end{adjustbox}
+  \caption{分解研究：已验证完成率（每格 72 个回合）。每个配置都用同一张冻结的计数表打分和选择。Q = Qwen2.5，L = Llama-3.1。}
+  \label{tab:app-v08}
+\end{table*}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v08_terms}\end{adjustbox}
+  \caption{分解研究：\cref{fig:decomposition} 中绘制的对比。Q-7B 的排序格是主要终点（97.5\% 区间）；其余各格为探索性的 95\% 区间。}
+  \label{tab:app-v08terms}
+\end{table*}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{../tables/v09_terms}\end{adjustbox}
+  \caption{停止研究：各项对比。前两行中的 L-8B 格是主要终点（97.5\% 区间）；其余各格为探索性的 95\% 区间。}
+  \label{tab:app-v09terms}
+\end{table*}
+
+\FloatBarrier
+\section{示例轨迹}
+\label{app:trace}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{hesp-framework.pdf}
+  \caption{一个分诊案例（sec-base-00，Qwen2.5-7B，第 0 次重复）分别由模型单独处理（左）和在 \hesp{} 中处理（右），取自表来源研究的归档日志。}
+  \label{fig:trace}
+\end{figure*}
+
+\section{勘误}
+\label{app:errata}
+
+\begin{description}
+  \item[E-1] 初始研究曾报告三个主要区间都不含零；实际上 72B 的区间是 $[0.000, 0.236]$。
+  \item[E-2] 初始研究的逐回合日志在租用的 GPU 释放之前没有归档。汇总结果可以重算，但第三方无法重新审计原始事件。从表来源研究起，日志都在释放算力之前归档并计算哈希。
+  \item[E-3] 初始研究的清单文件中带有来自另一个任务家族早期研究的过时元数据。
+  \item[E-4] 在初始研究中，随机选择对照能看到 EIG 排序。分解研究的盲配置消除了这一点。
+  \item[E-5] 在表来源研究之前，预测表来自环境的生成器。计数表取代了它们。
+  \item[E-6] 描述性安全指标的真值对 drift 回合处理有误，先后更正了两次。现在每个汇总脚本都会检查每个已验证结论是否等于所用的真值。
+  \item[E-7] 在表来源研究中，Memory-only 的账本用的是设计者表，而 \hesp{} 用的是计数表。这种不对称对基线有利，因此该研究的主要终点即便有偏差，也只会被低估。分解研究对所有配置都使用计数表。
+\end{description}
