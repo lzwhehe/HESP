@@ -634,3 +634,9 @@ H100 上 Qwen-7B 与 Llama-8B 各 1,152 个回合（1.6 与 2.2 分钟），本�
 **次要（探索性）。** 各格子的已验证数、错误原因、漏判攻击、无结论数与平均探针数；structured 与 documented、drifted 之间的差别（读原始文本本身让单独决策的模型损失多少）。
 
 **代码（v1.3 冻结版本之上）。** `hesp/rawlog.py` 新增 `NullParser`，原始日志环境对它记 `unparsed` 并在验证时不要求解析结果等于真实结果；`hesp/llm.py` 对 `unparsed` 观测改用上述提示文字；`scripts/run_v14_study.py`、`scripts/v14_summary.py`、`scripts/server/run_v14_h100.sh`；`tests/test_v14.py`（4 个测试）。单元测试 205 个全部通过；288 个不含 LLM 回合的行为指纹仍为 `3d9e5bc5`。服务器脚本只关闭自己启动的 vLLM 进程；GPU 上若有其他进程则不启动。
+
+### v1.4 冻结（2026-10-02，正式回合之前）
+
+- `hesp/` 源码哈希 `8bedfd0a`（服务器上由 git 检出，换行为 LF；v1.3 之后只改了 `rawlog.py` 与 `llm.py`，不使用 `NullParser` 时行为不变，288 个不含 LLM 回合的行为指纹仍为 `3d9e5bc5`）。
+- 冒烟测试（披露，不进入分析）：H100 上 Qwen-7B，每 8 个任务取 1 个（2 个任务），12 个格子 × 3 次 = 72 个回合，0 次 FSM 错误，审计全部通过，2.1 分钟；GPU 在脚本结束后空闲。只检查了能否运行、审计是否通过，以及漂移格式下提示中的观测确实是 `unparsed` 加日志原文；没有查看任何格子的完成率或结论。
+- 正式运行：H100 上 `scripts/server/run_v14_h100.sh`（Qwen-7B、Llama-8B，各 576 个回合）。运行期间不修改 `hesp/`。
