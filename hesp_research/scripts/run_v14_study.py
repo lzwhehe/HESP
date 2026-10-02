@@ -34,9 +34,9 @@ VARIANTS = ("v1", "clear_finish")
 CONDITIONS = ("structured", "documented", "drifted")
 
 
-def jobs(task_stride=1):
+def jobs(task_stride=1, modes=MODES, variants=VARIANTS, conditions=CONDITIONS):
     tasks = sec_suite(("base", "noise"))[::task_stride]
-    return [(mode, variant, condition, t, rep) for mode in MODES for variant in VARIANTS for condition in CONDITIONS
+    return [(mode, variant, condition, t, rep) for mode in modes for variant in variants for condition in conditions
             for t in tasks for rep in range(3)]
 
 
@@ -49,13 +49,18 @@ def main():
     ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--task-stride", type=int, default=1, help="smoke tests only")
+    ap.add_argument("--presentation", choices=("unparsed", "raw_text"), default="unparsed",
+                    help="raw_text: the v1.4 exploratory check with the neutral '(raw log below)' wording")
+    ap.add_argument("--modes", nargs="+", default=list(MODES), choices=MODES)
+    ap.add_argument("--variants", nargs="+", default=list(VARIANTS), choices=VARIANTS)
+    ap.add_argument("--conditions", nargs="+", default=list(CONDITIONS), choices=CONDITIONS)
     args = ap.parse_args()
     client = OpenAICompatClient(args.model, args.base_url)
     _, tables, digest, _ = family("sec")
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=args.resume)
     src = source_hash()
-    todo = jobs(args.task_stride)
+    todo = jobs(args.task_stride, args.modes, args.variants, args.conditions)
 
     def one(i_job):
         i, (mode, variant, condition, t, rep) = i_job
@@ -68,7 +73,7 @@ def main():
         if condition == "structured":
             env = make_sec_env(t, seed)
         else:
-            env = make_raw_env_class(NullParser(), condition)(t["cause"], t["variant"], seed)
+            env = make_raw_env_class(NullParser(args.presentation), condition)(t["cause"], t["variant"], seed)
         with env:
             r = run(env, LLMPlanner(client, seed=seed, temperature=args.temperature, prompt_variant=variant), mode,
                     rdir, BUDGET, predictor=TargetPredictor(tables, "empirical_20"), selector=Selector("eig_cost", seed),
@@ -92,7 +97,8 @@ def main():
             f.write(json.dumps(r) + "\n")
     (out / "manifest.json").write_text(json.dumps({
         "study": "v1.4", "seed": SEED, "source_sha256": src, "model": client.info(), "temperature": args.temperature,
-        "table": {"name": "empirical_20", "sha256": digest}, "task_stride": args.task_stride,
+        "table": {"name": "empirical_20", "sha256": digest}, "task_stride": args.task_stride, "presentation": args.presentation,
+        "modes": args.modes, "variants": args.variants, "conditions": args.conditions,
         "episodes": len(rows)}, indent=2), encoding="utf-8")
     print(f"{len(rows)} episodes, audits passed {sum(r['audit_passed'] for r in rows)}, "
           f"done in {(time.time() - start) / 60:.1f} min")

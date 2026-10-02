@@ -141,8 +141,14 @@ def _drifted(probe_id, b, rng):
 
 class NullParser:
     """v1.4: no parser. The observation carries the log text and the outcome ``unparsed``; a model that decides
-    on its own reads the text itself (``scripts/run_v14_study.py``)."""
+    on its own reads the text itself (``scripts/run_v14_study.py``). ``outcome="raw_text"`` (v1.4 exploratory
+    check) only changes how the planner prompt announces the text: "(raw log below)" instead of "(not parsed...)"."""
     name = source = "none"
+
+    def __init__(self, outcome="unparsed"):
+        if outcome not in ("unparsed", "raw_text"):
+            raise ValueError(f"unknown NullParser outcome {outcome}")
+        self.outcome = outcome
 
     def parse(self, probe_id, text):
         return None
@@ -291,7 +297,8 @@ def make_raw_env_class(parser, condition, trusted_sources=TRUSTED_SOURCES):
             observation = Observation(
                 f"o{self._counter:04d}", action.id, self._version,
                 parsed if parsed is not None else (TRANSIENT if not valid else
-                                                   "unparsed" if facts.get("parser") == "none" else "unclassified"),
+                                                   getattr(parser, "outcome", "unparsed") if facts.get("parser") == "none"
+                                                   else "unclassified"),
                 facts, raw, valid)
             self._observations[observation.id] = observation
             self._true_outcome[observation.id] = truth

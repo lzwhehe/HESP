@@ -54,7 +54,8 @@ archive() {
 
 v14() {  # $1 = key, $2 = mode (full|smoke)
   local out attempt start n extra=""
-  if [ "$2" = smoke ]; then out="results/v14_smoke_$1"; extra="--task-stride ${STRIDE:-8}"; else out="results/v14_alone_$1"; fi
+  if [ "$2" = smoke ]; then out="results/v14_smoke_$1"; extra="--task-stride ${STRIDE:-8}"; else out="results/${OUT_PREFIX:-v14_alone}_$1"; fi
+  extra="$extra ${STUDY_ARGS:-}"
   for attempt in 1 2 3; do
     start=$(log_lines "$1")
     python -u scripts/run_v14_study.py $extra --output "$out" --model "${NAME[$1]}" \

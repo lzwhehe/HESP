@@ -29,10 +29,10 @@ class ScriptReader:
                 "reason": "read the log"}
 
 
-def episode(hypothesis, condition="drifted", mode="react_style"):
+def episode(hypothesis, condition="drifted", mode="react_style", presentation="unparsed"):
     planner = ScriptReader(hypothesis)
     with tempfile.TemporaryDirectory() as root:
-        with make_raw_env_class(NullParser(), condition)("credential_stuffing", "base", 5) as env:
+        with make_raw_env_class(NullParser(presentation), condition)("credential_stuffing", "base", 5) as env:
             result = run(env, planner, mode, Path(root) / "r", BUDGET)
             log = list(env.parse_log)
         audit = audit_run(Path(root) / "r")
@@ -58,6 +58,12 @@ class TestModelAloneOnRawLogs(unittest.TestCase):
 
     def test_correct_reading_is_verified(self):
         result, _, _, _ = episode("credential_stuffing")
+        self.assertEqual(result["status"], "VERIFIED_SIMULATION")
+
+    def test_neutral_wording(self):
+        result, _, _, prompts = episode("credential_stuffing", presentation="raw_text")
+        self.assertIn("source_ips -> outcome=(raw log below)", prompts[-1])
+        self.assertNotIn("not parsed", prompts[-1])
         self.assertEqual(result["status"], "VERIFIED_SIMULATION")
 
     def test_wrong_cause_is_not_verified(self):
