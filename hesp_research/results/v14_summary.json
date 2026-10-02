@@ -1,0 +1,410 @@
+{
+  "qwen7b": {
+    "model": "Qwen2.5-7B",
+    "alone": {
+      "react_style_v1_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 8,
+        "wrong_cause": 8,
+        "missed_attack": 8,
+        "no_verdict": 40,
+        "planner_error": 0,
+        "mean_tool_calls": 6.6,
+        "audits_passed": 48
+      },
+      "react_style_v1_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.06,
+        "audits_passed": 48
+      },
+      "react_style_v1_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 5.92,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 6,
+        "wrong_cause": 6,
+        "missed_attack": 5,
+        "no_verdict": 42,
+        "planner_error": 0,
+        "mean_tool_calls": 7.38,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 1,
+        "mean_tool_calls": 7.42,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 1,
+        "mean_tool_calls": 5.48,
+        "audits_passed": 48
+      },
+      "memory_only_v1_structured": {
+        "episodes": 48,
+        "verified": 9,
+        "named_cause": 9,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 39,
+        "planner_error": 0,
+        "mean_tool_calls": 7.06,
+        "audits_passed": 48
+      },
+      "memory_only_v1_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 6.71,
+        "audits_passed": 48
+      },
+      "memory_only_v1_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 5.35,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_structured": {
+        "episodes": 48,
+        "verified": 13,
+        "named_cause": 13,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 35,
+        "planner_error": 0,
+        "mean_tool_calls": 7.33,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.46,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 4,
+        "mean_tool_calls": 5,
+        "audits_passed": 48
+      }
+    },
+    "reference": {
+      "controller_structured_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_rule_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_rule_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.35,
+        "audits_passed": 48
+      },
+      "controller_llm_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_llm_drifted": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      }
+    },
+    "primary": {
+      "difference": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ],
+      "level": 0.975,
+      "tasks": 16,
+      "pairs": 48
+    }
+  },
+  "llama8b": {
+    "model": "Llama-3.1-8B",
+    "alone": {
+      "react_style_v1_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.98,
+        "audits_passed": 48
+      },
+      "react_style_v1_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.04,
+        "audits_passed": 48
+      },
+      "react_style_v1_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.4,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 1,
+        "mean_tool_calls": 7.85,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.04,
+        "audits_passed": 48
+      },
+      "react_style_clear_finish_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.83,
+        "audits_passed": 48
+      },
+      "memory_only_v1_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.85,
+        "audits_passed": 48
+      },
+      "memory_only_v1_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.04,
+        "audits_passed": 48
+      },
+      "memory_only_v1_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.67,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_structured": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.52,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.08,
+        "audits_passed": 48
+      },
+      "memory_only_clear_finish_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 7.48,
+        "audits_passed": 48
+      }
+    },
+    "reference": {
+      "controller_structured_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_rule_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_rule_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 0,
+        "mean_tool_calls": 8.35,
+        "audits_passed": 48
+      },
+      "controller_llm_documented": {
+        "episodes": 48,
+        "verified": 48,
+        "named_cause": 48,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 0,
+        "planner_error": 0,
+        "mean_tool_calls": 2.6,
+        "audits_passed": 48
+      },
+      "controller_llm_drifted": {
+        "episodes": 48,
+        "verified": 34,
+        "named_cause": 36,
+        "wrong_cause": 2,
+        "missed_attack": 0,
+        "no_verdict": 12,
+        "planner_error": 0,
+        "mean_tool_calls": 4.52,
+        "audits_passed": 48
+      }
+    },
+    "primary": {
+      "difference": 0.7083333333333334,
+      "ci": [
+        0.4375,
+        0.9375
+      ],
+      "level": 0.975,
+      "tasks": 16,
+      "pairs": 48
+    }
+  }
+}

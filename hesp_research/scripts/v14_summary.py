@@ -73,7 +73,8 @@ def main():
             by[r["arm"]].append(r)
         cells = {f"{a}_{c}": cell(by[f"{a}_{c}"]) for a in ALONE for c in CONDITIONS if by.get(f"{a}_{c}")}
         refs = {f"controller_{p}_{c}": cell([r for r in ref if r["parser"] == p and r["condition"] == c])
-                for p, c in (("structured", "documented"), ("rule", "drifted"), ("llm", "drifted"))}
+                for p, c in (("structured", "documented"), ("rule", "documented"), ("rule", "drifted"),
+                             ("llm", "documented"), ("llm", "drifted"))}
         prim = primary([r for r in ref if r["parser"] == "llm" and r["condition"] == "drifted"], by[PRIMARY_ALONE])
         summary[key] = {"model": label, "alone": cells, "reference": refs, "primary": prim}
         md += [f"## {label}", "", "| configuration | verified | wrong | missed | no verdict | probes |",

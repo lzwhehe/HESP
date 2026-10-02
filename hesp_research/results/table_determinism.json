@@ -1,0 +1,25 @@
+{
+  "cells": 90,
+  "probes": 10,
+  "compared_with": "empirical_100",
+  "by_k": {
+    "1": {
+      "differing_cells": 4,
+      "differing_probes": [
+        "threat_intel"
+      ]
+    },
+    "5": {
+      "differing_cells": 4,
+      "differing_probes": [
+        "threat_intel"
+      ]
+    },
+    "20": {
+      "differing_cells": 4,
+      "differing_probes": [
+        "threat_intel"
+      ]
+    }
+  }
+}

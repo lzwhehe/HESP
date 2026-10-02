@@ -364,6 +364,37 @@ def v12_raw():
     write("v12_raw", L)
 
 
+def v14_readdecide():
+    """v1.4 with v1.2 C raw: who reads and who decides, on structured observations and on raw logs (verified of 48;
+    Qwen2.5-7B / Llama-3.1-8B). Controller rows use confirm stop and a never-finishing planner."""
+    path = RESULTS / "v14_summary.json"
+    if not path.exists():
+        return
+    s = json.loads(path.read_text(encoding="utf-8"))
+    q, l = s["qwen7b"], s["llama8b"]
+
+    def pair(get):
+        return f"{get(q)} / {get(l)}"
+
+    def alone(arm, cond):
+        return pair(lambda m: m["alone"][f"{arm}_{cond}"]["verified"])
+
+    def ref(key):
+        return pair(lambda m: m["reference"][key]["verified"])
+    L = [r"\begin{tabular}{lllrrr}", r"\toprule",
+         r"Decides & Reads & Prompt & structured & documented log & drifted log \\", r"\midrule"]
+    for arm, mode, prompt in (("react_style_v1", "ReAct-style", "default"), ("react_style_clear_finish", "ReAct-style", "clear finish"),
+                              ("memory_only_v1", "Memory-only", "default"), ("memory_only_clear_finish", "Memory-only", "clear finish")):
+        L.append(f"model ({mode}) & model & {prompt} & {alone(arm, 'structured')} & {alone(arm, 'documented')} & "
+                 f"{alone(arm, 'drifted')} \\\\")
+    L.append(r"\midrule")
+    L.append(f"controller & rule parser & -- & {ref('controller_structured_documented')} & "
+             f"{ref('controller_rule_documented')} & {ref('controller_rule_drifted')} \\\\")
+    L.append(f"controller & model & -- & -- & {ref('controller_llm_documented')} & {ref('controller_llm_drifted')} \\\\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    write("v14_readdecide", L)
+
+
 def v13():
     """v1.3: adaptive log injection under four reader policies; attacks closed as benign (of 36 actionable episodes per
     cell), honest benign cases verified (of 12), and, for the reader alone, adoption of the attacker's readings."""
@@ -435,6 +466,7 @@ if __name__ == "__main__":
     sensitivity()
     v12_policy()
     v12_raw()
+    v14_readdecide()
     v13()
     v12_fair()
     print("tables written to", OUT)

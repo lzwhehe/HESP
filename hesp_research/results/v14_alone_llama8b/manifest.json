@@ -1,0 +1,19 @@
+{
+  "study": "v1.4",
+  "seed": 2033,
+  "source_sha256": "8bedfd0ac62a9d770ddcbeaa6b73a35d0b3841c9ab9577061830fcd1b5cbc5d2",
+  "model": {
+    "model": "llama-3.1-8b-instruct",
+    "digest": null,
+    "root": "/home/ubuntu/models/Llama-3.1-8B-Instruct",
+    "max_model_len": 8192,
+    "server": "openai-compatible"
+  },
+  "temperature": 0.2,
+  "table": {
+    "name": "empirical_20",
+    "sha256": "c7153c615c95ebf704b5584f2f189ff2c1f040c59f10a3a50a746c03859ad1b7"
+  },
+  "task_stride": 1,
+  "episodes": 576
+}
