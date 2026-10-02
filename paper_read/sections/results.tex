@@ -52,7 +52,16 @@ We now let probes return raw log text in the documented format or in a \emph{dri
 
 \Cref{tab:v12raw} shows the comparison. On the documented format, both parsers read all 108 observations, and the controller resolves all 48 episodes, as with structured observations. On the drifted format, the rule parser reads none of 364 observations, and every episode escalates to an analyst. Qwen2.5-7B reads all 108 drifted observations and resolves all 48 episodes; Llama-3.1-8B reads 174 of 196 and resolves 34. Under the recommended configuration, which adds source-diverse corroboration, Qwen2.5-7B resolves 41 of 48 drifted episodes, exactly as many as a scripted reader that never misreads, and Llama-3.1-8B resolves 28. Removing the model, in other words, removes the agent's ability to work at all once the logs stop matching the parser.
 
-\smallskip\noindent\textbf{Finding 2.} A fixed parser fails completely once the log format changes, and a 7B model reads the changed format well enough to resolve most cases: reading is the job that needs the model.
+\begin{table}[t]
+  \caption{Neither half works alone. Resolved episodes of 48 (Q-7B / L-8B) on sec-triage base and noise by who decides and who reads. In the model rows the model decides alone and sees the environment's label with the JSON response (structured) or the log text without a label (log formats). The controller rows use the confirmation stop, and its fixed rules are the environment's classifier (structured) or the rule parser (log formats); the last row is the model reader of \cref{tab:v12raw}.}
+  \label{tab:readdecide}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/v14_readdecide}\end{adjustbox}
+\end{table}
+
+\emph{The model without the controller.} Reading alone does not make the model useful. With the same tasks, seeds, and log text, we let each model decide on its own, ReAct-style or Memory-only with the default prompt or the clearer one of \cref{tab:v12fair}, and showed it each probe's log text without an outcome label (\cref{tab:readdecide}). In all four configurations and both log formats, neither model resolves a case: every episode ends without a verdict, and none names a wrong cause. With labeled observations, Qwen2.5-7B resolves up to 13 of 48 and Llama-3.1-8B none. Qwen2.5-7B does read the text. After the drifted authentication summary, its stated reason is that the log shows distributed credential stuffing, yet it proposes the same probe again instead of concluding, 6.8 times per episode against 2.3 with labeled observations. Replacing the prompt's ``not parsed'' wording with a neutral one, an exploratory check run after the main study, leaves it at 0 of 48 on both formats. The pre-registered difference on drifted logs between the model reading for the controller and the model deciding alone is $+1.000$ for Qwen2.5-7B (CI $+1.000$ to $+1.000$) and $+0.708$ for Llama-3.1-8B (CI $+0.44$ to $+0.94$).
+
+\smallskip\noindent\textbf{Finding 2.} Neither half suffices alone. A fixed parser fails completely once the log format changes; a small model deciding alone resolves nothing from raw logs, although it reads them; reading for the controller, the same model resolves most cases.
 
 \subsection{RQ3: Is a Model Reader Safe?}
 \label{sec:rawlog}

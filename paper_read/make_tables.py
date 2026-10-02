@@ -388,7 +388,7 @@ def v14_readdecide():
         L.append(f"model ({mode}) & model & {prompt} & {alone(arm, 'structured')} & {alone(arm, 'documented')} & "
                  f"{alone(arm, 'drifted')} \\\\")
     L.append(r"\midrule")
-    L.append(f"controller & rule parser & -- & {ref('controller_structured_documented')} & "
+    L.append(f"controller & fixed rules & -- & {ref('controller_structured_documented')} & "
              f"{ref('controller_rule_documented')} & {ref('controller_rule_drifted')} \\\\")
     L.append(f"controller & model & -- & -- & {ref('controller_llm_documented')} & {ref('controller_llm_drifted')} \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
