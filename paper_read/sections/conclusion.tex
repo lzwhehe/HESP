@@ -1,0 +1,4 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+A local LLM that triages alerts reads evidence the attacker helped write, and whatever the model decides, the attacker can decide too. \hesp{} lets the model read but not decide: a controller chooses the probes, requires ledger evidence for every verdict, requires independent corroboration for benign ones, and never lets the model's own reading support a benign verdict. On three simulated settings and five models, these rules stop injected instructions, forged sources, and adaptive attacks on log parsing, and the controller resolves as many cases as any model we tested. Testing the same rules on real telemetry requires paired, objectively labeled traces of attacks and the legitimate activity they imitate.

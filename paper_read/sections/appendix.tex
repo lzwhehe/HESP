@@ -1,0 +1,250 @@
+\section{Planner Prompt}
+\label{app:prompt}
+
+The planner receives a system message and one user message per decision. Below is the third request of the running example in \S\ref{sec:approach} (Llama-3.1-8B, blind configuration with controller stop), rendered from the archived journal by the function that produced the model's prompt. Long lines are wrapped for print.
+
+\input{tables/prompt_example}
+
+\section{Execution Loop and Configurations}
+\label{app:loop}
+
+\paragraph{Order of operations} One episode runs the following loop until it ends; the step numbers are those of \texttt{controller.run} in the repository.
+\begin{enumerate}\setlength\itemsep{0pt}
+  \item If the time budget is spent, end (no verdict).
+  \item If the environment's state version changed, reset the current scores to the prior and keep earlier evidence as history.
+  \item \emph{Controller stop} (if enabled): if the leader has posterior $\ge 0.8$ and a current observation supports it (under the confirmation rule, one that \emph{specifically} supports it), and any benign-corroboration requirement is met, conclude with up to three supporting observations. The planner is not called.
+  \item Rank the legal probes (untried in this state, affordable, prerequisites met) by EIG/cost.
+  \item Send the planner one request (ledger, history, blocked proposals, remaining budgets; the ranking only if shown) and receive one decision. A malformed reply is returned once with the error; a second one ends the episode (\emph{planner error}).
+  \item \texttt{stop}: end without a verdict (\emph{abstained}).
+  \item \texttt{finish}: if the finish guard is on and the claim fails it (score $< 0.8$, no cited current supporting observation, or missing benign corroboration), reject it, add the reason to the blocked proposals, and go to step~1; the rejection consumes a decision. Otherwise conclude with the planner's verdict.
+  \item \texttt{action}: in Memory-only and ReAct-style configurations, the proposed probe runs; in \hesp{} configurations, the controller's selector chooses the probe, whatever was proposed. A duplicate in the same state is blocked and costs a decision.
+  \item Journal the prediction $P(o \mid h, a)$ for every cause, execute the probe, journal the observation, and update the ledger. A transient failure is journaled and may be retried; it is not evidence.
+\end{enumerate}
+When the decision budget, tool budget, or legal probes run out, the controller stop (if enabled) is applied once more. The verifier is called on every verdict only to record the evaluation; its result never reaches the controller or the planner. Consequently, with the controller stop enabled and the same acceptance rule as the guard, the planner is never asked again once the rule is met; the value of a strong model ``waiting for confirmation'' (\S\ref{sec:rq-stop}) was measured in configurations \emph{without} the controller stop.
+
+
+\begin{table*}[t]
+  \caption{Configurations used in the paper. ``Guard'': the finish guard of \S\ref{sec:finish}. ``Stop'': controller-side stop, by posterior (post.) or by the confirmation rule (conf.). ``Corr.'': benign verdicts need two specifically supporting observations from different probes (probe) or different source groups (source). Every configuration uses the same catalogue, budgets, duplicate blocking, and verifier. $^\dagger$Recommended default.}
+  \label{tab:configs}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{lllllll}
+    \toprule
+    Configuration & Studies & Ledger shown & Probe chosen by & Ranking shown & Guard & Stop / Corr. \\
+    \midrule
+    ReAct-style & v0.5, v0.6, v1.0-C & no & planner & -- & no & none \\
+    Memory-only & all & yes & planner & -- & no & none (v0.9, v1.0-A: also post.) \\
+    Memory-only, raw text removed & v1.1 & yes (no raw text) & planner & -- & no & none \\
+    \hesp{} (``full'') & v0.5, v0.6 & yes & controller (EIG/cost) & yes & yes & none \\
+    \hesp{} blind & v0.8 & yes & controller (EIG/cost or random) & no & no & none \\
+    \hesp{} blind + stop & v0.9, v1.0-A & yes & controller (EIG/cost or random) & no & no & post. \\
+    \hesp{} guard + stop & v1.0-C, v1.1 & yes & controller (EIG/cost) & no & yes & post.; optional corr.\ (probe) \\
+    \hesp{} guard, stop variants & v1.1 & yes & controller (EIG/cost) & no & yes & none / post.\ / conf.; corr.\ (probe or source) \\
+    LLM-free controller & v0.9 ref., v1.0-B, v1.1-D & -- & controller & -- & -- & post.\ or conf. \\
+    \hesp{} guard, joint stop rules & v1.2 & yes & controller (EIG/cost) & no & yes & joint (named or incl.\ \textit{other}), $r \in \{3,5,10,30\}$ \\
+    \hesp{} guard + confirmation stop + recovery$^\dagger$ & v1.1, v1.2 & yes & controller (EIG/cost) & no & yes & conf.; corr.\ (source) for benign; probe forced after 2 rejected finishes \\
+    recommended + reader policy$^\dagger$ & v1.3 & -- (LLM reads only) & controller (EIG/cost) & -- & -- & as above; reader only / rule parser first / fields stripped / reader trust (benign needs a trusted reading) \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table*}
+
+\section{Pre-registration Record}
+\label{app:prereg}
+
+\begin{table*}[t]
+  \caption{Overview of the pre-registered studies: 11{,}912 audited LLM episodes in the five original studies, 7{,}926 in v1.1, 1{,}440 in v1.2, 2{,}304 in v1.3, and LLM-free episodes. The repository labels the studies by version.}
+  \label{tab:studies}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{llllrl}
+    \toprule
+    Study & Version & Question & Models & Episodes & Primary endpoint(s) \\
+    \midrule
+    Initial & v0.5 & does the controller help? & 3 Qwen & 1{,}944 & full \hesp{} vs.\ Memory-only, per model \\
+    Table-source & v0.6 & must the tables come from an oracle? & 3 Qwen & 1{,}728 & counted-table \hesp{} vs.\ Memory-only, 7B \\
+    Decomposition & v0.8 & ranking or loss of choice? second family & 5 & 1{,}800 & ranking vs.\ random (Q-7B); \hesp{} vs.\ Memory-only (L-8B) \\
+    Stopping & v0.9 & what to probe vs.\ when to stop & 5 & 1{,}800 & controller stop; selection given stop (both L-8B) \\
+    \midrule
+    Second family & v1.0-A & do the effects replicate on Sigma-derived tasks? & 5 & 3{,}800 & ranking; full effect (both Q-7B) \\
+    Table error & v1.0-B & what if the tables are wrong? & none & LLM-free & descriptive only \\
+    Adversarial evidence & v1.0-C & injected instructions and forged evidence & 5 & 840 & injection attack success (Q-7B) \\
+    \midrule
+    Follow-up & v1.1 & same evidence standard; attack attribution; stop diagnosis; wider table error & 5 & 7{,}926 + 3{,}968 LLM-free & LLM stop vs.\ LLM-free controller, both families (Q-72B) \\
+    Second review & v1.2 & evidence policies; fair prompts; raw logs & 2 & 1{,}440 + 3{,}320 LLM-free & controller vs.\ Memory-only with a clearer prompt (Q-7B, L-8B) \\
+    Reader attacks & v1.3 & adaptive log injection; reader policies & 2 & 2{,}304 + 1{,}152 LLM-free & reader only vs.\ reader trust: attacks closed as benign (Q-7B, L-8B) \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table*}
+
+Each study's section of the protocol was frozen before any of its episodes ran. Freezing covered the full text, the hash of the controller source, and the hashes of the prediction tables, and was recorded as a commit in the project's git repository; changes after freezing were appended as errata. These are \emph{internally frozen} prospective protocols: \cref{tab:prereg} gives the freeze commit and the first episode's manifest time for each study, but neither timestamp is attested by an external registry, and a hash identifies content without proving when it was fixed.
+
+\begin{table*}[t]
+  \caption{Pre-registration record. Freeze: commit and its time; first episode: creation time of the first run manifest (both UTC).}
+  \label{tab:prereg}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{lllllrl}
+    \toprule
+    Study & Version & Source hash & Freeze commit (UTC) & First episode (UTC) & Episodes & Primary endpoints and outcome \\
+    \midrule
+    Initial & v0.5 & \texttt{5a5fccd2} & \texttt{f0b4198} 09-24 01:23 & 09-24 01:27 & 1{,}944 & 7B and 32B confirmed; 72B interval touches zero (E-1) \\
+    Table-source & v0.6 & \texttt{dcf1e79e} & \texttt{2bbbed4} 09-24 12:58 & 09-24 13:03 & 1{,}728 & 7B, counted tables vs.\ Memory-only: confirmed \\
+    Decomposition & v0.8 & \texttt{8c355d97} & \texttt{084590c} 09-25 11:38 & 09-25 13:24 & 1{,}800 & ranking on Q-7B confirmed; \hesp{} vs.\ Memory-only on L-8B not confirmed \\
+    Stopping & v0.9 & \texttt{b7b821b9} & \texttt{04ed6aa} 09-26 05:17 & 09-26 05:19 & 1{,}800 & controller stop on L-8B confirmed; selection given stop on L-8B not confirmed \\
+    Table error, adversarial & v1.0-B/C & \texttt{f8eb0d16} & \texttt{5ecbb10} 09-27 14:50 & 09-27 14:51 & 840 + LLM-free & injection attack success (Q-7B) confirmed \\
+    Second family & v1.0-A & \texttt{f8eb0d16} & \texttt{6045509} 09-27 16:06 & 09-27 16:07 & 3{,}800 & ranking and full effect on sigma-triage (Q-7B) confirmed \\
+    Follow-up & v1.1 & \texttt{81126159} & \texttt{98f89b7} 09-29 02:09 & 09-29 02:09 & 7{,}926 + 3{,}968 LLM-free & PE1 (Q-72B, both families): no gain \\
+    Evidence policies & v1.2-B & \texttt{4b75a468} & \texttt{480089f} 09-29 10:37 & 09-29 10:37 & 2{,}936 LLM-free & descriptive only \\
+    Fair prompts, raw logs & v1.2-C & \texttt{82b98ff5} & \texttt{4c3198d} 09-29 10:45 & 09-29 10:45 & 1{,}440 & controller vs.\ Memory-only with the selected prompt (Q-7B, L-8B) \\
+    Reader attacks & v1.3 & \texttt{ac215a1f} & \texttt{68feb26} 09-29 17:30 & 09-29 17:30 & 2{,}304 + 1{,}152 LLM-free & reader only vs.\ reader trust, attacks closed as benign (Q-7B, L-8B): see \S\ref{sec:rawlog} \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table*}
+
+\paragraph{Disclosed pre-freeze runs} Before freezing the table-source, decomposition, and stopping studies, we ran pipeline smoke tests of 10 to 16 episodes. For the stopping study we also ran an LLM-free simulation on disjoint development seeds. None of these runs enters any analysis. The simulation informed the stated expectation for the controller-stop endpoint; the threshold of 0.8 was carried over from the finish guard and was not tuned. The LLM-free reference in \cref{tab:v09} was run after the stopping study and is exploratory. Before freezing the v1.0 study we ran pipeline smoke tests (8 adversarial and 20 sigma-triage episodes, and a reduced table-error run) and an LLM-free simulation of the adversarial variants on disjoint seeds. That simulation already showed that a forged scanner answer makes the controller close every actionable case as benign, and that the asymmetric-evidence rule prevents it; the protocol records this expectation before any LLM episode ran. The v1.0 source hash is unchanged from the adversarial and table-error parts to the second family: the family's code was written and tested before any rule was sampled. Before freezing v1.1 we ran smoke tests of every part; the first one failed on a serving fault that was later traced to prefix caching (E-11), and its episodes, like those of the two study directories discarded for the same reason, enter no analysis. Before freezing v1.2 and v1.3 we ran smoke tests on a subset of tasks (v1.3: two tasks, 144 episodes on Qwen2.5-7B, and the scripted reader on the same subset), checking only that the pipeline ran, parsers returned labels, and audits passed; the v1.3 protocol records the expectation, derived from the tables before any run, that a reader adopting every claim closes every attack under the adaptive attacks. Two further episode sets lie outside \cref{tab:studies}: the 3{,}888 episodes of Appendix~\ref{app:alternatives} come from an exploratory study (v0.4) on an earlier task family with its own protocol and seeds, and the 3{,}968 LLM-free episodes of v1.1-D are counted separately.
+
+\FloatBarrier
+\section{Detailed Results}
+\label{app:tables}
+
+
+\begin{table*}[t]
+  \caption{Clustering and drift sensitivity of the sec-triage primary endpoints (exploratory): each endpoint recomputed with the pre-registered task clusters (as reported; the v1.0-C endpoint has 6 injection tasks, one per actionable cause), with causes as clusters (tasks averaged within a cause first), and separately on the base, noise, and drift variants. Bootstrap seeds and interval levels are those of each study.}
+  \label{tab:sensitivity}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/sensitivity}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Table-source study: verified completion by the source of the prediction tables (72 episodes per cell). The 7B comparison against Memory-only is the pre-registered primary endpoint; 32B and 72B are exploratory. Intervals are 95\% task-cluster bootstrap.}
+  \label{tab:v06}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Second task family (sigma-triage): verified completion, with mean probe cost in parentheses, 152 episodes per cell (76 tasks, two repeats). The two contrasts are the pre-registered primary endpoints on Q-7B (98.33\% intervals over 12 rules); the other models' intervals are exploratory 95\% intervals. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:v10a}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10a_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Adversarial evidence (v1.0, sec-triage): attack success, the number of episodes with an actionable cause that end in a benign verdict (of 18: six causes, three repeats), and verified episodes on the two benign causes (of 6). \hesp{} uses the finish guard and controller stop; ``+corr.''\ adds the per-probe corroboration rule. Primary endpoint (Q-7B, injected instruction, Memory-only $-$ \hesp{}, as a share): $+1.000$ $[+1.000,+1.000]$, 98.33\% interval.}
+  \label{tab:v10c}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v10c_main}\end{adjustbox}
+\end{table*}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig-decomposition.pdf}
+  \caption{Decomposition study: where the gain over Memory-only comes from, per model (difference in verified completion, 72 paired episodes, task-cluster bootstrap intervals). \emph{Taking the choice away} compares random controller selection with the model's own choices. \emph{Ranking} compares EIG/cost selection with random selection while the planner's prompt is identical. The hollow marker (Qwen 7B, ranking) is a primary endpoint with a 97.5\% interval; the others are exploratory 95\% intervals. Amber marks intervals entirely below zero. Llama-3.1-8B never concludes, so every contrast on it is zero.}
+  \label{fig:decomposition}
+\end{figure*}
+
+\begin{table*}[t]
+  \caption{Stopping study: verified completion, with mean probe cost in parentheses, 72 episodes per cell. ``LLM or controller'': the planner may still finish first. A new seed (2027) makes the first and third rows an independent replication of the decomposition study. The bottom rows replace the LLM with a script that never finishes.}
+  \label{tab:v09}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v09_main}\end{adjustbox}
+\end{table*}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v08_verified}\end{adjustbox}
+  \caption{Decomposition study: verified completion (72 episodes per cell). Every arm scores and selects with the same frozen counted table. Q = Qwen2.5, L = Llama-3.1.}
+  \label{tab:app-v08}
+\end{table*}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v08_terms}\end{adjustbox}
+  \caption{Decomposition study: contrasts plotted in \cref{fig:decomposition}. The Q-7B ranking cell is a primary endpoint (97.5\% interval); all other cells are exploratory 95\% intervals.}
+  \label{tab:app-v08terms}
+\end{table*}
+
+\begin{table*}[t]
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v09_terms}\end{adjustbox}
+  \caption{Stopping study: contrasts. The L-8B cells in the first two rows are the primary endpoints (97.5\% intervals); all other cells are exploratory 95\% intervals.}
+  \label{tab:app-v09terms}
+\end{table*}
+
+\begin{table*}[t]
+  \caption{Table-source study: security-facing outcomes (descriptive). ``Claimed'' counts episodes that ended with a verdict. Missed-attack, false-escalation, and wrong-cause rates are over those verdicts; the unresolved rate is over all 72 episodes.}
+  \label{tab:security}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v06_security}\end{adjustbox}
+\end{table*}
+
+\section{Public Data Audit}
+\label{app:public}
+
+Testing whether a controller chooses probes well requires three things. (i) The alert alone must not reveal the answer, so several explanations must remain plausible. (ii) Probes must differ in cost and in how much they reveal, so that their order matters. (iii) Ground truth must be objective, reflecting what actually happened rather than a labeling convention. Appendix~\ref{app:licences} lists the versions and files read.
+
+\paragraph{ExCyTIn-Bench~\citep{excytin}} ExCyTIn poses questions over a simulated Azure tenant's logs, which an agent queries in SQL. The answers can be recovered mechanically from the published investigation graphs (98.5\% of the 1{,}017 questions of the \texttt{opus5} set); the graphs are the evaluator's answer source and are not visible to an agent, so this shows how the questions were generated, not that an agent has a shortcut. On the 418 training questions, 54.8\% name the target alert in the question text, and most others paraphrase it, so the task is to locate the named alert and read an entity. The standard indicator-pivot probe finds the true answer no more often than distractors (0.571 against 0.570 in the alert table), and only 19.4\% of questions have any table that singles out the answer. For the questions we examined and the probe we adapted, the task resembles navigation and retrieval more than the choice among competing explanations; other adaptations of the benchmark may fit better.
+
+\paragraph{GUIDE~\citep{guide}} GUIDE contains 707{,}108 real, anonymized incidents from 5{,}340 organizations, graded as true positive, benign positive, or false positive. Over ten incident-level probes on its alert metadata, organization identity alone carries 1.03 of the grade's 1.50 bits of entropy, and several large organizations assign one grade to every incident. Within an organization, looking up how it previously graded the same detector reaches 0.911 accuracy, and across organizations the probes do not beat the majority class. On cold-start incidents (a within-organization time split of the training data: the latest 20\% of incidents whose organization--detector pair has little or mixed history), evidence integration ranks true positives against the other two grades with AUROC 0.755, equal to history lookup (0.759; difference $-0.004$ $[-0.028,+0.027]$, organizations resampled). The grade depends strongly on the organization, which may reflect policy, base rates, or detector mix; we did not separate these, and we paused the planned GUIDE study. Its test split remains unread.
+
+\paragraph{OTRF Security-Datasets~\citep{otrf}} OTRF contains lab recordings of Windows host telemetry captured while ATT\&CK techniques were executed, with no benign-activity recordings. We audited 27 recordings from the remote-execution family (243{,}000 events), treated every service installation and scheduled-task creation or update as an alert, and labeled it from the recording's metadata. Of the 46 distinct alerts, 8 are attacks and 38 are background operating-system events. A one-glance rule on the alert text, which asks whether the task or service belongs to a Windows component, is correct on 44 of 46, because six of the eight attacks are named by their tooling. This holds for the 27 recordings and two event types we audited, not for OTRF as a whole.
+
+\paragraph{Case study} The one OTRF scenario that does require investigation, a scheduled task masquerading as a Windows maintenance task, is separated from the other task events in these recordings by two cheap probes although its alert text looks benign; Appendix~\ref{app:case} gives the details. Within this sample one probe (the creating account) already separates it; without legitimate remote-administration counterparts, the case is qualitative evidence only.
+
+\paragraph{The common gap} In the subsets we examined, the missing ingredient is the same: attacks that look like routine administration, and routine administration that looks like an attack. In the OTRF recordings we audited, the benign events are operating-system housekeeping rather than administrators legitimately using the same tools, and the attack emulations leave tooling artifacts. Paired, objectively labeled data of this kind would be needed to evaluate triage agents on real telemetry.
+
+\section{Case Study: A Scheduled Task Masquerading as a Windows Task}
+\label{app:case}
+
+The one OTRF scenario that does require investigation shows, on real logs, the kind of case \hesp{} is built for. Its metadata references Microsoft's analysis of the Solorigate intrusion~\citep{solorigate} and labels the activity as remote scheduled-task creation (T1053.005). The alert, security event 4698 on \texttt{WORKSTATION6}, reports a new task \texttt{EventCacheManager} in the folder \texttt{\textbackslash Microsoft\textbackslash Windows\textbackslash Software\-Protection\-Platform}, whose folder and name match genuine Windows tasks; the text-only rule calls it benign. A first probe finds that the domain user \texttt{THESHIRE\textbackslash pgustavo} created it, whereas the other 17 task events under \texttt{\textbackslash Microsoft\textbackslash Windows} in the 27 recordings were all made by machine accounts. A second finds that the creating session is a network logon (type 3, Kerberos) from another host, which rules out local persistence and user-context updaters. The task runs \texttt{cmd.exe} as SYSTEM, and the source host's process log shows the \texttt{schtasks /create \dots{} /s} command that created it. The alert text and the investigation point in opposite directions, and two cheap probes separate them. Because one probe suffices and the scenario is unique, the case cannot show that probe order matters; we include it as qualitative evidence only.
+
+\section{Design Alternatives}
+\label{app:alternatives}
+
+Each design choice replaced an alternative that we implemented and measured. In every \hesp{} configuration the controller executes its own choice; the only variation is whether the planner is also shown the ranking, which changes completion by at most $+0.06$ (decomposition study). Letting the planner choose with the ranking in view is Memory-only plus the ranking, which we did not run. A budget-aware two-step lookahead selector beat EIG/cost by $+0.17$ to $+0.21$ on the task family we developed it on, but on a held-out family (3{,}888 episodes) it matched or trailed EIG/cost, by $-0.125$ for the 7B planner, and on sec-triage it completed 0.889, 0.972, and 0.958 against 0.958, 1.000, and 1.000 for the three Qwen models; we kept the greedy rule. Showing the planner a posterior above 0.999 and stating that no legal probe is left does not make Llama-3.1-8B conclude, whereas a stopping rule enforced by the controller does. Without the finish guard, completion changes by at most $+0.04$, but the guard ensures that every accepted verdict cites current supporting evidence, so we keep it.
+
+\section{Runtime and Cost}
+\label{app:runtime}
+
+End-to-end latency is dominated by LLM inference; ledger updates and selection take negligible time next to a model call. \Cref{tab:runtime} gives per-episode wall time, planner calls, and tokens in the stopping study. These were measured with 32 episodes sharing one GPU, so they include queueing and overstate the latency of a single investigation; the batch figure (1{,}800 episodes over five models in 28 minutes) is throughput, not latency. The controller stop cuts planner calls from 5.5--10.1 to 2.3 per episode and tokens by a factor of 2.5 to 5, and controller selection halves probe cost (for Llama-3.1-8B, from 4.78 to 2.35 units).
+
+\begin{table}[h]
+  \caption{Stopping study: per-episode wall time (median and 95th percentile), planner calls, and input plus output tokens (72 episodes per row; vLLM 0.30.0 on one RTX PRO 6000D, 32 concurrent episodes).}
+  \label{tab:runtime}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/runtime}\end{adjustbox}
+\end{table}
+
+\section{Datasets and Licences}
+\label{app:licences}
+
+ExCyTIn-Bench: code MIT, data CDLA-Permissive-2.0, released for research; question set \texttt{opus5} (1{,}017 questions: 599 test, 418 train) and the investigation graphs from the \texttt{microsoft/SecRL} repository as of 2026-09-24 (commit not recorded), logs of incidents 5 and 38 from the public data release. The feasibility checks read all 1{,}017 questions (erratum E-10); the pivot measurement used only the 418 training questions. The published paper reports 589 test questions for an earlier question set; we did not reconcile the two releases. GUIDE: anonymized incidents released by Microsoft; we read only the training split and do not redistribute per-incident data. OTRF Security-Datasets: the LICENSE file is MIT (the README still carries an older GPL-3.0 notice); the recordings contain emulated attacks in a lab domain and no personal data. SigmaHQ detection rules: Detection Rule License 1.1, used with attribution at commit 07ec293a; the repository stores the derived task specifications, not the rule files.
+
+\section{Example Trace}
+\label{app:trace}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{hesp-framework.pdf}
+  \caption{One triage case (sec-base-00, Qwen2.5-7B, repeat 0) handled by the model alone (left) and inside \hesp{} (right), drawn from the archived journals of the table-source study.}
+  \label{fig:trace}
+\end{figure*}
+
+\section{Errata}
+\label{app:errata}
+
+\begin{description}
+  \item[E-1] The initial study reported that all three primary intervals excluded zero; the 72B interval is $[0.000, 0.236]$.
+  \item[E-2] The initial study's per-episode journals were not archived before the rented GPU was released. Summaries can be recomputed, but the raw events cannot be re-audited by third parties. From the table-source study on, journals are archived and hashed before compute is released.
+  \item[E-3] The initial study's manifests carried stale metadata from an earlier study on another task family.
+  \item[E-4] In the initial study, the random-selection control could see the EIG ranking. The blind variants of the decomposition study remove this.
+  \item[E-5] Before the table-source study, prediction tables were derived from the environment's generator. The counted tables replace them.
+  \item[E-6] The ground truth of the descriptive security metrics mishandled drifting episodes and was corrected twice. Every summary script now checks that each verified verdict equals the ground truth used.
+  \item[E-7] In the table-source study, the Memory-only ledger used designer tables while \hesp{} used counted ones. We expected the asymmetry to favour the baseline but did not test this; an LLM may respond non-monotonically to the ledger's scores. The decomposition study uses the counted table for every arm and removes the asymmetry.
+  \item[E-8] The v1.0 freezing record stated that no mirrored weights were used. The two Llama-3.1 checkpoints have come from non-gated mirrors since the decomposition study; they are the same files used in every earlier study.
+  \item[E-9] (Disclosed deviation.) The v1.0 protocol planned to annotate the Sigma rules on a separate 20\,GB GPU, where phi-4 did not fit. Annotation ran instead on the study's own server with the same model, prompt, schema, and temperature, before anything was frozen; the first machine produced no annotation.
+  \item[E-10] \S\ref{sec:realdata} and the ethics section stated that no test split of any public dataset was read. For ExCyTIn-Bench this was false: the two feasibility scripts that measured whether answers can be recovered from the investigation graphs (98.5\%) and whether a fixed catalogue covers them read all 1{,}017 questions of the \texttt{opus5} set, including the 599 test questions. Only the later pivot measurement was restricted to the 418 training questions. No ExCyTIn result evaluates \hesp{} and nothing was tuned on it; the statement holds for GUIDE, whose test split remains unread.
+  \item[E-11] (v1.1, disclosed before analysis.) The first v1.1 launch on the H100 server served the model with prefix caching, as on the RTX PRO 6000D. vLLM 0.11 then failed every JSON-mode request of the second study served by a warm server (xgrammar ``Failed to advance FSM''); a controlled rerun reproduced this with caching on and not with caching off. All v1.1 GPU runs on that server therefore use no prefix caching, and the two study directories produced with it were discarded unanalyzed.
+\end{description}

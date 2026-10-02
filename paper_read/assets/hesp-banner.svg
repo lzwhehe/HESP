@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-labelledby="title desc">
+  <title id="title">HESP — Hypotheses. Evidence. State. Planning.</title>
+  <desc id="desc">Navy research banner with a teal graph representing an evidence-driven planning loop.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#142d3b"/></linearGradient>
+    <linearGradient id="accent"><stop stop-color="#5eead4"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#94a3b8" stroke-opacity=".07"/></pattern>
+  </defs>
+  <rect width="1280" height="400" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="400" rx="24" fill="url(#grid)"/>
+  <rect x="62" y="57" width="202" height="30" rx="15" fill="#153e42" stroke="#2d6c6a"/>
+  <circle cx="79" cy="72" r="4" fill="#5eead4"/>
+  <text x="92" y="77" fill="#a7f3d0" font-family="Segoe UI,Arial,sans-serif" font-size="12" letter-spacing="1.4">RESEARCH PROTOTYPE</text>
+  <text x="58" y="198" fill="#f1f5f9" font-family="Segoe UI,Arial,sans-serif" font-size="104" font-weight="700" letter-spacing="4">HESP</text>
+  <rect x="64" y="222" width="76" height="4" rx="2" fill="url(#accent)"/>
+  <text x="64" y="268" fill="#cbd5e1" font-family="Segoe UI,Arial,sans-serif" font-size="23">Hypotheses. Evidence. State. Planning.</text>
+  <text x="64" y="311" fill="#829bb0" font-family="Segoe UI,Arial,sans-serif" font-size="16">Auditable decisions. Reproducible experiments.</text>
+  <g stroke="#2c6673" stroke-width="2" fill="none">
+    <path d="M920 90L1084 166L1040 307L864 286L804 154Z"/>
+    <path d="M920 90L946 207L1084 166M946 207L1040 307M946 207L864 286M946 207L804 154"/>
+    <circle cx="946" cy="207" r="124" stroke-dasharray="3 10" stroke-opacity=".5"/>
+  </g>
+  <g fill="#142d3b" stroke="#5eead4" stroke-width="2">
+    <circle cx="920" cy="90" r="10"/><circle cx="1084" cy="166" r="10"/>
+    <circle cx="1040" cy="307" r="10"/><circle cx="864" cy="286" r="10"/>
+    <circle cx="804" cy="154" r="10"/>
+  </g>
+  <circle cx="946" cy="207" r="37" fill="#123f46" stroke="#5eead4" stroke-width="2"/>
+  <path d="M931 207l10 10 21-23" stroke="#99f6e4" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#9fb6c9" font-family="Segoe UI,Arial,sans-serif" font-size="12" letter-spacing="1.5">
+    <text x="871" y="65">HYPOTHESIS</text><text x="1105" y="171">TEST</text>
+    <text x="1007" y="342">EVIDENCE</text><text x="809" y="320">STATE</text>
+    <text x="747" y="126">PLAN</text>
+  </g>
+  <text x="1149" y="364" fill="#698799" font-family="Segoe UI,Arial,sans-serif" font-size="13">v0.2</text>
+</svg>

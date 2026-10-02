@@ -1,0 +1,23 @@
+\section{Background and Motivation}
+\label{sec:background}
+
+\subsection{Alert Triage}
+Triage decides, for each alert, what caused it and whether a response is needed~\citep{nodoze}. Unlike attack investigation, which reconstructs a whole attack story~\citep{kairos,clouseau}, triage ends with one verdict: a cause and the evidence for it. The analyst reaches the verdict by querying the environment, and queries differ in cost and in how well they separate the candidate causes.
+
+Consider an alert that reports a spike in authentication failures and HTTP errors on a web tier (\cref{fig:motivating}). It looks like credential stuffing, but SQL-injection probing, an authorized vulnerability scan, a misclassified health check, and an administration panel exposed to the internet produce the same symptom. A threat-intelligence lookup on the top source may answer ``malicious'', which three of these causes share. Reading the admin panel's configuration, one cheap query, settles the last explanation at once, but only an investigator who keeps that explanation in view will run it. An investigation therefore makes two decisions again and again: which query to run next, and whether the evidence already suffices.
+
+\subsection{Small Models Fail at the Procedure}
+\label{sec:motivation}
+An LLM agent makes both decisions itself~\citep{react}: at each step the model reads the observations so far, then calls a tool or states a verdict. \Cref{fig:motivating} shows what happens when the model is Llama-3.1-8B and the true cause is the exposed admin panel. When the model chooses the probes and decides when to stop (first row), it never runs the decisive query. When a controller chooses the probes but the model still decides when to stop (second row), the model sees the decisive observation at step three and keeps probing until the budget is gone. Only when the controller also stops does the episode end with the right verdict.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig_motivating.pdf}
+  \caption{Choosing probes and stopping are separate failures. One alert (true cause: an exposed admin panel), one local model (Llama-3.1-8B), four ways to split the investigation. Each chip is a probe that ran (dashed: a duplicate proposal the controller blocked); red marks the observation that confirms the cause. When the model decides when to stop (first two rows), it reaches the decisive evidence and keeps probing. A controller-side stop concludes (last two rows), and information-gain selection gets there in three probes. All rows are taken from archived journals.}
+  \label{fig:motivating}
+\end{figure*}
+
+The pattern holds beyond this alert. Qwen2.5-7B choosing its own probes resolves 8 to 13\% of cases while spending nearly its whole budget, and uniformly random probes would do better. Llama-3.1-8B requests another probe in all 3{,}389 of its decisions, including those in which the ledger's posterior exceeds 0.999. Larger models do conclude, but without a ledger Qwen2.5-32B and 72B cite invalid evidence in 22 to 31\% of their citations. Two small models of similar size thus fail in different places, one at choosing probes and one at stopping (\S\ref{sec:utility}), which is why a controller has to take over both decisions rather than repair one.
+
+\subsection{Attacker-Written Evidence}
+An agent that reads retrieved content can be steered by instructions hidden in it, namely indirect prompt injection~\citep{greshake2023}, which AgentDojo benchmarks on tool-using agents~\citep{agentdojo}. Log injection through unescaped user-controlled fields is an older form of the same problem~\citep{owasp_loginjection}, and LogInject shows that LLM log analysis in SOCs follows such payloads at high rates~\citep{loginject}. Defenses fall into two families. Model-level defenses, such as structured queries and preference optimization~\citep{struq,secalign}, reduce but do not remove the model's tendency to follow injected text. System-level defenses separate a privileged planner from the untrusted data: the Dual LLM pattern and CaMeL~\citep{camel} let a quarantined model read the data while a planner fixes the control flow, and CaMeL, FIDES~\citep{fides}, and Progent~\citep{progent} enforce policies on the tool calls that follow. CaMeL also shows that the quarantined reader remains a channel: an attacker who cannot change the plan can still choose the values the reader returns. In triage this channel is the whole attack, because the verdict is computed from the values the reader returns and no tool call follows that a policy could stop.

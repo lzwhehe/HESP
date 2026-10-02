@@ -1,0 +1,14 @@
+\section{Motivation}
+\label{sec:motivation}
+
+\subsection{Challenges}
+When a small local model drives the investigation, three challenges arise. We measured each on the configurations of our studies (\S\ref{sec:setup}).
+
+\stepnum{1} \textbf{The procedure fails.} Qwen2.5-7B selecting its own probes verifies only 0.083 to 0.125 of cases: it runs about seven distinct probes per episode, spends 9.4 to 9.5 of its 10 cost units, and three quarters of its episodes end with the tool budget exhausted; replacing its choices with uniformly random ones raises completion by $+0.556$ (\S\ref{sec:cost}). Under our prompt and serving configuration, Llama-3.1-8B requests another probe in every one of its 3{,}389 decisions, including those in which the ledger's posterior exceeds 0.999 and the prompt states that no legal probe is left. Larger models conclude, but not always on evidence: without a ledger, Qwen2.5-32B and 72B call 13 of 51 and 20 of 54 actionable incidents benign among those they rule on.
+
+\stepnum{2} \textbf{The evidence is partly the attacker's.} A user agent, a request payload, or a ticket comment is copied into the logs the agent reads. When such a field carries an instruction to close the case as an authorized scan, every model that decides and reaches its own verdict follows it (\S\ref{sec:injection}). A benign verdict is the verdict an attacker most wants, because it closes the case without a response.
+
+\stepnum{3} \textbf{Someone has to read the logs.} A fixed parser written against the documented log format reads nothing after a logging-pipeline change, and every case is then escalated (\S\ref{sec:rawlog}). A model can read the changed format, but a model that reads can be talked into an attacker's reading, and it reads every source the attacker can write into.
+
+\subsection{Our Solution}
+\hesp{} answers each challenge with a component outside the model. \stepnum{1} A ledger updated from likelihood tables counted in LLM-free development runs, a ranking of every legal probe by expected information gain per cost, an explicit acceptance rule applied before each planner call, and a controller-side stop once the rule is met (Appendix~\ref{app:loop} gives the exact order). \stepnum{2} A finish guard that accepts only verdicts citing a current observation that supports the claimed cause in the ledger, so that text which never enters the ledger cannot end the case, and a corroboration rule that requires benign verdicts to rest on distinct source groups. \stepnum{3} A trust boundary between readers: observations parsed by a rule parser are trusted, observations parsed by the model may raise a cause and confirm an attack but never confirm a benign verdict. A write-ahead journal lets an audit replay every step.

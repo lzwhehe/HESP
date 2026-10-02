@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="660" viewBox="0 0 1180 660" role="img"><title>v0.5 sec-triage verified completion by arm and model</title><rect width="1180" height="660" fill="#FFFFFF"/>
+<text x="40.0" y="28.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#52514E">Defensive security alert-triage (held-out). Qwen2.5 planners (local vLLM), 24 tasks x 3 repeats per cell, paired.</text>
+<text x="40.0" y="48.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="italic" text-anchor="start" fill="#52514E">Whiskers: 95% bootstrap over task clusters.</text>
+<circle cx="470.0" cy="44.0" r="5.5" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="482.0" y="48.5" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" font-style="normal" text-anchor="start" fill="#1F2937">7B</text>
+<rect x="574.5" y="38.5" width="11.0" height="11.0" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="592.0" y="48.5" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" font-style="normal" text-anchor="start" fill="#1F2937">32B-AWQ</text>
+<path d="M690 36.85 L697.15 44 L690 51.15 L682.85 44 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="702.0" y="48.5" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" font-style="normal" text-anchor="start" fill="#1F2937">72B-AWQ</text>
+<line x1="240.0" y1="90.0" x2="240.0" y2="594.0" stroke="#E7E6E2" stroke-width="1"/>
+<text x="240.0" y="614.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" font-style="normal" text-anchor="middle" fill="#52514E">0.00</text>
+<line x1="380.0" y1="90.0" x2="380.0" y2="594.0" stroke="#E7E6E2" stroke-width="1"/>
+<text x="380.0" y="614.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" font-style="normal" text-anchor="middle" fill="#52514E">0.25</text>
+<line x1="520.0" y1="90.0" x2="520.0" y2="594.0" stroke="#E7E6E2" stroke-width="1"/>
+<text x="520.0" y="614.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" font-style="normal" text-anchor="middle" fill="#52514E">0.50</text>
+<line x1="660.0" y1="90.0" x2="660.0" y2="594.0" stroke="#E7E6E2" stroke-width="1"/>
+<text x="660.0" y="614.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" font-style="normal" text-anchor="middle" fill="#52514E">0.75</text>
+<line x1="800.0" y1="90.0" x2="800.0" y2="594.0" stroke="#E7E6E2" stroke-width="1"/>
+<text x="800.0" y="614.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" font-style="normal" text-anchor="middle" fill="#52514E">1.00</text>
+<text x="520.0" y="636.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" font-style="normal" text-anchor="middle" fill="#52514E">verified rate</text>
+<text x="226.0" y="114.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">A · ReAct-style</text>
+<line x1="240.0" y1="98.0" x2="286.7" y2="98.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="255.6" cy="98.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="473.3" y1="109.0" x2="683.3" y2="109.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="570.0" y="104.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="465.6" y1="120.0" x2="675.6" y2="120.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M574.4444444444445 114.28 L580.1644444444445 120 L574.4444444444445 125.72 L568.7244444444444 120 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<rect x="44.0" y="144.0" width="780.0" height="50.0" rx="6" fill="#F4F6FA" fill-opacity="1" stroke="none" stroke-width="0"/>
+<text x="226.0" y="170.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">B · Memory-only</text>
+<line x1="240.0" y1="154.0" x2="372.2" y2="154.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="302.2" cy="154.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="558.9" y1="165.0" x2="737.8" y2="165.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="655.6" y="160.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="660.0" y1="176.0" x2="800.0" y2="176.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M737.7777777777778 170.28 L743.4977777777779 176 L737.7777777777778 181.72 L732.0577777777778 176 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="226.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">B + guard</text>
+<line x1="240.0" y1="210.0" x2="380.0" y2="210.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="302.2" cy="210.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="597.8" y1="221.0" x2="761.1" y2="221.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="678.9" y="216.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="667.8" y1="232.0" x2="800.0" y2="232.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M737.7777777777778 226.28 L743.4977777777779 232 L737.7777777777778 237.72 L732.0577777777778 232 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="282.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">C · EIG/c</text>
+<line x1="730.0" y1="266.0" x2="800.0" y2="266.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="776.7" cy="266.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="800.0" y1="277.0" x2="800.0" y2="277.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="795.6" y="272.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="800.0" y1="288.0" x2="800.0" y2="288.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M800.0 282.28 L805.72 288 L800.0 293.72 L794.28 288 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<rect x="44.0" y="312.0" width="780.0" height="50.0" rx="6" fill="#F4F6FA" fill-opacity="1" stroke="none" stroke-width="0"/>
+<text x="226.0" y="338.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700" font-style="normal" text-anchor="end" fill="#1F2937">C · EIG/c + guard</text>
+<line x1="800.0" y1="322.0" x2="800.0" y2="322.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="800.0" cy="322.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="800.0" y1="333.0" x2="800.0" y2="333.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="795.6" y="328.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="800.0" y1="344.0" x2="800.0" y2="344.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M800.0 338.28 L805.72 344 L800.0 349.72 L794.28 344 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="394.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">C · lookahead</text>
+<line x1="667.8" y1="378.0" x2="800.0" y2="378.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="737.8" cy="378.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="753.3" y1="389.0" x2="800.0" y2="389.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="780.0" y="384.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="737.8" y1="400.0" x2="800.0" y2="400.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M776.6666666666667 394.28 L782.3866666666668 400 L776.6666666666667 405.72 L770.9466666666667 400 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="450.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">C · lookahead + guard</text>
+<line x1="667.8" y1="434.0" x2="800.0" y2="434.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="737.8" cy="434.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="753.3" y1="445.0" x2="800.0" y2="445.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="780.0" y="440.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="737.8" y1="456.0" x2="800.0" y2="456.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M776.6666666666667 450.28 L782.3866666666668 456 L776.6666666666667 461.72 L770.9466666666667 456 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="506.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">C · random picks</text>
+<line x1="535.6" y1="490.0" x2="683.3" y2="490.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="613.3" cy="490.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="574.4" y1="501.0" x2="722.2" y2="501.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="647.8" y="496.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="574.4" y1="512.0" x2="722.2" y2="512.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M652.2222222222222 506.28 L657.9422222222222 512 L652.2222222222222 517.72 L646.5022222222221 512 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="226.0" y="562.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" font-style="normal" text-anchor="end" fill="#1F2937">C · self-elicited P</text>
+<line x1="356.7" y1="546.0" x2="590.0" y2="546.0" stroke="#2a78d6" stroke-width="1.9"/>
+<circle cx="473.3" cy="546.0" r="4.4" fill="#2a78d6" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="800.0" y1="557.0" x2="800.0" y2="557.0" stroke="#eb6834" stroke-width="1.9"/>
+<rect x="795.6" y="552.6" width="8.8" height="8.8" rx="1.5" fill="#eb6834" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<line x1="776.7" y1="568.0" x2="800.0" y2="568.0" stroke="#1baf7a" stroke-width="1.9"/>
+<path d="M792.2222222222223 562.28 L797.9422222222223 568 L792.2222222222223 573.72 L786.5022222222223 568 Z" fill="#1baf7a" stroke="#FFFFFF" stroke-width="2" paint-order="stroke"/>
+<text x="40.0" y="622.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" font-style="italic" text-anchor="start" fill="#52514E">Shaded rows: pre-registered primary comparison (C · EIG/cost + guard vs B · Memory-only).</text>
+</svg>
