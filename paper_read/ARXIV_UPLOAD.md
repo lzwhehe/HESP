@@ -10,10 +10,10 @@
 2. 上传 `arxiv/hesp_v2_arxiv.zip`。处理器选 pdfLaTeX（默认）。确认 arXiv 编译出的 PDF 与 `arxiv/hesp_v2.pdf` 一致（20 页）。
 3. **Title** 改为：`HESP: Making Small Local LLMs Usable for Alert Triage -- The Model Reads the Logs, a Controller Decides`
 4. **Abstract** 栏粘贴 `arxiv_abstract.txt` 的全部内容。
-5. **Comments** 栏填写：
+5. **Comments** 栏填写（355 字符，上限 400）：
 
 ```
-v2: substantially revised and repositioned: for known alert types, a small local model reads raw logs and a controller decides. Adds studies in which probes return raw log text, including a pre-registered study of the small model deciding alone on raw logs (0 of 48 in every configuration), attacks on the model reader with reader trust as a defense, and corrects a statement about access to the ExCyTIn-Bench test split (erratum E-10). 20 pages, 5 figures. Code and data: https://github.com/lzwhehe/HESP
+v2: revised and repositioned: for known alert types, a small local model reads raw logs and a controller decides. Adds raw-log studies, incl. the model deciding alone (0 of 48 cases) and attacks on the model reader; corrects a statement on ExCyTIn-Bench test-split access (erratum E-10). 20 pages, 5 figures. Code and data: https://github.com/lzwhehe/HESP
 ```
 
 6. 作者不变。提交后检查新版本页面。
