@@ -139,6 +139,15 @@ def _drifted(probe_id, b, rng):
     return _kv(b)
 
 
+class NullParser:
+    """v1.4: no parser. The observation carries the log text and the outcome ``unparsed``; a model that decides
+    on its own reads the text itself (``scripts/run_v14_study.py``)."""
+    name = source = "none"
+
+    def parse(self, probe_id, text):
+        return None
+
+
 class RuleParser:
     """Regex parser written against the documented format only; returns None when the text does not match.
     It reads the FIRST line that records the probe, as the documented format has exactly one."""
@@ -281,7 +290,8 @@ def make_raw_env_class(parser, condition, trusted_sources=TRUSTED_SOURCES):
                 parsed, raw = None, f"{p['method']} {p['path']} -> HTTP {status}"
             observation = Observation(
                 f"o{self._counter:04d}", action.id, self._version,
-                parsed if parsed is not None else (TRANSIENT if not valid else "unclassified"),
+                parsed if parsed is not None else (TRANSIENT if not valid else
+                                                   "unparsed" if facts.get("parser") == "none" else "unclassified"),
                 facts, raw, valid)
             self._observations[observation.id] = observation
             self._true_outcome[observation.id] = truth
@@ -294,7 +304,9 @@ def make_raw_env_class(parser, condition, trusted_sources=TRUSTED_SOURCES):
             return observation
 
         def verify(self, hypothesis, evidence_ids):
-            """Signature verifier on the TRUE outcomes: a parser error cannot make a verdict verified."""
+            """Signature verifier on the TRUE outcomes: a parser error cannot make a verdict verified. Without a
+        parser (v1.4) the cited observation must carry a signature in its true outcome, the standard the
+        structured verifier applies."""
             cause = self._app.cause
             if hypothesis != cause or not evidence_ids or len(evidence_ids) > self.max_citations:
                 return False
@@ -303,7 +315,7 @@ def make_raw_env_class(parser, condition, trusted_sources=TRUSTED_SOURCES):
                 return False
             return any(o.state_version == self._version
                        and (o.action_id, self._true_outcome.get(o.id)) in self.SIGNATURES[cause]
-                       and o.outcome == self._true_outcome.get(o.id)
+                       and (o.outcome == self._true_outcome.get(o.id) or o.facts.get("parser") == "none")
                        for o in cited)
 
     return RawSecEnvironment

@@ -186,7 +186,9 @@ def render_request(request):
         lines.append("(none)")
     for o in request["history"]:
         raw = o["raw"] if len(o["raw"]) <= 300 else o["raw"][:300] + "..."
-        lines.append(f"- {o['id']} [state v{o['state_version']}] {o['action_id']} -> outcome={o['outcome']}"
+        # v1.4: an unparsed raw-log observation shows the log text only; the model reads it itself.
+        shown = "(not parsed; read the log text)" if o["outcome"] == "unparsed" else o["outcome"]
+        lines.append(f"- {o['id']} [state v{o['state_version']}] {o['action_id']} -> outcome={shown}"
                      f"{'' if o.get('valid', True) else ' (INVALID/transient)'} | {raw}")
     inv = request.get("investigation")
     if inv:
