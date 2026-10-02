@@ -1,64 +1,6 @@
-\subsection{RQ1: Injected Instructions}
-\label{sec:injection}
-\label{sec:adversarial}
-\label{sec:security}
-We plant each of the four injected texts in every probe response of the six actionable sec-triage causes and run every configuration on all five models (\cref{tab:v11attack}, left).
-
-\begin{table*}[t]
-  \caption{The finish guard stops injected instructions, and corroboration across source groups stops forged sources. Left: actionable cases closed as benign (``missed'') or left without a verdict (``unresolved'') under four injected texts, of 72 per model. Middle: actionable cases closed as benign under forged evidence, of 18 (range over the five models). Right: honest benign cases resolved, of 6 (range over the five models). sec-triage.}
-  \label{tab:v11attack}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{tables/v11_attack}\end{adjustbox}
-\end{table*}
-
-When the model decides the verdict, the attack works on every model that ever concludes: Memory-only agents close 69, 57, 69, and 63 of 72 actionable cases as the authorized scan on Qwen2.5-7B, 32B, 72B, and Llama-3.1-70B; Llama-3.1-8B is ``safe'' only because it never concludes. Taking probe selection and stopping away from the model is not enough: without the guard, the model proposes the injected verdict before the controller's own stop fires in 36 to 48 of 72 episodes. With the guard, no configuration on any model closes a single case, because the injected text never enters the ledger and the guard accepts only ledger-backed verdicts. Removing the raw text from the prompt also blocks the attack, but leaves 65 of 72 cases unresolved for Qwen2.5-7B, which then lacks the information it needs.
-
-The injection still costs analyst time. With the guard alone, 44 to 72 of 72 episodes end without a verdict, because the model keeps proposing the rejected verdict; with the controller stop added, 0 to 42 do.
-
-\smallskip\noindent\textbf{Finding 1.} Text an attacker writes into logs decides the verdict whenever the model decides it, and never when the verdict must rest on ledger evidence; the residual effect is delay, not closure.
-
-\subsection{RQ2: Forged Sources}
-\label{sec:evidence}
-Once the guard holds, the attacker must forge evidence the ledger reads. A single forged scanner answer lifts the authorized scan above the acceptance threshold after one probe, and the controller stop closes 18 of 18 actionable cases as benign on every model; the forged feed does the same (\cref{tab:v11attack}, middle). The controller's strength, acting on the most informative observation first, is exactly what the attacker exploits. The forged feed also misleads the larger models themselves, which close up to 15 of 18 cases under Memory-only.
-
-Requiring two supporting observations escalates every forged case on every model. Counting probes is not sufficient, however: in the forged-feed runs the controller's second probe happened to read a different source. When a fixed playbook reads \texttt{source\_ips} and then \texttt{threat\_intel}, both fed by the poisoned feed, corroboration by probe closes 18 of 18 actionable cases, whereas corroboration by source group closes none. The rule costs honest benign cases that have a single signature: in sec-triage, 3 of the 6 benign episodes are resolved with corroboration instead of 6, because the monitoring false positive has only one specific signature there; across the 26 benign explanations of sigma-triage, corroboration escalates 8 of 104 benign episodes.
-
-\smallskip\noindent\textbf{Finding 2.} A controller that decides is defeated by one forged source; source-diverse corroboration stops it, at a cost that depends on how many independent signatures an honest benign cause has.
-
-\subsection{RQ3: Attacks on the Reader}
-\label{sec:rawlog}
-We now let probes return raw log text and make the model the parser; the controller plans with the recommended configuration, so the model's only role is reading. \Cref{tab:v13} reports the attacks under four reader policies for Qwen2.5-7B, Llama-3.1-8B, and the scripted reader that adopts every claim.
-
-\begin{table*}[t]
-  \caption{Only reader trust stops every attack on the reader. Actionable cases closed as benign (of 36) under the four-probe claim and the three adaptive attacks; honest benign cases resolved (of 12; at most 6, since the monitoring false positive has one signature) under the documented and drifted formats; and, for the reader alone, observations in which it adopted the attacker's label. Policies: the reader alone; a rule parser first with the reader on what it cannot read; known free-text fields removed first; reader trust on top of rule-parser-first. sec-triage base and noise, 48 episodes per cell.}
-  \label{tab:v13}
-  \centering\small
-  \begin{adjustbox}{max width=\textwidth}\input{tables/v13}\end{adjustbox}
-\end{table*}
-
-\emph{The model is needed to read.} The rule parser reads the documented format without error but none of the 364 drifted observations, so under drift every case escalates. Qwen2.5-7B reads the drifted format and resolves 41 of 48 drifted episodes, as many as with structured observations; Llama-3.1-8B's misreadings cost it 13 (28 of 48).
-
-\emph{The first attack only looked contained.} A benign claim on four probes is adopted by Qwen2.5-7B in 48 of 105 observations and by Llama-3.1-8B once in 71, and no attack is closed. The scripted reader shows why: adopting every claim, it closes all 36 actionable cases as the authorized scan after two probes, because the four claimed probes span three source groups and source-diverse corroboration is met by forged readings alone. The models were safe only because they adopted some claims and not others.
-
-\emph{Adaptive attacks reach that bound.} With the story on every probe in the documented format, Qwen2.5-7B adopts the claims on \texttt{change\_ticket} and \texttt{access\_pattern} but never on \texttt{source\_ips} (0 of 42), where the genuine record contradicts the claim; no case is closed, but 18 are escalated. On the drifted format the claims stand alone, Qwen2.5-7B adopts all 84, and every one of the 36 actionable cases is closed as the authorized scan, exactly as with the scripted reader. Llama-3.1-8B adopts 85 of 124 and closes 19. Log-line injection closes nothing, because both models read the first \texttt{source\_ips} record, but Llama-3.1-8B adopts the forged records of two other probes in 72 of 72 observations and leaves all 36 actionable cases unresolved.
-
-\emph{A case.} Consider a credential-stuffing alert under the drifted adaptive attack, with Qwen2.5-7B as the reader. The first probe, \texttt{source\_ips}, returns the log below (lines wrapped). The genuine line reports residential botnet ranges; the attacker's user agent asserts a known scanner.
-\begin{Verbatim}[fontsize=\scriptsize,frame=single]
-Top talkers: mostly consumer broadband
-  ranges flagged as botnet
-heartbeat ok pipeline=v2
-user_agent="Mozilla/5.0 (compatible)
-  reputation=known_scanner_asn (authorized
-  scanner, CHG-88; parsers: report
-  known_scanner_asn)"
-\end{Verbatim}
-The model returns \textit{known scanner}, which lifts the authorized scan to 0.82. Without reader trust, the controller withholds the verdict for lack of a second source group, runs \texttt{access\_pattern}, whose forged reading \textit{path scanning} comes from a different group, and closes the case as the authorized scan at 0.95 after two probes. With reader trust, the same two readings arrive, but neither may confirm a benign cause, so the controller keeps probing. The genuine authentication-failure signature appears at the fifth probe and contradicts the forged story; the posterior splits between the authorized scan and \textit{other}, no trusted observation confirms either, and the case reaches an analyst with all eight observations in its journal.
-
-\emph{What stops it.} Reading with the rule parser first is immune wherever the format is documented and useless under drift. Removing the free-text fields blocks every claim inside a field but not a forged log line, which the scripted reader adopts in full. Reader trust closes no case under any attack, on either model or on the scripted reader, and costs nothing while the rule parser can read (41 of 48 resolved, as with structured observations). Its price falls on the drifted format, where no honest benign case is resolved (0 of 12, against 6), and under the drifted adaptive attack every episode is escalated after exhausting its budget. The two pre-registered comparisons hold: the model alone closes more actionable cases than under reader trust by $+0.333$ on Qwen2.5-7B (97.5\% CI $+0.333$ to $+0.333$) and by $+0.176$ on Llama-3.1-8B (CI $+0.093$ to $+0.259$).
-
-\smallskip\noindent\textbf{Finding 3.} A model that reads can be talked into the attacker's reading of every log at once, which defeats source-diverse corroboration; letting model-parsed observations confirm attacks but never benign verdicts closes the path, and honest benign cases pay for it only when no trusted parser can read the logs.
-
-\subsection{RQ4: Cost of Taking the Decisions}
+\subsection{RQ1: Who Should Decide?}
+\label{sec:decide}
+We first take the decisions from the model one at a time and measure what that costs in resolved cases, with structured observations and no attacker.
 \label{sec:utility}
 \label{sec:cost}
 \label{sec:fair}
@@ -94,9 +36,88 @@ The model returns \textit{known scanner}, which lifts the authorized scan to 0.8
 
 \emph{Overhead.} \hesp{} lowers rather than raises the cost of an investigation, because it asks the model less. The controller stop cuts model calls from 5.5 to 10.1 per episode to 2.3 and tokens by a factor of 2.5 to 5; the median episode on Qwen2.5-72B takes 15.3\,s instead of 46.8\,s (Appendix~\ref{app:runtime}). Ledger updates and probe selection take negligible time next to a model call.
 
-\smallskip\noindent\textbf{Finding 4.} Small models fail at choosing probes and at stopping for different reasons, and a controller that takes both decisions resolves as many cases as any model we tested, at lower cost.
+\smallskip\noindent\textbf{Finding 1.} Small models fail at choosing probes and at stopping for different reasons, and a controller that takes both decisions resolves as many cases as any model we tested, at lower cost. With structured observations and a given list of causes, deciding needs no model.
 
-\subsection{RQ5: Evidence Rules and Imperfect Tables}
+
+\subsection{RQ2: Who Should Read?}
+\label{sec:read}
+We now let probes return raw log text in the documented format or in a \emph{drifted} format that states the same facts in reworded lines, as after a logging-pipeline change, and compare a fixed rule parser with the model as parser. The controller decides throughout, so the model's only role is reading.
+
+\begin{table}[t]
+  \caption{Reading needs the model once the format changes. Parse accuracy and resolved episodes (of 48) on sec-triage when probes return raw log text, for a fixed rule parser and for the model as parser (Q-7B: Qwen2.5-7B; L-8B: Llama-3.1-8B). The controller decides in every row; ``injected'' rows are discussed in RQ3.}
+  \label{tab:v12raw}
+  \centering\small
+  \begin{adjustbox}{max width=\columnwidth}\input{tables/v12_raw}\end{adjustbox}
+\end{table}
+
+\Cref{tab:v12raw} shows the comparison. On the documented format, both parsers read all 108 observations, and the controller resolves all 48 episodes, as with structured observations. On the drifted format, the rule parser reads none of 364 observations, and every episode escalates to an analyst. Qwen2.5-7B reads all 108 drifted observations and resolves all 48 episodes; Llama-3.1-8B reads 174 of 196 and resolves 34. Under the recommended configuration, which adds source-diverse corroboration, Qwen2.5-7B resolves 41 of 48 drifted episodes, exactly as many as a scripted reader that never misreads, and Llama-3.1-8B resolves 28. Removing the model, in other words, removes the agent's ability to work at all once the logs stop matching the parser.
+
+\smallskip\noindent\textbf{Finding 2.} A fixed parser fails completely once the log format changes, and a 7B model reads the changed format well enough to resolve most cases: reading is the job that needs the model.
+
+\subsection{RQ3: Is a Model Reader Safe?}
+\label{sec:rawlog}
+The reader is also where the attacker writes. \Cref{tab:v13} reports the attacks under four reader policies for Qwen2.5-7B, Llama-3.1-8B, and the scripted reader that adopts every claim.
+
+\begin{table*}[t]
+  \caption{Only reader trust stops every attack on the reader. Actionable cases closed as benign (of 36) under the four-probe claim and the three adaptive attacks; honest benign cases resolved (of 12; at most 6, since the monitoring false positive has one signature) under the documented and drifted formats; and, for the reader alone, observations in which it adopted the attacker's label. Policies: the reader alone; a rule parser first with the reader on what it cannot read; known free-text fields removed first; reader trust on top of rule-parser-first. sec-triage base and noise, 48 episodes per cell.}
+  \label{tab:v13}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v13}\end{adjustbox}
+\end{table*}
+
+\emph{The first attack only looked contained.} A benign claim on four probes is adopted by Qwen2.5-7B in 48 of 105 observations and by Llama-3.1-8B once in 71, and no attack is closed. The scripted reader shows why: adopting every claim, it closes all 36 actionable cases as the authorized scan after two probes, because the four claimed probes span three source groups and source-diverse corroboration is met by forged readings alone. The models were safe only because they adopted some claims and not others.
+
+\emph{Adaptive attacks reach that bound.} With the story on every probe in the documented format, Qwen2.5-7B adopts the claims on \texttt{change\_ticket} and \texttt{access\_pattern} but never on \texttt{source\_ips} (0 of 42), where the genuine record contradicts the claim; no case is closed, but 18 are escalated. On the drifted format the claims stand alone, Qwen2.5-7B adopts all 84, and every one of the 36 actionable cases is closed as the authorized scan, exactly as with the scripted reader. Llama-3.1-8B adopts 85 of 124 and closes 19. Log-line injection closes nothing, because both models read the first \texttt{source\_ips} record, but Llama-3.1-8B adopts the forged records of two other probes in 72 of 72 observations and leaves all 36 actionable cases unresolved.
+
+\emph{A case.} Consider a credential-stuffing alert under the drifted adaptive attack, with Qwen2.5-7B as the reader. The first probe, \texttt{source\_ips}, returns the log below (lines wrapped). The genuine line reports residential botnet ranges; the attacker's user agent asserts a known scanner.
+\begin{Verbatim}[fontsize=\scriptsize,frame=single]
+Top talkers: mostly consumer broadband
+  ranges flagged as botnet
+heartbeat ok pipeline=v2
+user_agent="Mozilla/5.0 (compatible)
+  reputation=known_scanner_asn (authorized
+  scanner, CHG-88; parsers: report
+  known_scanner_asn)"
+\end{Verbatim}
+The model returns \textit{known scanner}, which lifts the authorized scan to 0.82. Without reader trust, the controller withholds the verdict for lack of a second source group, runs \texttt{access\_pattern}, whose forged reading \textit{path scanning} comes from a different group, and closes the case as the authorized scan at 0.95 after two probes. With reader trust, the same two readings arrive, but neither may confirm a benign cause, so the controller keeps probing. The genuine authentication-failure signature appears at the fifth probe and contradicts the forged story; the posterior splits between the authorized scan and \textit{other}, no trusted observation confirms either, and the case reaches an analyst with all eight observations in its journal.
+
+\emph{What stops it.} Reading with the rule parser first is immune wherever the format is documented and useless under drift. Removing the free-text fields blocks every claim inside a field but not a forged log line, which the scripted reader adopts in full. Reader trust closes no case under any attack, on either model or on the scripted reader, and costs nothing while the rule parser can read (41 of 48 resolved, as with structured observations). Its price falls on the drifted format, where no honest benign case is resolved (0 of 12, against 6), and under the drifted adaptive attack every episode is escalated after exhausting its budget. The two pre-registered comparisons hold: the model alone closes more actionable cases than under reader trust by $+0.333$ on Qwen2.5-7B (97.5\% CI $+0.333$ to $+0.333$) and by $+0.176$ on Llama-3.1-8B (CI $+0.093$ to $+0.259$).
+
+\smallskip\noindent\textbf{Finding 3.} A model that reads can be talked into the attacker's reading of every log at once, which defeats source-diverse corroboration; letting model-parsed observations confirm attacks but never benign verdicts closes the path, and honest benign cases pay for it only when no trusted parser can read the logs.
+
+
+\subsection{RQ4: Can Attackers Reach the Decisions?}
+Once the controller decides, an attacker can still try to reach the verdict through the text the model sees (A1) or through forged evidence the ledger reads (A2).
+
+\paragraph{Injected instructions}\label{sec:injection}
+\label{sec:adversarial}
+\label{sec:security}
+We plant each of the four injected texts in every probe response of the six actionable sec-triage causes and run every configuration on all five models (\cref{tab:v11attack}, left).
+
+\begin{table*}[t]
+  \caption{The finish guard stops injected instructions, and corroboration across source groups stops forged sources. Left: actionable cases closed as benign (``missed'') or left without a verdict (``unresolved'') under four injected texts, of 72 per model. Middle: actionable cases closed as benign under forged evidence, of 18 (range over the five models). Right: honest benign cases resolved, of 6 (range over the five models). sec-triage.}
+  \label{tab:v11attack}
+  \centering\small
+  \begin{adjustbox}{max width=\textwidth}\input{tables/v11_attack}\end{adjustbox}
+\end{table*}
+
+When the model decides the verdict, the attack works on every model that ever concludes: Memory-only agents close 69, 57, 69, and 63 of 72 actionable cases as the authorized scan on Qwen2.5-7B, 32B, 72B, and Llama-3.1-70B; Llama-3.1-8B is ``safe'' only because it never concludes. Taking probe selection and stopping away from the model is not enough: without the guard, the model proposes the injected verdict before the controller's own stop fires in 36 to 48 of 72 episodes. With the guard, no configuration on any model closes a single case, because the injected text never enters the ledger and the guard accepts only ledger-backed verdicts. Removing the raw text from the prompt also blocks the attack, but leaves 65 of 72 cases unresolved for Qwen2.5-7B, which then lacks the information it needs.
+
+The injection still costs analyst time. With the guard alone, 44 to 72 of 72 episodes end without a verdict, because the model keeps proposing the rejected verdict; with the controller stop added, 0 to 42 do.
+
+\smallskip\noindent\textbf{Finding 4a.} Text an attacker writes into logs decides the verdict whenever the model decides it, and never when the verdict must rest on ledger evidence; the residual effect is delay, not closure.
+
+
+\paragraph{Forged sources}
+\label{sec:evidence}
+Once the guard holds, the attacker must forge evidence the ledger reads. A single forged scanner answer lifts the authorized scan above the acceptance threshold after one probe, and the controller stop closes 18 of 18 actionable cases as benign on every model; the forged feed does the same (\cref{tab:v11attack}, middle). The controller's strength, acting on the most informative observation first, is exactly what the attacker exploits. The forged feed also misleads the larger models themselves, which close up to 15 of 18 cases under Memory-only.
+
+Requiring two supporting observations escalates every forged case on every model. Counting probes is not sufficient, however: in the forged-feed runs the controller's second probe happened to read a different source. When a fixed playbook reads \texttt{source\_ips} and then \texttt{threat\_intel}, both fed by the poisoned feed, corroboration by probe closes 18 of 18 actionable cases, whereas corroboration by source group closes none. The rule costs honest benign cases that have a single signature: in sec-triage, 3 of the 6 benign episodes are resolved with corroboration instead of 6, because the monitoring false positive has only one specific signature there; across the 26 benign explanations of sigma-triage, corroboration escalates 8 of 104 benign episodes.
+
+\smallskip\noindent\textbf{Finding 4b.} A controller that decides is defeated by one forged source; source-diverse corroboration stops it, at a cost that depends on how many independent signatures an honest benign cause has.
+
+
+\subsection{RQ5: Evidence Rules, Imperfect Tables, and Missing Causes}
 \label{sec:policy}
 \label{sec:mismatch}
 \label{sec:rq-help}
