@@ -11,6 +11,7 @@
         "no_verdict": 40,
         "planner_error": 0,
         "mean_tool_calls": 6.6,
+        "mean_repeated_proposals": 2.35,
         "audits_passed": 48
       },
       "react_style_v1_documented": {
@@ -22,6 +23,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.06,
+        "mean_repeated_proposals": 3.4,
         "audits_passed": 48
       },
       "react_style_v1_drifted": {
@@ -33,6 +35,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 5.92,
+        "mean_repeated_proposals": 6.02,
         "audits_passed": 48
       },
       "react_style_clear_finish_structured": {
@@ -44,6 +47,7 @@
         "no_verdict": 42,
         "planner_error": 0,
         "mean_tool_calls": 7.38,
+        "mean_repeated_proposals": 1.6,
         "audits_passed": 48
       },
       "react_style_clear_finish_documented": {
@@ -55,6 +59,7 @@
         "no_verdict": 48,
         "planner_error": 1,
         "mean_tool_calls": 7.42,
+        "mean_repeated_proposals": 2.65,
         "audits_passed": 48
       },
       "react_style_clear_finish_drifted": {
@@ -66,6 +71,7 @@
         "no_verdict": 48,
         "planner_error": 1,
         "mean_tool_calls": 5.48,
+        "mean_repeated_proposals": 6.4,
         "audits_passed": 48
       },
       "memory_only_v1_structured": {
@@ -77,6 +83,7 @@
         "no_verdict": 39,
         "planner_error": 0,
         "mean_tool_calls": 7.06,
+        "mean_repeated_proposals": 3.12,
         "audits_passed": 48
       },
       "memory_only_v1_documented": {
@@ -88,6 +95,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 6.71,
+        "mean_repeated_proposals": 5.04,
         "audits_passed": 48
       },
       "memory_only_v1_drifted": {
@@ -99,6 +107,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 5.35,
+        "mean_repeated_proposals": 6.62,
         "audits_passed": 48
       },
       "memory_only_clear_finish_structured": {
@@ -110,6 +119,7 @@
         "no_verdict": 35,
         "planner_error": 0,
         "mean_tool_calls": 7.33,
+        "mean_repeated_proposals": 2.31,
         "audits_passed": 48
       },
       "memory_only_clear_finish_documented": {
@@ -121,6 +131,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.46,
+        "mean_repeated_proposals": 3.88,
         "audits_passed": 48
       },
       "memory_only_clear_finish_drifted": {
@@ -132,6 +143,31 @@
         "no_verdict": 48,
         "planner_error": 4,
         "mean_tool_calls": 5,
+        "mean_repeated_proposals": 6.77,
+        "audits_passed": 48
+      },
+      "NEUTRAL_memory_only_clear_finish_documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 1,
+        "mean_tool_calls": 7.33,
+        "mean_repeated_proposals": 3.6,
+        "audits_passed": 48
+      },
+      "NEUTRAL_memory_only_clear_finish_drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 2,
+        "mean_tool_calls": 5.46,
+        "mean_repeated_proposals": 6.31,
         "audits_passed": 48
       }
     },
@@ -145,6 +181,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_rule_documented": {
@@ -156,6 +193,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_rule_drifted": {
@@ -167,6 +205,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.35,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_llm_documented": {
@@ -178,6 +217,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_llm_drifted": {
@@ -189,6 +229,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       }
     },
@@ -201,6 +242,32 @@
       "level": 0.975,
       "tasks": 16,
       "pairs": 48
+    },
+    "neutral_wording": {
+      "documented": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 1,
+        "mean_tool_calls": 7.33,
+        "mean_repeated_proposals": 3.6,
+        "audits_passed": 48
+      },
+      "drifted": {
+        "episodes": 48,
+        "verified": 0,
+        "named_cause": 0,
+        "wrong_cause": 0,
+        "missed_attack": 0,
+        "no_verdict": 48,
+        "planner_error": 2,
+        "mean_tool_calls": 5.46,
+        "mean_repeated_proposals": 6.31,
+        "audits_passed": 48
+      }
     }
   },
   "llama8b": {
@@ -215,6 +282,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.98,
+        "mean_repeated_proposals": 2.96,
         "audits_passed": 48
       },
       "react_style_v1_documented": {
@@ -226,6 +294,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.04,
+        "mean_repeated_proposals": 2.17,
         "audits_passed": 48
       },
       "react_style_v1_drifted": {
@@ -237,6 +306,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.4,
+        "mean_repeated_proposals": 3.06,
         "audits_passed": 48
       },
       "react_style_clear_finish_structured": {
@@ -248,6 +318,7 @@
         "no_verdict": 48,
         "planner_error": 1,
         "mean_tool_calls": 7.85,
+        "mean_repeated_proposals": 2.31,
         "audits_passed": 48
       },
       "react_style_clear_finish_documented": {
@@ -259,6 +330,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.04,
+        "mean_repeated_proposals": 2.19,
         "audits_passed": 48
       },
       "react_style_clear_finish_drifted": {
@@ -270,6 +342,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.83,
+        "mean_repeated_proposals": 2.21,
         "audits_passed": 48
       },
       "memory_only_v1_structured": {
@@ -281,6 +354,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.85,
+        "mean_repeated_proposals": 1.29,
         "audits_passed": 48
       },
       "memory_only_v1_documented": {
@@ -292,6 +366,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.04,
+        "mean_repeated_proposals": 2,
         "audits_passed": 48
       },
       "memory_only_v1_drifted": {
@@ -303,6 +378,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.67,
+        "mean_repeated_proposals": 2.4,
         "audits_passed": 48
       },
       "memory_only_clear_finish_structured": {
@@ -314,6 +390,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.52,
+        "mean_repeated_proposals": 1.33,
         "audits_passed": 48
       },
       "memory_only_clear_finish_documented": {
@@ -325,6 +402,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.08,
+        "mean_repeated_proposals": 2.21,
         "audits_passed": 48
       },
       "memory_only_clear_finish_drifted": {
@@ -336,6 +414,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 7.48,
+        "mean_repeated_proposals": 2.5,
         "audits_passed": 48
       }
     },
@@ -349,6 +428,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_rule_documented": {
@@ -360,6 +440,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_rule_drifted": {
@@ -371,6 +452,7 @@
         "no_verdict": 48,
         "planner_error": 0,
         "mean_tool_calls": 8.35,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_llm_documented": {
@@ -382,6 +464,7 @@
         "no_verdict": 0,
         "planner_error": 0,
         "mean_tool_calls": 2.6,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       },
       "controller_llm_drifted": {
@@ -393,6 +476,7 @@
         "no_verdict": 12,
         "planner_error": 0,
         "mean_tool_calls": 4.52,
+        "mean_repeated_proposals": 0,
         "audits_passed": 48
       }
     },

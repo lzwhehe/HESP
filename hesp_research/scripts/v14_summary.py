@@ -39,6 +39,7 @@ def cell(rs):
             "no_verdict": sum(r["claimed_hypothesis"] in (None, "other") for r in rs),
             "planner_error": sum(r["status"] == "PLANNER_ERROR" for r in rs),
             "mean_tool_calls": round(statistics.mean(r["tool_calls"] for r in rs), 2),
+            "mean_repeated_proposals": round(statistics.mean(r["blocked_duplicate_proposals"] for r in rs), 2),
             "audits_passed": sum(bool(r.get("audit_passed", True)) for r in rs)}
 
 
@@ -77,11 +78,17 @@ def main():
                              ("llm", "documented"), ("llm", "drifted"))}
         prim = primary([r for r in ref if r["parser"] == "llm" and r["condition"] == "drifted"], by[PRIMARY_ALONE])
         summary[key] = {"model": label, "alone": cells, "reference": refs, "primary": prim}
-        md += [f"## {label}", "", "| configuration | verified | wrong | missed | no verdict | probes |",
-               "|---|---|---|---|---|---|"]
+        neutral = load(res / f"v14x_neutral_{key}" / "outcomes.jsonl")
+        if neutral:   # exploratory wording check: "(raw log below)" instead of "(not parsed; read the log text)"
+            summary[key]["neutral_wording"] = {c: cell([r for r in neutral if r["condition"] == c])
+                                               for c in ("documented", "drifted")}
+            cells.update({f"NEUTRAL_{PRIMARY_ALONE[:-len('_drifted')]}_{c}": v
+                          for c, v in summary[key]["neutral_wording"].items()})
+        md += [f"## {label}", "", "| configuration | verified | wrong | missed | no verdict | probes | repeated proposals |",
+               "|---|---|---|---|---|---|---|"]
         for name, c in list(cells.items()) + list(refs.items()):
             md.append(f"| {name} | {c['verified']}/{c['episodes']} | {c['wrong_cause']} | {c['missed_attack']} | "
-                      f"{c['no_verdict']} | {c['mean_tool_calls']} |")
+                      f"{c['no_verdict']} | {c['mean_tool_calls']} | {c['mean_repeated_proposals']} |")
         md += ["", f"Primary (97.5 %): controller with {label} reading drifted logs minus {label} alone "
                    f"({PRIMARY_ALONE}): **{prim['difference']:+.3f} [{prim['ci'][0]:+.3f}, {prim['ci'][1]:+.3f}]** "
                    f"({prim['tasks']} tasks, {prim['pairs']} pairs)", ""]

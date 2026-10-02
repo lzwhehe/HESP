@@ -655,3 +655,9 @@ H100 上 Qwen-7B 与 Llama-8B 各 576 个回合（约 15 与 17 分钟），审�
 **设计。** `NullParser("raw_text")`：观测结果记为 `raw_text`，提示中显示为 `outcome=(raw log below)`，其余（日志文本、任务、种子 `cell_seed(2033, ·)`、预算、温度、验证器）与 v1.4 完全相同。只用 Qwen-7B，Memory-only + clear_finish（v1.4 主要终点中的单独配置），documented 与 drifted 两个条件，各 48 个回合，共 96 个。不做冒烟测试（代码只改了提示中的一个字符串，单元测试 5 个通过，行为指纹仍为 `3d9e5bc5`）。
 
 **判读（写在运行前）。** 若 drifted 下仍为 0 或接近 0（≤ 3/48），则措辞不是 Qwen-7B 单独失败的主要原因；若明显上升（例如 ≥ 13/48，即达到给标签时的水平），则 v1.4 中 Qwen-7B 结构化与原始日志之间的差别主要来自措辞，论文须如此说明。两种情况都不影响主要终点的判读方向：只要单独决策低于 48/48 的结合配置，"模型读、控制器决定"仍占优，但差值大小须按本检查一并报告。
+
+### v1.4 探索性检查结果（2026-10-02）
+
+H100 上 Qwen-7B 96 个回合（3.3 分钟），审计全部通过，0 次 FSM 错误，运行后 vLLM 已关闭；`hesp/` 源码哈希 `b93e1c0f`（只多了中性措辞选项）；归档哈希见 `results/v14x_neutral_qwen7b/runs_archive.sha256`；汇总并入 `results/v14_summary.{json,md}`。
+- 中性措辞 `outcome=(raw log below)` 下，Memory-only + clear_finish 在 documented 与 drifted 下都是 **0/48**，全部没有结论，与 `not parsed` 措辞相同。按运行前写下的判读，措辞不是 Qwen-7B 单独失败的主要原因。
+- 失败方式不变：平均每个回合重复提议已执行探针 6.31 次（not parsed 措辞 6.77 次；给标签的结构化观测 2.31 次）。模型的理由显示它读懂了日志（例如在 auth_log 返回"4210 failed sign-ins across 900 users from 780 addresses"后写下"directly shows distributed credential stuffing attempts"），却再次提议该探针而不结案。
