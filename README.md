@@ -7,6 +7,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2609.33446-B31B1B?style=flat-square)](https://arxiv.org/abs/2609.33446)
 [![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square)
+[![License: MIT](https://img.shields.io/badge/license-MIT-64748B?style=flat-square)](LICENSE)
 ![Pre-registered](https://img.shields.io/badge/studies-pre--registered-14B8A6?style=flat-square)
 
 [论文](#论文) · [核心结果](#核心结果) · [工作原理](#工作原理) · [快速开始](#快速开始) · [仓库结构](#仓库结构) · [研究记录](#研究记录) · [English](docs/README.en.md)
