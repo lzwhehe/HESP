@@ -2,216 +2,128 @@
 
 ![HESP — Hypotheses. Evidence. State. Planning.](docs/assets/hesp-banner.svg)
 
-![HESP 项目总览](docs/assets/hesp-overview.png)
+**让小型本地 LLM 能用于告警分诊：模型负责读日志，控制器负责决定。**
 
-<sub>项目一览：小型本地模型在告警分诊中失败在"调查流程"上（左）；HESP 控制器逐个探针排除假设，中间是 v0.9 的一个真实回合（圆面积为后验概率）；右侧是四次预先登记研究的结论。图中所有数字由 <code>docs/figures/make_overview_figure.py</code> 直接从结果文件生成。矢量版本：[PDF](docs/assets/hesp-overview.pdf) · [SVG](docs/assets/hesp-overview.svg)。</sub>
-
-**让每一步探索，都有可检验的依据。**
-
-一个围绕假设、证据与业务状态组织行动的 Agent 研究原型。
-
+[![arXiv](https://img.shields.io/badge/arXiv-2609.33446-B31B1B?style=flat-square)](https://arxiv.org/abs/2609.33446)
 [![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square)
-![Version 0.4](https://img.shields.io/badge/version-0.4-14B8A6?style=flat-square)
-![Research prototype](https://img.shields.io/badge/stage-research_prototype-64748B?style=flat-square)
+![Pre-registered](https://img.shields.io/badge/studies-pre--registered-14B8A6?style=flat-square)
 
-[快速开始](#快速开始) · [工作原理](#工作原理) · [实验结果](#实验结果) · [研究路线](#研究路线) · [English](docs/README.en.md)
+[论文](#论文) · [核心结果](#核心结果) · [工作原理](#工作原理) · [快速开始](#快速开始) · [仓库结构](#仓库结构) · [研究记录](#研究记录) · [English](docs/README.en.md)
 
 </div>
 
 ---
 
-## 为什么做 HESP
+## 要解决的问题
 
-复杂任务中的 Agent 不仅需要记住发生了什么，还需要判断：**下一步做什么，才能有效区分当前的解释？**
+不能把遥测数据发给外部模型的组织，只能用自己机器上的小模型（7B/8B）来分诊安全告警。但这些模型单独做不到：它们不会选下一步该查什么，也不会判断证据何时已经足够。
 
-HESP 将调查过程组织为可追溯的循环：建立局部假设、登记测试预测、选择行动、记录观察、更新证据，并在业务状态变化后重新规划。研究关注的问题是：在相同模型、工具和预算下，诊断式行动选择能否在结构化记忆之外带来额外收益？
+不过，很多告警属于反复出现的类型。对这类告警，分析员已经知道可能的原因有哪些、用什么检查能区分它们，以及以往案例是怎么结案的。**HESP 面向的就是这类已知告警类型。** 它把分诊拆成两项工作：
 
-> **研究阶段：本地靶场上的受控实验。** v0.4 在两个自建的本地 Web 诊断靶场上，用三档本地部署的开源模型（Qwen2.5 7B / 32B / 72B）完成了 3888 个预先登记、配对进行的回合。结论只适用于这些靶场，**不是** Web CTF 或真实网站上的结论。
+| 工作 | 由谁完成 | 具体内容 |
+| :--- | :--- | :--- |
+| **读** | 小模型 | 把探针返回的原始日志文本，读成分析员事先定义好的某个结果 |
+| **决定** | 控制器 | 选下一个探针、判断何时停止、只接受有证据支持的结论 |
 
-## 核心能力
+## 论文
 
-| 能力 | 实现方式 |
-| :--- | :--- |
-| **假设驱动的选择** | 根据给定预测表计算预期信息增益；可选 EIG/cost、预算感知的前瞻（lookahead）等选择器 |
-| **可追溯的证据** | 执行前登记预测，执行后保存原始观察、来源与更新记录 |
-| **感知业务状态** | 状态版本变化时重置当前分数；状态守卫拒绝引用旧状态证据下的结论 |
-| **授权本地靶场** | 仅监听 127.0.0.1 的 HTTP 诊断应用（web-diag / upload-diag），含状态漂移与噪声变体 |
-| **本地大模型** | Ollama 与 vLLM（OpenAI 兼容）后端，服务端报告 usage，无需任何 API 密钥 |
-| **统一对照条件** | 三种模式共享工具、预算、精确去重和独立验证器 |
-| **可复现的执行** | 固定种子、随机运行顺序、冻结 manifest 与源码哈希 |
-| **可检查的结果** | 日志审计、失败分类、未知用量处理与配对统计 |
+**HESP: Making Small Local LLMs Usable for Alert Triage — The Model Reads the Logs, a Controller Decides**
+arXiv: [2609.33446](https://arxiv.org/abs/2609.33446)（v2）。论文源码在 [`paper_read/`](paper_read/)，中文审阅稿在 [`paper_read/zh/`](paper_read/zh/)。
+
+## 核心结果
+
+sec-triage 场景，每格 48 个回合中被独立验证器判为正确的数量（Qwen2.5-7B / Llama-3.1-8B）：
+
+| 谁决定 | 谁读 | 结构化观测（已给标签） | 原始日志（原格式） | 原始日志（格式变化后） |
+| :--- | :--- | ---: | ---: | ---: |
+| 小模型单独（四种配置中最好的） | 模型 | 13 / 0 | 0 / 0 | **0 / 0** |
+| 控制器 | 固定规则 | 48 / 48 | 48 / 48 | **0 / 0** |
+| 控制器 | 模型 | — | 48 / 48 | **48 / 34** |
+
+- **两半都不能单独工作。** 小模型单独面对原始日志时一个案例也解决不了。它读得懂日志，却不结案，而是反复要求重跑同一个探针。控制器单独时，日志格式一变，规则解析器就一条也读不出。两者结合才能解决。
+- **做决定不需要模型。** 观测已经结构化时，不含任何模型的控制器在两个场景中解决了全部案例，五个 7B–72B 模型都没有超过它。
+- **读取是攻击面。** 攻击者把一致的良性故事写进每条日志，就能让作为读取器的 Qwen2.5-7B 把 36 个攻击全部结为良性。HESP 不让模型读出的证据支持良性结论，挡住了测试过的所有攻击，代价是没有可信解析器时，诚实的良性案例会被升级给人工。
+
+**适用范围。** 三个场景都是模拟的；候选原因、探针和结果由人事先写好，且每个原因都会留下一条独特的观测；预测表统计自确定性的生成器。新的告警类型，以及从真实工单统计的预测表，都不在已检验的范围内。详见论文的局限部分。
 
 ## 工作原理
 
-![HESP 框架总览](docs/assets/hesp-framework.png)
+![HESP 的一个真实回合](docs/assets/hesp-pipeline.png)
 
-<sub>同一条告警（INC-4271，真因为撞库 <code>credential_stuffing</code>）、同一个本地 Qwen2.5-7B、同样的预算与验证器，两次真实运行逐步对照（v0.6 日志，重复 0），由 <code>docs/figures/make_framework_figure.py</code> 直接从日志归档生成。左：模型自己选每一步探针——第 1 步后账本置信度已达 .96，但它重复提议被拦下、把预算花在低价值探针上，最终没有结论。右：HESP 控制器按单位成本期望信息增益（EIG/<i>c</i>）选不重复的探针，模型只负责提议与结案；第 2 步模型提议 <code>auth_log</code>，控制器执行 <code>access_pattern</code>；无可用探针时模型结案，绿色 <i>E</i> 为被引用的证据，结论通过结案守卫与独立验证。<i>p</i>(<i>h</i>*) 为账本中对真因的后验：左侧用设计者预测表，右侧用 20 个开发回合计数得到的表。底部为该模型在全部 24 条告警 × 3 次重复上的结果。矢量版本：[PDF](docs/assets/hesp-framework.pdf) · [SVG](docs/assets/hesp-framework.svg)。</sub>
+<sub>一个真实回合（sec-base-02，Llama-3.1-8B 作为规划器）：模型只提议探针，从不结案；控制器按单位成本的期望信息增益选择探针，用贝叶斯公式更新各原因的概率，在领先原因的后验达到 0.8、且有当前证据支持时结案。每一步预测都先写入日志，再执行观测。</sub>
 
-```mermaid
-flowchart LR
-    A[公开任务与状态] --> B[局部假设与候选测试]
-    B --> C[预测结果分布]
-    C --> D[信息增益 / 成本]
-    D --> E[登记预测并执行]
-    E --> F[观察与证据账本]
-    F --> B
-    F --> G[提交诊断]
-    G --> H[独立结果验证]
-```
+每拿到一个结果，控制器依次：
 
-预测表中的概率来自人工模拟规则。信息增益是给定预测模型下的计算值；分数升高不等于任务成功，最终判断必须通过独立验证器。
-
-### 三种对照模式
-
-| 模式 | Planner 可见信息 | 行动选择 |
-| :--- | :--- | :--- |
-| `react_style` | 目标、工具、完整历史 | Planner 决定 |
-| `memory_only` | 上述信息 + 结构化假设、状态与证据 | Planner 决定 |
-| `hesp` | 上述信息 + 候选信息增益与成本 | 控制器按信息增益 / 成本选择 |
-
-`react_style` 是接口形态，不是 ReAct 论文的忠实复现。三组使用同一个模型、同一套提示模板、同样的工具、预算、精确去重和验证器，区别只在于请求中包含哪些段落，以及由谁来选动作。
+1. **更新账本。** 用预测表 $P(o \mid h, a)$ 按贝叶斯公式更新每个候选原因的概率。预测表从已知原因的开发案例中计数得到，不让模型估计。
+2. **判断能否结案。** 领先原因的后验达到阈值，并且至少有一条当前观测能把它单独挑出来时才结案（确认停止）。
+3. **选下一个探针。** 计算每个探针的期望信息增益除以成本，执行最高的那个。
+4. **保护结论。** 结束守卫拒绝账本不支持的结论；良性结论必须有两个独立来源组佐证；模型解析出的观测不能支持良性结论（读取器信任）。
 
 ## 快速开始
 
-**Python 3.10+ · 仅标准库 · 无需 API 密钥**
+**Python 3.10+，只用标准库，不需要 API 密钥。** 下面的命令都不需要 GPU。
 
 ```bash
 git clone https://github.com/lzwhehe/HESP.git
 cd HESP/hesp_research
 
-# 1. 验证软件
-python -m unittest discover -s tests -v
+# 单元测试（约 1 分钟）
+python -m unittest discover -s tests
 
-# 2. 跑通一次诊断
-python -m hesp --mode hesp --case owner_policy --output runs/first_run
+# 不含 LLM 的控制器在一个案例上的逐步过程
+python scripts/demo_controller_trace.py --cause dns_c2
 
-# 3. 执行三组配对模拟
-python scripts/run_study.py --output runs/study --repeats 3 --seed 42
+# 行为指纹：288 个不含 LLM 的回合，应输出 digest 3d9e5bc5...
+python scripts/check_equivalence.py
 
-# 4. 审计单次运行
-python scripts/audit_run.py runs/first_run
-
-# 5. 本地 Web 靶场 + 选择器消融（脚本 Planner，无需模型）
-python -m hesp --env web --case owner_policy --variant drift --output runs/web_demo
-python scripts/run_web_ablation.py --output runs/ablation --repeats 1
-
-# 6. 接本地模型（需 Ollama 或 vLLM，见模型适配协议）
-python -m hesp --env web --mode hesp --llm qwen2.5:7b-instruct --output runs/llm_demo
+# 从结果文件重新生成汇总，再生成论文表格
+python scripts/v14_summary.py
+python ../paper_read/make_tables.py
 ```
 
-输出目录必须不存在，以避免覆盖历史结果。完整参数和外部进程接口见 [原型使用说明](hesp_research/README.md) 和 [模型适配协议](hesp_research/docs/MODEL_ADAPTER.md)。
+接本地模型（vLLM 或 Ollama，OpenAI 兼容接口）的方法见 [模型适配协议](hesp_research/docs/MODEL_ADAPTER.md)；各研究在 H100 上的运行脚本在 [`hesp_research/scripts/server/`](hesp_research/scripts/server/)。
 
-### 一次运行会留下什么
-
-```text
-runs/first_run/
-├── config.json       # 模式、预算、预测表与源码哈希
-├── events.jsonl      # 预测 → 行动 → 观察 → 证据 → 验证
-└── result.json       # 状态、资源用量与独立验证结果
-
-runs/study/
-├── manifest.json     # 运行前冻结的顺序与配置
-├── outcomes.jsonl    # 逐次持久化的结果
-├── analysis.json     # 分组统计与任务聚类配对分析
-├── report.md         # 可直接阅读的摘要
-└── run*/             # 每次运行的完整记录
-```
-
-## 实验结果
-
-完整报告：[**RESULTS.md**](hesp_research/docs/RESULTS.md)。分析口径在运行前登记于 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md)；每个数字都能追溯到 `hesp_research/results/` 中的原始日志，所有回合都通过了日志审计。
-
-![v0.5 安全分诊结果](docs/assets/fig-v05-sec.png)
-
-**v0.6(RQ3:不再依赖 oracle 预测表)。** 此前所有 HESP 结果都用了由环境生成函数平滑而来的"设计者预测表"。v0.6 把它换成**只从开发期观测计数得到的表**(估计代码从结构上碰不到生成函数),预先登记并冻结后在三档模型上跑了 1728 个回合:
-
-| Planner | 主要终点 `emp20 − memory_only` [95% 区间] | 成功率的 oracle 差距 | 多花的探针成本 |
-| --- | --- | ---: | ---: |
-| **Qwen2.5-7B(确认性)** | **+0.875 [+0.736, +0.972]** | 0.000 | +2.33 |
-| Qwen2.5-32B-AWQ | +0.250 [+0.097, +0.417] | 0.000 | +2.44 |
-| Qwen2.5-72B-AWQ | +0.111 [0.000, +0.236] | 0.000 | +1.21 |
-
-不含 LLM 的检验显示,**多出来的成本全部来自开发数据观测不到的"未知原因"那一行**。数据效率曲线在 k=5 就饱和,这是靶场近乎确定性造成的,不能据此说明方法在嘈杂环境中数据高效——这要留给外部基准检验。完整结果与局限见 [RESULTS.md §10](hesp_research/docs/RESULTS.md)。
-
-**v0.5 主研究(防御安全告警分诊,留出任务族)。** 把 v0.4 事后发现的"EIG/cost + 状态守卫"作为**预先登记的主方案**在全新的安全任务族上确认。预先登记的主要终点(相对结构化记忆的验证完成率配对差)**在 7B 和 32B 上区间不含 0,在 72B 上包含 0**:
-
-| Planner | 主要终点 Δ [95% 区间] | Memory-only 自身 |
-| --- | --- | ---: |
-| Qwen2.5-7B | +0.8889 [+0.7500, +1.0000] | 0.111 |
-| Qwen2.5-32B-AWQ | +0.2500 [+0.0972, +0.4167] | 0.750 |
-| Qwen2.5-72B-AWQ | +0.1111 [**0.0000**, +0.2361] | 0.889 |
-
-表格由 `hesp_research/scripts/v05_summary.py` 从原始 `outcomes.jsonl` 生成。**早先版本曾写"三个模型区间都不含 0",这是错的**——更正与其余四条勘误见 [RESULTS.md §9](hesp_research/docs/RESULTS.md)。
-
-弱模型在安全分诊上几乎完全靠 HESP 才能完成(7B 自己查只有 0.03–0.11,陷入"探测→再确认→不下结论"死循环;HESP 升到 0.96–1.00 且成本更低)。完整数据见 [RESULTS.md §8](hesp_research/docs/RESULTS.md)。
-
----
-
-**v0.4 主研究(运维/上传诊断)。**
-
-**v0.4 主研究**（留出任务族 upload-diag，9 个 arm × 48 个任务 × 3 次重复 × 3 个模型）。预先登记的主要终点是完整 HESP 相对结构化记忆（Memory-only）的验证完成率配对差：
-
-| Planner | 完整 HESP − Memory-only [95% 任务聚类区间] | Memory-only 完成率 |
-| --- | --- | ---: |
-| Qwen2.5-7B | **+0.625** [+0.44, +0.79] | 0.236 |
-| Qwen2.5-32B-AWQ | **+0.000** [−0.12, +0.12] | 0.944 |
-| Qwen2.5-72B-AWQ | **+0.111** [+0.03, +0.22] | 0.819 |
-
-- **收益随 Planner 变强而缩小。** 7B 自己决策时会过早下结论，由控制器挑选探针弥补了这一点；32B 上优势消失。
-- **探索性发现：** EIG/cost + 状态守卫在留出族上三个模型都达到 1.000，需要新的预注册研究来确认。
-- **负面结果：** 预算感知 lookahead 在开发族上更好，在留出族上却没有更好，改进没有跨任务族泛化；模型自己生成的预测表校准较差（KL 0.86–1.76 比特）。
-
-| 记录 | 规模 | 原始证据 |
-| :--- | :--- | :--- |
-| v0.4 三档模型主研究 | 3888 回合，源码哈希固定，全部通过审计 | [汇总](hesp_research/results/v04_summary.md) |
-| v0.3 笔记本 Pilot（7B Q4） | 240 回合 | [报告](hesp_research/results/llm_pilot_v03/report.md) |
-| 选择规则消融（无模型） | 5880 回合 × 7 档预算 | [曲线](hesp_research/results/web_ablation_v031/curve.json) |
-| 预测校准 | 3 个模型 × 2 个任务族 | [RESULTS §4–5](hesp_research/docs/RESULTS.md) |
-| 软件测试 | 97 项，Windows / Linux | `python -m unittest discover -s tests` |
-
-## 项目导航
+## 仓库结构
 
 ```text
 HESP/
-├── .github/                 # CI、研究任务与 PR 模板
-├── docs/                    # 项目视觉与英文介绍
-└── hesp_research/
-    ├── hesp/                # 控制器、证据账本、规划器与分析
-    ├── tests/               # 数值、协议、预算与回归测试
-    ├── scripts/             # 验证、实验、审计与打包入口
-    ├── docs/                # 研究协议、接口与进度
-    └── results/             # 保留的 v0.1 / v0.2 验证记录
+├── hesp_research/          代码、测试、实验脚本与全部结果
+│   ├── hesp/               控制器、账本、选择器、环境（sec / sigma / comp-triage）、原始日志读取
+│   ├── scripts/            各研究的运行与汇总脚本（run_v*_study.py、v*_summary.py）
+│   ├── tests/              单元测试
+│   ├── results/            每个研究的 outcomes.jsonl、汇总与回合日志归档（含哈希）
+│   └── docs/               PROTOCOL.md（预注册）、RESULTS.md、外部数据集审计
+├── paper_read/             论文 v2（当前版本）：LaTeX 源码、表格生成脚本、中文稿、arXiv 打包脚本
+├── paper/                  另一篇稿件：LLM 安全运营基准的捷径审计
+├── arxiv_v2/               对 v1 的最小更正版（已被 paper_read 取代，保留备查）
+└── docs/                   README 图片与英文说明
 ```
 
-| 想了解什么 | 从这里开始 |
-| :--- | :--- |
-| 全部实验结果与局限 | [实验结果](hesp_research/docs/RESULTS.md) |
-| 研究问题、对照与统计口径 | [研究协议](hesp_research/docs/PROTOCOL.md) |
-| 原始模拟演示发生了什么 | [第一阶段运行说明](hesp_research/docs/FIRST_RUN.md) |
-| 如何接入外部 Planner | [模型适配协议](hesp_research/docs/MODEL_ADAPTER.md) |
-| 已完成与尚未完成的工作 | [后续工作记录](hesp_research/docs/CONTINUATION.md) |
-| 如何贡献与复现 | [贡献说明](CONTRIBUTING.md) |
-| 每个版本改了什么 | [更新日志](CHANGELOG.md) |
+## 研究记录
 
-## 研究路线
+每项研究都在运行前写入 [PROTOCOL.md](hesp_research/docs/PROTOCOL.md) 并冻结源码哈希；失败的预测和勘误都保留在记录中，论文中的每个数字都由脚本从 `hesp_research/results/` 生成。
 
-- [x] **01 · 原型** — 调查状态、证据更新、信息增益、三组控制流程。
-- [x] **02 · 工程验证** — 配对模拟、日志审计、统计管线与自动检查配置。
-- [x] **03 · 模型 Pilot** — 本地 7B 模型、预测抽取、完整 usage 记录（v0.3）。
-- [x] **04 · 授权本地 Web 环境** — 仅回环地址的两个诊断靶场、独立验证器、每回合重置（v0.3–v0.4）。
-- [x] **05a · 受控主研究** — 预先登记、留出任务族、三档模型、因子化消融，报告负面结果（v0.4）。
-- [ ] **05b · 确认性研究** — 以 EIG/cost + 守卫为新的主要 arm 预先登记；增加他人编写的第三个任务族和其他模型家族。
-- [ ] **06 · 开放式假设** — 由模型生成并扩展假设集合，而不是由任务提供。
+| 研究 | 问题 | 主要发现 |
+| :--- | :--- | :--- |
+| v0.3–v0.5 | 信息增益选择是否帮助本地模型完成诊断 | 7B 模型自己查只有 0.03–0.11，HESP 下 0.96–1.00 |
+| v0.6 | 预测表能否不依赖设计者 | 从开发回合计数得到的表与设计者的表效果相同 |
+| v0.7 | GUIDE 真实事件上的冷启动 | 冻结前发现主要终点无效，已暂停；测试集未读取 |
+| v0.8 | 在规划器信息相同时，排序本身是否有用 | 有用（+0.26 到 +0.35）；Llama-3.1-8B 从不结案 |
+| v0.9 | 由控制器负责停止 | Llama-3.1-8B 从 0 升到 0.917 |
+| v1.0–v1.1 | Sigma 规则场景、确认停止、攻击与公平比较 | 不含模型的控制器 72/72、152/152；没有模型超过它 |
+| v1.2 | 更好的提示词；探针返回原始日志 | 格式变化后规则解析器 0/364，模型读取 48/48 |
+| v1.3 | 针对模型读取器的自适应攻击 | 读取器信任规则把漏判降到 0/36 |
+| v1.4 | 小模型单独面对原始日志 | 两个模型所有配置 0/48；Qwen 的措辞检查同样 0/48 |
 
-所有模型都在本地运行（Ollama / vLLM），不产生 API 费用。
+## 引用
 
----
-
-<div align="center">
-
-**Hypotheses → Evidence → State → Planning**
-
-让研究过程可检查，让结论回到证据。
-
-</div>
+```bibtex
+@misc{liu2026hesp,
+  title         = {{HESP}: Making Small Local {LLMs} Usable for Alert Triage -- The Model Reads the Logs, a Controller Decides},
+  author        = {Liu, Zhuowen and Wang, Zhixuan},
+  year          = {2026},
+  eprint        = {2609.33446},
+  archivePrefix = {arXiv}
+}
+```
