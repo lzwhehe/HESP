@@ -2,7 +2,7 @@
 
 ![HESP — Hypotheses. Evidence. State. Planning.](assets/hesp-banner.svg)
 
-**Making small local LLMs usable for alert triage: the model reads the logs, a controller decides.**
+**Making 7B models capable of alert triage**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2609.33446-B31B1B?style=flat-square)](https://arxiv.org/abs/2609.33446)
 [![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)

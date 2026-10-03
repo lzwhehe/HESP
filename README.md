@@ -2,7 +2,7 @@
 
 ![HESP — Hypotheses. Evidence. State. Planning.](docs/assets/hesp-banner.svg)
 
-**让小型本地 LLM 能用于告警分诊：模型负责读日志，控制器负责决定。**
+**让 7B 模型胜任告警分诊**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2609.33446-B31B1B?style=flat-square)](https://arxiv.org/abs/2609.33446)
 [![CI](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/lzwhehe/HESP/actions/workflows/verify.yml)
